@@ -143,7 +143,7 @@ You can find the full list of implemented metric types <a href="/user/metrics/in
 <a class="header" href="#the-metric-types-api" id="the-metric-types-api"><h2>The metric type's API</h2></a>
 <p>A metric type implementation is defined in its own file under <code>glean-core/src/metrics/</code>, e.g. <code>glean-core/src/metrics/counter.rs</code> for a <a href="/user/metrics/counter.html">Counter</a>.</p>
 <p>Start by defining a structure to hold the metric's metadata:</p>
-<pre><code class="language-rust noplaypen">#[derive(Debug)]
+<pre><code class="language-rust noplaypen">#[derive(Clone, Debug)]
 pub struct CounterMetric {
     meta: CommonMetricData
 }
@@ -151,12 +151,12 @@ pub struct CounterMetric {
 <p>Implement the <code>MetricType</code> trait to create a metric from the meta data as well as expose the meta data.
 This also gives you a <code>should_record</code> method on the metric type.</p>
 <pre><code>impl MetricType for CounterMetric {
-    fn with_meta(meta: CommonMetricData) -&gt; Self {
-        Self { meta }
-    }
-
     fn meta(&amp;self) -&gt; &amp;CommonMetricData {
         &amp;self.meta
+    }
+
+    fn meta_mut(&amp;mut self) -&gt; &amp;mut CommonMetricData {
+        &amp;mut self.meta
     }
 }
 </code></pre>

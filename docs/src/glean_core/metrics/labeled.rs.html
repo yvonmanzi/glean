@@ -109,26 +109,17 @@
 <span id="109">109</span>
 <span id="110">110</span>
 <span id="111">111</span>
-<span id="112">112</span>
-<span id="113">113</span>
-<span id="114">114</span>
-<span id="115">115</span>
-<span id="116">116</span>
-<span id="117">117</span>
-<span id="118">118</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
 <span class="comment">// file, You can obtain one at https://mozilla.org/MPL/2.0/.</span>
 
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashSet</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
 
 <span class="kw">use</span> <span class="ident">lazy_static</span>::<span class="ident">lazy_static</span>;
 <span class="kw">use</span> <span class="ident">regex</span>::<span class="ident">Regex</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">metrics</span>::<span class="ident">MetricType</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">CommonMetricData</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Glean</span>;
 
 <span class="kw">const</span> <span class="ident">MAX_LABELS</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">16</span>;
@@ -141,40 +132,35 @@
 <span class="doccomment">/// A labeled metric.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Labeled metrics allow to record multiple sub-metrics of the same type under different string labels.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">LabeledMetric</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="ident">meta</span>: <span class="ident">CommonMetricData</span>,
     <span class="ident">labels</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>,
     <span class="doccomment">/// Type of the underlying metric</span>
-    <span class="doccomment">/// We don&#39;t hold on to any of these, but we need to be able to create them.</span>
-    <span class="ident">submetric</span>: <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// We hold on to an instance of it, which is cloned to create new modified instances.</span>
+    <span class="ident">submetric</span>: <span class="ident">T</span>,
 
     <span class="ident">seen_labels</span>: <span class="ident">HashSet</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">LabeledMetric</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">MetricType</span>,
+    <span class="ident">T</span>: <span class="ident">MetricType</span> <span class="op">+</span> <span class="ident">Clone</span>,
 {
     <span class="doccomment">/// Create a new labeled metric from the given meta data and optional list of labels.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See [`get`](#method.get) for information how static or dynamic labels are handled.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">meta</span>: <span class="ident">CommonMetricData</span>, <span class="ident">labels</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="ident">LabeledMetric</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">submetric</span>: <span class="ident">T</span>, <span class="ident">labels</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="ident">LabeledMetric</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">LabeledMetric</span> {
-            <span class="ident">meta</span>,
             <span class="ident">labels</span>,
-            <span class="ident">submetric</span>: <span class="ident">PhantomData</span>,
+            <span class="ident">submetric</span>,
             <span class="ident">seen_labels</span>: <span class="ident">HashSet</span>::<span class="ident">new</span>(),
         }
     }
 
     <span class="kw">fn</span> <span class="ident">new_metric_with_name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">name</span>: <span class="ident">String</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
-        <span class="kw">let</span> <span class="ident">meta</span> <span class="op">=</span> <span class="ident">CommonMetricData</span> {
-            <span class="ident">name</span>,
-            ..<span class="self">self</span>.<span class="ident">meta</span>.<span class="ident">clone</span>()
-        };
-
-        <span class="ident">T</span>::<span class="ident">with_meta</span>(<span class="ident">meta</span>)
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">t</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">submetric</span>.<span class="ident">clone</span>();
+        <span class="ident">t</span>.<span class="ident">meta_mut</span>().<span class="ident">name</span> <span class="op">=</span> <span class="ident">name</span>;
+        <span class="ident">t</span>
     }
 
     <span class="kw">fn</span> <span class="ident">static_label</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">label</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span> {
@@ -230,7 +216,7 @@
             <span class="prelude-val">Some</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">static_label</span>(<span class="ident">label</span>),
             <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">dynamic_label</span>(<span class="ident">label</span>),
         };
-        <span class="kw">let</span> <span class="ident">label</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}/{}&quot;</span>, <span class="self">self</span>.<span class="ident">meta</span>.<span class="ident">name</span>, <span class="ident">label</span>);
+        <span class="kw">let</span> <span class="ident">label</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}/{}&quot;</span>, <span class="self">self</span>.<span class="ident">submetric</span>.<span class="ident">meta</span>().<span class="ident">name</span>, <span class="ident">label</span>);
 
         <span class="self">self</span>.<span class="ident">new_metric_with_name</span>(<span class="ident">label</span>)
     }

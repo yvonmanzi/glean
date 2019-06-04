@@ -36,7 +36,7 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error</span>::<span class="prelude-ty">Result</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Glean</span>;
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
 <span class="doccomment">/// Stores information about a ping.</span>
 <span class="doccomment">/// This is required so that given metric data queued on disk we can send</span>
 <span class="doccomment">/// pings with the correct settings, e.g. whether it has a client_id.</span>
