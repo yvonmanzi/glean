@@ -153,6 +153,9 @@
 <span id="153">153</span>
 <span id="154">154</span>
 <span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -163,6 +166,7 @@
 <span class="kw">use</span> <span class="ident">lazy_static</span>::<span class="ident">lazy_static</span>;
 <span class="kw">use</span> <span class="ident">regex</span>::<span class="ident">Regex</span>;
 
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error_recording</span>::{<span class="ident">record_error</span>, <span class="ident">ErrorType</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">metrics</span>::{<span class="ident">Metric</span>, <span class="ident">MetricType</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Glean</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Lifetime</span>;
@@ -268,16 +272,18 @@
                 <span class="kw">return</span> <span class="ident">OTHER_LABEL</span>;
             } <span class="kw">else</span> {
                 <span class="kw">if</span> <span class="ident">label</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="ident">MAX_LABEL_LENGTH</span> {
-                    <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(
+                    <span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
                         <span class="string">&quot;label length {} exceeds maximum of {}&quot;</span>,
                         <span class="ident">label</span>.<span class="ident">len</span>(),
                         <span class="ident">MAX_LABEL_LENGTH</span>
                     );
+                    <span class="ident">record_error</span>(<span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">submetric</span>.<span class="ident">meta</span>(), <span class="ident">ErrorType</span>::<span class="ident">InvalidLabel</span>, <span class="ident">msg</span>);
                     <span class="kw">return</span> <span class="ident">OTHER_LABEL</span>;
                 }
 
                 <span class="kw">if</span> <span class="op">!</span><span class="ident">LABEL_REGEX</span>.<span class="ident">is_match</span>(<span class="ident">label</span>) {
-                    <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;label must be snake_case, got &#39;{}&#39;&quot;</span>, <span class="ident">label</span>,);
+                    <span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;label must be snake_case, got &#39;{}&#39;&quot;</span>, <span class="ident">label</span>);
+                    <span class="ident">record_error</span>(<span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">submetric</span>.<span class="ident">meta</span>(), <span class="ident">ErrorType</span>::<span class="ident">InvalidLabel</span>, <span class="ident">msg</span>);
                     <span class="kw">return</span> <span class="ident">OTHER_LABEL</span>;
                 }
 
