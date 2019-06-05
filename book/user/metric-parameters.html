@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>User - Glean - Cross-platform Telemetry library</title>
+        <title>Metric parameters - Glean - Cross-platform Telemetry library</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,7 +75,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="../index.html"><strong aria-hidden="true">1.</strong> Glean</a></li><li><a href="../user/index.html" class="active"><strong aria-hidden="true">2.</strong> User</a></li><li><ol class="section"><li><a href="../user/adding-glean-to-your-project.html"><strong aria-hidden="true">2.1.</strong> Adding Glean to your project</a></li><li><a href="../user/adding-new-metrics.html"><strong aria-hidden="true">2.2.</strong> Adding new metrics</a></li><li><a href="../user/metric-parameters.html"><strong aria-hidden="true">2.3.</strong> Metric parameters</a></li><li><a href="../user/testing-metrics.html"><strong aria-hidden="true">2.4.</strong> Testing metrics</a></li><li><a href="../user/debugging.html"><strong aria-hidden="true">2.5.</strong> Debugging products using Glean</a></li><li><a href="../user/error-reporting.html"><strong aria-hidden="true">2.6.</strong> Error reporting</a></li><li><a href="../user/metrics/index.html"><strong aria-hidden="true">2.7.</strong> Metric types</a></li><li><ol class="section"><li><a href="../user/metrics/boolean.html"><strong aria-hidden="true">2.7.1.</strong> Boolean</a></li><li><a href="../user/metrics/counter.html"><strong aria-hidden="true">2.7.2.</strong> Counter</a></li><li><a href="../user/metrics/string.html"><strong aria-hidden="true">2.7.3.</strong> String</a></li><li><a href="../user/metrics/string_list.html"><strong aria-hidden="true">2.7.4.</strong> String List</a></li><li><a href="../user/metrics/timespan.html"><strong aria-hidden="true">2.7.5.</strong> Timespan</a></li><li><a href="../user/metrics/timing_distribution.html"><strong aria-hidden="true">2.7.6.</strong> Timing Distribution</a></li><li><a href="../user/metrics/uuid.html"><strong aria-hidden="true">2.7.7.</strong> UUID</a></li><li><a href="../user/metrics/datetime.html"><strong aria-hidden="true">2.7.8.</strong> Datetime</a></li><li><a href="../user/metrics/event.html"><strong aria-hidden="true">2.7.9.</strong> Event</a></li><li><a href="../user/metrics/labeled_metric.html"><strong aria-hidden="true">2.7.10.</strong> Labeled Metrics</a></li></ol></li><li><a href="../user/pings/index.html"><strong aria-hidden="true">2.8.</strong> Pings</a></li><li><ol class="section"><li><a href="../user/pings/baseline.html"><strong aria-hidden="true">2.8.1.</strong> Baseline Ping</a></li><li><a href="../user/pings/metrics.html"><strong aria-hidden="true">2.8.2.</strong> Metrics Ping</a></li><li><a href="../user/pings/events.html"><strong aria-hidden="true">2.8.3.</strong> Events Ping</a></li><li><a href="../user/pings/custom.html"><strong aria-hidden="true">2.8.4.</strong> Custom Pings</a></li></ol></li></ol></li><li><a href="../dev/index.html"><strong aria-hidden="true">3.</strong> Development</a></li><li><ol class="section"><li><a href="../dev/android/index.html"><strong aria-hidden="true">3.1.</strong> Android</a></li><li><ol class="section"><li><a href="../dev/android/setup-android-build-environment.html"><strong aria-hidden="true">3.1.1.</strong> Setup Build Environment</a></li></ol></li><li><a href="../dev/core/index.html"><strong aria-hidden="true">3.2.</strong> Rust Component</a></li><li><ol class="section"><li><a href="../dev/core/dependency-management.html"><strong aria-hidden="true">3.2.1.</strong> Dependency Management</a></li><li><a href="../dev/core/new-metric-type.html"><strong aria-hidden="true">3.2.2.</strong> Adding a new metric type</a></li><li><a href="../dev/core/internal.html"><strong aria-hidden="true">3.2.3.</strong> Internal design details</a></li></ol></li><li><a href="../dev/ffi/index.html"><strong aria-hidden="true">3.3.</strong> FFI Layer</a></li><li><ol class="section"><li><a href="../dev/ffi/when-to-use-what-in-the-ffi.html"><strong aria-hidden="true">3.3.1.</strong> When/How FFI</a></li></ol></li><li><a href="../contributing.html"><strong aria-hidden="true">3.4.</strong> Contributing</a></li></ol></li><li><a href="../api/index.html"><strong aria-hidden="true">4.</strong> API Documentation</a></li></ol>
+            <ol class="chapter"><li><a href="../index.html"><strong aria-hidden="true">1.</strong> Glean</a></li><li><a href="../user/index.html"><strong aria-hidden="true">2.</strong> User</a></li><li><ol class="section"><li><a href="../user/adding-glean-to-your-project.html"><strong aria-hidden="true">2.1.</strong> Adding Glean to your project</a></li><li><a href="../user/adding-new-metrics.html"><strong aria-hidden="true">2.2.</strong> Adding new metrics</a></li><li><a href="../user/metric-parameters.html" class="active"><strong aria-hidden="true">2.3.</strong> Metric parameters</a></li><li><a href="../user/testing-metrics.html"><strong aria-hidden="true">2.4.</strong> Testing metrics</a></li><li><a href="../user/debugging.html"><strong aria-hidden="true">2.5.</strong> Debugging products using Glean</a></li><li><a href="../user/error-reporting.html"><strong aria-hidden="true">2.6.</strong> Error reporting</a></li><li><a href="../user/metrics/index.html"><strong aria-hidden="true">2.7.</strong> Metric types</a></li><li><ol class="section"><li><a href="../user/metrics/boolean.html"><strong aria-hidden="true">2.7.1.</strong> Boolean</a></li><li><a href="../user/metrics/counter.html"><strong aria-hidden="true">2.7.2.</strong> Counter</a></li><li><a href="../user/metrics/string.html"><strong aria-hidden="true">2.7.3.</strong> String</a></li><li><a href="../user/metrics/string_list.html"><strong aria-hidden="true">2.7.4.</strong> String List</a></li><li><a href="../user/metrics/timespan.html"><strong aria-hidden="true">2.7.5.</strong> Timespan</a></li><li><a href="../user/metrics/timing_distribution.html"><strong aria-hidden="true">2.7.6.</strong> Timing Distribution</a></li><li><a href="../user/metrics/uuid.html"><strong aria-hidden="true">2.7.7.</strong> UUID</a></li><li><a href="../user/metrics/datetime.html"><strong aria-hidden="true">2.7.8.</strong> Datetime</a></li><li><a href="../user/metrics/event.html"><strong aria-hidden="true">2.7.9.</strong> Event</a></li><li><a href="../user/metrics/labeled_metric.html"><strong aria-hidden="true">2.7.10.</strong> Labeled Metrics</a></li></ol></li><li><a href="../user/pings/index.html"><strong aria-hidden="true">2.8.</strong> Pings</a></li><li><ol class="section"><li><a href="../user/pings/baseline.html"><strong aria-hidden="true">2.8.1.</strong> Baseline Ping</a></li><li><a href="../user/pings/metrics.html"><strong aria-hidden="true">2.8.2.</strong> Metrics Ping</a></li><li><a href="../user/pings/events.html"><strong aria-hidden="true">2.8.3.</strong> Events Ping</a></li><li><a href="../user/pings/custom.html"><strong aria-hidden="true">2.8.4.</strong> Custom Pings</a></li></ol></li></ol></li><li><a href="../dev/index.html"><strong aria-hidden="true">3.</strong> Development</a></li><li><ol class="section"><li><a href="../dev/android/index.html"><strong aria-hidden="true">3.1.</strong> Android</a></li><li><ol class="section"><li><a href="../dev/android/setup-android-build-environment.html"><strong aria-hidden="true">3.1.1.</strong> Setup Build Environment</a></li></ol></li><li><a href="../dev/core/index.html"><strong aria-hidden="true">3.2.</strong> Rust Component</a></li><li><ol class="section"><li><a href="../dev/core/dependency-management.html"><strong aria-hidden="true">3.2.1.</strong> Dependency Management</a></li><li><a href="../dev/core/new-metric-type.html"><strong aria-hidden="true">3.2.2.</strong> Adding a new metric type</a></li><li><a href="../dev/core/internal.html"><strong aria-hidden="true">3.2.3.</strong> Internal design details</a></li></ol></li><li><a href="../dev/ffi/index.html"><strong aria-hidden="true">3.3.</strong> FFI Layer</a></li><li><ol class="section"><li><a href="../dev/ffi/when-to-use-what-in-the-ffi.html"><strong aria-hidden="true">3.3.1.</strong> When/How FFI</a></li></ol></li><li><a href="../contributing.html"><strong aria-hidden="true">3.4.</strong> Contributing</a></li></ol></li><li><a href="../api/index.html"><strong aria-hidden="true">4.</strong> API Documentation</a></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -140,20 +140,63 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#user-documentation" id="user-documentation"><h1>User Documentation</h1></a>
+                        <a class="header" href="#metric-parameters" id="metric-parameters"><h1>Metric parameters</h1></a>
+<p>All metric types must include the following required parameters:</p>
+<ul>
+<li>
+<p><code>description</code>: <strong>Required.</strong> A textual description of the metric for humans. It should describe what the metric does, what it means for analysts, and its edge cases or any other helpful information.</p>
+</li>
+<li>
+<p><code>notification_emails</code>: <strong>Required.</strong> A list of email addresses to notify for important events with the metric or when people with context or ownership for the metric need to be contacted.</p>
+</li>
+<li>
+<p><code>bugs</code>: <strong>Required.</strong> A list of bugs (e.g. Bugzilla or Github) that are relevant to this metric. For example, bugs that track its original implementation or later changes to it. If a number, it is an ID to an issue in the default tracker (<code>bugzilla.mozilla.org</code>). If a string, it must be a URI to a bug page in a tracker.</p>
+</li>
+<li>
+<p><code>data_reviews</code>: <strong>Required.</strong> A list of URIs to any data collection reviews relevant to the metric.</p>
+</li>
+<li>
+<p><code>expires</code>: <strong>Required.</strong> May be one of the following values:</p>
+<ul>
+<li><code>&lt;build date&gt;</code>: An ISO date <code>yyyy-mm-dd</code> in UTC on which the metric expires. For example, <code>2019-03-13</code>. This date is checked at build time. Except in special cases, this form should be used so that the metric automatically &quot;sunsets&quot; after a period of time.</li>
+<li><code>never</code>: This metric never expires.</li>
+<li><code>expired</code>: This metric is manually expired.</li>
+</ul>
+</li>
+</ul>
+<p>All metric types also support the following optional parameters:</p>
+<ul>
+<li>
+<p><code>lifetime</code>: Defines the lifetime of the metric. Different lifetimes affect when the metrics value is reset.</p>
+<ul>
+<li><code>ping</code> (default): The metric is reset each time it is sent in a ping.</li>
+<li><code>user</code>: The metric is part of the user's profile.</li>
+<li><code>application</code>: The metric is related to an application run, and is reset when the application restarts.</li>
+</ul>
+</li>
+<li>
+<p><code>send_in_pings</code>: Defines which pings the metric should be sent on. If not specified, the metric is sent on the &quot;default ping&quot;, which is the <code>events</code> ping for events and the <code>metrics</code> ping for everything else. Most metrics don't need to specify this unless they are sent on custom pings.</p>
+</li>
+<li>
+<p><code>disabled</code>: (default: <code>false</code>) Data collection for this metric is disabled.</p>
+</li>
+<li>
+<p><code>version</code>: (default: 0) The version of the metric. A monotonically increasing integer value. This should be bumped if the metric changes in a backward-incompatible way.</p>
+</li>
+</ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../user/adding-new-metrics.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="../user/adding-glean-to-your-project.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../user/testing-metrics.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -165,13 +208,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="../index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="../user/adding-new-metrics.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="../user/adding-glean-to-your-project.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="../user/testing-metrics.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

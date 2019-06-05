@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Boolean - Glean - Cross-platform Telemetry library</title>
+        <title>Custom Pings - Glean - Cross-platform Telemetry library</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,7 +75,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="../../index.html"><strong aria-hidden="true">1.</strong> Glean</a></li><li><a href="../../user/index.html"><strong aria-hidden="true">2.</strong> User</a></li><li><ol class="section"><li><a href="../../user/adding-glean-to-your-project.html"><strong aria-hidden="true">2.1.</strong> Adding Glean to your project</a></li><li><a href="../../user/adding-new-metrics.html"><strong aria-hidden="true">2.2.</strong> Adding new metrics</a></li><li><a href="../../user/metric-parameters.html"><strong aria-hidden="true">2.3.</strong> Metric parameters</a></li><li><a href="../../user/testing-metrics.html"><strong aria-hidden="true">2.4.</strong> Testing metrics</a></li><li><a href="../../user/debugging.html"><strong aria-hidden="true">2.5.</strong> Debugging products using Glean</a></li><li><a href="../../user/error-reporting.html"><strong aria-hidden="true">2.6.</strong> Error reporting</a></li><li><a href="../../user/metrics/index.html"><strong aria-hidden="true">2.7.</strong> Metric types</a></li><li><ol class="section"><li><a href="../../user/metrics/boolean.html" class="active"><strong aria-hidden="true">2.7.1.</strong> Boolean</a></li><li><a href="../../user/metrics/counter.html"><strong aria-hidden="true">2.7.2.</strong> Counter</a></li><li><a href="../../user/metrics/string.html"><strong aria-hidden="true">2.7.3.</strong> String</a></li><li><a href="../../user/metrics/string_list.html"><strong aria-hidden="true">2.7.4.</strong> String List</a></li><li><a href="../../user/metrics/timespan.html"><strong aria-hidden="true">2.7.5.</strong> Timespan</a></li><li><a href="../../user/metrics/timing_distribution.html"><strong aria-hidden="true">2.7.6.</strong> Timing Distribution</a></li><li><a href="../../user/metrics/uuid.html"><strong aria-hidden="true">2.7.7.</strong> UUID</a></li><li><a href="../../user/metrics/datetime.html"><strong aria-hidden="true">2.7.8.</strong> Datetime</a></li><li><a href="../../user/metrics/event.html"><strong aria-hidden="true">2.7.9.</strong> Event</a></li><li><a href="../../user/metrics/labeled_metric.html"><strong aria-hidden="true">2.7.10.</strong> Labeled Metrics</a></li></ol></li><li><a href="../../user/pings/index.html"><strong aria-hidden="true">2.8.</strong> Pings</a></li><li><ol class="section"><li><a href="../../user/pings/baseline.html"><strong aria-hidden="true">2.8.1.</strong> Baseline Ping</a></li><li><a href="../../user/pings/metrics.html"><strong aria-hidden="true">2.8.2.</strong> Metrics Ping</a></li><li><a href="../../user/pings/events.html"><strong aria-hidden="true">2.8.3.</strong> Events Ping</a></li><li><a href="../../user/pings/custom.html"><strong aria-hidden="true">2.8.4.</strong> Custom Pings</a></li></ol></li></ol></li><li><a href="../../dev/index.html"><strong aria-hidden="true">3.</strong> Development</a></li><li><ol class="section"><li><a href="../../dev/android/index.html"><strong aria-hidden="true">3.1.</strong> Android</a></li><li><ol class="section"><li><a href="../../dev/android/setup-android-build-environment.html"><strong aria-hidden="true">3.1.1.</strong> Setup Build Environment</a></li></ol></li><li><a href="../../dev/core/index.html"><strong aria-hidden="true">3.2.</strong> Rust Component</a></li><li><ol class="section"><li><a href="../../dev/core/dependency-management.html"><strong aria-hidden="true">3.2.1.</strong> Dependency Management</a></li><li><a href="../../dev/core/new-metric-type.html"><strong aria-hidden="true">3.2.2.</strong> Adding a new metric type</a></li><li><a href="../../dev/core/internal.html"><strong aria-hidden="true">3.2.3.</strong> Internal design details</a></li></ol></li><li><a href="../../dev/ffi/index.html"><strong aria-hidden="true">3.3.</strong> FFI Layer</a></li><li><ol class="section"><li><a href="../../dev/ffi/when-to-use-what-in-the-ffi.html"><strong aria-hidden="true">3.3.1.</strong> When/How FFI</a></li></ol></li><li><a href="../../contributing.html"><strong aria-hidden="true">3.4.</strong> Contributing</a></li></ol></li><li><a href="../../api/index.html"><strong aria-hidden="true">4.</strong> API Documentation</a></li></ol>
+            <ol class="chapter"><li><a href="../../index.html"><strong aria-hidden="true">1.</strong> Glean</a></li><li><a href="../../user/index.html"><strong aria-hidden="true">2.</strong> User</a></li><li><ol class="section"><li><a href="../../user/adding-glean-to-your-project.html"><strong aria-hidden="true">2.1.</strong> Adding Glean to your project</a></li><li><a href="../../user/adding-new-metrics.html"><strong aria-hidden="true">2.2.</strong> Adding new metrics</a></li><li><a href="../../user/metric-parameters.html"><strong aria-hidden="true">2.3.</strong> Metric parameters</a></li><li><a href="../../user/testing-metrics.html"><strong aria-hidden="true">2.4.</strong> Testing metrics</a></li><li><a href="../../user/debugging.html"><strong aria-hidden="true">2.5.</strong> Debugging products using Glean</a></li><li><a href="../../user/error-reporting.html"><strong aria-hidden="true">2.6.</strong> Error reporting</a></li><li><a href="../../user/metrics/index.html"><strong aria-hidden="true">2.7.</strong> Metric types</a></li><li><ol class="section"><li><a href="../../user/metrics/boolean.html"><strong aria-hidden="true">2.7.1.</strong> Boolean</a></li><li><a href="../../user/metrics/counter.html"><strong aria-hidden="true">2.7.2.</strong> Counter</a></li><li><a href="../../user/metrics/string.html"><strong aria-hidden="true">2.7.3.</strong> String</a></li><li><a href="../../user/metrics/string_list.html"><strong aria-hidden="true">2.7.4.</strong> String List</a></li><li><a href="../../user/metrics/timespan.html"><strong aria-hidden="true">2.7.5.</strong> Timespan</a></li><li><a href="../../user/metrics/timing_distribution.html"><strong aria-hidden="true">2.7.6.</strong> Timing Distribution</a></li><li><a href="../../user/metrics/uuid.html"><strong aria-hidden="true">2.7.7.</strong> UUID</a></li><li><a href="../../user/metrics/datetime.html"><strong aria-hidden="true">2.7.8.</strong> Datetime</a></li><li><a href="../../user/metrics/event.html"><strong aria-hidden="true">2.7.9.</strong> Event</a></li><li><a href="../../user/metrics/labeled_metric.html"><strong aria-hidden="true">2.7.10.</strong> Labeled Metrics</a></li></ol></li><li><a href="../../user/pings/index.html"><strong aria-hidden="true">2.8.</strong> Pings</a></li><li><ol class="section"><li><a href="../../user/pings/baseline.html"><strong aria-hidden="true">2.8.1.</strong> Baseline Ping</a></li><li><a href="../../user/pings/metrics.html"><strong aria-hidden="true">2.8.2.</strong> Metrics Ping</a></li><li><a href="../../user/pings/events.html"><strong aria-hidden="true">2.8.3.</strong> Events Ping</a></li><li><a href="../../user/pings/custom.html" class="active"><strong aria-hidden="true">2.8.4.</strong> Custom Pings</a></li></ol></li></ol></li><li><a href="../../dev/index.html"><strong aria-hidden="true">3.</strong> Development</a></li><li><ol class="section"><li><a href="../../dev/android/index.html"><strong aria-hidden="true">3.1.</strong> Android</a></li><li><ol class="section"><li><a href="../../dev/android/setup-android-build-environment.html"><strong aria-hidden="true">3.1.1.</strong> Setup Build Environment</a></li></ol></li><li><a href="../../dev/core/index.html"><strong aria-hidden="true">3.2.</strong> Rust Component</a></li><li><ol class="section"><li><a href="../../dev/core/dependency-management.html"><strong aria-hidden="true">3.2.1.</strong> Dependency Management</a></li><li><a href="../../dev/core/new-metric-type.html"><strong aria-hidden="true">3.2.2.</strong> Adding a new metric type</a></li><li><a href="../../dev/core/internal.html"><strong aria-hidden="true">3.2.3.</strong> Internal design details</a></li></ol></li><li><a href="../../dev/ffi/index.html"><strong aria-hidden="true">3.3.</strong> FFI Layer</a></li><li><ol class="section"><li><a href="../../dev/ffi/when-to-use-what-in-the-ffi.html"><strong aria-hidden="true">3.3.1.</strong> When/How FFI</a></li></ol></li><li><a href="../../contributing.html"><strong aria-hidden="true">3.4.</strong> Contributing</a></li></ol></li><li><a href="../../api/index.html"><strong aria-hidden="true">4.</strong> API Documentation</a></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -140,60 +140,79 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#boolean" id="boolean"><h1>Boolean</h1></a>
-<p>Booleans are used for simple flags, for example &quot;is a11y enabled&quot;?.</p>
-<a class="header" href="#configuration" id="configuration"><h2>Configuration</h2></a>
-<p>Say you're adding a boolean to record whether a11y is enabled on the device. First you need to add an entry for the boolean to the <code>metrics.yaml</code> file:</p>
-<pre><code class="language-YAML">flags:
-  a11y_enabled:
-    type: boolean
-    description: &gt;
-      Records whether a11y is enabled on the device.
+                        <a class="header" href="#custom-pings" id="custom-pings"><h1>Custom pings</h1></a>
+<p>Applications can define metrics that are sent in custom pings. Unlike the built-in pings, custom pings are sent explicitly by the application.</p>
+<a class="header" href="#defining-a-custom-ping" id="defining-a-custom-ping"><h2>Defining a custom ping</h2></a>
+<p>Custom pings must be defined in a <code>pings.yaml</code> file, which is in the same directory alongside your app's <code>metrics.yaml</code> file.</p>
+<p>Each ping has the following parameters:</p>
+<ul>
+<li><code>include_client_id</code> (required): A boolean indicating whether to include the
+<code>client_id</code> in the <a href="index.html#The-client_info-section"><code>client_info</code> section</a>).</li>
+</ul>
+<p>In addition to these parameters, pings also support the parameters related to data review and expiration defined in <a href="../adding-new-metrics.html#common-metric-parameters">common metric parameters</a>: <code>description</code>, <code>notification_emails</code>, <code>bugs</code>, and <code>data_reviews</code>.</p>
+<p>For example, to define a custom ping called <code>search</code> specifically for search information:</p>
+<pre><code class="language-YAML"># Required to indicate this is a `pings.yaml` file
+$schema: moz://mozilla.org/schemas/glean/pings/1-0-0
+
+search:
+  description: &gt;
+    A ping to record search data.
+  include_client_id: false
+  notification_emails:
+    - CHANGE-ME@example.com
+  bugs:
+    - 123456789
+  data_reviews:
+    - http://example.com/path/to/data-review
+</code></pre>
+<a class="header" href="#loading-custom-ping-metadata-into-your-application-or-library" id="loading-custom-ping-metadata-into-your-application-or-library"><h2>Loading custom ping metadata into your application or library</h2></a>
+<p>Glean generates code from <code>pings.yaml</code> in a <code>Pings</code> object, which must be instantiated so Glean can send pings by name.
+This object must be registered with Glean from your startup code (such as in your application's <code>onCreate</code> method or a function called from that method).</p>
+<pre><code>import org.mozilla.yourApplication.GleanMetrics.Pings
+
+...
+
+override fun onCreate() {
     ...
+    Glean.registerPings(Pings)
+    ...
+}
 </code></pre>
-<a class="header" href="#api" id="api"><h2>API</h2></a>
-<pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Flags
-
-Flags.a11yEnabled.set(System.isAccesibilityEnabled())
+<a class="header" href="#sending-metrics-in-a-custom-ping" id="sending-metrics-in-a-custom-ping"><h2>Sending metrics in a custom ping</h2></a>
+<p>To send a metric on a custom ping, you add the custom ping's name to the <code>send_in_pings</code> parameter in the <code>metrics.yaml</code> file.</p>
+<p>For example, to define a new metric to record the default search engine, which is sent in a custom ping called <code>search</code>, put <code>search</code> in the <code>send_in_pings</code> parameter.  Note that it is an error to specify a ping in <code>send_in_pings</code> that does not also have an entry in <code>pings.yaml</code>.</p>
+<pre><code class="language-YAML">search.default:
+  name:
+    type: string
+    description: &gt;
+      The name of the default search engine.
+    send_in_pings:
+      - search
 </code></pre>
-<p>There are test APIs available too:</p>
-<pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Flags
-Glean.enableTestingMode()
-
-// Was anything recorded?
-assertTrue(Flags.a11yEnabled.testHasValue())
-// Does it have the expected value?
-assertTrue(Flags.a11yEnabled.testGetValue())
+<p>If this metric should also be sent in the default ping for the given metric type, you can add the special value <code>default</code> to <code>send_in_pings</code>:</p>
+<pre><code class="language-YAML">    send_in_pings:
+      - search
+      - default
 </code></pre>
-<a class="header" href="#limits" id="limits"><h2>Limits</h2></a>
-<ul>
-<li>None.</li>
-</ul>
-<a class="header" href="#examples" id="examples"><h2>Examples</h2></a>
-<ul>
-<li>Is a11y enabled?</li>
-</ul>
-<a class="header" href="#recorded-errors" id="recorded-errors"><h2>Recorded errors</h2></a>
-<ul>
-<li>None.</li>
-</ul>
-<a class="header" href="#reference" id="reference"><h2>Reference</h2></a>
-<ul>
-<li><a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-boolean-metric-type/index.html">Kotlin API docs</a></li>
-</ul>
+<a class="header" href="#sending-a-custom-ping" id="sending-a-custom-ping"><h2>Sending a custom ping</h2></a>
+<p>To send a custom ping, call the <code>send</code> method on the <code>PingType</code> object that Glean generated for your ping.</p>
+<p>For example, to send the custom ping defined above:</p>
+<pre><code class="language-kotlin">import org.mozilla.yourApplication.GleanMetrics.Pings
+Pings.search.send()
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../../user/metrics/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../user/pings/events.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="../../user/metrics/counter.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../../dev/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -205,13 +224,13 @@ assertTrue(Flags.a11yEnabled.testGetValue())
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="../../user/metrics/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="../../user/pings/events.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="../../user/metrics/counter.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="../../dev/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

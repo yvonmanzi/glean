@@ -32,7 +32,10 @@
     </head>
     <body class="light">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">var path_to_root = "../../";</script>
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = "light";
+        </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script type="text/javascript">
@@ -54,7 +57,7 @@
         <script type="text/javascript">
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
-            if (theme === null || theme === undefined) { theme = 'light'; }
+            if (theme === null || theme === undefined) { theme = default_theme; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
         </script>
@@ -72,7 +75,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="../../index.html"><strong aria-hidden="true">1.</strong> Glean</a></li><li><a href="../../dev/index.html"><strong aria-hidden="true">2.</strong> Development</a></li><li><ol class="section"><li><a href="../../dev/android/index.html"><strong aria-hidden="true">2.1.</strong> Android</a></li><li><ol class="section"><li><a href="../../dev/android/setup-android-build-environment.html"><strong aria-hidden="true">2.1.1.</strong> Setup Build Environment</a></li></ol></li><li><a href="../../dev/core/index.html"><strong aria-hidden="true">2.2.</strong> Rust Component</a></li><li><ol class="section"><li><a href="../../dev/core/dependency-management.html"><strong aria-hidden="true">2.2.1.</strong> Dependency Management</a></li><li><a href="../../dev/core/new-metric-type.html"><strong aria-hidden="true">2.2.2.</strong> Adding a new metric type</a></li></ol></li><li><a href="../../dev/ffi/index.html"><strong aria-hidden="true">2.3.</strong> FFI Layer</a></li><li><ol class="section"><li><a href="../../dev/ffi/when-to-use-what-in-the-ffi.html"><strong aria-hidden="true">2.3.1.</strong> When/How FFI</a></li></ol></li><li><a href="../../contributing.html"><strong aria-hidden="true">2.4.</strong> Contributing</a></li></ol></li><li><a href="../../user/index.html"><strong aria-hidden="true">3.</strong> User</a></li><li><ol class="section"><li><a href="../../user/adding-new-metrics.html"><strong aria-hidden="true">3.1.</strong> Adding new metrics</a></li><li><a href="../../user/testing-metrics.html"><strong aria-hidden="true">3.2.</strong> Testing metrics</a></li><li><a href="../../user/metrics/index.html"><strong aria-hidden="true">3.3.</strong> Metrics types</a></li><li><ol class="section"><li><a href="../../user/metrics/boolean.html"><strong aria-hidden="true">3.3.1.</strong> Boolean</a></li><li><a href="../../user/metrics/counter.html"><strong aria-hidden="true">3.3.2.</strong> Counter</a></li><li><a href="../../user/metrics/string.html"><strong aria-hidden="true">3.3.3.</strong> String</a></li><li><a href="../../user/metrics/string_list.html"><strong aria-hidden="true">3.3.4.</strong> String List</a></li><li><a href="../../user/metrics/timespan.html"><strong aria-hidden="true">3.3.5.</strong> Timespan</a></li><li><a href="../../user/metrics/timing_distribution.html"><strong aria-hidden="true">3.3.6.</strong> Timing Distribution</a></li><li><a href="../../user/metrics/uuid.html"><strong aria-hidden="true">3.3.7.</strong> UUID</a></li><li><a href="../../user/metrics/datetime.html"><strong aria-hidden="true">3.3.8.</strong> Datetime</a></li><li><a href="../../user/metrics/event.html"><strong aria-hidden="true">3.3.9.</strong> Event</a></li><li><a href="../../user/metrics/labeled_metric.html"><strong aria-hidden="true">3.3.10.</strong> Labeled Metrics</a></li></ol></li><li><a href="../../user/pings/index.html" class="active"><strong aria-hidden="true">3.4.</strong> Pings</a></li><li><ol class="section"><li><a href="../../user/pings/baseline.html"><strong aria-hidden="true">3.4.1.</strong> Baseline Ping</a></li></ol></li></ol></li><li><a href="../../api/index.html"><strong aria-hidden="true">4.</strong> API Documentation</a></li></ol>
+            <ol class="chapter"><li><a href="../../index.html"><strong aria-hidden="true">1.</strong> Glean</a></li><li><a href="../../user/index.html"><strong aria-hidden="true">2.</strong> User</a></li><li><ol class="section"><li><a href="../../user/adding-glean-to-your-project.html"><strong aria-hidden="true">2.1.</strong> Adding Glean to your project</a></li><li><a href="../../user/adding-new-metrics.html"><strong aria-hidden="true">2.2.</strong> Adding new metrics</a></li><li><a href="../../user/metric-parameters.html"><strong aria-hidden="true">2.3.</strong> Metric parameters</a></li><li><a href="../../user/testing-metrics.html"><strong aria-hidden="true">2.4.</strong> Testing metrics</a></li><li><a href="../../user/debugging.html"><strong aria-hidden="true">2.5.</strong> Debugging products using Glean</a></li><li><a href="../../user/error-reporting.html"><strong aria-hidden="true">2.6.</strong> Error reporting</a></li><li><a href="../../user/metrics/index.html"><strong aria-hidden="true">2.7.</strong> Metric types</a></li><li><ol class="section"><li><a href="../../user/metrics/boolean.html"><strong aria-hidden="true">2.7.1.</strong> Boolean</a></li><li><a href="../../user/metrics/counter.html"><strong aria-hidden="true">2.7.2.</strong> Counter</a></li><li><a href="../../user/metrics/string.html"><strong aria-hidden="true">2.7.3.</strong> String</a></li><li><a href="../../user/metrics/string_list.html"><strong aria-hidden="true">2.7.4.</strong> String List</a></li><li><a href="../../user/metrics/timespan.html"><strong aria-hidden="true">2.7.5.</strong> Timespan</a></li><li><a href="../../user/metrics/timing_distribution.html"><strong aria-hidden="true">2.7.6.</strong> Timing Distribution</a></li><li><a href="../../user/metrics/uuid.html"><strong aria-hidden="true">2.7.7.</strong> UUID</a></li><li><a href="../../user/metrics/datetime.html"><strong aria-hidden="true">2.7.8.</strong> Datetime</a></li><li><a href="../../user/metrics/event.html"><strong aria-hidden="true">2.7.9.</strong> Event</a></li><li><a href="../../user/metrics/labeled_metric.html"><strong aria-hidden="true">2.7.10.</strong> Labeled Metrics</a></li></ol></li><li><a href="../../user/pings/index.html" class="active"><strong aria-hidden="true">2.8.</strong> Pings</a></li><li><ol class="section"><li><a href="../../user/pings/baseline.html"><strong aria-hidden="true">2.8.1.</strong> Baseline Ping</a></li><li><a href="../../user/pings/metrics.html"><strong aria-hidden="true">2.8.2.</strong> Metrics Ping</a></li><li><a href="../../user/pings/events.html"><strong aria-hidden="true">2.8.3.</strong> Events Ping</a></li><li><a href="../../user/pings/custom.html"><strong aria-hidden="true">2.8.4.</strong> Custom Pings</a></li></ol></li></ol></li><li><a href="../../dev/index.html"><strong aria-hidden="true">3.</strong> Development</a></li><li><ol class="section"><li><a href="../../dev/android/index.html"><strong aria-hidden="true">3.1.</strong> Android</a></li><li><ol class="section"><li><a href="../../dev/android/setup-android-build-environment.html"><strong aria-hidden="true">3.1.1.</strong> Setup Build Environment</a></li></ol></li><li><a href="../../dev/core/index.html"><strong aria-hidden="true">3.2.</strong> Rust Component</a></li><li><ol class="section"><li><a href="../../dev/core/dependency-management.html"><strong aria-hidden="true">3.2.1.</strong> Dependency Management</a></li><li><a href="../../dev/core/new-metric-type.html"><strong aria-hidden="true">3.2.2.</strong> Adding a new metric type</a></li><li><a href="../../dev/core/internal.html"><strong aria-hidden="true">3.2.3.</strong> Internal design details</a></li></ol></li><li><a href="../../dev/ffi/index.html"><strong aria-hidden="true">3.3.</strong> FFI Layer</a></li><li><ol class="section"><li><a href="../../dev/ffi/when-to-use-what-in-the-ffi.html"><strong aria-hidden="true">3.3.1.</strong> When/How FFI</a></li></ol></li><li><a href="../../contributing.html"><strong aria-hidden="true">3.4.</strong> Contributing</a></li></ol></li><li><a href="../../api/index.html"><strong aria-hidden="true">4.</strong> API Documentation</a></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -89,7 +92,7 @@
                                 <i class="fa fa-paint-brush"></i>
                             </button>
                             <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -108,6 +111,7 @@
                             <a href="../../print.html" title="Print this book" aria-label="Print this book">
                                 <i id="print-button" class="fa fa-print"></i>
                             </a>
+                            
                         </div>
                     </div>
                 </div>
@@ -137,27 +141,92 @@
                 <div id="content" class="content">
                     <main>
                         <a class="header" href="#glean-pings" id="glean-pings"><h1>Glean Pings</h1></a>
-<p>Every glean ping is in JSON format and contains one or more of the <a href="#ping-sections">common sections</a>
-with shared information data.</p>
-<p>If data collection is enabled, glean provides a set of built-in pings that are assembled out of the box
-without any developer intervention.  The following is a list of these built-in pings:</p>
+<p>Every glean ping is in JSON format and contains one or more of the <a href="#ping-sections">common sections</a> with shared information data.</p>
+<p>If data collection is enabled, glean provides a set of built-in pings that are assembled out of the box without any developer intervention.  The following is a list of these built-in pings:</p>
 <ul>
 <li><a href="baseline.html"><code>baseline</code> ping</a></li>
-<li><code>events</code> ping (<em>not provided yet</em>)</li>
-<li><code>metrics</code> ping (<em>not provided yet</em>)</li>
+<li><a href="events.html"><code>events</code> ping</a></li>
+<li><a href="metrics.html"><code>metrics</code> ping</a></li>
 </ul>
-<p>Applications can also define and send their own custom pings (<em>not provided yet</em>).</p>
+<p>Applications can also define and send their own <a href="custom.html">custom pings</a>.</p>
 <a class="header" href="#ping-sections" id="ping-sections"><h2>Ping sections</h2></a>
-<p>There are two standard metadata sections that are added to most pings</p>
-<p>TBD.</p>
+<p>There are two standard metadata sections that are added to most pings, in addition to their core metrics and events content (which are described elsewhere in <a href="../adding-new-metrics.html">adding new metrics</a>.</p>
+<ul>
+<li>
+<p>The <a href="#The-ping_info-section"><code>ping_info</code> section</a> contains core metadata that is included in <strong>every</strong> ping.</p>
+</li>
+<li>
+<p>The <a href="#The-client_info-section"><code>client_info</code> section</a> contains information that identifies the client.
+It is included in most pings (including all built-in pings), but may be excluded from pings where we don't want to connect client information with the other metrics in the ping.</p>
+</li>
+</ul>
 <a class="header" href="#the-ping_info-section" id="the-ping_info-section"><h3>The <code>ping_info</code> section</h3></a>
-<p>TBD.</p>
+<p>The following fields are included in the <code>ping_info</code> section, for every ping.
+Optional fields are marked accordingly.</p>
+<table><thead><tr><th> Field name </th><th> Type </th><th> Description </th></tr></thead><tbody>
+<tr><td> <code>ping_type</code> </td><td> String </td><td> The name of the ping type (e.g. &quot;baseline&quot;, &quot;metrics&quot;) </td></tr>
+<tr><td> <code>seq</code> </td><td> Counter </td><td> A running counter of the number of times pings of this type have been sent </td></tr>
+<tr><td> <code>experiments</code> </td><td> Object </td><td> <em>Optional</em>. A dictionary of <a href="#the-experiments-object">active experiments</a> </td></tr>
+<tr><td> <code>start_time</code> </td><td> Datetime </td><td> The time of the start of collection of the data in the ping, in local time and with minute precision, including timezone information. </td></tr>
+<tr><td> <code>end_time</code> </td><td> Datetime </td><td> The time of the end of collection of the data in the ping, in local time and with minute precision, including timezone information. This is also the time this ping was generated and is likely well before ping transmission time. </td></tr>
+</tbody></table>
+<p>All the metrics surviving application restarts (e.g. <code>seq</code>, ...) are removed once the application using glean is uninstalled.</p>
 <a class="header" href="#the-client_info-section" id="the-client_info-section"><h3>The <code>client_info</code> section</h3></a>
-<p>TBD.</p>
+<p>The following fields are included in the <code>client_info</code> section.
+Optional fields are marked accordingly.</p>
+<table><thead><tr><th> Field name </th><th> Type </th><th> Description </th></tr></thead><tbody>
+<tr><td> <code>app_build</code> </td><td> String </td><td> The build identifier generated by the CI system (e.g. &quot;1234/A&quot;) </td></tr>
+<tr><td> <code>app_display_version</code> </td><td> String </td><td> The user-visible version string (e.g. &quot;1.0.3&quot;) </td></tr>
+<tr><td> <code>app_channel</code> </td><td> String </td><td> <em>Optional</em> The product-provided release channel (e.g. &quot;beta&quot;) </td></tr>
+<tr><td> <code>architecture</code> </td><td> String </td><td> The architecture of the device (e.g. &quot;arm&quot;, &quot;x86&quot;) </td></tr>
+<tr><td> <code>client_id</code> </td><td> UUID </td><td>  A UUID identifying a profile and allowing user-oriented correlation of data </td></tr>
+<tr><td> <code>device_manufacturer</code> </td><td> String </td><td> The manufacturer of the device </td></tr>
+<tr><td> <code>device_model</code> </td><td> String </td><td> The model name of the device </td></tr>
+<tr><td> <code>first_run_date</code> </td><td> Datetime </td><td> The date of the first run of the application, in local time and with day precision, including timezone information. </td></tr>
+<tr><td> <code>os</code> </td><td> String </td><td> The name of the operating system (e.g. &quot;linux&quot;, &quot;Android&quot;, &quot;ios&quot;) </td></tr>
+<tr><td> <code>os_version</code> </td><td> String </td><td> The user visible version of the operating system (e.g. &quot;1.2.3&quot;) </td></tr>
+<tr><td> <code>android_sdk_version</code> </td><td> String </td><td> <em>Optional</em>. The Android specific SDK version of the software running on this hardware device (e.g. &quot;23&quot;) </td></tr>
+<tr><td> <code>telemetry_sdk_build</code> </td><td> String </td><td> The version of the glean library </td></tr>
+</tbody></table>
+<p>All the metrics surviving application restarts (e.g. <code>client_id</code>, ...) are removed once the application using glean is uninstalled.</p>
+<a class="header" href="#the-experiments-object" id="the-experiments-object"><h3>The <code>experiments</code> object</h3></a>
+<p><strong>STATUS: Not implemented.</strong></p>
+<p>This object (included in the <a href="#The-ping_info-section"><code>ping_info</code> section</a>) contains experiments keyed by the experiment <code>id</code>. Each listed experiment contains the <code>branch</code> the client is enrolled in and may contain a string to string map with additional data in the <code>extra</code> key. Both the <code>id</code> and <code>branch</code> are truncated to 30 characters.</p>
+<pre><code class="language-json">{
+  &quot;&lt;id&gt;&quot;: {
+    &quot;branch&quot;: &quot;branch-id&quot;,
+    &quot;extra&quot;: {
+      &quot;some-key&quot;: &quot;a-value&quot;
+    }
+  }
+}
+</code></pre>
 <a class="header" href="#ping-submission" id="ping-submission"><h2>Ping submission</h2></a>
-<p>TBD.</p>
+<p>The pings that glean generates are submitted to the Mozilla servers at specific paths, in order to provide additional metadata without the need to unpack the ping payload.
+A typical submission URL looks like</p>
+<p><code>&quot;&lt;server-address&gt;/submit/&lt;application-id&gt;/&lt;doc-type&gt;/&lt;glean-schema-version&gt;/&lt;ping-uuid&gt;&quot;</code></p>
+<p>where:</p>
+<ul>
+<li><code>&lt;server-address&gt;</code>: the address of the server that receives the pings;</li>
+<li><code>&lt;application-id&gt;</code>: a unique application id, automatically detected by glean; this is the value returned by <a href="http://developer.android.com/reference/android/content/Context.html#getPackageName()"><code>Context.getPackageName()</code></a>;</li>
+<li><code>&lt;doc-type&gt;</code>: the name of the ping; this can be one of the pings available out of the box with glean, or a custom ping;</li>
+<li><code>&lt;glean-schema-version&gt;</code>: the version of the glean ping schema;</li>
+<li><code>&lt;ping-uuid&gt;</code>: a unique identifier for this ping.</li>
+</ul>
 <a class="header" href="#submitted-headers" id="submitted-headers"><h3>Submitted headers</h3></a>
-<p>TBD.</p>
+<p>A pre-defined set of headers is additionally sent along with the submitted ping:</p>
+<table><thead><tr><th> Header </th><th> Value </th><th> Description </th></tr></thead><tbody>
+<tr><td> <code>Content-Type</code> </td><td> <code>application/json; charset=utf-8</code> </td><td> Describes the data sent to the server </td></tr>
+<tr><td> <code>User-Agent</code> </td><td> Defaults to e.g. <code>Glean/0.40.0 (Android)</code>, where <code>0.40.0</code> is the glean version number and <code>Android</code> is the platform name. It can be overriden by user through <a href="../../../javadoc/glean/mozilla.telemetry.glean/-configuration/index.html">configuration</a> </td><td> Describes the application sending the ping using glean </td></tr>
+<tr><td> <code>Date</code> </td><td> e.g. <code>Mon, 23 Jan 2019 10:10:10 GMT+00:00</code> </td><td> Submission date/time in GMT/UTC+0 offset </td></tr>
+<tr><td> <code>X-Client-Type</code> </td><td> <code>Glean</code> </td><td> Custom header to support handling of glean pings in the legacy pipeline </td></tr>
+<tr><td> <code>X-Client-Version</code> </td><td> e.g. <code>0.40.0</code> </td><td> The glean version, sent as a custom header to support handling of glean pings in the legacy pipeline </td></tr>
+</tbody></table>
+<a class="header" href="#defining-background-state" id="defining-background-state"><h2>Defining background state</h2></a>
+<p>These docs refer to application 'background' state in several places.
+This specifically means when the activity is no longer visible to the user, it has entered the Stopped state, and the system invokes the <a href="https://developer.android.com/reference/android/app/Activity.html#onStop()"><code>onStop()</code></a> callback.
+This may occur, for example, when a newly launched activity covers the entire screen.
+The system may also call <code>onStop()</code> when the activity has finished running, and is about to be terminated.</p>
 
                     </main>
 
