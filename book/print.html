@@ -1836,6 +1836,9 @@ In the simple cases where the in-memory representation maps to its JSON represen
 </code></pre>
 <p>For more complex serialization consider implementing serialization logic as a function returning a <a href="https://docs.rs/serde_json/*/serde_json/enum.Value.html"><code>serde_json::Value</code></a>
 or another object that can be serialized.</p>
+<p>For example, the <code>DateTime</code> serializer has the following entry, where <code>get_iso_time_string</code> is a function to convert from the <code>DateTime</code> metric representation to a string:</p>
+<pre><code class="language-rust noplaypen">Metric::Datetime(d, time_unit) =&gt; json!(get_iso_time_string(*d, *time_unit)),
+</code></pre>
 <a class="header" href="#ffi-layer" id="ffi-layer"><h2>FFI layer</h2></a>
 <p>In order to use a new metric type over the FFI layer, it needs implementations in the FFI component and the platform-part.</p>
 <a class="header" href="#ffi-component" id="ffi-component"><h3>FFI component</h3></a>
