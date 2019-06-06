@@ -195,9 +195,9 @@
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">MetricType</span> <span class="op">+</span> <span class="ident">Clone</span>,
 {
-    <span class="doccomment">/// Create a new labeled metric from the given meta data and optional list of labels.</span>
+    <span class="doccomment">/// Create a new labeled metric from the given metric instance and optional list of labels.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// See [`get`](#method.get) for information how static or dynamic labels are handled.</span>
+    <span class="doccomment">/// See [`get`](#method.get) for information on how static or dynamic labels are handled.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">submetric</span>: <span class="ident">T</span>, <span class="ident">labels</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="ident">LabeledMetric</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">LabeledMetric</span> {
             <span class="ident">labels</span>,
