@@ -1991,6 +1991,13 @@ There are a couple of exceptions to this:</p>
 <p>Ping lifetime metrics do not need special handling.  They will begin recording again after metric uploading is re-enabled.</p>
 </li>
 </ul>
+<a class="header" href="#reservered-ping-names" id="reservered-ping-names"><h2>Reservered ping names</h2></a>
+<p>The Glean SDK reserves all ping names starting with <code>glean_</code>.</p>
+<p>This currently includes, but is not limited to:</p>
+<ul>
+<li><code>glean_client_info</code></li>
+<li><code>glean_internal_info</code></li>
+</ul>
 <a class="header" href="#when-to-use-what-method-of-passing-data-between-rust-and-javaswift" id="when-to-use-what-method-of-passing-data-between-rust-and-javaswift"><h1>When to use what method of passing data between Rust and Java/Swift</h1></a>
 <hr />
 <p>This is currently copied from <a href="https://github.com/mozilla/application-services/blob/4347ea9c590d2319db1c994680832cc20bc3758d/docs/howtos/when-to-use-what-in-the-ffi.md">application-services documentation</a>.</p>
