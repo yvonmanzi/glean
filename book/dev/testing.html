@@ -152,6 +152,17 @@
 <p>The Rust tests may be run with the following command:</p>
 <pre><code>cargo test --all
 </code></pre>
+<p>Log output can be controlled via the environment variable <code>RUST_LOG</code> for the <code>glean_core</code> crate:</p>
+<pre><code>export RUST_LOG=glean_core=debug
+</code></pre>
+<p>When running tests with logging you need to tell <code>cargo</code> to not suppress output:</p>
+<pre><code>cargo test -- --nocapture
+</code></pre>
+<p>Tests run in parallel by default, leading to interleaving log lines.
+This makes it harder to understand what's going on.
+For debugging you can force single-threaded tests:</p>
+<pre><code>cargo test -- --nocapture --test-threads=1
+</code></pre>
 <a class="header" href="#running-the-kotlinandroid-tests" id="running-the-kotlinandroid-tests"><h2>Running the Kotlin/Android tests</h2></a>
 <a class="header" href="#from-the-command-line" id="from-the-command-line"><h3>From the command line</h3></a>
 <p>The full Android test suite may be run from the command line with:</p>
