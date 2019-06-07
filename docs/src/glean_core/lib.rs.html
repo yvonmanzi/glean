@@ -207,14 +207,6 @@
 <span id="207">207</span>
 <span id="208">208</span>
 <span id="209">209</span>
-<span id="210">210</span>
-<span id="211">211</span>
-<span id="212">212</span>
-<span id="213">213</span>
-<span id="214">214</span>
-<span id="215">215</span>
-<span id="216">216</span>
-<span id="217">217</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -254,7 +246,6 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Glean</span> {
-    <span class="ident">initialized</span>: <span class="ident">bool</span>,
     <span class="ident">upload_enabled</span>: <span class="ident">bool</span>,
     <span class="ident">data_store</span>: <span class="ident">Database</span>,
     <span class="ident">core_metrics</span>: <span class="ident">CoreMetrics</span>,
@@ -274,7 +265,6 @@
 
         <span class="kw">let</span> <span class="ident">application_id</span> <span class="op">=</span> <span class="ident">sanitize_application_id</span>(<span class="ident">application_id</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">glean</span> <span class="op">=</span> <span class="self">Self</span> {
-            <span class="ident">initialized</span>: <span class="bool-val">false</span>,
             <span class="ident">upload_enabled</span>,
             <span class="ident">data_store</span>: <span class="ident">Database</span>::<span class="ident">new</span>(<span class="ident">data_path</span>)<span class="question-mark">?</span>,
             <span class="ident">core_metrics</span>: <span class="ident">CoreMetrics</span>::<span class="ident">new</span>(),
@@ -284,7 +274,6 @@
             <span class="ident">start_time</span>: <span class="ident">local_now_with_offset</span>(),
         };
         <span class="ident">glean</span>.<span class="ident">initialize_core_metrics</span>()<span class="question-mark">?</span>;
-        <span class="ident">glean</span>.<span class="ident">initialized</span> <span class="op">=</span> <span class="bool-val">true</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">glean</span>)
     }
 
@@ -296,11 +285,6 @@
         }
         <span class="self">self</span>.<span class="ident">core_metrics</span>.<span class="ident">client_id</span>.<span class="ident">generate_if_missing</span>(<span class="self">self</span>);
         <span class="prelude-val">Ok</span>(())
-    }
-
-    <span class="doccomment">/// Determine whether the global Glean object is fully initialized yet.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_initialized</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">initialized</span>
     }
 
     <span class="doccomment">/// Set whether upload is enabled or not.</span>
