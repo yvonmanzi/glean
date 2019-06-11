@@ -164,6 +164,10 @@
 <span id="164">164</span>
 <span id="165">165</span>
 <span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -233,25 +237,29 @@
             <span class="ident">value</span>
         };
 
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">error</span> <span class="op">=</span> <span class="prelude-val">None</span>;
         <span class="ident">glean</span>
             .<span class="ident">storage</span>()
             .<span class="ident">record_with</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>, <span class="op">|</span><span class="ident">old_value</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">old_value</span> {
                 <span class="prelude-val">Some</span>(<span class="ident">Metric</span>::<span class="ident">StringList</span>(<span class="kw-2">mut</span> <span class="ident">old_value</span>)) <span class="op">=&gt;</span> {
                     <span class="kw">if</span> <span class="ident">old_value</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="ident">MAX_LIST_LENGTH</span> {
-                        <span class="comment">//let msg = format!(</span>
-                        <span class="comment">//    &quot;String list length of {} exceeds maximum of {}&quot;,</span>
-                        <span class="comment">//    old_value.len() + 1,</span>
-                        <span class="comment">//    MAX_LIST_LENGTH</span>
-                        <span class="comment">//);</span>
-                        <span class="comment">// TODO (bug 1557828) - record the error when it doesn&#39;t deadlock.</span>
-                        <span class="comment">// record_error(glean, &amp;self.meta, ErrorType::InvalidValue, msg);</span>
-                        <span class="kw">return</span> <span class="ident">Metric</span>::<span class="ident">StringList</span>(<span class="ident">old_value</span>);
+                        <span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
+                            <span class="string">&quot;String list length of {} exceeds maximum of {}&quot;</span>,
+                            <span class="ident">old_value</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="number">1</span>,
+                            <span class="ident">MAX_LIST_LENGTH</span>
+                        );
+                        <span class="ident">error</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">msg</span>);
+                    } <span class="kw">else</span> {
+                        <span class="ident">old_value</span>.<span class="ident">push</span>(<span class="ident">value</span>.<span class="ident">clone</span>());
                     }
-                    <span class="ident">old_value</span>.<span class="ident">push</span>(<span class="ident">value</span>.<span class="ident">clone</span>());
                     <span class="ident">Metric</span>::<span class="ident">StringList</span>(<span class="ident">old_value</span>)
                 }
                 <span class="kw">_</span> <span class="op">=&gt;</span> <span class="ident">Metric</span>::<span class="ident">StringList</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">value</span>.<span class="ident">clone</span>()]),
-            })
+            });
+
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">msg</span>) <span class="op">=</span> <span class="ident">error</span> {
+            <span class="ident">record_error</span>(<span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>, <span class="ident">ErrorType</span>::<span class="ident">InvalidValue</span>, <span class="ident">msg</span>);
+        }
     }
 
     <span class="doccomment">/// Set to a specific list of strings.</span>
