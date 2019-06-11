@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["StorageManager",""]]});
+initSidebarItems({"struct":[["StorageManager","Snapshot metrics from the underlying database."]]});

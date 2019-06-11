@@ -195,10 +195,39 @@
 <span id="195">195</span>
 <span id="196">196</span>
 <span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
 <span class="comment">// file, You can obtain one at https://mozilla.org/MPL/2.0/.</span>
+
+<span class="doccomment">//! Ping collection, assembly &amp; submission.</span>
 
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fs</span>::{<span class="ident">create_dir_all</span>, <span class="ident">File</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Write</span>;
@@ -216,6 +245,7 @@
 <span class="comment">// An internal ping name, not to be touched by anything else</span>
 <span class="kw">const</span> <span class="ident">INTERNAL_STORAGE</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;glean_internal_info&quot;</span>;
 
+<span class="doccomment">/// Collect a ping&#39;s data, assemble it into its full payload and store it on disk.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PingMaker</span>;
 
 <span class="kw">fn</span> <span class="ident">merge</span>(<span class="ident">a</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">JsonValue</span>, <span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="ident">JsonValue</span>) {
@@ -238,6 +268,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">PingMaker</span> {
+    <span class="doccomment">/// Create a new PingMaker.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>
     }
@@ -333,6 +364,17 @@
         <span class="macro">json</span><span class="macro">!</span>(<span class="ident">map</span>)
     }
 
+    <span class="doccomment">/// Collect a snapshot for the given ping from storage and attach required meta information.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ## Arguments</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `glean` - the Glean instance to collect data from.</span>
+    <span class="doccomment">/// * `ping` - the ping to collect for.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ## Return value</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns a fully assembled JSON representation of the ping payload.</span>
+    <span class="doccomment">/// If there is no data stored for the ping, `None` is returned.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">collect</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">ping</span>: <span class="kw-2">&amp;</span><span class="ident">PingType</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">JsonValue</span><span class="op">&gt;</span> {
         <span class="macro">info</span><span class="macro">!</span>(<span class="string">&quot;Collecting {}&quot;</span>, <span class="ident">ping</span>.<span class="ident">name</span>);
 
@@ -355,6 +397,18 @@
         }))
     }
 
+    <span class="doccomment">/// Collect a snapshot for the given ping from storage and attach required meta information,</span>
+    <span class="doccomment">/// returning it as a string containing JSON.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ## Arguments</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `glean` - the Glean instance to collect data from.</span>
+    <span class="doccomment">/// * `ping` - the ping to collect for.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ## Return value</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns a fully assembled ping payload in a string encoded as JSON.</span>
+    <span class="doccomment">/// If there is no data stored for the ping, `None` is returned.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">collect_string</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">ping</span>: <span class="kw-2">&amp;</span><span class="ident">PingType</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">collect</span>(<span class="ident">glean</span>, <span class="ident">ping</span>)
             .<span class="ident">map</span>(<span class="op">|</span><span class="ident">ping</span><span class="op">|</span> ::<span class="ident">serde_json</span>::<span class="ident">to_string_pretty</span>(<span class="kw-2">&amp;</span><span class="ident">ping</span>).<span class="ident">unwrap</span>())

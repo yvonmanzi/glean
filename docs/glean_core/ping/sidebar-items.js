@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["PingMaker",""]]});
+initSidebarItems({"struct":[["PingMaker","Collect a ping's data, assemble it into its full payload and store it on disk."]]});

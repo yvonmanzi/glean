@@ -205,13 +205,81 @@
 <span id="205">205</span>
 <span id="206">206</span>
 <span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
 <span class="comment">// file, You can obtain one at https://mozilla.org/MPL/2.0/.</span>
 
+<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_docs</span>)]</span>
 <span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">new_without_default</span>)]</span>
 <span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">redundant_closure</span>)]</span>
+
+<span class="doccomment">//! Glean is a modern approach for recording and sending Telemetry data.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! It&#39;s in use at Mozilla for their mobile products.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! All documentation can be found online:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ## [The Glean Book](https://mozilla.github.io/glean)</span>
 
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::{<span class="ident">Path</span>, <span class="ident">PathBuf</span>};
@@ -242,6 +310,35 @@
 
 <span class="kw">const</span> <span class="ident">GLEAN_SCHEMA_VERSION</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="number">1</span>;
 
+<span class="doccomment">/// The object holding meta information about a Glean instance.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ## Example</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Create a new Glean instance, register a ping, record a simple counter and then send the final</span>
+<span class="doccomment">/// ping.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```rust,no_run</span>
+<span class="doccomment">/// # use glean_core::{Glean, CommonMetricData, metrics::*};</span>
+<span class="doccomment">/// let mut glean = Glean::new(&quot;/tmp/glean&quot;, &quot;glean.sample.app&quot;, true).unwrap();</span>
+<span class="doccomment">/// let ping = PingType::new(&quot;baseline&quot;, true);</span>
+<span class="doccomment">/// glean.register_ping_type(&amp;ping);</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// let call_counter: CounterMetric = CounterMetric::new(CommonMetricData {</span>
+<span class="doccomment">///     name: &quot;calls&quot;.into(),</span>
+<span class="doccomment">///     category: &quot;local&quot;.into(),</span>
+<span class="doccomment">///     send_in_pings: vec![&quot;baseline&quot;.into()],</span>
+<span class="doccomment">///     ..Default::default()</span>
+<span class="doccomment">/// });</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// call_counter.add(&amp;glean, 1);</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// glean.send_ping(&amp;ping, true).unwrap();</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ## Note</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// In specific language bindings, this is usually wrapped in a singleton and all metric recording goes to a single instance of this object.</span>
+<span class="doccomment">/// In the Rust core, it is possible to create multiple instances, which is used in testing.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Glean</span> {
     <span class="ident">upload_enabled</span>: <span class="ident">bool</span>,
@@ -254,7 +351,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Glean</span> {
-    <span class="doccomment">/// Initialize the global Glean object.</span>
+    <span class="doccomment">/// Create and initialize a new Glean object.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This will create the necessary directories and files in `data_path`.</span>
     <span class="doccomment">/// This will also initialize the core metrics.</span>
@@ -297,18 +394,32 @@
         <span class="self">self</span>.<span class="ident">upload_enabled</span>
     }
 
+    <span class="doccomment">/// Get the application ID as specified on instantiation.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_application_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">application_id</span>
     }
 
+    <span class="doccomment">/// Get the data path of this instance.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_data_path</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Path</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">data_path</span>
     }
 
+    <span class="doccomment">/// Get a handle to the database.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">storage</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Database</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">data_store</span>
     }
 
+    <span class="doccomment">/// Take a snapshot for the given store and optionally clear it.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ## Arguments</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `store_name` - The store to snapshot.</span>
+    <span class="doccomment">/// * `clear_store` - Whether to clear the store after snapshotting.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ## Return value</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns the snapshot in a string encoded as JSON.</span>
+    <span class="doccomment">/// If the snapshot is empty, it returns an empty string.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">snapshot</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">store_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">clear_store</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
         <span class="ident">StorageManager</span>
             .<span class="ident">snapshot</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">storage</span>(), <span class="ident">store_name</span>, <span class="ident">clear_store</span>)
@@ -379,10 +490,17 @@
         }
     }
 
+    <span class="doccomment">/// Get a [`PingType`](metrics/struct.PingType.html) by name.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ## Return value</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns the `PingType` if a ping of the given name was registered before.</span>
+    <span class="doccomment">/// Returns `None` otherwise.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_ping_by_name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ping_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">PingType</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">ping_registry</span>.<span class="ident">get</span>(<span class="ident">ping_name</span>)
     }
 
+    <span class="doccomment">/// Register a new [`PingType`](metrics/struct.PingType.html).</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register_ping_type</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ping</span>: <span class="kw-2">&amp;</span><span class="ident">PingType</span>) {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">ping_registry</span>.<span class="ident">contains_key</span>(<span class="kw-2">&amp;</span><span class="ident">ping</span>.<span class="ident">name</span>) {
             <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;Duplicate ping named {}&quot;</span>, <span class="ident">ping</span>.<span class="ident">name</span>)
