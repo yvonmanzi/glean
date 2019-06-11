@@ -134,6 +134,36 @@
 <span id="134">134</span>
 <span id="135">135</span>
 <span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -142,6 +172,7 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error_recording</span>::{<span class="ident">record_error</span>, <span class="ident">ErrorType</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">metrics</span>::<span class="ident">Metric</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">metrics</span>::<span class="ident">MetricType</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">storage</span>::<span class="ident">StorageManager</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">CommonMetricData</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Glean</span>;
 
@@ -207,12 +238,13 @@
             .<span class="ident">record_with</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>, <span class="op">|</span><span class="ident">old_value</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">old_value</span> {
                 <span class="prelude-val">Some</span>(<span class="ident">Metric</span>::<span class="ident">StringList</span>(<span class="kw-2">mut</span> <span class="ident">old_value</span>)) <span class="op">=&gt;</span> {
                     <span class="kw">if</span> <span class="ident">old_value</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="ident">MAX_LIST_LENGTH</span> {
-                        <span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
-                            <span class="string">&quot;String list length of {} exceeds maximum of {}&quot;</span>,
-                            <span class="ident">old_value</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="number">1</span>,
-                            <span class="ident">MAX_LIST_LENGTH</span>
-                        );
-                        <span class="ident">record_error</span>(<span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>, <span class="ident">ErrorType</span>::<span class="ident">InvalidValue</span>, <span class="ident">msg</span>);
+                        <span class="comment">//let msg = format!(</span>
+                        <span class="comment">//    &quot;String list length of {} exceeds maximum of {}&quot;,</span>
+                        <span class="comment">//    old_value.len() + 1,</span>
+                        <span class="comment">//    MAX_LIST_LENGTH</span>
+                        <span class="comment">//);</span>
+                        <span class="comment">// TODO (bug 1557828) - record the error when it doesn&#39;t deadlock.</span>
+                        <span class="comment">// record_error(glean, &amp;self.meta, ErrorType::InvalidValue, msg);</span>
                         <span class="kw">return</span> <span class="ident">Metric</span>::<span class="ident">StringList</span>(<span class="ident">old_value</span>);
                     }
                     <span class="ident">old_value</span>.<span class="ident">push</span>(<span class="ident">value</span>.<span class="ident">clone</span>());
@@ -240,9 +272,9 @@
 
         <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">value</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="ident">MAX_LIST_LENGTH</span> {
             <span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
-                <span class="string">&quot;Individual value length {} exceeds maximum of {}&quot;</span>,
+                <span class="string">&quot;StringList length {} exceeds maximum of {}&quot;</span>,
                 <span class="ident">value</span>.<span class="ident">len</span>(),
-                <span class="ident">MAX_STRING_LENGTH</span>
+                <span class="ident">MAX_LIST_LENGTH</span>
             );
             <span class="ident">record_error</span>(<span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>, <span class="ident">ErrorType</span>::<span class="ident">InvalidValue</span>, <span class="ident">msg</span>);
             <span class="ident">value</span>[<span class="number">0</span>..<span class="ident">MAX_LIST_LENGTH</span>].<span class="ident">to_vec</span>()
@@ -255,9 +287,9 @@
             .<span class="ident">map</span>(<span class="op">|</span><span class="ident">elem</span><span class="op">|</span> {
                 <span class="kw">if</span> <span class="ident">elem</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="ident">MAX_STRING_LENGTH</span> {
                     <span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
-                        <span class="string">&quot;String list length of {} exceeds maximum of {}&quot;</span>,
-                        <span class="ident">elem</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="number">1</span>,
-                        <span class="ident">MAX_LIST_LENGTH</span>
+                        <span class="string">&quot;Individual value length of {} exceeds maximum of {}&quot;</span>,
+                        <span class="ident">elem</span>.<span class="ident">len</span>(),
+                        <span class="ident">MAX_STRING_LENGTH</span>
                     );
                     <span class="ident">record_error</span>(<span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>, <span class="ident">ErrorType</span>::<span class="ident">InvalidValue</span>, <span class="ident">msg</span>);
                     <span class="ident">elem</span>[<span class="number">0</span>..<span class="ident">MAX_STRING_LENGTH</span>].<span class="ident">to_string</span>()
@@ -269,6 +301,34 @@
 
         <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Metric</span>::<span class="ident">StringList</span>(<span class="ident">value</span>);
         <span class="ident">glean</span>.<span class="ident">storage</span>().<span class="ident">record</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>, <span class="kw-2">&amp;</span><span class="ident">value</span>);
+    }
+
+    <span class="doccomment">/// **Test-only API (exported for FFI purposes).**</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Get the currently-stored values.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This doesn&#39;t clear the stored value.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_get_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">match</span> <span class="ident">StorageManager</span>.<span class="ident">snapshot_metric</span>(<span class="ident">glean</span>.<span class="ident">storage</span>(), <span class="ident">storage_name</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>.<span class="ident">identifier</span>())
+        {
+            <span class="prelude-val">Some</span>(<span class="ident">Metric</span>::<span class="ident">StringList</span>(<span class="ident">values</span>)) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">values</span>),
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+        }
+    }
+
+    <span class="doccomment">/// **Test-only API (exported for FFI purposes).**</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Get the currently-stored values as a JSON String of the format</span>
+    <span class="doccomment">/// [&quot;string1&quot;, &quot;string2&quot;, ...]</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This doesn&#39;t clear the stored value.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_get_value_as_json_string</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>,
+        <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">test_get_value</span>(<span class="ident">glean</span>, <span class="ident">storage_name</span>)
+            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">values</span><span class="op">|</span> <span class="ident">serde_json</span>::<span class="ident">to_string</span>(<span class="kw-2">&amp;</span><span class="ident">values</span>).<span class="ident">unwrap</span>())
     }
 }
 </pre></div>
