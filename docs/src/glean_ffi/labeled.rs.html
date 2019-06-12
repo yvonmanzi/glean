@@ -112,6 +112,9 @@
 <span id="112">112</span>
 <span id="113">113</span>
 <span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -124,6 +127,9 @@
 
 <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">handlemap_ext</span>::<span class="ident">HandleMapExtension</span>;
 <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">boolean</span>::<span class="ident">BOOLEAN_METRICS</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">counter</span>::<span class="ident">COUNTER_METRICS</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">string</span>::<span class="ident">STRING_METRICS</span>;
 
 <span class="doccomment">/// Generate FFI functions for labeled metrics.</span>
 <span class="doccomment">///</span>
