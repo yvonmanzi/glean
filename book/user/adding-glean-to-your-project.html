@@ -151,12 +151,10 @@
 </ul>
 <a class="header" href="#usage" id="usage"><h2>Usage</h2></a>
 <a class="header" href="#setting-up-the-dependency" id="setting-up-the-dependency"><h3>Setting up the dependency</h3></a>
-<p>TODO: 1556494</p>
-<!-- Use Gradle to download the library from [maven.mozilla.org](https://maven.mozilla.org/)  -->
-<!-- ([Setup repository](../../../README.md#maven-repository)): -->
-<!-- ```Groovy -->
-<!-- implementation "org.mozilla.components:service-glean:{latest-version}" -->
-<!-- ``` -->
+<p>Use Gradle to download the library from <a href="https://maven.mozilla.org/">maven.mozilla.org</a>
+(<a href="../../../README.html#maven-repository">Setup repository</a>):</p>
+<pre><code class="language-Groovy">implementation &quot;org.mozilla.components:service-glean:{latest-version}&quot;
+</code></pre>
 <a class="header" href="#integrating-with-the-build-system" id="integrating-with-the-build-system"><h3>Integrating with the build system</h3></a>
 <p>In order for Glean to work, a Python environment must be accessible at build time.
 This is done automatically by the <a href="https://github.com/JetBrains/gradle-python-envs/"><code>com.jetbrains.python.envs</code></a> plugin.
