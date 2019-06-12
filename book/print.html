@@ -1767,7 +1767,7 @@ pub struct CounterMetric {
 </code></pre>
 <p>Implement the <code>MetricType</code> trait to create a metric from the meta data as well as expose the meta data.
 This also gives you a <code>should_record</code> method on the metric type.</p>
-<pre><code>impl MetricType for CounterMetric {
+<pre><code class="language-rust noplaypen">impl MetricType for CounterMetric {
     fn meta(&amp;self) -&gt; &amp;CommonMetricData {
         &amp;self.meta
     }
@@ -1852,11 +1852,14 @@ or another object that can be serialized.</p>
 <a class="header" href="#ffi-layer" id="ffi-layer"><h2>FFI layer</h2></a>
 <p>In order to use a new metric type over the FFI layer, it needs implementations in the FFI component and the platform-part.</p>
 <a class="header" href="#ffi-component" id="ffi-component"><h3>FFI component</h3></a>
-<p>The FFI component implementation can be found in <code>glean-core/ffi/src/lib.rs</code>.</p>
-<p>Add a global map for your metric type:</p>
+<p>The FFI component implementation can be found in <code>glean-core/ffi/src</code>.
+Each metric type is implemented in its own module.</p>
+<p>Add a new file named after your metric, e.g. <code>glean-core/ffi/src/counter.rs</code>, and declare it in <code>glean-core/ffi/src/lib.rs</code> with <code>mod counter;</code>.</p>
+<p>In the metric type module add a global map for your metric type and define the destructor:</p>
 <pre><code class="language-rust noplaypen">lazy_static! {
     static ref COUNTER_METRICS: ConcurrentHandleMap&lt;CounterMetric&gt; = ConcurrentHandleMap::new();
 }
+define_handle_map_deleter!(COUNTER_METRICS, glean_destroy_counter_metric);
 </code></pre>
 <p>Add a function to create new instances of this metric type:</p>
 <pre><code class="language-rust noplaypen">#[no_mangle]
@@ -1904,6 +1907,7 @@ pub extern &quot;C&quot; fn glean_counter_should_record(glean_handle: u64, metri
 <p>The platform-specific FFI wrapper needs the definitions of these new functions.
 For Kotlin this is in <code>glean-core/android/src/main/java/mozilla/telemetry/glean/rust/LibGleanFFI.kt</code>:</p>
 <pre><code class="language-kotlin">fun glean_new_counter_metric(category: String, name: String, send_in_pings: StringArray, send_in_pings_len: Int, lifetime: Int, disabled: Byte): Long
+fun glean_destroy_counter_metric(handle: Long, error: RustError.ByReference)
 fun glean_counter_add(glean_handle: Long, metric_id: Long, amount: Int)
 fun glean_counter_should_record(glean_handle: Long, metric_id: Long): Byte
 </code></pre>
