@@ -453,7 +453,7 @@ Additionally, error metrics are always sent in the <a href="user/pings/metrics.h
   }
 }
 </code></pre>
-<p>If you have a debug build of glean, details about the errors being recorded are included in the logs. This detailed information is not included in Glean pings.</p>
+<p>If you have a debug build of Glean, details about the errors being recorded are included in the logs. This detailed information is not included in Glean pings.</p>
 <a class="header" href="#metrics" id="metrics"><h1>Metrics</h1></a>
 <p>There are different metrics to choose from, depending on what you want to achieve:</p>
 <ul>
@@ -1214,8 +1214,8 @@ assertEquals(&quot;login_opened&quot;, first.name)
 <li>See <a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-event-metric-type/index.html">Kotlin API docs</a>.</li>
 </ul>
 <a class="header" href="#glean-pings" id="glean-pings"><h1>Glean Pings</h1></a>
-<p>Every glean ping is in JSON format and contains one or more of the <a href="#ping-sections">common sections</a> with shared information data.</p>
-<p>If data collection is enabled, glean provides a set of built-in pings that are assembled out of the box without any developer intervention.  The following is a list of these built-in pings:</p>
+<p>Every Glean ping is in JSON format and contains one or more of the <a href="#ping-sections">common sections</a> with shared information data.</p>
+<p>If data collection is enabled, Glean provides a set of built-in pings that are assembled out of the box without any developer intervention.  The following is a list of these built-in pings:</p>
 <ul>
 <li><a href="user/pings/baseline.html"><code>baseline</code> ping</a></li>
 <li><a href="user/pings/events.html"><code>events</code> ping</a></li>
@@ -1243,7 +1243,7 @@ Optional fields are marked accordingly.</p>
 <tr><td> <code>start_time</code> </td><td> Datetime </td><td> The time of the start of collection of the data in the ping, in local time and with minute precision, including timezone information. </td></tr>
 <tr><td> <code>end_time</code> </td><td> Datetime </td><td> The time of the end of collection of the data in the ping, in local time and with minute precision, including timezone information. This is also the time this ping was generated and is likely well before ping transmission time. </td></tr>
 </tbody></table>
-<p>All the metrics surviving application restarts (e.g. <code>seq</code>, ...) are removed once the application using glean is uninstalled.</p>
+<p>All the metrics surviving application restarts (e.g. <code>seq</code>, ...) are removed once the application using Glean is uninstalled.</p>
 <a class="header" href="#the-client_info-section" id="the-client_info-section"><h3>The <code>client_info</code> section</h3></a>
 <p>The following fields are included in the <code>client_info</code> section.
 Optional fields are marked accordingly.</p>
@@ -1259,9 +1259,9 @@ Optional fields are marked accordingly.</p>
 <tr><td> <code>os</code> </td><td> String </td><td> The name of the operating system (e.g. &quot;linux&quot;, &quot;Android&quot;, &quot;ios&quot;) </td></tr>
 <tr><td> <code>os_version</code> </td><td> String </td><td> The user visible version of the operating system (e.g. &quot;1.2.3&quot;) </td></tr>
 <tr><td> <code>android_sdk_version</code> </td><td> String </td><td> <em>Optional</em>. The Android specific SDK version of the software running on this hardware device (e.g. &quot;23&quot;) </td></tr>
-<tr><td> <code>telemetry_sdk_build</code> </td><td> String </td><td> The version of the glean library </td></tr>
+<tr><td> <code>telemetry_sdk_build</code> </td><td> String </td><td> The version of the Glean library </td></tr>
 </tbody></table>
-<p>All the metrics surviving application restarts (e.g. <code>client_id</code>, ...) are removed once the application using glean is uninstalled.</p>
+<p>All the metrics surviving application restarts (e.g. <code>client_id</code>, ...) are removed once the application using Glean is uninstalled.</p>
 <a class="header" href="#the-experiments-object" id="the-experiments-object"><h3>The <code>experiments</code> object</h3></a>
 <p><strong>STATUS: Not implemented.</strong></p>
 <p>This object (included in the <a href="#The-ping_info-section"><code>ping_info</code> section</a>) contains experiments keyed by the experiment <code>id</code>. Each listed experiment contains the <code>branch</code> the client is enrolled in and may contain a string to string map with additional data in the <code>extra</code> key. Both the <code>id</code> and <code>branch</code> are truncated to 30 characters.</p>
@@ -1275,25 +1275,25 @@ Optional fields are marked accordingly.</p>
 }
 </code></pre>
 <a class="header" href="#ping-submission" id="ping-submission"><h2>Ping submission</h2></a>
-<p>The pings that glean generates are submitted to the Mozilla servers at specific paths, in order to provide additional metadata without the need to unpack the ping payload.
+<p>The pings that Glean generates are submitted to the Mozilla servers at specific paths, in order to provide additional metadata without the need to unpack the ping payload.
 A typical submission URL looks like</p>
 <p><code>&quot;&lt;server-address&gt;/submit/&lt;application-id&gt;/&lt;doc-type&gt;/&lt;glean-schema-version&gt;/&lt;ping-uuid&gt;&quot;</code></p>
 <p>where:</p>
 <ul>
 <li><code>&lt;server-address&gt;</code>: the address of the server that receives the pings;</li>
-<li><code>&lt;application-id&gt;</code>: a unique application id, automatically detected by glean; this is the value returned by <a href="http://developer.android.com/reference/android/content/Context.html#getPackageName()"><code>Context.getPackageName()</code></a>;</li>
-<li><code>&lt;doc-type&gt;</code>: the name of the ping; this can be one of the pings available out of the box with glean, or a custom ping;</li>
-<li><code>&lt;glean-schema-version&gt;</code>: the version of the glean ping schema;</li>
+<li><code>&lt;application-id&gt;</code>: a unique application id, automatically detected by Glean; this is the value returned by <a href="http://developer.android.com/reference/android/content/Context.html#getPackageName()"><code>Context.getPackageName()</code></a>;</li>
+<li><code>&lt;doc-type&gt;</code>: the name of the ping; this can be one of the pings available out of the box with Glean, or a custom ping;</li>
+<li><code>&lt;glean-schema-version&gt;</code>: the version of the Glean ping schema;</li>
 <li><code>&lt;ping-uuid&gt;</code>: a unique identifier for this ping.</li>
 </ul>
 <a class="header" href="#submitted-headers" id="submitted-headers"><h3>Submitted headers</h3></a>
 <p>A pre-defined set of headers is additionally sent along with the submitted ping:</p>
 <table><thead><tr><th> Header </th><th> Value </th><th> Description </th></tr></thead><tbody>
 <tr><td> <code>Content-Type</code> </td><td> <code>application/json; charset=utf-8</code> </td><td> Describes the data sent to the server </td></tr>
-<tr><td> <code>User-Agent</code> </td><td> Defaults to e.g. <code>Glean/0.40.0 (Android)</code>, where <code>0.40.0</code> is the glean version number and <code>Android</code> is the platform name. It can be overriden by user through <a href="../../../javadoc/glean/mozilla.telemetry.glean/-configuration/index.html">configuration</a> </td><td> Describes the application sending the ping using glean </td></tr>
+<tr><td> <code>User-Agent</code> </td><td> Defaults to e.g. <code>Glean/0.40.0 (Android)</code>, where <code>0.40.0</code> is the Glean version number and <code>Android</code> is the platform name. It can be overriden by user through <a href="../../../javadoc/glean/mozilla.telemetry.glean/-configuration/index.html">configuration</a> </td><td> Describes the application sending the ping using Glean </td></tr>
 <tr><td> <code>Date</code> </td><td> e.g. <code>Mon, 23 Jan 2019 10:10:10 GMT+00:00</code> </td><td> Submission date/time in GMT/UTC+0 offset </td></tr>
-<tr><td> <code>X-Client-Type</code> </td><td> <code>Glean</code> </td><td> Custom header to support handling of glean pings in the legacy pipeline </td></tr>
-<tr><td> <code>X-Client-Version</code> </td><td> e.g. <code>0.40.0</code> </td><td> The glean version, sent as a custom header to support handling of glean pings in the legacy pipeline </td></tr>
+<tr><td> <code>X-Client-Type</code> </td><td> <code>Glean</code> </td><td> Custom header to support handling of Glean pings in the legacy pipeline </td></tr>
+<tr><td> <code>X-Client-Version</code> </td><td> e.g. <code>0.40.0</code> </td><td> The Glean version, sent as a custom header to support handling of Glean pings in the legacy pipeline </td></tr>
 </tbody></table>
 <a class="header" href="#defining-background-state" id="defining-background-state"><h2>Defining background state</h2></a>
 <p>These docs refer to application 'background' state in several places.
