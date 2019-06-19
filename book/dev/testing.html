@@ -4,6 +4,8 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Testing - Glean - Cross-platform Telemetry library</title>
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,7 +58,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -75,7 +77,10 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="../index.html"><strong aria-hidden="true">1.</strong> Glean</a></li><li><a href="../user/index.html"><strong aria-hidden="true">2.</strong> User</a></li><li><ol class="section"><li><a href="../user/adding-glean-to-your-project.html"><strong aria-hidden="true">2.1.</strong> Adding Glean to your project</a></li><li><a href="../user/adding-new-metrics.html"><strong aria-hidden="true">2.2.</strong> Adding new metrics</a></li><li><a href="../user/metric-parameters.html"><strong aria-hidden="true">2.3.</strong> Metric parameters</a></li><li><a href="../user/testing-metrics.html"><strong aria-hidden="true">2.4.</strong> Testing metrics</a></li><li><a href="../user/debugging.html"><strong aria-hidden="true">2.5.</strong> Debugging products using Glean</a></li><li><a href="../user/error-reporting.html"><strong aria-hidden="true">2.6.</strong> Error reporting</a></li><li><a href="../user/metrics/index.html"><strong aria-hidden="true">2.7.</strong> Metric types</a></li><li><ol class="section"><li><a href="../user/metrics/boolean.html"><strong aria-hidden="true">2.7.1.</strong> Boolean</a></li><li><a href="../user/metrics/counter.html"><strong aria-hidden="true">2.7.2.</strong> Counter</a></li><li><a href="../user/metrics/labeled_counters.html"><strong aria-hidden="true">2.7.3.</strong> Labeled Counters</a></li><li><a href="../user/metrics/string.html"><strong aria-hidden="true">2.7.4.</strong> String</a></li><li><a href="../user/metrics/labeled_strings.html"><strong aria-hidden="true">2.7.5.</strong> Labeled Strings</a></li><li><a href="../user/metrics/string_list.html"><strong aria-hidden="true">2.7.6.</strong> String List</a></li><li><a href="../user/metrics/timespan.html"><strong aria-hidden="true">2.7.7.</strong> Timespan</a></li><li><a href="../user/metrics/labeled_timespans.html"><strong aria-hidden="true">2.7.8.</strong> Labeled Timespans</a></li><li><a href="../user/metrics/timing_distribution.html"><strong aria-hidden="true">2.7.9.</strong> Timing Distribution</a></li><li><a href="../user/metrics/uuid.html"><strong aria-hidden="true">2.7.10.</strong> UUID</a></li><li><a href="../user/metrics/datetime.html"><strong aria-hidden="true">2.7.11.</strong> Datetime</a></li><li><a href="../user/metrics/event.html"><strong aria-hidden="true">2.7.12.</strong> Event</a></li></ol></li><li><a href="../user/pings/index.html"><strong aria-hidden="true">2.8.</strong> Pings</a></li><li><ol class="section"><li><a href="../user/pings/baseline.html"><strong aria-hidden="true">2.8.1.</strong> Baseline Ping</a></li><li><a href="../user/pings/metrics.html"><strong aria-hidden="true">2.8.2.</strong> Metrics Ping</a></li><li><a href="../user/pings/events.html"><strong aria-hidden="true">2.8.3.</strong> Events Ping</a></li><li><a href="../user/pings/custom.html"><strong aria-hidden="true">2.8.4.</strong> Custom Pings</a></li></ol></li></ol></li><li><a href="../dev/index.html"><strong aria-hidden="true">3.</strong> Development</a></li><li><ol class="section"><li><a href="../dev/testing.html" class="active"><strong aria-hidden="true">3.1.</strong> Testing</a></li><li><a href="../dev/android/index.html"><strong aria-hidden="true">3.2.</strong> Android</a></li><li><ol class="section"><li><a href="../dev/android/setup-android-build-environment.html"><strong aria-hidden="true">3.2.1.</strong> Setup Build Environment</a></li></ol></li><li><a href="../dev/core/index.html"><strong aria-hidden="true">3.3.</strong> Rust Component</a></li><li><ol class="section"><li><a href="../dev/core/dependency-management.html"><strong aria-hidden="true">3.3.1.</strong> Dependency Management</a></li><li><a href="../dev/core/new-metric-type.html"><strong aria-hidden="true">3.3.2.</strong> Adding a new metric type</a></li><li><a href="../dev/core/internal.html"><strong aria-hidden="true">3.3.3.</strong> Internal design details</a></li></ol></li><li><a href="../dev/ffi/index.html"><strong aria-hidden="true">3.4.</strong> FFI Layer</a></li><li><ol class="section"><li><a href="../dev/ffi/when-to-use-what-in-the-ffi.html"><strong aria-hidden="true">3.4.1.</strong> When/How FFI</a></li></ol></li><li><a href="../contributing.html"><strong aria-hidden="true">3.5.</strong> Contributing</a></li></ol></li><li><a href="../api/index.html"><strong aria-hidden="true">4.</strong> API Documentation</a></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li><a href="../index.html"><strong aria-hidden="true">1.</strong> Glean</a></li><li><a href="../user/index.html"><strong aria-hidden="true">2.</strong> User</a></li><li><ol class="section"><li><a href="../user/adding-glean-to-your-project.html"><strong aria-hidden="true">2.1.</strong> Adding Glean to your project</a></li><li><a href="../user/adding-new-metrics.html"><strong aria-hidden="true">2.2.</strong> Adding new metrics</a></li><li><a href="../user/metric-parameters.html"><strong aria-hidden="true">2.3.</strong> Metric parameters</a></li><li><a href="../user/testing-metrics.html"><strong aria-hidden="true">2.4.</strong> Testing metrics</a></li><li><a href="../user/debugging.html"><strong aria-hidden="true">2.5.</strong> Debugging products using Glean</a></li><li><a href="../user/error-reporting.html"><strong aria-hidden="true">2.6.</strong> Error reporting</a></li><li><a href="../user/metrics/index.html"><strong aria-hidden="true">2.7.</strong> Metric types</a></li><li><ol class="section"><li><a href="../user/metrics/boolean.html"><strong aria-hidden="true">2.7.1.</strong> Boolean</a></li><li><a href="../user/metrics/counter.html"><strong aria-hidden="true">2.7.2.</strong> Counter</a></li><li><a href="../user/metrics/labeled_counters.html"><strong aria-hidden="true">2.7.3.</strong> Labeled Counters</a></li><li><a href="../user/metrics/string.html"><strong aria-hidden="true">2.7.4.</strong> String</a></li><li><a href="../user/metrics/labeled_strings.html"><strong aria-hidden="true">2.7.5.</strong> Labeled Strings</a></li><li><a href="../user/metrics/string_list.html"><strong aria-hidden="true">2.7.6.</strong> String List</a></li><li><a href="../user/metrics/timespan.html"><strong aria-hidden="true">2.7.7.</strong> Timespan</a></li><li><a href="../user/metrics/labeled_timespans.html"><strong aria-hidden="true">2.7.8.</strong> Labeled Timespans</a></li><li><a href="../user/metrics/timing_distribution.html"><strong aria-hidden="true">2.7.9.</strong> Timing Distribution</a></li><li><a href="../user/metrics/uuid.html"><strong aria-hidden="true">2.7.10.</strong> UUID</a></li><li><a href="../user/metrics/datetime.html"><strong aria-hidden="true">2.7.11.</strong> Datetime</a></li><li><a href="../user/metrics/event.html"><strong aria-hidden="true">2.7.12.</strong> Event</a></li></ol></li><li><a href="../user/pings/index.html"><strong aria-hidden="true">2.8.</strong> Pings</a></li><li><ol class="section"><li><a href="../user/pings/baseline.html"><strong aria-hidden="true">2.8.1.</strong> Baseline Ping</a></li><li><a href="../user/pings/metrics.html"><strong aria-hidden="true">2.8.2.</strong> Metrics Ping</a></li><li><a href="../user/pings/events.html"><strong aria-hidden="true">2.8.3.</strong> Events Ping</a></li><li><a href="../user/pings/custom.html"><strong aria-hidden="true">2.8.4.</strong> Custom Pings</a></li></ol></li></ol></li><li><a href="../dev/index.html"><strong aria-hidden="true">3.</strong> Development</a></li><li><ol class="section"><li><a href="../dev/testing.html" class="active"><strong aria-hidden="true">3.1.</strong> Testing</a></li><li><a href="../dev/android/index.html"><strong aria-hidden="true">3.2.</strong> Android</a></li><li><ol class="section"><li><a href="../dev/android/setup-android-build-environment.html"><strong aria-hidden="true">3.2.1.</strong> Setup Build Environment</a></li></ol></li><li><a href="../dev/core/index.html"><strong aria-hidden="true">3.3.</strong> Rust Component</a></li><li><ol class="section"><li><a href="../dev/core/dependency-management.html"><strong aria-hidden="true">3.3.1.</strong> Dependency Management</a></li><li><a href="../dev/core/new-metric-type.html"><strong aria-hidden="true">3.3.2.</strong> Adding a new metric type</a></li><li><a href="../dev/core/internal.html"><strong aria-hidden="true">3.3.3.</strong> Internal design details</a></li></ol></li><li><a href="../dev/ffi/index.html"><strong aria-hidden="true">3.4.</strong> FFI Layer</a></li><li><ol class="section"><li><a href="../dev/ffi/when-to-use-what-in-the-ffi.html"><strong aria-hidden="true">3.4.1.</strong> When/How FFI</a></li></ol></li><li><a href="../contributing.html"><strong aria-hidden="true">3.5.</strong> Contributing</a></li></ol></li><li><a href="../api/index.html"><strong aria-hidden="true">4.</strong> API Documentation</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -105,7 +110,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Glean - Cross-platform Telemetry library</h1> 
+                        <h1 class="menu-title">Glean - Cross-platform Telemetry library</h1>
 
                         <div class="right-buttons">
                             <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -140,15 +145,15 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#running-the-tests" id="running-the-tests"><h1>Running the tests</h1></a>
-<a class="header" href="#running-all-tests" id="running-all-tests"><h2>Running all tests</h2></a>
+                        <h1><a class="header" href="#running-the-tests" id="running-the-tests">Running the tests</a></h1>
+<h2><a class="header" href="#running-all-tests" id="running-all-tests">Running all tests</a></h2>
 <p>The tests for all languages may be run from the command line:</p>
 <pre><code>make test
 </code></pre>
 <hr />
 <p><em>Windows Note:</em> On Windows, <code>make</code> is not available by default. While not required, installing <code>make</code> will allow you to use the convenience features in the <code>Makefile</code>.</p>
 <hr />
-<a class="header" href="#running-the-rust-tests" id="running-the-rust-tests"><h2>Running the Rust tests</h2></a>
+<h2><a class="header" href="#running-the-rust-tests" id="running-the-rust-tests">Running the Rust tests</a></h2>
 <p>The Rust tests may be run with the following command:</p>
 <pre><code>cargo test --all
 </code></pre>
@@ -163,12 +168,12 @@ This makes it harder to understand what's going on.
 For debugging you can force single-threaded tests:</p>
 <pre><code>cargo test -- --nocapture --test-threads=1
 </code></pre>
-<a class="header" href="#running-the-kotlinandroid-tests" id="running-the-kotlinandroid-tests"><h2>Running the Kotlin/Android tests</h2></a>
-<a class="header" href="#from-the-command-line" id="from-the-command-line"><h3>From the command line</h3></a>
+<h2><a class="header" href="#running-the-kotlinandroid-tests" id="running-the-kotlinandroid-tests">Running the Kotlin/Android tests</a></h2>
+<h3><a class="header" href="#from-the-command-line" id="from-the-command-line">From the command line</a></h3>
 <p>The full Android test suite may be run from the command line with:</p>
 <pre><code>./gradlew test
 </code></pre>
-<a class="header" href="#from-android-studio" id="from-android-studio"><h3>From Android Studio</h3></a>
+<h3><a class="header" href="#from-android-studio" id="from-android-studio">From Android Studio</a></h3>
 <p>To run the full Android test suite, in the &quot;Gradle&quot; pane, navigate to <code>glean-core</code> -&gt; <code>Tasks</code> -&gt; <code>verification</code> and double-click either <code>testDebugUnitTest</code> or <code>testReleaseUnitTest</code> (depending on whether you want to run in Debug or Release mode).
 You can save this task permanently by opening the task dropdown in the toolbar and selecting &quot;Save glean.rs:glean-core:android [testDebugUnitTest] Configuration&quot;.</p>
 <p>To run a single Android test, navigate to the file containing the test, and right click on the green arrow in the left margin next to the test.  There you have a choice of running or debugging the test.</p>

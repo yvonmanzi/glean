@@ -4,6 +4,8 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Labeled Strings - Glean - Cross-platform Telemetry library</title>
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,7 +58,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -75,7 +77,10 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="../../index.html"><strong aria-hidden="true">1.</strong> Glean</a></li><li><a href="../../user/index.html"><strong aria-hidden="true">2.</strong> User</a></li><li><ol class="section"><li><a href="../../user/adding-glean-to-your-project.html"><strong aria-hidden="true">2.1.</strong> Adding Glean to your project</a></li><li><a href="../../user/adding-new-metrics.html"><strong aria-hidden="true">2.2.</strong> Adding new metrics</a></li><li><a href="../../user/metric-parameters.html"><strong aria-hidden="true">2.3.</strong> Metric parameters</a></li><li><a href="../../user/testing-metrics.html"><strong aria-hidden="true">2.4.</strong> Testing metrics</a></li><li><a href="../../user/debugging.html"><strong aria-hidden="true">2.5.</strong> Debugging products using Glean</a></li><li><a href="../../user/error-reporting.html"><strong aria-hidden="true">2.6.</strong> Error reporting</a></li><li><a href="../../user/metrics/index.html"><strong aria-hidden="true">2.7.</strong> Metric types</a></li><li><ol class="section"><li><a href="../../user/metrics/boolean.html"><strong aria-hidden="true">2.7.1.</strong> Boolean</a></li><li><a href="../../user/metrics/counter.html"><strong aria-hidden="true">2.7.2.</strong> Counter</a></li><li><a href="../../user/metrics/labeled_counters.html"><strong aria-hidden="true">2.7.3.</strong> Labeled Counters</a></li><li><a href="../../user/metrics/string.html"><strong aria-hidden="true">2.7.4.</strong> String</a></li><li><a href="../../user/metrics/labeled_strings.html" class="active"><strong aria-hidden="true">2.7.5.</strong> Labeled Strings</a></li><li><a href="../../user/metrics/string_list.html"><strong aria-hidden="true">2.7.6.</strong> String List</a></li><li><a href="../../user/metrics/timespan.html"><strong aria-hidden="true">2.7.7.</strong> Timespan</a></li><li><a href="../../user/metrics/labeled_timespans.html"><strong aria-hidden="true">2.7.8.</strong> Labeled Timespans</a></li><li><a href="../../user/metrics/timing_distribution.html"><strong aria-hidden="true">2.7.9.</strong> Timing Distribution</a></li><li><a href="../../user/metrics/uuid.html"><strong aria-hidden="true">2.7.10.</strong> UUID</a></li><li><a href="../../user/metrics/datetime.html"><strong aria-hidden="true">2.7.11.</strong> Datetime</a></li><li><a href="../../user/metrics/event.html"><strong aria-hidden="true">2.7.12.</strong> Event</a></li></ol></li><li><a href="../../user/pings/index.html"><strong aria-hidden="true">2.8.</strong> Pings</a></li><li><ol class="section"><li><a href="../../user/pings/baseline.html"><strong aria-hidden="true">2.8.1.</strong> Baseline Ping</a></li><li><a href="../../user/pings/metrics.html"><strong aria-hidden="true">2.8.2.</strong> Metrics Ping</a></li><li><a href="../../user/pings/events.html"><strong aria-hidden="true">2.8.3.</strong> Events Ping</a></li><li><a href="../../user/pings/custom.html"><strong aria-hidden="true">2.8.4.</strong> Custom Pings</a></li></ol></li></ol></li><li><a href="../../dev/index.html"><strong aria-hidden="true">3.</strong> Development</a></li><li><ol class="section"><li><a href="../../dev/testing.html"><strong aria-hidden="true">3.1.</strong> Testing</a></li><li><a href="../../dev/android/index.html"><strong aria-hidden="true">3.2.</strong> Android</a></li><li><ol class="section"><li><a href="../../dev/android/setup-android-build-environment.html"><strong aria-hidden="true">3.2.1.</strong> Setup Build Environment</a></li></ol></li><li><a href="../../dev/core/index.html"><strong aria-hidden="true">3.3.</strong> Rust Component</a></li><li><ol class="section"><li><a href="../../dev/core/dependency-management.html"><strong aria-hidden="true">3.3.1.</strong> Dependency Management</a></li><li><a href="../../dev/core/new-metric-type.html"><strong aria-hidden="true">3.3.2.</strong> Adding a new metric type</a></li><li><a href="../../dev/core/internal.html"><strong aria-hidden="true">3.3.3.</strong> Internal design details</a></li></ol></li><li><a href="../../dev/ffi/index.html"><strong aria-hidden="true">3.4.</strong> FFI Layer</a></li><li><ol class="section"><li><a href="../../dev/ffi/when-to-use-what-in-the-ffi.html"><strong aria-hidden="true">3.4.1.</strong> When/How FFI</a></li></ol></li><li><a href="../../contributing.html"><strong aria-hidden="true">3.5.</strong> Contributing</a></li></ol></li><li><a href="../../api/index.html"><strong aria-hidden="true">4.</strong> API Documentation</a></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li><a href="../../index.html"><strong aria-hidden="true">1.</strong> Glean</a></li><li><a href="../../user/index.html"><strong aria-hidden="true">2.</strong> User</a></li><li><ol class="section"><li><a href="../../user/adding-glean-to-your-project.html"><strong aria-hidden="true">2.1.</strong> Adding Glean to your project</a></li><li><a href="../../user/adding-new-metrics.html"><strong aria-hidden="true">2.2.</strong> Adding new metrics</a></li><li><a href="../../user/metric-parameters.html"><strong aria-hidden="true">2.3.</strong> Metric parameters</a></li><li><a href="../../user/testing-metrics.html"><strong aria-hidden="true">2.4.</strong> Testing metrics</a></li><li><a href="../../user/debugging.html"><strong aria-hidden="true">2.5.</strong> Debugging products using Glean</a></li><li><a href="../../user/error-reporting.html"><strong aria-hidden="true">2.6.</strong> Error reporting</a></li><li><a href="../../user/metrics/index.html"><strong aria-hidden="true">2.7.</strong> Metric types</a></li><li><ol class="section"><li><a href="../../user/metrics/boolean.html"><strong aria-hidden="true">2.7.1.</strong> Boolean</a></li><li><a href="../../user/metrics/counter.html"><strong aria-hidden="true">2.7.2.</strong> Counter</a></li><li><a href="../../user/metrics/labeled_counters.html"><strong aria-hidden="true">2.7.3.</strong> Labeled Counters</a></li><li><a href="../../user/metrics/string.html"><strong aria-hidden="true">2.7.4.</strong> String</a></li><li><a href="../../user/metrics/labeled_strings.html" class="active"><strong aria-hidden="true">2.7.5.</strong> Labeled Strings</a></li><li><a href="../../user/metrics/string_list.html"><strong aria-hidden="true">2.7.6.</strong> String List</a></li><li><a href="../../user/metrics/timespan.html"><strong aria-hidden="true">2.7.7.</strong> Timespan</a></li><li><a href="../../user/metrics/labeled_timespans.html"><strong aria-hidden="true">2.7.8.</strong> Labeled Timespans</a></li><li><a href="../../user/metrics/timing_distribution.html"><strong aria-hidden="true">2.7.9.</strong> Timing Distribution</a></li><li><a href="../../user/metrics/uuid.html"><strong aria-hidden="true">2.7.10.</strong> UUID</a></li><li><a href="../../user/metrics/datetime.html"><strong aria-hidden="true">2.7.11.</strong> Datetime</a></li><li><a href="../../user/metrics/event.html"><strong aria-hidden="true">2.7.12.</strong> Event</a></li></ol></li><li><a href="../../user/pings/index.html"><strong aria-hidden="true">2.8.</strong> Pings</a></li><li><ol class="section"><li><a href="../../user/pings/baseline.html"><strong aria-hidden="true">2.8.1.</strong> Baseline Ping</a></li><li><a href="../../user/pings/metrics.html"><strong aria-hidden="true">2.8.2.</strong> Metrics Ping</a></li><li><a href="../../user/pings/events.html"><strong aria-hidden="true">2.8.3.</strong> Events Ping</a></li><li><a href="../../user/pings/custom.html"><strong aria-hidden="true">2.8.4.</strong> Custom Pings</a></li></ol></li></ol></li><li><a href="../../dev/index.html"><strong aria-hidden="true">3.</strong> Development</a></li><li><ol class="section"><li><a href="../../dev/testing.html"><strong aria-hidden="true">3.1.</strong> Testing</a></li><li><a href="../../dev/android/index.html"><strong aria-hidden="true">3.2.</strong> Android</a></li><li><ol class="section"><li><a href="../../dev/android/setup-android-build-environment.html"><strong aria-hidden="true">3.2.1.</strong> Setup Build Environment</a></li></ol></li><li><a href="../../dev/core/index.html"><strong aria-hidden="true">3.3.</strong> Rust Component</a></li><li><ol class="section"><li><a href="../../dev/core/dependency-management.html"><strong aria-hidden="true">3.3.1.</strong> Dependency Management</a></li><li><a href="../../dev/core/new-metric-type.html"><strong aria-hidden="true">3.3.2.</strong> Adding a new metric type</a></li><li><a href="../../dev/core/internal.html"><strong aria-hidden="true">3.3.3.</strong> Internal design details</a></li></ol></li><li><a href="../../dev/ffi/index.html"><strong aria-hidden="true">3.4.</strong> FFI Layer</a></li><li><ol class="section"><li><a href="../../dev/ffi/when-to-use-what-in-the-ffi.html"><strong aria-hidden="true">3.4.1.</strong> When/How FFI</a></li></ol></li><li><a href="../../contributing.html"><strong aria-hidden="true">3.5.</strong> Contributing</a></li></ol></li><li><a href="../../api/index.html"><strong aria-hidden="true">4.</strong> API Documentation</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -105,7 +110,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Glean - Cross-platform Telemetry library</h1> 
+                        <h1 class="menu-title">Glean - Cross-platform Telemetry library</h1>
 
                         <div class="right-buttons">
                             <a href="../../print.html" title="Print this book" aria-label="Print this book">
@@ -140,9 +145,9 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#labeled-strings" id="labeled-strings"><h1>Labeled Strings</h1></a>
+                        <h1><a class="header" href="#labeled-strings" id="labeled-strings">Labeled Strings</a></h1>
 <p>Labeled strings record multiple Unicode string values, each under a different label.</p>
-<a class="header" href="#configuration" id="configuration"><h2>Configuration</h2></a>
+<h2><a class="header" href="#configuration" id="configuration">Configuration</a></h2>
 <p>For example to record which kind of error occured in different stages of a login process - <code>&quot;RuntimeException&quot;</code> in the <code>&quot;server_auth&quot;</code> stage or <code>&quot;invalid_string&quot;</code> in the <code>&quot;enter_email&quot;</code> stage:</p>
 <pre><code class="language-YAML">login:
   errors_by_stage:
@@ -153,7 +158,7 @@
       - enter_email
     ...
 </code></pre>
-<a class="header" href="#api" id="api"><h2>API</h2></a>
+<h2><a class="header" href="#api" id="api">API</a></h2>
 <p>Now you can use the labeled string from the application's code:</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Login
 
@@ -166,7 +171,7 @@ Glean.enableTestingMode()
 // Was anything recorded?
 assertTrue(Login.errorsByStage[&quot;server_auth&quot;].testHasValue())
 </code></pre>
-<a class="header" href="#limits" id="limits"><h2>Limits</h2></a>
+<h2><a class="header" href="#limits" id="limits">Limits</a></h2>
 <ul>
 <li>
 <p>Each label must be in <code>snake_case</code> (and also may contain <code>.</code>).</p>
@@ -181,11 +186,11 @@ assertTrue(Login.errorsByStage[&quot;server_auth&quot;].testHasValue())
 <p>If the labels aren't specified in the <code>metrics.yaml</code>, only 16 different dynamic labels may be used, after which the special value <code>__other__</code> will be used.</p>
 </li>
 </ul>
-<a class="header" href="#examples" id="examples"><h2>Examples</h2></a>
+<h2><a class="header" href="#examples" id="examples">Examples</a></h2>
 <ul>
-<li>What kind of errors occurred at each step in the login process?</li>
+<li>What kind of errors occurred at each step in the login process? </li>
 </ul>
-<a class="header" href="#recorded-errors" id="recorded-errors"><h2>Recorded Errors</h2></a>
+<h2><a class="header" href="#recorded-errors" id="recorded-errors">Recorded Errors</a></h2>
 <ul>
 <li>
 <p><code>invalid_label</code>: If the label contains invalid characters.</p>
@@ -194,7 +199,7 @@ assertTrue(Login.errorsByStage[&quot;server_auth&quot;].testHasValue())
 <p><code>invalid_label</code>: If the label exceeds the maximum number of allowed characters.</p>
 </li>
 </ul>
-<a class="header" href="#reference" id="reference"><h2>Reference</h2></a>
+<h2><a class="header" href="#reference" id="reference">Reference</a></h2>
 <ul>
 <li>Kotlin API docs: <a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-labeled-metric-type/index.html">LabeledMetricType</a>, <a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-string-metric-type/index.html">StringMetricType</a></li>
 </ul>

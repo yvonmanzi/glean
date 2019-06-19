@@ -4,6 +4,8 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Event - Glean - Cross-platform Telemetry library</title>
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,7 +58,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -75,7 +77,10 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="../../index.html"><strong aria-hidden="true">1.</strong> Glean</a></li><li><a href="../../user/index.html"><strong aria-hidden="true">2.</strong> User</a></li><li><ol class="section"><li><a href="../../user/adding-glean-to-your-project.html"><strong aria-hidden="true">2.1.</strong> Adding Glean to your project</a></li><li><a href="../../user/adding-new-metrics.html"><strong aria-hidden="true">2.2.</strong> Adding new metrics</a></li><li><a href="../../user/metric-parameters.html"><strong aria-hidden="true">2.3.</strong> Metric parameters</a></li><li><a href="../../user/testing-metrics.html"><strong aria-hidden="true">2.4.</strong> Testing metrics</a></li><li><a href="../../user/debugging.html"><strong aria-hidden="true">2.5.</strong> Debugging products using Glean</a></li><li><a href="../../user/error-reporting.html"><strong aria-hidden="true">2.6.</strong> Error reporting</a></li><li><a href="../../user/metrics/index.html"><strong aria-hidden="true">2.7.</strong> Metric types</a></li><li><ol class="section"><li><a href="../../user/metrics/boolean.html"><strong aria-hidden="true">2.7.1.</strong> Boolean</a></li><li><a href="../../user/metrics/counter.html"><strong aria-hidden="true">2.7.2.</strong> Counter</a></li><li><a href="../../user/metrics/labeled_counters.html"><strong aria-hidden="true">2.7.3.</strong> Labeled Counters</a></li><li><a href="../../user/metrics/string.html"><strong aria-hidden="true">2.7.4.</strong> String</a></li><li><a href="../../user/metrics/labeled_strings.html"><strong aria-hidden="true">2.7.5.</strong> Labeled Strings</a></li><li><a href="../../user/metrics/string_list.html"><strong aria-hidden="true">2.7.6.</strong> String List</a></li><li><a href="../../user/metrics/timespan.html"><strong aria-hidden="true">2.7.7.</strong> Timespan</a></li><li><a href="../../user/metrics/labeled_timespans.html"><strong aria-hidden="true">2.7.8.</strong> Labeled Timespans</a></li><li><a href="../../user/metrics/timing_distribution.html"><strong aria-hidden="true">2.7.9.</strong> Timing Distribution</a></li><li><a href="../../user/metrics/uuid.html"><strong aria-hidden="true">2.7.10.</strong> UUID</a></li><li><a href="../../user/metrics/datetime.html"><strong aria-hidden="true">2.7.11.</strong> Datetime</a></li><li><a href="../../user/metrics/event.html" class="active"><strong aria-hidden="true">2.7.12.</strong> Event</a></li></ol></li><li><a href="../../user/pings/index.html"><strong aria-hidden="true">2.8.</strong> Pings</a></li><li><ol class="section"><li><a href="../../user/pings/baseline.html"><strong aria-hidden="true">2.8.1.</strong> Baseline Ping</a></li><li><a href="../../user/pings/metrics.html"><strong aria-hidden="true">2.8.2.</strong> Metrics Ping</a></li><li><a href="../../user/pings/events.html"><strong aria-hidden="true">2.8.3.</strong> Events Ping</a></li><li><a href="../../user/pings/custom.html"><strong aria-hidden="true">2.8.4.</strong> Custom Pings</a></li></ol></li></ol></li><li><a href="../../dev/index.html"><strong aria-hidden="true">3.</strong> Development</a></li><li><ol class="section"><li><a href="../../dev/testing.html"><strong aria-hidden="true">3.1.</strong> Testing</a></li><li><a href="../../dev/android/index.html"><strong aria-hidden="true">3.2.</strong> Android</a></li><li><ol class="section"><li><a href="../../dev/android/setup-android-build-environment.html"><strong aria-hidden="true">3.2.1.</strong> Setup Build Environment</a></li></ol></li><li><a href="../../dev/core/index.html"><strong aria-hidden="true">3.3.</strong> Rust Component</a></li><li><ol class="section"><li><a href="../../dev/core/dependency-management.html"><strong aria-hidden="true">3.3.1.</strong> Dependency Management</a></li><li><a href="../../dev/core/new-metric-type.html"><strong aria-hidden="true">3.3.2.</strong> Adding a new metric type</a></li><li><a href="../../dev/core/internal.html"><strong aria-hidden="true">3.3.3.</strong> Internal design details</a></li></ol></li><li><a href="../../dev/ffi/index.html"><strong aria-hidden="true">3.4.</strong> FFI Layer</a></li><li><ol class="section"><li><a href="../../dev/ffi/when-to-use-what-in-the-ffi.html"><strong aria-hidden="true">3.4.1.</strong> When/How FFI</a></li></ol></li><li><a href="../../contributing.html"><strong aria-hidden="true">3.5.</strong> Contributing</a></li></ol></li><li><a href="../../api/index.html"><strong aria-hidden="true">4.</strong> API Documentation</a></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li><a href="../../index.html"><strong aria-hidden="true">1.</strong> Glean</a></li><li><a href="../../user/index.html"><strong aria-hidden="true">2.</strong> User</a></li><li><ol class="section"><li><a href="../../user/adding-glean-to-your-project.html"><strong aria-hidden="true">2.1.</strong> Adding Glean to your project</a></li><li><a href="../../user/adding-new-metrics.html"><strong aria-hidden="true">2.2.</strong> Adding new metrics</a></li><li><a href="../../user/metric-parameters.html"><strong aria-hidden="true">2.3.</strong> Metric parameters</a></li><li><a href="../../user/testing-metrics.html"><strong aria-hidden="true">2.4.</strong> Testing metrics</a></li><li><a href="../../user/debugging.html"><strong aria-hidden="true">2.5.</strong> Debugging products using Glean</a></li><li><a href="../../user/error-reporting.html"><strong aria-hidden="true">2.6.</strong> Error reporting</a></li><li><a href="../../user/metrics/index.html"><strong aria-hidden="true">2.7.</strong> Metric types</a></li><li><ol class="section"><li><a href="../../user/metrics/boolean.html"><strong aria-hidden="true">2.7.1.</strong> Boolean</a></li><li><a href="../../user/metrics/counter.html"><strong aria-hidden="true">2.7.2.</strong> Counter</a></li><li><a href="../../user/metrics/labeled_counters.html"><strong aria-hidden="true">2.7.3.</strong> Labeled Counters</a></li><li><a href="../../user/metrics/string.html"><strong aria-hidden="true">2.7.4.</strong> String</a></li><li><a href="../../user/metrics/labeled_strings.html"><strong aria-hidden="true">2.7.5.</strong> Labeled Strings</a></li><li><a href="../../user/metrics/string_list.html"><strong aria-hidden="true">2.7.6.</strong> String List</a></li><li><a href="../../user/metrics/timespan.html"><strong aria-hidden="true">2.7.7.</strong> Timespan</a></li><li><a href="../../user/metrics/labeled_timespans.html"><strong aria-hidden="true">2.7.8.</strong> Labeled Timespans</a></li><li><a href="../../user/metrics/timing_distribution.html"><strong aria-hidden="true">2.7.9.</strong> Timing Distribution</a></li><li><a href="../../user/metrics/uuid.html"><strong aria-hidden="true">2.7.10.</strong> UUID</a></li><li><a href="../../user/metrics/datetime.html"><strong aria-hidden="true">2.7.11.</strong> Datetime</a></li><li><a href="../../user/metrics/event.html" class="active"><strong aria-hidden="true">2.7.12.</strong> Event</a></li></ol></li><li><a href="../../user/pings/index.html"><strong aria-hidden="true">2.8.</strong> Pings</a></li><li><ol class="section"><li><a href="../../user/pings/baseline.html"><strong aria-hidden="true">2.8.1.</strong> Baseline Ping</a></li><li><a href="../../user/pings/metrics.html"><strong aria-hidden="true">2.8.2.</strong> Metrics Ping</a></li><li><a href="../../user/pings/events.html"><strong aria-hidden="true">2.8.3.</strong> Events Ping</a></li><li><a href="../../user/pings/custom.html"><strong aria-hidden="true">2.8.4.</strong> Custom Pings</a></li></ol></li></ol></li><li><a href="../../dev/index.html"><strong aria-hidden="true">3.</strong> Development</a></li><li><ol class="section"><li><a href="../../dev/testing.html"><strong aria-hidden="true">3.1.</strong> Testing</a></li><li><a href="../../dev/android/index.html"><strong aria-hidden="true">3.2.</strong> Android</a></li><li><ol class="section"><li><a href="../../dev/android/setup-android-build-environment.html"><strong aria-hidden="true">3.2.1.</strong> Setup Build Environment</a></li></ol></li><li><a href="../../dev/core/index.html"><strong aria-hidden="true">3.3.</strong> Rust Component</a></li><li><ol class="section"><li><a href="../../dev/core/dependency-management.html"><strong aria-hidden="true">3.3.1.</strong> Dependency Management</a></li><li><a href="../../dev/core/new-metric-type.html"><strong aria-hidden="true">3.3.2.</strong> Adding a new metric type</a></li><li><a href="../../dev/core/internal.html"><strong aria-hidden="true">3.3.3.</strong> Internal design details</a></li></ol></li><li><a href="../../dev/ffi/index.html"><strong aria-hidden="true">3.4.</strong> FFI Layer</a></li><li><ol class="section"><li><a href="../../dev/ffi/when-to-use-what-in-the-ffi.html"><strong aria-hidden="true">3.4.1.</strong> When/How FFI</a></li></ol></li><li><a href="../../contributing.html"><strong aria-hidden="true">3.5.</strong> Contributing</a></li></ol></li><li><a href="../../api/index.html"><strong aria-hidden="true">4.</strong> API Documentation</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -105,7 +110,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Glean - Cross-platform Telemetry library</h1> 
+                        <h1 class="menu-title">Glean - Cross-platform Telemetry library</h1>
 
                         <div class="right-buttons">
                             <a href="../../print.html" title="Print this book" aria-label="Print this book">
@@ -140,11 +145,11 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#events" id="events"><h1>Events</h1></a>
+                        <h1><a class="header" href="#events" id="events">Events</a></h1>
 <p><strong>Status: <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1552872">Not implemented.</a></strong></p>
 <p>Events allow recording of e.g. individual occurences of user actions, say every time a view was open and from where. Each time you record an event, it records a
 timestamp, the event's name and a set of custom values.</p>
-<a class="header" href="#configuration" id="configuration"><h2>Configuration</h2></a>
+<h2><a class="header" href="#configuration" id="configuration">Configuration</a></h2>
 <p>Say you're adding a new event for when a view is shown. First you need to add an entry for the event to the <code>metrics.yaml</code> file:</p>
 <pre><code class="language-YAML">views:
   login_opened:
@@ -156,7 +161,7 @@ timestamp, the event's name and a set of custom values.</p>
       source_of_login: 
         description: The source from which the login view was opened, e.g. &quot;toolbar&quot;.
 </code></pre>
-<a class="header" href="#api" id="api"><h2>API</h2></a>
+<h2><a class="header" href="#api" id="api">API</a></h2>
 <p>Note that an <code>enum</code> has been generated for handling the <code>extra_keys</code>: it has the same name as the event metric, with <code>Keys</code> added.</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Views
 
@@ -175,7 +180,7 @@ assertEquals(2, snapshot.size)
 val first = snapshot.single()
 assertEquals(&quot;login_opened&quot;, first.name)
 </code></pre>
-<a class="header" href="#limits" id="limits"><h2>Limits</h2></a>
+<h2><a class="header" href="#limits" id="limits">Limits</a></h2>
 <ul>
 <li>
 <p>When 500 events are queued on the client, and events pings is immediately sent.</p>
@@ -184,15 +189,15 @@ assertEquals(&quot;login_opened&quot;, first.name)
 <p>Event timestamps use a system timer that is guaranteed to be monotonic only within a particular boot of the device. Therefore, if there are any unsent recorded events on disk when the application starts, any pings containing those events are sent immediately, so that Glean can start over using a new timer and events based on different timers are never sent within the same ping.</p>
 </li>
 </ul>
-<a class="header" href="#examples" id="examples"><h2>Examples</h2></a>
+<h2><a class="header" href="#examples" id="examples">Examples</a></h2>
 <ul>
 <li>Every time a new tab is opened.</li>
 </ul>
-<a class="header" href="#recorded-errors" id="recorded-errors"><h2>Recorded errors</h2></a>
+<h2><a class="header" href="#recorded-errors" id="recorded-errors">Recorded errors</a></h2>
 <ul>
 <li>None.</li>
 </ul>
-<a class="header" href="#reference" id="reference"><h2>Reference</h2></a>
+<h2><a class="header" href="#reference" id="reference">Reference</a></h2>
 <ul>
 <li>See <a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-event-metric-type/index.html">Kotlin API docs</a>.</li>
 </ul>

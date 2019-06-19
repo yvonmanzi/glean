@@ -4,6 +4,8 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Setup Build Environment - Glean - Cross-platform Telemetry library</title>
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,7 +58,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -75,7 +77,10 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="../../index.html"><strong aria-hidden="true">1.</strong> Glean</a></li><li><a href="../../user/index.html"><strong aria-hidden="true">2.</strong> User</a></li><li><ol class="section"><li><a href="../../user/adding-glean-to-your-project.html"><strong aria-hidden="true">2.1.</strong> Adding Glean to your project</a></li><li><a href="../../user/adding-new-metrics.html"><strong aria-hidden="true">2.2.</strong> Adding new metrics</a></li><li><a href="../../user/metric-parameters.html"><strong aria-hidden="true">2.3.</strong> Metric parameters</a></li><li><a href="../../user/testing-metrics.html"><strong aria-hidden="true">2.4.</strong> Testing metrics</a></li><li><a href="../../user/debugging.html"><strong aria-hidden="true">2.5.</strong> Debugging products using Glean</a></li><li><a href="../../user/error-reporting.html"><strong aria-hidden="true">2.6.</strong> Error reporting</a></li><li><a href="../../user/metrics/index.html"><strong aria-hidden="true">2.7.</strong> Metric types</a></li><li><ol class="section"><li><a href="../../user/metrics/boolean.html"><strong aria-hidden="true">2.7.1.</strong> Boolean</a></li><li><a href="../../user/metrics/counter.html"><strong aria-hidden="true">2.7.2.</strong> Counter</a></li><li><a href="../../user/metrics/labeled_counters.html"><strong aria-hidden="true">2.7.3.</strong> Labeled Counters</a></li><li><a href="../../user/metrics/string.html"><strong aria-hidden="true">2.7.4.</strong> String</a></li><li><a href="../../user/metrics/labeled_strings.html"><strong aria-hidden="true">2.7.5.</strong> Labeled Strings</a></li><li><a href="../../user/metrics/string_list.html"><strong aria-hidden="true">2.7.6.</strong> String List</a></li><li><a href="../../user/metrics/timespan.html"><strong aria-hidden="true">2.7.7.</strong> Timespan</a></li><li><a href="../../user/metrics/labeled_timespans.html"><strong aria-hidden="true">2.7.8.</strong> Labeled Timespans</a></li><li><a href="../../user/metrics/timing_distribution.html"><strong aria-hidden="true">2.7.9.</strong> Timing Distribution</a></li><li><a href="../../user/metrics/uuid.html"><strong aria-hidden="true">2.7.10.</strong> UUID</a></li><li><a href="../../user/metrics/datetime.html"><strong aria-hidden="true">2.7.11.</strong> Datetime</a></li><li><a href="../../user/metrics/event.html"><strong aria-hidden="true">2.7.12.</strong> Event</a></li></ol></li><li><a href="../../user/pings/index.html"><strong aria-hidden="true">2.8.</strong> Pings</a></li><li><ol class="section"><li><a href="../../user/pings/baseline.html"><strong aria-hidden="true">2.8.1.</strong> Baseline Ping</a></li><li><a href="../../user/pings/metrics.html"><strong aria-hidden="true">2.8.2.</strong> Metrics Ping</a></li><li><a href="../../user/pings/events.html"><strong aria-hidden="true">2.8.3.</strong> Events Ping</a></li><li><a href="../../user/pings/custom.html"><strong aria-hidden="true">2.8.4.</strong> Custom Pings</a></li></ol></li></ol></li><li><a href="../../dev/index.html"><strong aria-hidden="true">3.</strong> Development</a></li><li><ol class="section"><li><a href="../../dev/testing.html"><strong aria-hidden="true">3.1.</strong> Testing</a></li><li><a href="../../dev/android/index.html"><strong aria-hidden="true">3.2.</strong> Android</a></li><li><ol class="section"><li><a href="../../dev/android/setup-android-build-environment.html" class="active"><strong aria-hidden="true">3.2.1.</strong> Setup Build Environment</a></li></ol></li><li><a href="../../dev/core/index.html"><strong aria-hidden="true">3.3.</strong> Rust Component</a></li><li><ol class="section"><li><a href="../../dev/core/dependency-management.html"><strong aria-hidden="true">3.3.1.</strong> Dependency Management</a></li><li><a href="../../dev/core/new-metric-type.html"><strong aria-hidden="true">3.3.2.</strong> Adding a new metric type</a></li><li><a href="../../dev/core/internal.html"><strong aria-hidden="true">3.3.3.</strong> Internal design details</a></li></ol></li><li><a href="../../dev/ffi/index.html"><strong aria-hidden="true">3.4.</strong> FFI Layer</a></li><li><ol class="section"><li><a href="../../dev/ffi/when-to-use-what-in-the-ffi.html"><strong aria-hidden="true">3.4.1.</strong> When/How FFI</a></li></ol></li><li><a href="../../contributing.html"><strong aria-hidden="true">3.5.</strong> Contributing</a></li></ol></li><li><a href="../../api/index.html"><strong aria-hidden="true">4.</strong> API Documentation</a></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li><a href="../../index.html"><strong aria-hidden="true">1.</strong> Glean</a></li><li><a href="../../user/index.html"><strong aria-hidden="true">2.</strong> User</a></li><li><ol class="section"><li><a href="../../user/adding-glean-to-your-project.html"><strong aria-hidden="true">2.1.</strong> Adding Glean to your project</a></li><li><a href="../../user/adding-new-metrics.html"><strong aria-hidden="true">2.2.</strong> Adding new metrics</a></li><li><a href="../../user/metric-parameters.html"><strong aria-hidden="true">2.3.</strong> Metric parameters</a></li><li><a href="../../user/testing-metrics.html"><strong aria-hidden="true">2.4.</strong> Testing metrics</a></li><li><a href="../../user/debugging.html"><strong aria-hidden="true">2.5.</strong> Debugging products using Glean</a></li><li><a href="../../user/error-reporting.html"><strong aria-hidden="true">2.6.</strong> Error reporting</a></li><li><a href="../../user/metrics/index.html"><strong aria-hidden="true">2.7.</strong> Metric types</a></li><li><ol class="section"><li><a href="../../user/metrics/boolean.html"><strong aria-hidden="true">2.7.1.</strong> Boolean</a></li><li><a href="../../user/metrics/counter.html"><strong aria-hidden="true">2.7.2.</strong> Counter</a></li><li><a href="../../user/metrics/labeled_counters.html"><strong aria-hidden="true">2.7.3.</strong> Labeled Counters</a></li><li><a href="../../user/metrics/string.html"><strong aria-hidden="true">2.7.4.</strong> String</a></li><li><a href="../../user/metrics/labeled_strings.html"><strong aria-hidden="true">2.7.5.</strong> Labeled Strings</a></li><li><a href="../../user/metrics/string_list.html"><strong aria-hidden="true">2.7.6.</strong> String List</a></li><li><a href="../../user/metrics/timespan.html"><strong aria-hidden="true">2.7.7.</strong> Timespan</a></li><li><a href="../../user/metrics/labeled_timespans.html"><strong aria-hidden="true">2.7.8.</strong> Labeled Timespans</a></li><li><a href="../../user/metrics/timing_distribution.html"><strong aria-hidden="true">2.7.9.</strong> Timing Distribution</a></li><li><a href="../../user/metrics/uuid.html"><strong aria-hidden="true">2.7.10.</strong> UUID</a></li><li><a href="../../user/metrics/datetime.html"><strong aria-hidden="true">2.7.11.</strong> Datetime</a></li><li><a href="../../user/metrics/event.html"><strong aria-hidden="true">2.7.12.</strong> Event</a></li></ol></li><li><a href="../../user/pings/index.html"><strong aria-hidden="true">2.8.</strong> Pings</a></li><li><ol class="section"><li><a href="../../user/pings/baseline.html"><strong aria-hidden="true">2.8.1.</strong> Baseline Ping</a></li><li><a href="../../user/pings/metrics.html"><strong aria-hidden="true">2.8.2.</strong> Metrics Ping</a></li><li><a href="../../user/pings/events.html"><strong aria-hidden="true">2.8.3.</strong> Events Ping</a></li><li><a href="../../user/pings/custom.html"><strong aria-hidden="true">2.8.4.</strong> Custom Pings</a></li></ol></li></ol></li><li><a href="../../dev/index.html"><strong aria-hidden="true">3.</strong> Development</a></li><li><ol class="section"><li><a href="../../dev/testing.html"><strong aria-hidden="true">3.1.</strong> Testing</a></li><li><a href="../../dev/android/index.html"><strong aria-hidden="true">3.2.</strong> Android</a></li><li><ol class="section"><li><a href="../../dev/android/setup-android-build-environment.html" class="active"><strong aria-hidden="true">3.2.1.</strong> Setup Build Environment</a></li></ol></li><li><a href="../../dev/core/index.html"><strong aria-hidden="true">3.3.</strong> Rust Component</a></li><li><ol class="section"><li><a href="../../dev/core/dependency-management.html"><strong aria-hidden="true">3.3.1.</strong> Dependency Management</a></li><li><a href="../../dev/core/new-metric-type.html"><strong aria-hidden="true">3.3.2.</strong> Adding a new metric type</a></li><li><a href="../../dev/core/internal.html"><strong aria-hidden="true">3.3.3.</strong> Internal design details</a></li></ol></li><li><a href="../../dev/ffi/index.html"><strong aria-hidden="true">3.4.</strong> FFI Layer</a></li><li><ol class="section"><li><a href="../../dev/ffi/when-to-use-what-in-the-ffi.html"><strong aria-hidden="true">3.4.1.</strong> When/How FFI</a></li></ol></li><li><a href="../../contributing.html"><strong aria-hidden="true">3.5.</strong> Contributing</a></li></ol></li><li><a href="../../api/index.html"><strong aria-hidden="true">4.</strong> API Documentation</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -105,7 +110,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Glean - Cross-platform Telemetry library</h1> 
+                        <h1 class="menu-title">Glean - Cross-platform Telemetry library</h1>
 
                         <div class="right-buttons">
                             <a href="../../print.html" title="Print this book" aria-label="Print this book">
@@ -140,15 +145,15 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#setup-the-android-build-environment" id="setup-the-android-build-environment"><h1>Setup the Android Build Environment</h1></a>
-<a class="header" href="#doing-a-local-build-of-the-android-components" id="doing-a-local-build-of-the-android-components"><h2>Doing a local build of the Android Components:</h2></a>
+                        <h1><a class="header" href="#setup-the-android-build-environment" id="setup-the-android-build-environment">Setup the Android Build Environment</a></h1>
+<h2><a class="header" href="#doing-a-local-build-of-the-android-components" id="doing-a-local-build-of-the-android-components">Doing a local build of the Android Components:</a></h2>
 <p>This document describes how to make local builds of the Android components in
 this repository. Most consumers of these components <em>do not</em> need to follow
 this process, but will instead use pre-built components [todo: link to this]</p>
-<a class="header" href="#prepare-your-build-environment" id="prepare-your-build-environment"><h2>Prepare your build environment</h2></a>
+<h2><a class="header" href="#prepare-your-build-environment" id="prepare-your-build-environment">Prepare your build environment</a></h2>
 <p>Typically, this process only needs to be run once, although periodically you
 may need to repeat some steps (eg, rust updates should be done periodically)</p>
-<a class="header" href="#setting-up-android-dependencies" id="setting-up-android-dependencies"><h3>Setting up Android dependencies</h3></a>
+<h3><a class="header" href="#setting-up-android-dependencies" id="setting-up-android-dependencies">Setting up Android dependencies</a></h3>
 <p>At the end of this process you should have the following environment variables set up.</p>
 <ul>
 <li><code>ANDROID_HOME</code></li>
@@ -170,7 +175,7 @@ If Android Studio asks you to upgrade the verison of gradle, decline.</p>
 Set the <code>ANDROID_HOME</code> environment variable to that path.
 The <code>NDK_HOME</code> can be set to <code>NDK_HOME=$ANDROID_HOME/ndk-bundle</code>.
 Set <code>JAVA_HOME</code> to be the location of Android Studio's JDK which can be found in Glean's &quot;Project Structure&quot; menu. (You may need to escape spaces in the path).</p>
-<a class="header" href="#setting-up-rust" id="setting-up-rust"><h3>Setting up Rust</h3></a>
+<h3><a class="header" href="#setting-up-rust" id="setting-up-rust">Setting up Rust</a></h3>
 <p>Rust can be installed using <code>rustup</code>, with the following commands:</p>
 <ul>
 <li><code>curl https://sh.rustup.rs -sSf | sh</code></li>
@@ -185,7 +190,7 @@ devices and Android emulators, the following targets need to be installed:</p>
 <li><code>rustup target add i686-linux-android</code></li>
 <li><code>rustup target add x86_64-linux-android</code></li>
 </ul>
-<a class="header" href="#building" id="building"><h2>Building</h2></a>
+<h2><a class="header" href="#building" id="building">Building</a></h2>
 <p>This should be relatively straightforward and painless:</p>
 <ol>
 <li>
@@ -203,7 +208,7 @@ of tasks by executing <code>./gradlew tasks</code>.</p>
 </ol>
 <p>The above can be skipped if using <code>Android Studio</code>. The project directory can be imported
 and all the build details can be left to the IDE.</p>
-<a class="header" href="#faq" id="faq"><h2>FAQ</h2></a>
+<h2><a class="header" href="#faq" id="faq">FAQ</a></h2>
 <ul>
 <li><strong>Q: Android Studio complains about Python not being found when building.</strong></li>
 <li>A: Make sure that the <code>python</code> binary is on your <code>PATH</code>. On Windows, in addition to that,

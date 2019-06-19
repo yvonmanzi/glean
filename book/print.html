@@ -4,6 +4,10 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Glean - Cross-platform Telemetry library</title>
+        
+        <meta name="robots" content="noindex" />
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,7 +60,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -75,7 +79,10 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="index.html"><strong aria-hidden="true">1.</strong> Glean</a></li><li><a href="user/index.html"><strong aria-hidden="true">2.</strong> User</a></li><li><ol class="section"><li><a href="user/adding-glean-to-your-project.html"><strong aria-hidden="true">2.1.</strong> Adding Glean to your project</a></li><li><a href="user/adding-new-metrics.html"><strong aria-hidden="true">2.2.</strong> Adding new metrics</a></li><li><a href="user/metric-parameters.html"><strong aria-hidden="true">2.3.</strong> Metric parameters</a></li><li><a href="user/testing-metrics.html"><strong aria-hidden="true">2.4.</strong> Testing metrics</a></li><li><a href="user/debugging.html"><strong aria-hidden="true">2.5.</strong> Debugging products using Glean</a></li><li><a href="user/error-reporting.html"><strong aria-hidden="true">2.6.</strong> Error reporting</a></li><li><a href="user/metrics/index.html"><strong aria-hidden="true">2.7.</strong> Metric types</a></li><li><ol class="section"><li><a href="user/metrics/boolean.html"><strong aria-hidden="true">2.7.1.</strong> Boolean</a></li><li><a href="user/metrics/counter.html"><strong aria-hidden="true">2.7.2.</strong> Counter</a></li><li><a href="user/metrics/labeled_counters.html"><strong aria-hidden="true">2.7.3.</strong> Labeled Counters</a></li><li><a href="user/metrics/string.html"><strong aria-hidden="true">2.7.4.</strong> String</a></li><li><a href="user/metrics/labeled_strings.html"><strong aria-hidden="true">2.7.5.</strong> Labeled Strings</a></li><li><a href="user/metrics/string_list.html"><strong aria-hidden="true">2.7.6.</strong> String List</a></li><li><a href="user/metrics/timespan.html"><strong aria-hidden="true">2.7.7.</strong> Timespan</a></li><li><a href="user/metrics/labeled_timespans.html"><strong aria-hidden="true">2.7.8.</strong> Labeled Timespans</a></li><li><a href="user/metrics/timing_distribution.html"><strong aria-hidden="true">2.7.9.</strong> Timing Distribution</a></li><li><a href="user/metrics/uuid.html"><strong aria-hidden="true">2.7.10.</strong> UUID</a></li><li><a href="user/metrics/datetime.html"><strong aria-hidden="true">2.7.11.</strong> Datetime</a></li><li><a href="user/metrics/event.html"><strong aria-hidden="true">2.7.12.</strong> Event</a></li></ol></li><li><a href="user/pings/index.html"><strong aria-hidden="true">2.8.</strong> Pings</a></li><li><ol class="section"><li><a href="user/pings/baseline.html"><strong aria-hidden="true">2.8.1.</strong> Baseline Ping</a></li><li><a href="user/pings/metrics.html"><strong aria-hidden="true">2.8.2.</strong> Metrics Ping</a></li><li><a href="user/pings/events.html"><strong aria-hidden="true">2.8.3.</strong> Events Ping</a></li><li><a href="user/pings/custom.html"><strong aria-hidden="true">2.8.4.</strong> Custom Pings</a></li></ol></li></ol></li><li><a href="dev/index.html"><strong aria-hidden="true">3.</strong> Development</a></li><li><ol class="section"><li><a href="dev/testing.html"><strong aria-hidden="true">3.1.</strong> Testing</a></li><li><a href="dev/android/index.html"><strong aria-hidden="true">3.2.</strong> Android</a></li><li><ol class="section"><li><a href="dev/android/setup-android-build-environment.html"><strong aria-hidden="true">3.2.1.</strong> Setup Build Environment</a></li></ol></li><li><a href="dev/core/index.html"><strong aria-hidden="true">3.3.</strong> Rust Component</a></li><li><ol class="section"><li><a href="dev/core/dependency-management.html"><strong aria-hidden="true">3.3.1.</strong> Dependency Management</a></li><li><a href="dev/core/new-metric-type.html"><strong aria-hidden="true">3.3.2.</strong> Adding a new metric type</a></li><li><a href="dev/core/internal.html"><strong aria-hidden="true">3.3.3.</strong> Internal design details</a></li></ol></li><li><a href="dev/ffi/index.html"><strong aria-hidden="true">3.4.</strong> FFI Layer</a></li><li><ol class="section"><li><a href="dev/ffi/when-to-use-what-in-the-ffi.html"><strong aria-hidden="true">3.4.1.</strong> When/How FFI</a></li></ol></li><li><a href="contributing.html"><strong aria-hidden="true">3.5.</strong> Contributing</a></li></ol></li><li><a href="api/index.html"><strong aria-hidden="true">4.</strong> API Documentation</a></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li><a href="index.html"><strong aria-hidden="true">1.</strong> Glean</a></li><li><a href="user/index.html"><strong aria-hidden="true">2.</strong> User</a></li><li><ol class="section"><li><a href="user/adding-glean-to-your-project.html"><strong aria-hidden="true">2.1.</strong> Adding Glean to your project</a></li><li><a href="user/adding-new-metrics.html"><strong aria-hidden="true">2.2.</strong> Adding new metrics</a></li><li><a href="user/metric-parameters.html"><strong aria-hidden="true">2.3.</strong> Metric parameters</a></li><li><a href="user/testing-metrics.html"><strong aria-hidden="true">2.4.</strong> Testing metrics</a></li><li><a href="user/debugging.html"><strong aria-hidden="true">2.5.</strong> Debugging products using Glean</a></li><li><a href="user/error-reporting.html"><strong aria-hidden="true">2.6.</strong> Error reporting</a></li><li><a href="user/metrics/index.html"><strong aria-hidden="true">2.7.</strong> Metric types</a></li><li><ol class="section"><li><a href="user/metrics/boolean.html"><strong aria-hidden="true">2.7.1.</strong> Boolean</a></li><li><a href="user/metrics/counter.html"><strong aria-hidden="true">2.7.2.</strong> Counter</a></li><li><a href="user/metrics/labeled_counters.html"><strong aria-hidden="true">2.7.3.</strong> Labeled Counters</a></li><li><a href="user/metrics/string.html"><strong aria-hidden="true">2.7.4.</strong> String</a></li><li><a href="user/metrics/labeled_strings.html"><strong aria-hidden="true">2.7.5.</strong> Labeled Strings</a></li><li><a href="user/metrics/string_list.html"><strong aria-hidden="true">2.7.6.</strong> String List</a></li><li><a href="user/metrics/timespan.html"><strong aria-hidden="true">2.7.7.</strong> Timespan</a></li><li><a href="user/metrics/labeled_timespans.html"><strong aria-hidden="true">2.7.8.</strong> Labeled Timespans</a></li><li><a href="user/metrics/timing_distribution.html"><strong aria-hidden="true">2.7.9.</strong> Timing Distribution</a></li><li><a href="user/metrics/uuid.html"><strong aria-hidden="true">2.7.10.</strong> UUID</a></li><li><a href="user/metrics/datetime.html"><strong aria-hidden="true">2.7.11.</strong> Datetime</a></li><li><a href="user/metrics/event.html"><strong aria-hidden="true">2.7.12.</strong> Event</a></li></ol></li><li><a href="user/pings/index.html"><strong aria-hidden="true">2.8.</strong> Pings</a></li><li><ol class="section"><li><a href="user/pings/baseline.html"><strong aria-hidden="true">2.8.1.</strong> Baseline Ping</a></li><li><a href="user/pings/metrics.html"><strong aria-hidden="true">2.8.2.</strong> Metrics Ping</a></li><li><a href="user/pings/events.html"><strong aria-hidden="true">2.8.3.</strong> Events Ping</a></li><li><a href="user/pings/custom.html"><strong aria-hidden="true">2.8.4.</strong> Custom Pings</a></li></ol></li></ol></li><li><a href="dev/index.html"><strong aria-hidden="true">3.</strong> Development</a></li><li><ol class="section"><li><a href="dev/testing.html"><strong aria-hidden="true">3.1.</strong> Testing</a></li><li><a href="dev/android/index.html"><strong aria-hidden="true">3.2.</strong> Android</a></li><li><ol class="section"><li><a href="dev/android/setup-android-build-environment.html"><strong aria-hidden="true">3.2.1.</strong> Setup Build Environment</a></li></ol></li><li><a href="dev/core/index.html"><strong aria-hidden="true">3.3.</strong> Rust Component</a></li><li><ol class="section"><li><a href="dev/core/dependency-management.html"><strong aria-hidden="true">3.3.1.</strong> Dependency Management</a></li><li><a href="dev/core/new-metric-type.html"><strong aria-hidden="true">3.3.2.</strong> Adding a new metric type</a></li><li><a href="dev/core/internal.html"><strong aria-hidden="true">3.3.3.</strong> Internal design details</a></li></ol></li><li><a href="dev/ffi/index.html"><strong aria-hidden="true">3.4.</strong> FFI Layer</a></li><li><ol class="section"><li><a href="dev/ffi/when-to-use-what-in-the-ffi.html"><strong aria-hidden="true">3.4.1.</strong> When/How FFI</a></li></ol></li><li><a href="contributing.html"><strong aria-hidden="true">3.5.</strong> Contributing</a></li></ol></li><li><a href="api/index.html"><strong aria-hidden="true">4.</strong> API Documentation</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -105,7 +112,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Glean - Cross-platform Telemetry library</h1> 
+                        <h1 class="menu-title">Glean - Cross-platform Telemetry library</h1>
 
                         <div class="right-buttons">
                             <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -140,7 +147,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#glean" id="glean"><h1>Glean</h1></a>
+                        <h1><a class="header" href="#glean" id="glean">Glean</a></h1>
 <p><img src="glean.jpeg" alt="Glean logo" /></p>
 <p><em>Modern Firefox Telemetry for mobile platforms</em></p>
 <p>The <code>Glean SDK</code> is a modern approach for a mobile Telemetry library and is part of the <a href="https://docs.telemetry.mozilla.org/concepts/glean/glean.html">Glean project</a>.
@@ -154,11 +161,11 @@ It started out as an <a href="https://github.com/mozilla-mobile/android-componen
 <li>Send an email to <em>glean-team@mozilla.com</em>.</li>
 <li>The Glean SDK team is: <em>:janerik</em>, <em>:dexter</em>, <em>:travis</em>, <em>:mdroettboom</em>, <em>:gfritzsche</em>, <em>:chutten</em></li>
 </ul>
-<a class="header" href="#license" id="license"><h2>License</h2></a>
+<h2><a class="header" href="#license" id="license">License</a></h2>
 <p>This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/</p>
-<a class="header" href="#user-documentation" id="user-documentation"><h1>User Documentation</h1></a>
-<a class="header" href="#adding-glean-to-your-project" id="adding-glean-to-your-project"><h1>Adding Glean to your project</h1></a>
-<a class="header" href="#before-using-the-library" id="before-using-the-library"><h2>Before using the library</h2></a>
+<h1><a class="header" href="#user-documentation" id="user-documentation">User Documentation</a></h1>
+<h1><a class="header" href="#adding-glean-to-your-project" id="adding-glean-to-your-project">Adding Glean to your project</a></h1>
+<h2><a class="header" href="#before-using-the-library" id="before-using-the-library">Before using the library</a></h2>
 <p>Products using Glean to collect telemetry <strong>must</strong>:</p>
 <ul>
 <li>add documentation for any new metric collected with the library in its repository (see <a href="user/pings/index.html">an example</a>);</li>
@@ -166,15 +173,15 @@ It started out as an <a href="https://github.com/mozilla-mobile/android-componen
 <li>provide a way for users to turn data collection off (e.g. providing settings to control
 <code>Glean.setUploadEnabled()</code>).</li>
 </ul>
-<a class="header" href="#usage" id="usage"><h2>Usage</h2></a>
-<a class="header" href="#setting-up-the-dependency" id="setting-up-the-dependency"><h3>Setting up the dependency</h3></a>
+<h2><a class="header" href="#usage" id="usage">Usage</a></h2>
+<h3><a class="header" href="#setting-up-the-dependency" id="setting-up-the-dependency">Setting up the dependency</a></h3>
 <p>Use Gradle to download the library from <a href="https://maven.mozilla.org/">maven.mozilla.org</a>
 (<a href="user/../../../README.html#maven-repository">Setup repository</a>):</p>
 <pre><code class="language-Groovy">implementation &quot;org.mozilla.components:service-glean:{latest-version}&quot;
 </code></pre>
-<a class="header" href="#integrating-with-the-build-system" id="integrating-with-the-build-system"><h3>Integrating with the build system</h3></a>
+<h3><a class="header" href="#integrating-with-the-build-system" id="integrating-with-the-build-system">Integrating with the build system</a></h3>
 <p>In order for Glean to work, a Python environment must be accessible at build time.
-This is done automatically by the <a href="https://github.com/JetBrains/gradle-python-envs/"><code>com.jetbrains.python.envs</code></a> plugin.
+This is done automatically by the <a href="https://github.com/JetBrains/gradle-python-envs/"><code>com.jetbrains.python.envs</code></a> plugin. 
 The plugin <strong>must</strong> be manually enabled by adding the following <code>plugins</code> block at the top of the <code>build.gradle</code> file for your app module.</p>
 <pre><code class="language-Groovy">plugins {
     id &quot;com.jetbrains.python.envs&quot; version &quot;0.0.26&quot;
@@ -184,11 +191,11 @@ The plugin <strong>must</strong> be manually enabled by adding the following <co
 This script can be referenced directly from the GitHub repo, as shown below:</p>
 <pre><code class="language-Groovy">apply from: 'https://github.com/mozilla/glean/raw/v{latest-version}/glean-core/android/sdk_generator.gradle'
 </code></pre>
-<p><strong>Important:</strong> the <code>{latest-version}</code> placeholder in the above link should be replaced with the version number of the Glean library used by the project.
+<p><strong>Important:</strong> the <code>{latest-version}</code> placeholder in the above link should be replaced with the version number of the Glean library used by the project. 
 For example, if version <em>0.34.2</em> is used, then the include directive becomes:</p>
 <pre><code class="language-Groovy">apply from: 'https://github.com/mozilla/glean/raw/v0.34.2/glean-core/android/sdk_generator.gradle'
 </code></pre>
-<a class="header" href="#initializing-glean" id="initializing-glean"><h3>Initializing Glean</h3></a>
+<h3><a class="header" href="#initializing-glean" id="initializing-glean">Initializing Glean</a></h3>
 <p>Before any data collection can take place, Glean <strong>must</strong> be initialized from the application.
 An excellent place to perform this operation is within the <code>onCreate</code> method of the class that extends Android's <code>Application</code> class.</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Pings
@@ -214,42 +221,42 @@ class SampleApplication : Application() {
 }
 </code></pre>
 <p>Once initialized, if collection is enabled, Glean will automatically start collecting <a href="user/pings/metrics.html">baseline metrics</a> and sending its <a href="user/pings/index.html">pings</a>.</p>
-<p>Glean should be initialized as soon as possible, and importantly, before any other libraries in the application start using Glean.
+<p>Glean should be initialized as soon as possible, and importantly, before any other libraries in the application start using Glean. 
 Library code should never call <code>Glean.initialize</code>, since it should be called exactly once per application.</p>
 <p><strong>Note</strong>: if the application has the concept of release channels and knows which channel it is on at run-time, then it can provide Glean with this information by setting it as part of the <code>Configuration</code> object parameter of the <code>Glean.initialize</code> method. For example:</p>
 <pre><code class="language-Kotlin">Glean.initialize(applicationContext, Configuration(channel = &quot;beta&quot;))
 </code></pre>
-<a class="header" href="#enabling-and-disabling-metrics" id="enabling-and-disabling-metrics"><h3>Enabling and disabling metrics</h3></a>
+<h3><a class="header" href="#enabling-and-disabling-metrics" id="enabling-and-disabling-metrics">Enabling and disabling metrics</a></h3>
 <p><code>Glean.setUploadEnabled()</code> should be called in response to the user enabling or disabling telemetry.<br />
 This method should also be called at least once prior to calling <code>Glean.initialize()</code>.</p>
 <p>The application should provide some form of user interface to call this method.</p>
 <p>When going from enabled to disabled, all pending events, metrics and pings are cleared, except for <code>first_run_date</code>.
 When re-enabling, core Glean metrics will be recomputed at that time.</p>
-<a class="header" href="#adding-new-metrics" id="adding-new-metrics"><h3>Adding new metrics</h3></a>
-<p>All metrics that your application collects must be defined in a <code>metrics.yaml</code> file.
-This file should be at the root of the application module (the same directory as the <code>build.gradle</code> file you updated).
+<h3><a class="header" href="#adding-new-metrics" id="adding-new-metrics">Adding new metrics</a></h3>
+<p>All metrics that your application collects must be defined in a <code>metrics.yaml</code> file. 
+This file should be at the root of the application module (the same directory as the <code>build.gradle</code> file you updated). 
 The format of that file is documented <a href="https://mozilla.github.io/glean_parser/metrics-yaml.html">here</a>.
 To learn more, see <a href="user/adding-new-metrics.html">adding new metrics</a>.</p>
-<p><strong>Important</strong>: as stated <a href="#before-using-the-library">here</a>, any new data collection requires documentation and data-review. This is also required for any new metric automatically collected by Glean.</p>
-<a class="header" href="#adding-custom-pings" id="adding-custom-pings"><h3>Adding custom pings</h3></a>
+<p><strong>Important</strong>: as stated <a href="user/#before-using-the-library">here</a>, any new data collection requires documentation and data-review. This is also required for any new metric automatically collected by Glean.</p>
+<h3><a class="header" href="#adding-custom-pings" id="adding-custom-pings">Adding custom pings</a></h3>
 <p>Please refer to the custom pings documentation <a href="user/pings/custom.html">here</a>.</p>
-<p><strong>Important</strong>: as stated <a href="#before-using-the-library">here</a>, any new data collection, including new custom pings, requires documentation and data-review. This is also required for any new ping automatically collected by Glean.</p>
-<a class="header" href="#testing-metrics" id="testing-metrics"><h3>Testing metrics</h3></a>
+<p><strong>Important</strong>: as stated <a href="user/#before-using-the-library">here</a>, any new data collection, including new custom pings, requires documentation and data-review. This is also required for any new ping automatically collected by Glean.</p>
+<h3><a class="header" href="#testing-metrics" id="testing-metrics">Testing metrics</a></h3>
 <p>In order to make testing metrics easier 'out of the box', all metrics include a set of test API functions in order to facilitate unit testing.  These include functions to test whether a value has been stored, and functions to retrieve the stored value for validation.  For more information, please refer to <a href="user/testing-metrics.html">Unit testing Glean metrics</a>.</p>
-<a class="header" href="#adding-new-metrics-1" id="adding-new-metrics-1"><h1>Adding new metrics</h1></a>
-<p>All metrics that your project collects must be defined in a <code>metrics.yaml</code> file.
-This file should be at the root of the application or library module (the same directory as the <code>build.gradle</code> file you updated).
+<h1><a class="header" href="#adding-new-metrics-1" id="adding-new-metrics-1">Adding new metrics</a></h1>
+<p>All metrics that your project collects must be defined in a <code>metrics.yaml</code> file. 
+This file should be at the root of the application or library module (the same directory as the <code>build.gradle</code> file you updated). 
 The format of that file is documented <a href="https://mozilla.github.io/glean_parser/metrics-yaml.html">here</a>.</p>
 <p>When adding a new metric, the workflow is:</p>
 <ul>
 <li>Decide on which <a href="user/metrics/index.html">metric type</a> you want to use.</li>
-<li>Add a new entry to <a href="#The-metricsyaml-file"><code>metrics.yaml</code></a>.</li>
+<li>Add a new entry to <a href="user/#The-metricsyaml-file"><code>metrics.yaml</code></a>.</li>
 <li>Add code to your project to record into the metric by calling Glean.</li>
 </ul>
 <p><strong>Important</strong>: Any new data collection requires documentation and data-review.
 This is also required for any new metric automatically collected by Glean.</p>
-<a class="header" href="#the-metricsyaml-file" id="the-metricsyaml-file"><h2>The <code>metrics.yaml</code> file</h2></a>
-<p>The <code>metrics.yaml</code> file defines the metrics your application or library will send.
+<h2><a class="header" href="#the-metricsyaml-file" id="the-metricsyaml-file">The <code>metrics.yaml</code> file</a></h2>
+<p>The <code>metrics.yaml</code> file defines the metrics your application or library will send. 
 They are organized into categories.
 The overall organization is:</p>
 <pre><code class="language-YAML"># Required to indicate this is a `metrics.yaml` file
@@ -279,7 +286,7 @@ category2.subcategory:  # Categories can contain subcategories
 </code></pre>
 <p>The details of the metric parameters are described in <a href="user/metric-parameters.html">metric parameters</a>.</p>
 <p>The <code>metrics.yaml</code> file is used to generate <code>Kotlin</code> code that becomes the public API to access your application's metrics.</p>
-<a class="header" href="#metric-naming" id="metric-naming"><h2>Metric naming</h2></a>
+<h2><a class="header" href="#metric-naming" id="metric-naming">Metric naming</a></h2>
 <p>Category and metric names in the <code>metrics.yaml</code> are in <code>snake_case</code>, but given the Kotlin coding standards defined by <a href="https://github.com/pinterest/ktlint">ktlint</a>, these identifiers must be <code>camelCase</code> in Kotlin. For example, the metric defined in the <code>metrics.yaml</code> as:</p>
 <pre><code class="language-YAML">views:
   login_opened:
@@ -289,7 +296,7 @@ category2.subcategory:  # Categories can contain subcategories
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Views
 Views.loginOpened...
 </code></pre>
-<a class="header" href="#metric-parameters" id="metric-parameters"><h1>Metric parameters</h1></a>
+<h1><a class="header" href="#metric-parameters" id="metric-parameters">Metric parameters</a></h1>
 <p>All metric types must include the following required parameters:</p>
 <ul>
 <li>
@@ -333,11 +340,11 @@ Views.loginOpened...
 <p><code>version</code>: (default: 0) The version of the metric. A monotonically increasing integer value. This should be bumped if the metric changes in a backward-incompatible way.</p>
 </li>
 </ul>
-<a class="header" href="#unit-testing-glean-metrics" id="unit-testing-glean-metrics"><h1>Unit testing Glean metrics</h1></a>
+<h1><a class="header" href="#unit-testing-glean-metrics" id="unit-testing-glean-metrics">Unit testing Glean metrics</a></h1>
 <p>In order to support unit testing inside of client applications using Glean, a set of testing API functions have been included.
 The intent is to make Glean easier to test 'out of the box' in any client application it may be used in.
 These functions expose a way to inspect and validate recorded metric values within the client application but are restricted to test code only through visibility annotations (<code>@VisibleForTesting(otherwise = VisibleForTesting.NONE)</code>).</p>
-<a class="header" href="#general-test-api-method-semantics" id="general-test-api-method-semantics"><h2>General test API method semantics</h2></a>
+<h2><a class="header" href="#general-test-api-method-semantics" id="general-test-api-method-semantics">General test API method semantics</a></h2>
 <p>In order to prevent issues with async calls when unit testing Glean, it is important to put Glean into testing mode by calling <code>Glean.enableTestingMode()</code>.
 This will ensure that metrics are done recording when the other test functions are used.</p>
 <p>To check if a value exists (i.e. it has been recorded), there is a <code>testHasValue()</code> function on each of the metric instances:</p>
@@ -348,7 +355,7 @@ This function will return a datatype appropriate to the specific type of the met
 <pre><code class="language-kotlin">assertEquals(5, GleanMetrics.Foo.UriCount.testGetValue())
 </code></pre>
 <p>Note that each of these functions has it's visibility limited to the scope to only unit tests by making use of the <code>@VisibleForTesting</code> annotation, so the IDE should complain if you attempt to use them inside of client code.</p>
-<a class="header" href="#testing-metrics-for-custom-pings" id="testing-metrics-for-custom-pings"><h2>Testing metrics for custom pings</h2></a>
+<h2><a class="header" href="#testing-metrics-for-custom-pings" id="testing-metrics-for-custom-pings">Testing metrics for custom pings</a></h2>
 <p>In order to test metrics where the metric is included in more than one ping, the test functions take an optional <code>pingName</code> argument.
 This is the name of the ping that the metric is being sent in, such as <code>events</code> for the &quot;events&quot; ping, or <code>metrics</code> for the &quot;metrics&quot; ping.
 This could also be a custom ping name that the metric is being sent in.
@@ -358,7 +365,7 @@ You should only need to provide a <code>pingName</code> if the metric is being s
 <pre><code class="language-kotlin">GleanMetrics.Foo.UriCount.testHasValue(&quot;customPing&quot;)
 GleanMetrics.Foo.UriCount.testGetValue(&quot;customPing&quot;)
 </code></pre>
-<a class="header" href="#example-of-using-the-test-api" id="example-of-using-the-test-api"><h2>Example of using the test API</h2></a>
+<h2><a class="header" href="#example-of-using-the-test-api" id="example-of-using-the-test-api">Example of using the test API</a></h2>
 <p>Here is a longer example to better illustrate the intended use of the test API:</p>
 <pre><code class="language-kotlin">// Enable testing mode
 // (Perhaps called from a @Before method so it precedes every test in the suite.)
@@ -387,9 +394,9 @@ assertEquals(3, events.size)
 // Check extra key/value for first event in the list
 assertEquals(&quot;Courier&quot;, events.elementAt(0).extra[&quot;font&quot;])
 </code></pre>
-<a class="header" href="#debugging-products-using-glean" id="debugging-products-using-glean"><h1>Debugging products using Glean</h1></a>
+<h1><a class="header" href="#debugging-products-using-glean" id="debugging-products-using-glean">Debugging products using Glean</a></h1>
 <p><strong>STATUS: <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1554116">Not implemented</a></strong></p>
-<p>Glean exports the <code>GleanDebugActivity</code> that can be used to toggle debugging features on or off.
+<p>Glean exports the <code>GleanDebugActivity</code> that can be used to toggle debugging features on or off. 
 Users can invoke this special activity, at run-time, using the following <a href="https://developer.android.com/studio/command-line/adb"><code>adb</code></a> command:</p>
 <p><code>adb shell am start -n [applicationId]/mozilla.components.service.glean.debug.GleanDebugActivity [extra keys]</code></p>
 <p>In the above:</p>
@@ -398,13 +405,13 @@ Users can invoke this special activity, at run-time, using the following <a href
 <p><code>[applicationId]</code> is the product's application id as defined in the manifest file and/or build script. For the Glean sample application, this is <code>org.mozilla.samples.glean</code> for a release build and <code>org.mozilla.samples.glean.debug</code> for a debug build.</p>
 </li>
 <li>
-<p><code>[extra keys]</code> is a list of extra keys to be passed to the debug activity. See the <a href="https://developer.android.com/studio/command-line/adb#IntentSpec">documentation</a> for the command line switches used to pass the extra keys.
+<p><code>[extra keys]</code> is a list of extra keys to be passed to the debug activity. See the <a href="https://developer.android.com/studio/command-line/adb#IntentSpec">documentation</a> for the command line switches used to pass the extra keys. 
 These are the currently supported keys:</p>
-<table><thead><tr><th>key</th><th>type</th><th>description</th></tr></thead><tbody>
-<tr><td> logPings </td><td> boolean (--ez) </td><td> If set to <code>true</code>, Glean dumps pings to logcat; defaults to <code>false</code> </td></tr>
-<tr><td> sendPing </td><td> string (--es) </td><td> Sends the ping with the given name immediately </td></tr>
-<tr><td> tagPings </td><td> string (--es) </td><td> Tags all outgoing pings as debug pings to make them available for real-time validation. The value must match the pattern <code>[a-zA-Z0-9-]{1,20}</code> </td></tr>
-</tbody></table>
+<p>|key|type|description|
+|---|----|-----------|
+| logPings | boolean (--ez) | If set to <code>true</code>, Glean dumps pings to logcat; defaults to <code>false</code> |
+| sendPing | string (--es) | Sends the ping with the given name immediately |
+| tagPings | string (--es) | Tags all outgoing pings as debug pings to make them available for real-time validation. The value must match the pattern <code>[a-zA-Z0-9-]{1,20}</code> |</p>
 </li>
 </ul>
 <p>For example, to direct a release build of the Glean sample application to (1) dump pings to logcat, (2) tag the ping with the <code>test-metrics-ping</code> tag, and (3) send the &quot;metrics&quot; ping immediately, the following command can be used:</p>
@@ -413,7 +420,7 @@ These are the currently supported keys:</p>
   --es sendPing metrics \
   --es tagPings test-metrics-ping
 </code></pre>
-<a class="header" href="#important-gleandebugactivity-notes" id="important-gleandebugactivity-notes"><h3>Important GleanDebugActivity notes!</h3></a>
+<h3><a class="header" href="#important-gleandebugactivity-notes" id="important-gleandebugactivity-notes">Important GleanDebugActivity notes!</a></h3>
 <ul>
 <li>
 <p>Options that are set using the adb flags are not immediately reset and will persist until the application is closed or manually reset.</p>
@@ -426,10 +433,10 @@ These are the currently supported keys:</p>
 </ol>
 </li>
 </ul>
-<a class="header" href="#error-reporting" id="error-reporting"><h1>Error reporting</h1></a>
-<p>Glean records the number of errors that occur when metrics are passed invalid data or are otherwise used incorrectly.
-This information is reported back in special labeled counter metrics in the <code>glean.error</code> category.
-Error metrics are included in the same pings as the metric that caused the error.
+<h1><a class="header" href="#error-reporting" id="error-reporting">Error reporting</a></h1>
+<p>Glean records the number of errors that occur when metrics are passed invalid data or are otherwise used incorrectly. 
+This information is reported back in special labeled counter metrics in the <code>glean.error</code> category. 
+Error metrics are included in the same pings as the metric that caused the error. 
 Additionally, error metrics are always sent in the <a href="user/pings/metrics.html"><code>metrics</code> ping</a> ping.</p>
 <p>The following categories of errors are recorded:</p>
 <ul>
@@ -454,7 +461,7 @@ Additionally, error metrics are always sent in the <a href="user/pings/metrics.h
 }
 </code></pre>
 <p>If you have a debug build of Glean, details about the errors being recorded are included in the logs. This detailed information is not included in Glean pings.</p>
-<a class="header" href="#metrics" id="metrics"><h1>Metrics</h1></a>
+<h1><a class="header" href="#metrics" id="metrics">Metrics</a></h1>
 <p>There are different metrics to choose from, depending on what you want to achieve:</p>
 <ul>
 <li>
@@ -494,7 +501,7 @@ Additionally, error metrics are always sent in the <a href="user/pings/metrics.h
 <p><a href="user/metrics/uuid.html">UUID</a>: Used to record universally unique identifiers (UUIDs), such as a client ID.</p>
 </li>
 </ul>
-<a class="header" href="#labeled-metrics" id="labeled-metrics"><h2>Labeled metrics</h2></a>
+<h2><a class="header" href="#labeled-metrics" id="labeled-metrics">Labeled metrics</a></h2>
 <p>There are two types of metrics listed above - <em>labeled</em> and <em>unlabeled</em> metrics. If a metric is <em>labeled</em>, it means that for a single metric entry you define in <code>metrics.yaml</code>, you can record into multiple metrics under the same name, each of the same type and identified by a different string label.</p>
 <p>This is useful when you need to break down metrics by a label known at build time or run time. For example:</p>
 <ul>
@@ -519,9 +526,9 @@ Only the first 16 labels seen by Glean will be tracked. After that, any addition
 <hr />
 <p><em>Note:</em> Be careful with using arbitrary strings as labels and make sure they can't accidentally contain identifying data (like directory paths or user input).</p>
 <hr />
-<a class="header" href="#boolean" id="boolean"><h1>Boolean</h1></a>
+<h1><a class="header" href="#boolean" id="boolean">Boolean</a></h1>
 <p>Booleans are used for simple flags, for example &quot;is a11y enabled&quot;?.</p>
-<a class="header" href="#configuration" id="configuration"><h2>Configuration</h2></a>
+<h2><a class="header" href="#configuration" id="configuration">Configuration</a></h2>
 <p>Say you're adding a boolean to record whether a11y is enabled on the device. First you need to add an entry for the boolean to the <code>metrics.yaml</code> file:</p>
 <pre><code class="language-YAML">flags:
   a11y_enabled:
@@ -530,7 +537,7 @@ Only the first 16 labels seen by Glean will be tracked. After that, any addition
       Records whether a11y is enabled on the device.
     ...
 </code></pre>
-<a class="header" href="#api" id="api"><h2>API</h2></a>
+<h2><a class="header" href="#api" id="api">API</a></h2>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Flags
 
 Flags.a11yEnabled.set(System.isAccesibilityEnabled())
@@ -544,25 +551,25 @@ assertTrue(Flags.a11yEnabled.testHasValue())
 // Does it have the expected value?
 assertTrue(Flags.a11yEnabled.testGetValue())
 </code></pre>
-<a class="header" href="#limits" id="limits"><h2>Limits</h2></a>
+<h2><a class="header" href="#limits" id="limits">Limits</a></h2>
 <ul>
 <li>None.</li>
 </ul>
-<a class="header" href="#examples" id="examples"><h2>Examples</h2></a>
+<h2><a class="header" href="#examples" id="examples">Examples</a></h2>
 <ul>
 <li>Is a11y enabled?</li>
 </ul>
-<a class="header" href="#recorded-errors" id="recorded-errors"><h2>Recorded errors</h2></a>
+<h2><a class="header" href="#recorded-errors" id="recorded-errors">Recorded errors</a></h2>
 <ul>
 <li>None.</li>
 </ul>
-<a class="header" href="#reference" id="reference"><h2>Reference</h2></a>
+<h2><a class="header" href="#reference" id="reference">Reference</a></h2>
 <ul>
-<li><a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-boolean-metric-type/index.html">Kotlin API docs</a></li>
+<li><a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-boolean-metric-type/index.html">Kotlin API docs</a></li>
 </ul>
-<a class="header" href="#counter" id="counter"><h1>Counter</h1></a>
+<h1><a class="header" href="#counter" id="counter">Counter</a></h1>
 <p>Used to count how often something happens, say how often a certain button was pressed. A counter always starts from <code>0</code>. Each time you record to a counter, its value is incremented.</p>
-<a class="header" href="#configuration-1" id="configuration-1"><h2>Configuration</h2></a>
+<h2><a class="header" href="#configuration-1" id="configuration-1">Configuration</a></h2>
 <p>Say you're adding a new counter for how often the refresh button is pressed. First you need to add an entry for the counter to the <code>metrics.yaml</code> file:</p>
 <pre><code class="language-YAML">controls:
   refresh_pressed:
@@ -571,7 +578,7 @@ assertTrue(Flags.a11yEnabled.testGetValue())
       Counts how often the refresh button is pressed.
     ...
 </code></pre>
-<a class="header" href="#api-1" id="api-1"><h2>API</h2></a>
+<h2><a class="header" href="#api-1" id="api-1">API</a></h2>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Controls
 
 Controls.refreshPressed.add() // Adds 1 to the counter.
@@ -586,25 +593,25 @@ assertTrue(Controls.refreshPressed.testHasValue())
 // Does the counter have the expected value?
 assertEquals(6, Controls.refreshPressed.testGetValue())
 </code></pre>
-<a class="header" href="#limits-1" id="limits-1"><h2>Limits</h2></a>
+<h2><a class="header" href="#limits-1" id="limits-1">Limits</a></h2>
 <ul>
 <li>Only increments, saturates at the limits of a 32-bit signed integer.</li>
 </ul>
-<a class="header" href="#examples-1" id="examples-1"><h2>Examples</h2></a>
+<h2><a class="header" href="#examples-1" id="examples-1">Examples</a></h2>
 <ul>
 <li>How often a certain button was pressed?</li>
 </ul>
-<a class="header" href="#recorded-errors-1" id="recorded-errors-1"><h2>Recorded errors</h2></a>
+<h2><a class="header" href="#recorded-errors-1" id="recorded-errors-1">Recorded errors</a></h2>
 <ul>
 <li>None.</li>
 </ul>
-<a class="header" href="#reference-1" id="reference-1"><h2>Reference</h2></a>
+<h2><a class="header" href="#reference-1" id="reference-1">Reference</a></h2>
 <ul>
-<li><a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-counter-metric-type/index.html">Kotlin API docs</a></li>
+<li><a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-counter-metric-type/index.html">Kotlin API docs</a></li>
 </ul>
-<a class="header" href="#labeled-counters" id="labeled-counters"><h1>Labeled Counters</h1></a>
+<h1><a class="header" href="#labeled-counters" id="labeled-counters">Labeled Counters</a></h1>
 <p>Labeled counters are used to record different related counts that should sum up to a total.</p>
-<a class="header" href="#configuration-2" id="configuration-2"><h2>Configuration</h2></a>
+<h2><a class="header" href="#configuration-2" id="configuration-2">Configuration</a></h2>
 <p>For example, you may want to record a count of different types of crashes for your Android application, such as native code crashes and uncaught exceptions:</p>
 <pre><code class="language-YAML">stability:
   crash_count:
@@ -616,7 +623,7 @@ assertEquals(6, Controls.refreshPressed.testGetValue())
       - native_code_crash
     ...
 </code></pre>
-<a class="header" href="#api-2" id="api-2"><h2>API</h2></a>
+<h2><a class="header" href="#api-2" id="api-2">API</a></h2>
 <p>Now you can use the labeled counter from the application's code:</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Stability
 Stability.crashCount[&quot;uncaught_exception&quot;].add() // Adds 1 to the &quot;uncaught_exception&quot; counter.
@@ -632,7 +639,7 @@ assertTrue(Stability.crashCount[&quot;native_code_crash&quot;].testHasValue())
 assertEquals(1, Stability.crashCount[&quot;uncaught_exception&quot;].testGetValue())
 assertEquals(3, Stability.crashCount[&quot;native_code_crash&quot;].testGetValue())
 </code></pre>
-<a class="header" href="#limits-2" id="limits-2"><h2>Limits</h2></a>
+<h2><a class="header" href="#limits-2" id="limits-2">Limits</a></h2>
 <ul>
 <li>
 <p>Each label must be in <code>snake_case</code> (and also may contain <code>.</code>).</p>
@@ -647,11 +654,11 @@ assertEquals(3, Stability.crashCount[&quot;native_code_crash&quot;].testGetValue
 <p>If the labels aren't specified in the <code>metrics.yaml</code>, only 16 different dynamic labels may be used, after which the special value <code>__other__</code> will be used.</p>
 </li>
 </ul>
-<a class="header" href="#examples-2" id="examples-2"><h2>Examples</h2></a>
+<h2><a class="header" href="#examples-2" id="examples-2">Examples</a></h2>
 <ul>
 <li>Record the number of times different kinds of crashes occurred.</li>
 </ul>
-<a class="header" href="#recorded-errors-2" id="recorded-errors-2"><h2>Recorded Errors</h2></a>
+<h2><a class="header" href="#recorded-errors-2" id="recorded-errors-2">Recorded Errors</a></h2>
 <ul>
 <li>
 <p><code>invalid_label</code>: If the label contains invalid characters.</p>
@@ -660,18 +667,18 @@ assertEquals(3, Stability.crashCount[&quot;native_code_crash&quot;].testGetValue
 <p><code>invalid_label</code>: If the label exceeds the maximum number of allowed characters.</p>
 </li>
 </ul>
-<a class="header" href="#reference-2" id="reference-2"><h2>Reference</h2></a>
+<h2><a class="header" href="#reference-2" id="reference-2">Reference</a></h2>
 <ul>
-<li>Kotlin API docs <a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-labeled-metric-type/index.html">LabeledMetricType</a>, <a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-counter-metric-type/index.html">CounterMetricType</a></li>
+<li>Kotlin API docs <a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-labeled-metric-type/index.html">LabeledMetricType</a>, <a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-counter-metric-type/index.html">CounterMetricType</a></li>
 </ul>
-<a class="header" href="#strings" id="strings"><h1>Strings</h1></a>
+<h1><a class="header" href="#strings" id="strings">Strings</a></h1>
 <p>This allows recording a Unicode string value with arbitrary content.</p>
 <hr />
 <p><em>Note:</em> Be careful using arbitrary strings and make sure they can't accidentally contain identifying data (like directory paths or user input).</p>
 <hr />
 <p><em>Note:</em> This is does not support recording JSON blobs - please get in contact with the Telemetry team if you're missing a type.</p>
 <hr />
-<a class="header" href="#configuration-3" id="configuration-3"><h2>Configuration</h2></a>
+<h2><a class="header" href="#configuration-3" id="configuration-3">Configuration</a></h2>
 <p>Say you're adding a metric to find out what the default search in a browser is. First you need to add an entry for the metric to the <code>metrics.yaml</code> file:</p>
 <pre><code class="language-YAML">search.default:
   name:
@@ -680,7 +687,7 @@ assertEquals(3, Stability.crashCount[&quot;native_code_crash&quot;].testGetValue
       The name of the default search engine.
     ...
 </code></pre>
-<a class="header" href="#api-3" id="api-3"><h2>API</h2></a>
+<h2><a class="header" href="#api-3" id="api-3">API</a></h2>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.SearchDefault
 
 // Record a value into the metric.
@@ -697,11 +704,11 @@ assertTrue(SearchDefault.name.testHasValue())
 // Does the string metric have the expected value?
 assertEquals(&quot;wikipedia&quot;, SearchDefault.name.testGetValue())
 </code></pre>
-<a class="header" href="#limits-3" id="limits-3"><h2>Limits</h2></a>
+<h2><a class="header" href="#limits-3" id="limits-3">Limits</a></h2>
 <ul>
 <li>Fixed maximum string length: 50. Longer strings are truncated. For the original Kotlin implementation of Glean, this is measured in Unicode characters. For the Rust implementation, this is measured in the number of bytes when the string is encoded in UTF-8.</li>
 </ul>
-<a class="header" href="#examples-3" id="examples-3"><h2>Examples</h2></a>
+<h2><a class="header" href="#examples-3" id="examples-3">Examples</a></h2>
 <ul>
 <li>
 <p>Record the operating system name with a value of &quot;android&quot;.</p>
@@ -710,17 +717,17 @@ assertEquals(&quot;wikipedia&quot;, SearchDefault.name.testGetValue())
 <p>Recording the device model with a value of &quot;SAMSUNG-SGH-I997&quot;.</p>
 </li>
 </ul>
-<a class="header" href="#recorded-errors-3" id="recorded-errors-3"><h2>Recorded errors</h2></a>
+<h2><a class="header" href="#recorded-errors-3" id="recorded-errors-3">Recorded errors</a></h2>
 <ul>
 <li><code>invalid_value</code>: if the string is too long</li>
 </ul>
-<a class="header" href="#reference-3" id="reference-3"><h2>Reference</h2></a>
+<h2><a class="header" href="#reference-3" id="reference-3">Reference</a></h2>
 <ul>
-<li><a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-string-metric-type/index.html">Kotlin API docs</a>.</li>
+<li><a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-string-metric-type/index.html">Kotlin API docs</a>.</li>
 </ul>
-<a class="header" href="#labeled-strings" id="labeled-strings"><h1>Labeled Strings</h1></a>
+<h1><a class="header" href="#labeled-strings" id="labeled-strings">Labeled Strings</a></h1>
 <p>Labeled strings record multiple Unicode string values, each under a different label.</p>
-<a class="header" href="#configuration-4" id="configuration-4"><h2>Configuration</h2></a>
+<h2><a class="header" href="#configuration-4" id="configuration-4">Configuration</a></h2>
 <p>For example to record which kind of error occured in different stages of a login process - <code>&quot;RuntimeException&quot;</code> in the <code>&quot;server_auth&quot;</code> stage or <code>&quot;invalid_string&quot;</code> in the <code>&quot;enter_email&quot;</code> stage:</p>
 <pre><code class="language-YAML">login:
   errors_by_stage:
@@ -731,7 +738,7 @@ assertEquals(&quot;wikipedia&quot;, SearchDefault.name.testGetValue())
       - enter_email
     ...
 </code></pre>
-<a class="header" href="#api-4" id="api-4"><h2>API</h2></a>
+<h2><a class="header" href="#api-4" id="api-4">API</a></h2>
 <p>Now you can use the labeled string from the application's code:</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Login
 
@@ -744,7 +751,7 @@ Glean.enableTestingMode()
 // Was anything recorded?
 assertTrue(Login.errorsByStage[&quot;server_auth&quot;].testHasValue())
 </code></pre>
-<a class="header" href="#limits-4" id="limits-4"><h2>Limits</h2></a>
+<h2><a class="header" href="#limits-4" id="limits-4">Limits</a></h2>
 <ul>
 <li>
 <p>Each label must be in <code>snake_case</code> (and also may contain <code>.</code>).</p>
@@ -759,11 +766,11 @@ assertTrue(Login.errorsByStage[&quot;server_auth&quot;].testHasValue())
 <p>If the labels aren't specified in the <code>metrics.yaml</code>, only 16 different dynamic labels may be used, after which the special value <code>__other__</code> will be used.</p>
 </li>
 </ul>
-<a class="header" href="#examples-4" id="examples-4"><h2>Examples</h2></a>
+<h2><a class="header" href="#examples-4" id="examples-4">Examples</a></h2>
 <ul>
-<li>What kind of errors occurred at each step in the login process?</li>
+<li>What kind of errors occurred at each step in the login process? </li>
 </ul>
-<a class="header" href="#recorded-errors-4" id="recorded-errors-4"><h2>Recorded Errors</h2></a>
+<h2><a class="header" href="#recorded-errors-4" id="recorded-errors-4">Recorded Errors</a></h2>
 <ul>
 <li>
 <p><code>invalid_label</code>: If the label contains invalid characters.</p>
@@ -772,16 +779,16 @@ assertTrue(Login.errorsByStage[&quot;server_auth&quot;].testHasValue())
 <p><code>invalid_label</code>: If the label exceeds the maximum number of allowed characters.</p>
 </li>
 </ul>
-<a class="header" href="#reference-4" id="reference-4"><h2>Reference</h2></a>
+<h2><a class="header" href="#reference-4" id="reference-4">Reference</a></h2>
 <ul>
-<li>Kotlin API docs: <a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-labeled-metric-type/index.html">LabeledMetricType</a>, <a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-string-metric-type/index.html">StringMetricType</a></li>
+<li>Kotlin API docs: <a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-labeled-metric-type/index.html">LabeledMetricType</a>, <a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-string-metric-type/index.html">StringMetricType</a></li>
 </ul>
-<a class="header" href="#string-list" id="string-list"><h1>String List</h1></a>
+<h1><a class="header" href="#string-list" id="string-list">String List</a></h1>
 <p>Strings lists are used for recording a list of Unicode string values, such as the names of the enabled search engines.</p>
 <hr />
 <p><em>Note:</em> Be careful using arbitrary strings and make sure they can't accidentally contain identifying data (like directory paths or user input).</p>
 <hr />
-<a class="header" href="#configuration-5" id="configuration-5"><h2>Configuration</h2></a>
+<h2><a class="header" href="#configuration-5" id="configuration-5">Configuration</a></h2>
 <p>First you need to add an entry for the counter to the <code>metrics.yaml</code> file:</p>
 <pre><code class="language-YAML">search:
   engines:
@@ -790,7 +797,7 @@ assertTrue(Login.errorsByStage[&quot;server_auth&quot;].testHasValue())
       Records the name of the enabled search engines.
     ...
 </code></pre>
-<a class="header" href="#api-5" id="api-5"><h2>API</h2></a>
+<h2><a class="header" href="#api-5" id="api-5">API</a></h2>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Search
 
 // Add them one at a time
@@ -810,7 +817,7 @@ assertTrue(Search.engines.testHasValue())
 // Does it have the expected value?
 assertEquals(listOf(&quot;Google&quot;, &quot;DuckDuckGo&quot;), Search.engines.testGetValue())
 </code></pre>
-<a class="header" href="#limits-5" id="limits-5"><h2>Limits</h2></a>
+<h2><a class="header" href="#limits-5" id="limits-5">Limits</a></h2>
 <ul>
 <li>
 <p>Fixed maximum string length: 50. Longer strings are truncated. For the original Kotlin implementation of Glean, this is measured in Unicode characters. For the Rust implementation, this is measured in the number of bytes when the string is encoded in UTF-8.</p>
@@ -819,11 +826,11 @@ assertEquals(listOf(&quot;Google&quot;, &quot;DuckDuckGo&quot;), Search.engines.
 <p>Fixed maximum list length: 20 items. Additional strings are dropped.</p>
 </li>
 </ul>
-<a class="header" href="#examples-5" id="examples-5"><h2>Examples</h2></a>
+<h2><a class="header" href="#examples-5" id="examples-5">Examples</a></h2>
 <ul>
 <li>The names of the enabled search engines.</li>
 </ul>
-<a class="header" href="#recorded-errors-5" id="recorded-errors-5"><h2>Recorded errors</h2></a>
+<h2><a class="header" href="#recorded-errors-5" id="recorded-errors-5">Recorded errors</a></h2>
 <ul>
 <li>
 <p><code>invalid_value</code>: if the string is too long</p>
@@ -832,15 +839,15 @@ assertEquals(listOf(&quot;Google&quot;, &quot;DuckDuckGo&quot;), Search.engines.
 <p><code>invalid_value</code>: if the list is too long</p>
 </li>
 </ul>
-<a class="header" href="#reference-5" id="reference-5"><h2>Reference</h2></a>
+<h2><a class="header" href="#reference-5" id="reference-5">Reference</a></h2>
 <ul>
-<li><a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-string-list-metric-type/index.html">Kotlin API docs</a></li>
+<li><a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-string-list-metric-type/index.html">Kotlin API docs</a></li>
 </ul>
-<a class="header" href="#timespan" id="timespan"><h1>Timespan</h1></a>
+<h1><a class="header" href="#timespan" id="timespan">Timespan</a></h1>
 <p><strong>STATUS: <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1552863">Not implemented.</a></strong></p>
-<p>Timespans are used to make a summed measurement of how much time is spent in a particular task.</p>
+<p>Timespans are used to make a summed measurement of how much time is spent in a particular task. </p>
 <p>To measure the distribution of multiple timespans, see <a href="user/metrics/timing_distribution.html">Timing Distributions</a>. To record absolute times, see <a href="user/metrics/datetime.html">Datetimes</a>.</p>
-<a class="header" href="#configuration-6" id="configuration-6"><h2>Configuration</h2></a>
+<h2><a class="header" href="#configuration-6" id="configuration-6">Configuration</a></h2>
 <p>Timespans have a required <code>time_unit</code> parameter to specify the smallest unit of resolution that the timespan will record. The allowed values for <code>time_unit</code> are:</p>
 <ul>
 <li><code>nanosecond</code></li>
@@ -861,7 +868,7 @@ assertEquals(listOf(&quot;Google&quot;, &quot;DuckDuckGo&quot;), Search.engines.
     time_unit: milliseconds
     ...
 </code></pre>
-<a class="header" href="#api-6" id="api-6"><h2>API</h2></a>
+<h2><a class="header" href="#api-6" id="api-6">API</a></h2>
 <p>Each time interval that the timespan metric records must be associated with an object provided by the user. This is so that intervals can be measured concurrently. In our example using login time, this might be an object representing the login UI page.</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Auth
 
@@ -890,25 +897,25 @@ assertTrue(Auth.loginTime.testHasValue())
 // Does the timer have the expected value
 assertTrue(Auth.loginTime.testGetValue() &gt; 0)
 </code></pre>
-<a class="header" href="#limits-6" id="limits-6"><h2>Limits</h2></a>
+<h2><a class="header" href="#limits-6" id="limits-6">Limits</a></h2>
 <ul>
 <li>None.</li>
 </ul>
-<a class="header" href="#examples-6" id="examples-6"><h2>Examples</h2></a>
+<h2><a class="header" href="#examples-6" id="examples-6">Examples</a></h2>
 <ul>
 <li>How much time is spent rendering the UI?</li>
 </ul>
-<a class="header" href="#recorded-errors-6" id="recorded-errors-6"><h2>Recorded errors</h2></a>
+<h2><a class="header" href="#recorded-errors-6" id="recorded-errors-6">Recorded errors</a></h2>
 <ul>
-<li><code>invalid_value</code>: If recording a negative timespan.</li>
+<li><code>invalid_value</code>: If recording a negative timespan. </li>
 </ul>
-<a class="header" href="#reference-6" id="reference-6"><h2>Reference</h2></a>
+<h2><a class="header" href="#reference-6" id="reference-6">Reference</a></h2>
 <ul>
-<li><a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-timespan-metric-type/index.html">Kotlin API docs</a></li>
+<li><a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-timespan-metric-type/index.html">Kotlin API docs</a></li>
 </ul>
-<a class="header" href="#labeled-timespans" id="labeled-timespans"><h1>Labeled Timespans</h1></a>
+<h1><a class="header" href="#labeled-timespans" id="labeled-timespans">Labeled Timespans</a></h1>
 <p>Used to measure how much time is spent in a set of related tasks.</p>
-<a class="header" href="#configuration-7" id="configuration-7"><h2>Configuration</h2></a>
+<h2><a class="header" href="#configuration-7" id="configuration-7">Configuration</a></h2>
 <p>For example, to record the time spent in different stages in a login process:</p>
 <pre><code class="language-YAML">auth:
   times_per_stage:
@@ -920,10 +927,10 @@ assertTrue(Auth.loginTime.testGetValue() &gt; 0)
       - load_next_view
     ...
 </code></pre>
-<a class="header" href="#api-7" id="api-7"><h2>API</h2></a>
-<p>Now you can use the labeled timespan from the application's code.
-Each time interval that the metric records must be associated with an object provided by the user.
-This is so that intervals can be measured concurrently.
+<h2><a class="header" href="#api-7" id="api-7">API</a></h2>
+<p>Now you can use the labeled timespan from the application's code. 
+Each time interval that the metric records must be associated with an object provided by the user. 
+This is so that intervals can be measured concurrently. 
 In our example, using time in different stages of the login process, this might be an object representing the login UI page.</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Auth
 fun onShowLoginForm(e: Event) {
@@ -952,7 +959,7 @@ assertTrue(Auth.timesPerStage[&quot;auth_with_server&quot;].testHasValue())
 assertTrue(Auth.timesPerStage[&quot;fill_form&quot;].testGetValue() &gt; 0)
 assertTrue(Auth.timesPerStage[&quot;auth_with_server&quot;].testGetValue() &gt; 0)Now you can use the labeled counter from the application's code:
 </code></pre>
-<a class="header" href="#limits-7" id="limits-7"><h2>Limits</h2></a>
+<h2><a class="header" href="#limits-7" id="limits-7">Limits</a></h2>
 <ul>
 <li>
 <p>Each label must be in <code>snake_case</code> (and also may contain <code>.</code>).</p>
@@ -967,11 +974,11 @@ assertTrue(Auth.timesPerStage[&quot;auth_with_server&quot;].testGetValue() &gt; 
 <p>If the labels aren't specified in the <code>metrics.yaml</code>, only 16 different dynamic labels may be used, after which the special value <code>__other__</code> will be used.</p>
 </li>
 </ul>
-<a class="header" href="#examples-7" id="examples-7"><h2>Examples</h2></a>
+<h2><a class="header" href="#examples-7" id="examples-7">Examples</a></h2>
 <ul>
 <li>Record the time spent in different stages in a login process.</li>
 </ul>
-<a class="header" href="#recorded-errors-7" id="recorded-errors-7"><h2>Recorded Errors</h2></a>
+<h2><a class="header" href="#recorded-errors-7" id="recorded-errors-7">Recorded Errors</a></h2>
 <ul>
 <li>
 <p><code>invalid_label</code>: If the label contains invalid characters.</p>
@@ -980,15 +987,15 @@ assertTrue(Auth.timesPerStage[&quot;auth_with_server&quot;].testGetValue() &gt; 
 <p><code>invalid_label</code>: If the label exceeds the maximum number of allowed characters.</p>
 </li>
 </ul>
-<a class="header" href="#reference-7" id="reference-7"><h2>Reference</h2></a>
+<h2><a class="header" href="#reference-7" id="reference-7">Reference</a></h2>
 <ul>
-<li>Kotlin API docs <a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-labeled-metric-type/index.html">LabeledMetricType</a>, <a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-timespan-metric-type/index.html">TimespanMetricType</a></li>
+<li>Kotlin API docs <a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-labeled-metric-type/index.html">LabeledMetricType</a>, <a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-timespan-metric-type/index.html">TimespanMetricType</a></li>
 </ul>
-<a class="header" href="#timing-distribution" id="timing-distribution"><h1>Timing Distribution</h1></a>
+<h1><a class="header" href="#timing-distribution" id="timing-distribution">Timing Distribution</a></h1>
 <p><strong>STATUS: <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1552865">Not implemented.</a></strong></p>
 <p>Timing distributions are used to accumulate and store time measurement, for analyzing distributions of the timing data.</p>
 <p>To measure the distribution of multiple timespans, see <a href="user/metrics/timing_distribution.html">Timing Distributions</a>. To record absolute times, see <a href="user/metrics/datetime.html">Datetimes</a>.</p>
-<a class="header" href="#configuration-8" id="configuration-8"><h2>Configuration</h2></a>
+<h2><a class="header" href="#configuration-8" id="configuration-8">Configuration</a></h2>
 <p>Timing distributions have a required <code>time_unit</code> parameter to specify the resolution and range of the values that are recorded. The allowed values for <code>time_unit</code> are:</p>
 <ul>
 <li><code>nanosecond</code></li>
@@ -1009,7 +1016,7 @@ assertTrue(Auth.timesPerStage[&quot;auth_with_server&quot;].testGetValue() &gt; 
       Counts how long each page takes to load
     ...
 </code></pre>
-<a class="header" href="#api-8" id="api-8"><h2>API</h2></a>
+<h2><a class="header" href="#api-8" id="api-8">API</a></h2>
 <p>Now you can use the timing distribution from the application's code. Each time interval that the timing distribution metric records must be associated with an object provided by the user. This is so that intervals can be measured concurrently.  For example, to measure page load time on a number of tabs that are loading at the same time, each time interval should be associated with an object that uniquely represents each tab.</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Pages
 
@@ -1038,26 +1045,26 @@ assertEquals(11, snapshot.sum)
 // Usually you don't know the exact timing values, but how many should have been recorded.
 assertEquals(2L, snapshot.count())
 </code></pre>
-<a class="header" href="#limits-8" id="limits-8"><h2>Limits</h2></a>
+<h2><a class="header" href="#limits-8" id="limits-8">Limits</a></h2>
 <ul>
 <li>Which range of values is recorded in detail depends on the <code>time_unit</code>, e.g. for milliseconds, all values greater 60000 are recorded as overflow values.</li>
 </ul>
-<a class="header" href="#examples-8" id="examples-8"><h2>Examples</h2></a>
+<h2><a class="header" href="#examples-8" id="examples-8">Examples</a></h2>
 <ul>
 <li>How long does it take a page to load?</li>
 </ul>
-<a class="header" href="#recorded-errors-8" id="recorded-errors-8"><h2>Recorded errors</h2></a>
+<h2><a class="header" href="#recorded-errors-8" id="recorded-errors-8">Recorded errors</a></h2>
 <ul>
-<li><code>invalid_value</code>: If recording a negative timespan.</li>
+<li><code>invalid_value</code>: If recording a negative timespan. </li>
 </ul>
-<a class="header" href="#reference-8" id="reference-8"><h2>Reference</h2></a>
+<h2><a class="header" href="#reference-8" id="reference-8">Reference</a></h2>
 <ul>
-<li>See <a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-timing-distribution-metric-type/index.html">Kotlin API docs</a></li>
+<li>See <a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-timing-distribution-metric-type/index.html">Kotlin API docs</a></li>
 </ul>
-<a class="header" href="#uuid" id="uuid"><h1>UUID</h1></a>
+<h1><a class="header" href="#uuid" id="uuid">UUID</a></h1>
 <p><strong>STATUS: <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1552870">Not implemented.</a></strong></p>
 <p>UUIDs are used to record values that uniquely identify some entity, such as a client id.</p>
-<a class="header" href="#configuration-9" id="configuration-9"><h2>Configuration</h2></a>
+<h2><a class="header" href="#configuration-9" id="configuration-9">Configuration</a></h2>
 <p>You first need to add an entry for it to the <code>metrics.yaml</code> file:</p>
 <pre><code class="language-YAML">user:
   client_id:
@@ -1066,7 +1073,7 @@ assertEquals(2L, snapshot.count())
       A unique identifier for the client's profile
     ...
 </code></pre>
-<a class="header" href="#api-9" id="api-9"><h2>API</h2></a>
+<h2><a class="header" href="#api-9" id="api-9">API</a></h2>
 <p>Now that the UUID is defined in <code>metrics.yaml</code>, you can use the metric to record values in the application's code.</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.User
 
@@ -1082,28 +1089,28 @@ assertTrue(User.clientId.testHasValue())
 // Was it the expected value? 
 assertEquals(uuid, User.clientId.testGetValue())
 </code></pre>
-<a class="header" href="#limits-9" id="limits-9"><h2>Limits</h2></a>
+<h2><a class="header" href="#limits-9" id="limits-9">Limits</a></h2>
 <ul>
 <li>None.</li>
 </ul>
-<a class="header" href="#examples-9" id="examples-9"><h2>Examples</h2></a>
+<h2><a class="header" href="#examples-9" id="examples-9">Examples</a></h2>
 <ul>
 <li>A unique identifier for the client.</li>
 </ul>
-<a class="header" href="#recorded-errors-9" id="recorded-errors-9"><h2>Recorded errors</h2></a>
+<h2><a class="header" href="#recorded-errors-9" id="recorded-errors-9">Recorded errors</a></h2>
 <ul>
 <li>None.</li>
 </ul>
-<a class="header" href="#reference-9" id="reference-9"><h2>Reference</h2></a>
+<h2><a class="header" href="#reference-9" id="reference-9">Reference</a></h2>
 <ul>
-<li>See <a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-uuid-metric-type/index.html">Kotlin API docs</a>.</li>
+<li>See <a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-uuid-metric-type/index.html">Kotlin API docs</a>.</li>
 </ul>
-<a class="header" href="#datetime" id="datetime"><h1>Datetime</h1></a>
+<h1><a class="header" href="#datetime" id="datetime">Datetime</a></h1>
 <p><strong>STATUS: Not implemented.</strong></p>
 <p>Datetimes are used to record an absolute date and time, for example the date and time that the application was first run.</p>
 <p>The device's offset from UTC is recorded and sent with the datetime value in the ping.</p>
 <p>To measure the distribution of multiple timespans, see <a href="user/metrics/timing_distribution.html">Timing Distributions</a>. To record absolute times, see <a href="user/metrics/datetime.html">Datetimes</a>.</p>
-<a class="header" href="#configuration-10" id="configuration-10"><h2>Configuration</h2></a>
+<h2><a class="header" href="#configuration-10" id="configuration-10">Configuration</a></h2>
 <p>Datetimes have a required <code>time_unit</code> parameter to specify the smallest unit of resolution that the timespan will record. The allowed values for <code>time_unit</code> are:</p>
 <ul>
 <li><code>nanosecond</code></li>
@@ -1124,7 +1131,7 @@ assertEquals(uuid, User.clientId.testGetValue())
       Records the date when the application was first run
     ...
 </code></pre>
-<a class="header" href="#api-10" id="api-10"><h2>API</h2></a>
+<h2><a class="header" href="#api-10" id="api-10">API</a></h2>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Install
 
 Install.firstRun.set() // Records &quot;now&quot;
@@ -1141,27 +1148,27 @@ assertTrue(Install.firstRun.testHasValue())
 // &quot;-05:00&quot; suffix.
 assertEquals(&quot;2019-03-25-05:00&quot;, Install.firstRun.testGetValueAsString())
 </code></pre>
-<a class="header" href="#limits-10" id="limits-10"><h2>Limits</h2></a>
+<h2><a class="header" href="#limits-10" id="limits-10">Limits</a></h2>
 <ul>
 <li>None.</li>
 </ul>
-<a class="header" href="#examples-10" id="examples-10"><h2>Examples</h2></a>
+<h2><a class="header" href="#examples-10" id="examples-10">Examples</a></h2>
 <ul>
 <li>When did the user first run the application?</li>
 </ul>
-<a class="header" href="#recorded-errors-10" id="recorded-errors-10"><h2>Recorded errors</h2></a>
+<h2><a class="header" href="#recorded-errors-10" id="recorded-errors-10">Recorded errors</a></h2>
 <ul>
 <li>None.</li>
 </ul>
-<a class="header" href="#reference-10" id="reference-10"><h2>Reference</h2></a>
+<h2><a class="header" href="#reference-10" id="reference-10">Reference</a></h2>
 <ul>
-<li><a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-datetime-metric-type/index.html">Kotlin API docs</a></li>
+<li><a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-datetime-metric-type/index.html">Kotlin API docs</a></li>
 </ul>
-<a class="header" href="#events" id="events"><h1>Events</h1></a>
+<h1><a class="header" href="#events" id="events">Events</a></h1>
 <p><strong>Status: <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1552872">Not implemented.</a></strong></p>
 <p>Events allow recording of e.g. individual occurences of user actions, say every time a view was open and from where. Each time you record an event, it records a
 timestamp, the event's name and a set of custom values.</p>
-<a class="header" href="#configuration-11" id="configuration-11"><h2>Configuration</h2></a>
+<h2><a class="header" href="#configuration-11" id="configuration-11">Configuration</a></h2>
 <p>Say you're adding a new event for when a view is shown. First you need to add an entry for the event to the <code>metrics.yaml</code> file:</p>
 <pre><code class="language-YAML">views:
   login_opened:
@@ -1173,7 +1180,7 @@ timestamp, the event's name and a set of custom values.</p>
       source_of_login: 
         description: The source from which the login view was opened, e.g. &quot;toolbar&quot;.
 </code></pre>
-<a class="header" href="#api-11" id="api-11"><h2>API</h2></a>
+<h2><a class="header" href="#api-11" id="api-11">API</a></h2>
 <p>Note that an <code>enum</code> has been generated for handling the <code>extra_keys</code>: it has the same name as the event metric, with <code>Keys</code> added.</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Views
 
@@ -1192,7 +1199,7 @@ assertEquals(2, snapshot.size)
 val first = snapshot.single()
 assertEquals(&quot;login_opened&quot;, first.name)
 </code></pre>
-<a class="header" href="#limits-11" id="limits-11"><h2>Limits</h2></a>
+<h2><a class="header" href="#limits-11" id="limits-11">Limits</a></h2>
 <ul>
 <li>
 <p>When 500 events are queued on the client, and events pings is immediately sent.</p>
@@ -1201,20 +1208,20 @@ assertEquals(&quot;login_opened&quot;, first.name)
 <p>Event timestamps use a system timer that is guaranteed to be monotonic only within a particular boot of the device. Therefore, if there are any unsent recorded events on disk when the application starts, any pings containing those events are sent immediately, so that Glean can start over using a new timer and events based on different timers are never sent within the same ping.</p>
 </li>
 </ul>
-<a class="header" href="#examples-11" id="examples-11"><h2>Examples</h2></a>
+<h2><a class="header" href="#examples-11" id="examples-11">Examples</a></h2>
 <ul>
 <li>Every time a new tab is opened.</li>
 </ul>
-<a class="header" href="#recorded-errors-11" id="recorded-errors-11"><h2>Recorded errors</h2></a>
+<h2><a class="header" href="#recorded-errors-11" id="recorded-errors-11">Recorded errors</a></h2>
 <ul>
 <li>None.</li>
 </ul>
-<a class="header" href="#reference-11" id="reference-11"><h2>Reference</h2></a>
+<h2><a class="header" href="#reference-11" id="reference-11">Reference</a></h2>
 <ul>
-<li>See <a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-event-metric-type/index.html">Kotlin API docs</a>.</li>
+<li>See <a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-event-metric-type/index.html">Kotlin API docs</a>.</li>
 </ul>
-<a class="header" href="#glean-pings" id="glean-pings"><h1>Glean Pings</h1></a>
-<p>Every Glean ping is in JSON format and contains one or more of the <a href="#ping-sections">common sections</a> with shared information data.</p>
+<h1><a class="header" href="#glean-pings" id="glean-pings">Glean Pings</a></h1>
+<p>Every Glean ping is in JSON format and contains one or more of the <a href="user/pings/#ping-sections">common sections</a> with shared information data.</p>
 <p>If data collection is enabled, Glean provides a set of built-in pings that are assembled out of the box without any developer intervention.  The following is a list of these built-in pings:</p>
 <ul>
 <li><a href="user/pings/baseline.html"><code>baseline</code> ping</a></li>
@@ -1222,49 +1229,49 @@ assertEquals(&quot;login_opened&quot;, first.name)
 <li><a href="user/pings/metrics.html"><code>metrics</code> ping</a></li>
 </ul>
 <p>Applications can also define and send their own <a href="user/pings/custom.html">custom pings</a>.</p>
-<a class="header" href="#ping-sections" id="ping-sections"><h2>Ping sections</h2></a>
+<h2><a class="header" href="#ping-sections" id="ping-sections">Ping sections</a></h2>
 <p>There are two standard metadata sections that are added to most pings, in addition to their core metrics and events content (which are described elsewhere in <a href="user/pings/../adding-new-metrics.html">adding new metrics</a>.</p>
 <ul>
 <li>
-<p>The <a href="#The-ping_info-section"><code>ping_info</code> section</a> contains core metadata that is included in <strong>every</strong> ping.</p>
+<p>The <a href="user/pings/#The-ping_info-section"><code>ping_info</code> section</a> contains core metadata that is included in <strong>every</strong> ping.</p>
 </li>
 <li>
-<p>The <a href="#The-client_info-section"><code>client_info</code> section</a> contains information that identifies the client.
+<p>The <a href="user/pings/#The-client_info-section"><code>client_info</code> section</a> contains information that identifies the client. 
 It is included in most pings (including all built-in pings), but may be excluded from pings where we don't want to connect client information with the other metrics in the ping.</p>
 </li>
 </ul>
-<a class="header" href="#the-ping_info-section" id="the-ping_info-section"><h3>The <code>ping_info</code> section</h3></a>
-<p>The following fields are included in the <code>ping_info</code> section, for every ping.
+<h3><a class="header" href="#the-ping_info-section" id="the-ping_info-section">The <code>ping_info</code> section</a></h3>
+<p>The following fields are included in the <code>ping_info</code> section, for every ping. 
 Optional fields are marked accordingly.</p>
-<table><thead><tr><th> Field name </th><th> Type </th><th> Description </th></tr></thead><tbody>
-<tr><td> <code>ping_type</code> </td><td> String </td><td> The name of the ping type (e.g. &quot;baseline&quot;, &quot;metrics&quot;) </td></tr>
-<tr><td> <code>seq</code> </td><td> Counter </td><td> A running counter of the number of times pings of this type have been sent </td></tr>
-<tr><td> <code>experiments</code> </td><td> Object </td><td> <em>Optional</em>. A dictionary of <a href="#the-experiments-object">active experiments</a> </td></tr>
-<tr><td> <code>start_time</code> </td><td> Datetime </td><td> The time of the start of collection of the data in the ping, in local time and with minute precision, including timezone information. </td></tr>
-<tr><td> <code>end_time</code> </td><td> Datetime </td><td> The time of the end of collection of the data in the ping, in local time and with minute precision, including timezone information. This is also the time this ping was generated and is likely well before ping transmission time. </td></tr>
+<table><thead><tr><th>Field name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>ping_type</code></td><td>String</td><td>The name of the ping type (e.g. &quot;baseline&quot;, &quot;metrics&quot;)</td></tr>
+<tr><td><code>seq</code></td><td>Counter</td><td>A running counter of the number of times pings of this type have been sent</td></tr>
+<tr><td><code>experiments</code></td><td>Object</td><td><em>Optional</em>. A dictionary of <a href="user/pings/#the-experiments-object">active experiments</a></td></tr>
+<tr><td><code>start_time</code></td><td>Datetime</td><td>The time of the start of collection of the data in the ping, in local time and with minute precision, including timezone information.</td></tr>
+<tr><td><code>end_time</code></td><td>Datetime</td><td>The time of the end of collection of the data in the ping, in local time and with minute precision, including timezone information. This is also the time this ping was generated and is likely well before ping transmission time.</td></tr>
 </tbody></table>
 <p>All the metrics surviving application restarts (e.g. <code>seq</code>, ...) are removed once the application using Glean is uninstalled.</p>
-<a class="header" href="#the-client_info-section" id="the-client_info-section"><h3>The <code>client_info</code> section</h3></a>
+<h3><a class="header" href="#the-client_info-section" id="the-client_info-section">The <code>client_info</code> section</a></h3>
 <p>The following fields are included in the <code>client_info</code> section.
 Optional fields are marked accordingly.</p>
-<table><thead><tr><th> Field name </th><th> Type </th><th> Description </th></tr></thead><tbody>
-<tr><td> <code>app_build</code> </td><td> String </td><td> The build identifier generated by the CI system (e.g. &quot;1234/A&quot;) </td></tr>
-<tr><td> <code>app_display_version</code> </td><td> String </td><td> The user-visible version string (e.g. &quot;1.0.3&quot;) </td></tr>
-<tr><td> <code>app_channel</code> </td><td> String </td><td> <em>Optional</em> The product-provided release channel (e.g. &quot;beta&quot;) </td></tr>
-<tr><td> <code>architecture</code> </td><td> String </td><td> The architecture of the device (e.g. &quot;arm&quot;, &quot;x86&quot;) </td></tr>
-<tr><td> <code>client_id</code> </td><td> UUID </td><td>  A UUID identifying a profile and allowing user-oriented correlation of data </td></tr>
-<tr><td> <code>device_manufacturer</code> </td><td> String </td><td> The manufacturer of the device </td></tr>
-<tr><td> <code>device_model</code> </td><td> String </td><td> The model name of the device </td></tr>
-<tr><td> <code>first_run_date</code> </td><td> Datetime </td><td> The date of the first run of the application, in local time and with day precision, including timezone information. </td></tr>
-<tr><td> <code>os</code> </td><td> String </td><td> The name of the operating system (e.g. &quot;linux&quot;, &quot;Android&quot;, &quot;ios&quot;) </td></tr>
-<tr><td> <code>os_version</code> </td><td> String </td><td> The user visible version of the operating system (e.g. &quot;1.2.3&quot;) </td></tr>
-<tr><td> <code>android_sdk_version</code> </td><td> String </td><td> <em>Optional</em>. The Android specific SDK version of the software running on this hardware device (e.g. &quot;23&quot;) </td></tr>
-<tr><td> <code>telemetry_sdk_build</code> </td><td> String </td><td> The version of the Glean library </td></tr>
+<table><thead><tr><th>Field name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>app_build</code></td><td>String</td><td>The build identifier generated by the CI system (e.g. &quot;1234/A&quot;)</td></tr>
+<tr><td><code>app_display_version</code></td><td>String</td><td>The user-visible version string (e.g. &quot;1.0.3&quot;)</td></tr>
+<tr><td><code>app_channel</code></td><td>String</td><td><em>Optional</em> The product-provided release channel (e.g. &quot;beta&quot;)</td></tr>
+<tr><td><code>architecture</code></td><td>String</td><td>The architecture of the device (e.g. &quot;arm&quot;, &quot;x86&quot;)</td></tr>
+<tr><td><code>client_id</code></td><td>UUID</td><td>A UUID identifying a profile and allowing user-oriented correlation of data</td></tr>
+<tr><td><code>device_manufacturer</code></td><td>String</td><td>The manufacturer of the device</td></tr>
+<tr><td><code>device_model</code></td><td>String</td><td>The model name of the device</td></tr>
+<tr><td><code>first_run_date</code></td><td>Datetime</td><td>The date of the first run of the application, in local time and with day precision, including timezone information.</td></tr>
+<tr><td><code>os</code></td><td>String</td><td>The name of the operating system (e.g. &quot;linux&quot;, &quot;Android&quot;, &quot;ios&quot;)</td></tr>
+<tr><td><code>os_version</code></td><td>String</td><td>The user visible version of the operating system (e.g. &quot;1.2.3&quot;)</td></tr>
+<tr><td><code>android_sdk_version</code></td><td>String</td><td><em>Optional</em>. The Android specific SDK version of the software running on this hardware device (e.g. &quot;23&quot;)</td></tr>
+<tr><td><code>telemetry_sdk_build</code></td><td>String</td><td>The version of the Glean library</td></tr>
 </tbody></table>
 <p>All the metrics surviving application restarts (e.g. <code>client_id</code>, ...) are removed once the application using Glean is uninstalled.</p>
-<a class="header" href="#the-experiments-object" id="the-experiments-object"><h3>The <code>experiments</code> object</h3></a>
+<h3><a class="header" href="#the-experiments-object" id="the-experiments-object">The <code>experiments</code> object</a></h3>
 <p><strong>STATUS: Not implemented.</strong></p>
-<p>This object (included in the <a href="#The-ping_info-section"><code>ping_info</code> section</a>) contains experiments keyed by the experiment <code>id</code>. Each listed experiment contains the <code>branch</code> the client is enrolled in and may contain a string to string map with additional data in the <code>extra</code> key. Both the <code>id</code> and <code>branch</code> are truncated to 30 characters.</p>
+<p>This object (included in the <a href="user/pings/#The-ping_info-section"><code>ping_info</code> section</a>) contains experiments keyed by the experiment <code>id</code>. Each listed experiment contains the <code>branch</code> the client is enrolled in and may contain a string to string map with additional data in the <code>extra</code> key. Both the <code>id</code> and <code>branch</code> are truncated to 30 characters.</p>
 <pre><code class="language-json">{
   &quot;&lt;id&gt;&quot;: {
     &quot;branch&quot;: &quot;branch-id&quot;,
@@ -1274,8 +1281,8 @@ Optional fields are marked accordingly.</p>
   }
 }
 </code></pre>
-<a class="header" href="#ping-submission" id="ping-submission"><h2>Ping submission</h2></a>
-<p>The pings that Glean generates are submitted to the Mozilla servers at specific paths, in order to provide additional metadata without the need to unpack the ping payload.
+<h2><a class="header" href="#ping-submission" id="ping-submission">Ping submission</a></h2>
+<p>The pings that Glean generates are submitted to the Mozilla servers at specific paths, in order to provide additional metadata without the need to unpack the ping payload. 
 A typical submission URL looks like</p>
 <p><code>&quot;&lt;server-address&gt;/submit/&lt;application-id&gt;/&lt;doc-type&gt;/&lt;glean-schema-version&gt;/&lt;ping-uuid&gt;&quot;</code></p>
 <p>where:</p>
@@ -1286,35 +1293,35 @@ A typical submission URL looks like</p>
 <li><code>&lt;glean-schema-version&gt;</code>: the version of the Glean ping schema;</li>
 <li><code>&lt;ping-uuid&gt;</code>: a unique identifier for this ping.</li>
 </ul>
-<a class="header" href="#submitted-headers" id="submitted-headers"><h3>Submitted headers</h3></a>
+<h3><a class="header" href="#submitted-headers" id="submitted-headers">Submitted headers</a></h3>
 <p>A pre-defined set of headers is additionally sent along with the submitted ping:</p>
-<table><thead><tr><th> Header </th><th> Value </th><th> Description </th></tr></thead><tbody>
-<tr><td> <code>Content-Type</code> </td><td> <code>application/json; charset=utf-8</code> </td><td> Describes the data sent to the server </td></tr>
-<tr><td> <code>User-Agent</code> </td><td> Defaults to e.g. <code>Glean/0.40.0 (Android)</code>, where <code>0.40.0</code> is the Glean version number and <code>Android</code> is the platform name. It can be overriden by user through <a href="../../../javadoc/glean/mozilla.telemetry.glean/-configuration/index.html">configuration</a> </td><td> Describes the application sending the ping using Glean </td></tr>
-<tr><td> <code>Date</code> </td><td> e.g. <code>Mon, 23 Jan 2019 10:10:10 GMT+00:00</code> </td><td> Submission date/time in GMT/UTC+0 offset </td></tr>
-<tr><td> <code>X-Client-Type</code> </td><td> <code>Glean</code> </td><td> Custom header to support handling of Glean pings in the legacy pipeline </td></tr>
-<tr><td> <code>X-Client-Version</code> </td><td> e.g. <code>0.40.0</code> </td><td> The Glean version, sent as a custom header to support handling of Glean pings in the legacy pipeline </td></tr>
+<table><thead><tr><th>Header</th><th>Value</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>Content-Type</code></td><td><code>application/json; charset=utf-8</code></td><td>Describes the data sent to the server</td></tr>
+<tr><td><code>User-Agent</code></td><td>Defaults to e.g. <code>Glean/0.40.0 (Android)</code>, where <code>0.40.0</code> is the Glean version number and <code>Android</code> is the platform name. It can be overriden by user through <a href="user/pings/../../../javadoc/glean/mozilla.telemetry.glean/-configuration/index.html">configuration</a></td><td>Describes the application sending the ping using Glean</td></tr>
+<tr><td><code>Date</code></td><td>e.g. <code>Mon, 23 Jan 2019 10:10:10 GMT+00:00</code></td><td>Submission date/time in GMT/UTC+0 offset</td></tr>
+<tr><td><code>X-Client-Type</code></td><td><code>Glean</code></td><td>Custom header to support handling of Glean pings in the legacy pipeline</td></tr>
+<tr><td><code>X-Client-Version</code></td><td>e.g. <code>0.40.0</code></td><td>The Glean version, sent as a custom header to support handling of Glean pings in the legacy pipeline</td></tr>
 </tbody></table>
-<a class="header" href="#defining-background-state" id="defining-background-state"><h2>Defining background state</h2></a>
-<p>These docs refer to application 'background' state in several places.
+<h2><a class="header" href="#defining-background-state" id="defining-background-state">Defining background state</a></h2>
+<p>These docs refer to application 'background' state in several places. 
 This specifically means when the activity is no longer visible to the user, it has entered the Stopped state, and the system invokes the <a href="https://developer.android.com/reference/android/app/Activity.html#onStop()"><code>onStop()</code></a> callback.
-This may occur, for example, when a newly launched activity covers the entire screen.
+This may occur, for example, when a newly launched activity covers the entire screen. 
 The system may also call <code>onStop()</code> when the activity has finished running, and is about to be terminated.</p>
-<a class="header" href="#the-baseline-ping" id="the-baseline-ping"><h1>The <code>baseline</code> ping</h1></a>
-<a class="header" href="#description" id="description"><h2>Description</h2></a>
+<h1><a class="header" href="#the-baseline-ping" id="the-baseline-ping">The <code>baseline</code> ping</a></h1>
+<h2><a class="header" href="#description" id="description">Description</a></h2>
 <p>This ping is intended to provide metrics that are managed by the library itself, and not explicitly set by the application or included in the application's <code>metrics.yaml</code> file.</p>
-<a class="header" href="#scheduling" id="scheduling"><h2>Scheduling</h2></a>
+<h2><a class="header" href="#scheduling" id="scheduling">Scheduling</a></h2>
 <p>The <code>baseline</code> ping is automatically sent when the application is moved to the <a href="user/pings/index.html#defining-background-state">background</a>.</p>
-<a class="header" href="#contents" id="contents"><h2>Contents</h2></a>
+<h2><a class="header" href="#contents" id="contents">Contents</a></h2>
 <p>The baseline ping includes the following fields:</p>
-<table><thead><tr><th> Field name </th><th> Type </th><th> Description </th></tr></thead><tbody>
-<tr><td> <code>duration</code> </td><td> Timespan </td><td> The duration, in seconds, of the last foreground session </td></tr>
-<tr><td> <code>locale</code> </td><td> String </td><td> The locale of the application </td></tr>
+<table><thead><tr><th>Field name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>duration</code></td><td>Timespan</td><td>The duration, in seconds, of the last foreground session</td></tr>
+<tr><td><code>locale</code></td><td>String</td><td>The locale of the application</td></tr>
 </tbody></table>
 <p>The <code>baseline</code> ping shall also include the common <a href="user/pings/index.html#ping-sections">ping sections</a> found in all pings.</p>
-<a class="header" href="#querying-ping-contents" id="querying-ping-contents"><h3>Querying ping contents</h3></a>
+<h3><a class="header" href="#querying-ping-contents" id="querying-ping-contents">Querying ping contents</a></h3>
 <p>A quick note about querying ping contents (i.e. for https://sql.telemetry.mozilla.org):  Each metric in the baseline ping is organized by its metric type, and uses a namespace of <code>glean.baseline</code>. For instance, in order to select <code>duration</code> you would use <code>metrics.timespan['glean.baseline.duration']</code>. If you were trying to select a String based metric such as <code>os</code>, then you would use <code>metrics.string['glean.baseline.os']</code></p>
-<a class="header" href="#example-baseline-ping" id="example-baseline-ping"><h2>Example baseline ping</h2></a>
+<h2><a class="header" href="#example-baseline-ping" id="example-baseline-ping">Example baseline ping</a></h2>
 <pre><code class="language-json">{
   &quot;ping_info&quot;: {
     &quot;ping_type&quot;: &quot;baseline&quot;,
@@ -1351,33 +1358,33 @@ The system may also call <code>onStop()</code> when the activity has finished ru
   }
 }
 </code></pre>
-<a class="header" href="#the-metrics-ping" id="the-metrics-ping"><h1>The `metrics** ping</h1></a>
+<h1><a class="header" href="#the-metrics-ping" id="the-metrics-ping">The `metrics** ping</a></h1>
 <p><strong>STATUS: <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1551159">Not implemented.</a></strong></p>
-<a class="header" href="#description-1" id="description-1"><h2>Description</h2></a>
-<p>The <code>metrics</code> ping is intended for all of the metrics that are explicitly set by the application or are included in the application's <code>metrics.yaml</code> file (except events).
-The reported data is tied to the ping's <em>measurement window</em>, which is the time between the collection of two <code>metrics</code> ping.
-Ideally, this window is expected to be about 24 hours, given that the collection is scheduled daily at 4AM.
+<h2><a class="header" href="#description-1" id="description-1">Description</a></h2>
+<p>The <code>metrics</code> ping is intended for all of the metrics that are explicitly set by the application or are included in the application's <code>metrics.yaml</code> file (except events). 
+The reported data is tied to the ping's <em>measurement window</em>, which is the time between the collection of two <code>metrics</code> ping. 
+Ideally, this window is expected to be about 24 hours, given that the collection is scheduled daily at 4AM. 
 Data in the <a href="user/pings/index.html#the-ping_info-section"><code>ping_info</code></a> section of the ping can be used to infer the length of this window.</p>
-<a class="header" href="#scheduling-1" id="scheduling-1"><h2>Scheduling</h2></a>
-<p>The desired behaviour is to collect the ping at the first available opportunity after 4AM local time on a new calendar day.
+<h2><a class="header" href="#scheduling-1" id="scheduling-1">Scheduling</a></h2>
+<p>The desired behaviour is to collect the ping at the first available opportunity after 4AM local time on a new calendar day. 
 This breaks down into two scenarios:</p>
 <ol>
 <li>the application was just started (after a crash or a long inactivity period);</li>
 <li>the application was open and the 4AM due time was hit.</li>
 </ol>
-<p>In the first case, if the <code>metrics</code> ping was already collected on the current calendar day, a new collection will be scheduled for the next calendar day, at 4AM.
+<p>In the first case, if the <code>metrics</code> ping was already collected on the current calendar day, a new collection will be scheduled for the next calendar day, at 4AM. 
 If no collection happened yet, and the due time for the current calendar day has passed, a <code>metrics</code> ping is immediately generated and scheduled for sending.</p>
 <p>In the second case, similarly to the previous case, if the <code>metrics</code> ping was already collected on the current calendar day when we hit 4AM, then a new collection is scheduled for the next calendar day.
 Otherwise, the <code>metrics</code> is immediately collected and scheduled for sending.</p>
-<p>More <a href="#Scheduling-examples">scheduling examples</a> are included below.</p>
-<a class="header" href="#contents-1" id="contents-1"><h2>Contents</h2></a>
+<p>More <a href="user/pings/#Scheduling-examples">scheduling examples</a> are included below.</p>
+<h2><a class="header" href="#contents-1" id="contents-1">Contents</a></h2>
 <p>The <code>metrics</code> ping contains all of the metrics defined in <code>metrics.yaml</code> (except events) that don't specify a ping or where <code>default</code> is specified in their <a href="https://mozilla.github.io/glean_parser/metrics-yaml.html#send-in-pings"><code>send in pings</code></a> property.</p>
 <p>Additionally, error metrics in the <code>glean.error</code> category are included in the <code>metrics</code> ping.</p>
 <p>The <code>metrics</code> ping shall also include the common <a href="user/pings/index.html#the-ping_info-section"><code>ping_info</code></a> and <a href="user/pings/index.html#the-client_info-section">'client_info'</a> sections.</p>
-<a class="header" href="#querying-ping-contents-1" id="querying-ping-contents-1"><h3>Querying ping contents</h3></a>
-<p>A quick note about querying ping contents (i.e. for <a href="https://sql.telemetry.mozilla.org">sql.telemetry.mozilla.org</a>):  Each metric in the metrics ping is organized by its metric type, and uses a namespace of 'glean.metrics'.
+<h3><a class="header" href="#querying-ping-contents-1" id="querying-ping-contents-1">Querying ping contents</a></h3>
+<p>A quick note about querying ping contents (i.e. for <a href="https://sql.telemetry.mozilla.org">sql.telemetry.mozilla.org</a>):  Each metric in the metrics ping is organized by its metric type, and uses a namespace of 'glean.metrics'. 
 For instance, in order to select a String field called <code>test</code> you would use <code>metrics.string['glean.metrics.test']</code>.</p>
-<a class="header" href="#example-metrics-ping" id="example-metrics-ping"><h3>Example metrics ping</h3></a>
+<h3><a class="header" href="#example-metrics-ping" id="example-metrics-ping">Example metrics ping</a></h3>
 <pre><code class="language-json">{
   &quot;ping_info&quot;: {
     &quot;ping_type&quot;: &quot;metrics&quot;,
@@ -1419,8 +1426,8 @@ For instance, in order to select a String field called <code>test</code> you wou
   }
 }
 </code></pre>
-<a class="header" href="#scheduling-examples" id="scheduling-examples"><h2>Scheduling Examples</h2></a>
-<a class="header" href="#crossing-due-time-with-the-application-closed" id="crossing-due-time-with-the-application-closed"><h3>Crossing due time with the application closed</h3></a>
+<h2><a class="header" href="#scheduling-examples" id="scheduling-examples">Scheduling Examples</a></h2>
+<h3><a class="header" href="#crossing-due-time-with-the-application-closed" id="crossing-due-time-with-the-application-closed">Crossing due time with the application closed</a></h3>
 <ol>
 <li>
 <p>The application is opened on Feb 7 on 3PM, closed on 3:05PM.</p>
@@ -1447,7 +1454,7 @@ For instance, in order to select a String field called <code>test</code> you wou
 <p>Glean records metric A again, into MW2, which has a start_time of Feb8/5PM.</p>
 </li>
 </ul>
-<a class="header" href="#crossing-due-time-and-changing-timezones" id="crossing-due-time-and-changing-timezones"><h3>Crossing due time and changing timezones</h3></a>
+<h3><a class="header" href="#crossing-due-time-and-changing-timezones" id="crossing-due-time-and-changing-timezones">Crossing due time and changing timezones</a></h3>
 <ol>
 <li>
 <p>The application is opened on Feb 7 on 3PM in timezone UTC, closed on 3:05PM.</p>
@@ -1474,7 +1481,7 @@ For instance, in order to select a String field called <code>test</code> you wou
 </ul>
 </li>
 </ol>
-<a class="header" href="#the-application-doesnt-run-in-a-week" id="the-application-doesnt-run-in-a-week"><h3>The application doesn’t run in a week</h3></a>
+<h3><a class="header" href="#the-application-doesnt-run-in-a-week" id="the-application-doesnt-run-in-a-week">The application doesn’t run in a week</a></h3>
 <ol>
 <li>
 <p>The application is opened on Feb 7 on 3PM in timezone UTC, closed on 3:05PM.</p>
@@ -1501,7 +1508,7 @@ For instance, in order to select a String field called <code>test</code> you wou
 </ul>
 </li>
 </ol>
-<a class="header" href="#the-application-doesnt-run-for-a-week-and-when-its-finally-re-opened-the-timezone-has-changed" id="the-application-doesnt-run-for-a-week-and-when-its-finally-re-opened-the-timezone-has-changed"><h3>The application doesn’t run for a week, and when it’s finally re-opened the timezone has changed</h3></a>
+<h3><a class="header" href="#the-application-doesnt-run-for-a-week-and-when-its-finally-re-opened-the-timezone-has-changed" id="the-application-doesnt-run-for-a-week-and-when-its-finally-re-opened-the-timezone-has-changed">The application doesn’t run for a week, and when it’s finally re-opened the timezone has changed</a></h3>
 <ol>
 <li>
 <p>The application is opened on Feb 7 on 3PM in timezone UTC, closed on 3:05PM.</p>
@@ -1528,7 +1535,7 @@ For instance, in order to select a String field called <code>test</code> you wou
 </ul>
 </li>
 </ol>
-<a class="header" href="#the-user-changes-timezone-in-an-extreme-enough-fashion-that-they-cross-4am-twice-on-the-same-date" id="the-user-changes-timezone-in-an-extreme-enough-fashion-that-they-cross-4am-twice-on-the-same-date"><h3>The user changes timezone in an extreme enough fashion that they cross 4AM twice on the same date</h3></a>
+<h3><a class="header" href="#the-user-changes-timezone-in-an-extreme-enough-fashion-that-they-cross-4am-twice-on-the-same-date" id="the-user-changes-timezone-in-an-extreme-enough-fashion-that-they-cross-4am-twice-on-the-same-date">The user changes timezone in an extreme enough fashion that they cross 4AM twice on the same date</a></h3>
 <ol>
 <li>
 <p>The application is opened on Feb 7 at 3PM in timezone UTC+11, closed at 3:05PM</p>
@@ -1586,11 +1593,11 @@ For instance, in order to select a String field called <code>test</code> you wou
 </ul>
 </li>
 </ol>
-<a class="header" href="#the-events-ping" id="the-events-ping"><h1>The <code>events</code> ping</h1></a>
+<h1><a class="header" href="#the-events-ping" id="the-events-ping">The <code>events</code> ping</a></h1>
 <p><strong>STATUS: <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1552872">Not implemented.</a></strong></p>
-<a class="header" href="#description-2" id="description-2"><h2>Description</h2></a>
+<h2><a class="header" href="#description-2" id="description-2">Description</a></h2>
 <p>The events ping's purpose is to transport all of the event metric information.</p>
-<a class="header" href="#scheduling-2" id="scheduling-2"><h2>Scheduling</h2></a>
+<h2><a class="header" href="#scheduling-2" id="scheduling-2">Scheduling</a></h2>
 <p>The <code>events</code> ping is sent under the following circumstances:</p>
 <ul>
 <li>
@@ -1604,7 +1611,7 @@ For instance, in order to select a String field called <code>test</code> you wou
 </li>
 </ul>
 <p>All of these cases are handled automatically, with no intervention or configuration required by the application.</p>
-<a class="header" href="#contents-2" id="contents-2"><h2>Contents</h2></a>
+<h2><a class="header" href="#contents-2" id="contents-2">Contents</a></h2>
 <p>At the top-level, this ping contains the following keys:</p>
 <ul>
 <li>
@@ -1629,7 +1636,7 @@ For instance, in order to select a String field called <code>test</code> you wou
 <p><code>&quot;extra&quot;</code> (optional): A mapping of strings to strings providing additional data about the event. The keys are restricted to 40 characters and values in this map will never exceed 100 characters.</p>
 </li>
 </ul>
-<a class="header" href="#example-event-json" id="example-event-json"><h3>Example event JSON</h3></a>
+<h3><a class="header" href="#example-event-json" id="example-event-json">Example event JSON</a></h3>
 <pre><code class="language-json">{
   &quot;ping_info&quot;: {
     &quot;ping_type&quot;: &quot;metrics&quot;,
@@ -1673,9 +1680,9 @@ For instance, in order to select a String field called <code>test</code> you wou
   ]
 }
 </code></pre>
-<a class="header" href="#custom-pings" id="custom-pings"><h1>Custom pings</h1></a>
+<h1><a class="header" href="#custom-pings" id="custom-pings">Custom pings</a></h1>
 <p>Applications can define metrics that are sent in custom pings. Unlike the built-in pings, custom pings are sent explicitly by the application.</p>
-<a class="header" href="#defining-a-custom-ping" id="defining-a-custom-ping"><h2>Defining a custom ping</h2></a>
+<h2><a class="header" href="#defining-a-custom-ping" id="defining-a-custom-ping">Defining a custom ping</a></h2>
 <p>Custom pings must be defined in a <code>pings.yaml</code> file, which is in the same directory alongside your app's <code>metrics.yaml</code> file.</p>
 <p>Each ping has the following parameters:</p>
 <ul>
@@ -1698,8 +1705,8 @@ search:
   data_reviews:
     - http://example.com/path/to/data-review
 </code></pre>
-<a class="header" href="#loading-custom-ping-metadata-into-your-application-or-library" id="loading-custom-ping-metadata-into-your-application-or-library"><h2>Loading custom ping metadata into your application or library</h2></a>
-<p>Glean generates code from <code>pings.yaml</code> in a <code>Pings</code> object, which must be instantiated so Glean can send pings by name.
+<h2><a class="header" href="#loading-custom-ping-metadata-into-your-application-or-library" id="loading-custom-ping-metadata-into-your-application-or-library">Loading custom ping metadata into your application or library</a></h2>
+<p>Glean generates code from <code>pings.yaml</code> in a <code>Pings</code> object, which must be instantiated so Glean can send pings by name. 
 This object must be registered with Glean from your startup code (such as in your application's <code>onCreate</code> method or a function called from that method).</p>
 <pre><code>import org.mozilla.yourApplication.GleanMetrics.Pings
 
@@ -1711,7 +1718,7 @@ override fun onCreate() {
     ...
 }
 </code></pre>
-<a class="header" href="#sending-metrics-in-a-custom-ping" id="sending-metrics-in-a-custom-ping"><h2>Sending metrics in a custom ping</h2></a>
+<h2><a class="header" href="#sending-metrics-in-a-custom-ping" id="sending-metrics-in-a-custom-ping">Sending metrics in a custom ping</a></h2>
 <p>To send a metric on a custom ping, you add the custom ping's name to the <code>send_in_pings</code> parameter in the <code>metrics.yaml</code> file.</p>
 <p>For example, to define a new metric to record the default search engine, which is sent in a custom ping called <code>search</code>, put <code>search</code> in the <code>send_in_pings</code> parameter.  Note that it is an error to specify a ping in <code>send_in_pings</code> that does not also have an entry in <code>pings.yaml</code>.</p>
 <pre><code class="language-YAML">search.default:
@@ -1727,22 +1734,22 @@ override fun onCreate() {
       - search
       - default
 </code></pre>
-<a class="header" href="#sending-a-custom-ping" id="sending-a-custom-ping"><h2>Sending a custom ping</h2></a>
+<h2><a class="header" href="#sending-a-custom-ping" id="sending-a-custom-ping">Sending a custom ping</a></h2>
 <p>To send a custom ping, call the <code>send</code> method on the <code>PingType</code> object that Glean generated for your ping.</p>
 <p>For example, to send the custom ping defined above:</p>
 <pre><code class="language-kotlin">import org.mozilla.yourApplication.GleanMetrics.Pings
 Pings.search.send()
 </code></pre>
-<a class="header" href="#developer-documentation" id="developer-documentation"><h1>Developer Documentation</h1></a>
-<a class="header" href="#running-the-tests" id="running-the-tests"><h1>Running the tests</h1></a>
-<a class="header" href="#running-all-tests" id="running-all-tests"><h2>Running all tests</h2></a>
+<h1><a class="header" href="#developer-documentation" id="developer-documentation">Developer Documentation</a></h1>
+<h1><a class="header" href="#running-the-tests" id="running-the-tests">Running the tests</a></h1>
+<h2><a class="header" href="#running-all-tests" id="running-all-tests">Running all tests</a></h2>
 <p>The tests for all languages may be run from the command line:</p>
 <pre><code>make test
 </code></pre>
 <hr />
 <p><em>Windows Note:</em> On Windows, <code>make</code> is not available by default. While not required, installing <code>make</code> will allow you to use the convenience features in the <code>Makefile</code>.</p>
 <hr />
-<a class="header" href="#running-the-rust-tests" id="running-the-rust-tests"><h2>Running the Rust tests</h2></a>
+<h2><a class="header" href="#running-the-rust-tests" id="running-the-rust-tests">Running the Rust tests</a></h2>
 <p>The Rust tests may be run with the following command:</p>
 <pre><code>cargo test --all
 </code></pre>
@@ -1757,24 +1764,24 @@ This makes it harder to understand what's going on.
 For debugging you can force single-threaded tests:</p>
 <pre><code>cargo test -- --nocapture --test-threads=1
 </code></pre>
-<a class="header" href="#running-the-kotlinandroid-tests" id="running-the-kotlinandroid-tests"><h2>Running the Kotlin/Android tests</h2></a>
-<a class="header" href="#from-the-command-line" id="from-the-command-line"><h3>From the command line</h3></a>
+<h2><a class="header" href="#running-the-kotlinandroid-tests" id="running-the-kotlinandroid-tests">Running the Kotlin/Android tests</a></h2>
+<h3><a class="header" href="#from-the-command-line" id="from-the-command-line">From the command line</a></h3>
 <p>The full Android test suite may be run from the command line with:</p>
 <pre><code>./gradlew test
 </code></pre>
-<a class="header" href="#from-android-studio" id="from-android-studio"><h3>From Android Studio</h3></a>
+<h3><a class="header" href="#from-android-studio" id="from-android-studio">From Android Studio</a></h3>
 <p>To run the full Android test suite, in the &quot;Gradle&quot; pane, navigate to <code>glean-core</code> -&gt; <code>Tasks</code> -&gt; <code>verification</code> and double-click either <code>testDebugUnitTest</code> or <code>testReleaseUnitTest</code> (depending on whether you want to run in Debug or Release mode).
 You can save this task permanently by opening the task dropdown in the toolbar and selecting &quot;Save glean.rs:glean-core:android [testDebugUnitTest] Configuration&quot;.</p>
 <p>To run a single Android test, navigate to the file containing the test, and right click on the green arrow in the left margin next to the test.  There you have a choice of running or debugging the test.</p>
-<a class="header" href="#setup-the-android-build-environment" id="setup-the-android-build-environment"><h1>Setup the Android Build Environment</h1></a>
-<a class="header" href="#doing-a-local-build-of-the-android-components" id="doing-a-local-build-of-the-android-components"><h2>Doing a local build of the Android Components:</h2></a>
+<h1><a class="header" href="#setup-the-android-build-environment" id="setup-the-android-build-environment">Setup the Android Build Environment</a></h1>
+<h2><a class="header" href="#doing-a-local-build-of-the-android-components" id="doing-a-local-build-of-the-android-components">Doing a local build of the Android Components:</a></h2>
 <p>This document describes how to make local builds of the Android components in
 this repository. Most consumers of these components <em>do not</em> need to follow
 this process, but will instead use pre-built components [todo: link to this]</p>
-<a class="header" href="#prepare-your-build-environment" id="prepare-your-build-environment"><h2>Prepare your build environment</h2></a>
+<h2><a class="header" href="#prepare-your-build-environment" id="prepare-your-build-environment">Prepare your build environment</a></h2>
 <p>Typically, this process only needs to be run once, although periodically you
 may need to repeat some steps (eg, rust updates should be done periodically)</p>
-<a class="header" href="#setting-up-android-dependencies" id="setting-up-android-dependencies"><h3>Setting up Android dependencies</h3></a>
+<h3><a class="header" href="#setting-up-android-dependencies" id="setting-up-android-dependencies">Setting up Android dependencies</a></h3>
 <p>At the end of this process you should have the following environment variables set up.</p>
 <ul>
 <li><code>ANDROID_HOME</code></li>
@@ -1796,7 +1803,7 @@ If Android Studio asks you to upgrade the verison of gradle, decline.</p>
 Set the <code>ANDROID_HOME</code> environment variable to that path.
 The <code>NDK_HOME</code> can be set to <code>NDK_HOME=$ANDROID_HOME/ndk-bundle</code>.
 Set <code>JAVA_HOME</code> to be the location of Android Studio's JDK which can be found in Glean's &quot;Project Structure&quot; menu. (You may need to escape spaces in the path).</p>
-<a class="header" href="#setting-up-rust" id="setting-up-rust"><h3>Setting up Rust</h3></a>
+<h3><a class="header" href="#setting-up-rust" id="setting-up-rust">Setting up Rust</a></h3>
 <p>Rust can be installed using <code>rustup</code>, with the following commands:</p>
 <ul>
 <li><code>curl https://sh.rustup.rs -sSf | sh</code></li>
@@ -1811,7 +1818,7 @@ devices and Android emulators, the following targets need to be installed:</p>
 <li><code>rustup target add i686-linux-android</code></li>
 <li><code>rustup target add x86_64-linux-android</code></li>
 </ul>
-<a class="header" href="#building" id="building"><h2>Building</h2></a>
+<h2><a class="header" href="#building" id="building">Building</a></h2>
 <p>This should be relatively straightforward and painless:</p>
 <ol>
 <li>
@@ -1829,13 +1836,13 @@ of tasks by executing <code>./gradlew tasks</code>.</p>
 </ol>
 <p>The above can be skipped if using <code>Android Studio</code>. The project directory can be imported
 and all the build details can be left to the IDE.</p>
-<a class="header" href="#faq" id="faq"><h2>FAQ</h2></a>
+<h2><a class="header" href="#faq" id="faq">FAQ</a></h2>
 <ul>
 <li><strong>Q: Android Studio complains about Python not being found when building.</strong></li>
 <li>A: Make sure that the <code>python</code> binary is on your <code>PATH</code>. On Windows, in addition to that,
 it might be required to add its full path to the <code>rust.pythonCommand</code> entry in  <code>$project_root/local.properties</code>.</li>
 </ul>
-<a class="header" href="#glean-core---rust-component" id="glean-core---rust-component"><h1>glean-core - Rust component</h1></a>
+<h1><a class="header" href="#glean-core---rust-component" id="glean-core---rust-component">glean-core - Rust component</a></h1>
 <p>The majority of Glean is implemented as a Rust component, to be usable across all platforms.</p>
 <p>This includes:</p>
 <ul>
@@ -1843,7 +1850,7 @@ it might be required to add its full path to the <code>rust.pythonCommand</code>
 <li>A storage layer</li>
 <li>A ping serializer</li>
 </ul>
-<a class="header" href="#dependency-management-guidelines" id="dependency-management-guidelines"><h1>Dependency Management Guidelines</h1></a>
+<h1><a class="header" href="#dependency-management-guidelines" id="dependency-management-guidelines">Dependency Management Guidelines</a></h1>
 <hr />
 <p>This is currently copied from <a href="https://github.com/mozilla/application-services/blob/4347ea9c590d2319db1c994680832cc20bc3758d/docs/dependency-management.md">application-services documentation</a>.</p>
 <hr />
@@ -1857,7 +1864,7 @@ of how these dependencies will affect our consumers.  Considerations include:</p
 </ul>
 <p>We're still evolving our policies in this area, but these are the
 guidelines we've developed so far.</p>
-<a class="header" href="#rust-code" id="rust-code"><h2>Rust Code</h2></a>
+<h2><a class="header" href="#rust-code" id="rust-code">Rust Code</a></h2>
 <p>Unlike <a href="https://firefox-source-docs.mozilla.org/build/buildsystem/rust.html">Firefox</a>,
 we do not vendor third-party source code directly into the repo.  Instead we rely on
 <code>Cargo.lock</code> and its hash validation to ensure that each build uses an identical copy
@@ -1914,11 +1921,11 @@ but should still be given some thought.
 </ul>
 <p>Updating to new versions of existing dependencies is a normal part of software development
 and is not accompanied by any partiulcar ceremony.</p>
-<a class="header" href="#adding-a-new-metric-type" id="adding-a-new-metric-type"><h1>Adding a new metric type</h1></a>
+<h1><a class="header" href="#adding-a-new-metric-type" id="adding-a-new-metric-type">Adding a new metric type</a></h1>
 <p>Data in Glean is stored in so-called metrics.
 You can find the full list of implemented metric types <a href="dev/core/../../user/metrics/index.html">in the user overview</a>.</p>
 <p>Adding a new metric type involves defining the metric type's API, its persisted and in-memory storage as well as its serialization into the ping payload.</p>
-<a class="header" href="#the-metric-types-api" id="the-metric-types-api"><h2>The metric type's API</h2></a>
+<h2><a class="header" href="#the-metric-types-api" id="the-metric-types-api">The metric type's API</a></h2>
 <p>A metric type implementation is defined in its own file under <code>glean-core/src/metrics/</code>, e.g. <code>glean-core/src/metrics/counter.rs</code> for a <a href="dev/core/../../user/metrics/counter.html">Counter</a>.</p>
 <p>Start by defining a structure to hold the metric's metadata:</p>
 <pre><code class="language-rust noplaypen">#[derive(Clone, Debug)]
@@ -1966,7 +1973,7 @@ This also gives you a <code>should_record</code> method on the metric type.</p>
 </code></pre>
 <p>Use <code>glean.storage().record()</code> to record a fixed value or <code>glean.storage.record_with()</code> to construct a new value from the currently stored one.</p>
 <p>The storage operation makes use of the metric's variant of the <code>Metric</code> enumeration.</p>
-<a class="header" href="#the-metric-enumeration" id="the-metric-enumeration"><h2>The <code>Metric</code> enumeration</h2></a>
+<h2><a class="header" href="#the-metric-enumeration" id="the-metric-enumeration">The <code>Metric</code> enumeration</a></h2>
 <p>Persistence and in-memory serialization as well as ping payload serialization are handled through the <code>Metric</code> enumeration.
 This is defined in <code>glean-core/src/metrics/mod.rs</code>.
 Variants of this enumeration are used in the storage implementation of the metric type.</p>
@@ -2010,9 +2017,9 @@ or another object that can be serialized.</p>
 <p>For example, the <code>DateTime</code> serializer has the following entry, where <code>get_iso_time_string</code> is a function to convert from the <code>DateTime</code> metric representation to a string:</p>
 <pre><code class="language-rust noplaypen">Metric::Datetime(d, time_unit) =&gt; json!(get_iso_time_string(*d, *time_unit)),
 </code></pre>
-<a class="header" href="#ffi-layer" id="ffi-layer"><h2>FFI layer</h2></a>
+<h2><a class="header" href="#ffi-layer" id="ffi-layer">FFI layer</a></h2>
 <p>In order to use a new metric type over the FFI layer, it needs implementations in the FFI component and the platform-part.</p>
-<a class="header" href="#ffi-component" id="ffi-component"><h3>FFI component</h3></a>
+<h3><a class="header" href="#ffi-component" id="ffi-component">FFI component</a></h3>
 <p>The FFI component implementation can be found in <code>glean-core/ffi/src</code>.
 Each metric type is implemented in its own module.</p>
 <p>Add a new file named after your metric, e.g. <code>glean-core/ffi/src/counter.rs</code>, and declare it in <code>glean-core/ffi/src/lib.rs</code> with <code>mod counter;</code>.</p>
@@ -2064,7 +2071,7 @@ pub extern &quot;C&quot; fn glean_counter_should_record(glean_handle: u64, metri
     })
 }
 </code></pre>
-<a class="header" href="#platform-part-kotlin" id="platform-part-kotlin"><h3>Platform-part (Kotlin)</h3></a>
+<h3><a class="header" href="#platform-part-kotlin" id="platform-part-kotlin">Platform-part (Kotlin)</a></h3>
 <p>The platform-specific FFI wrapper needs the definitions of these new functions.
 For Kotlin this is in <code>glean-core/android/src/main/java/mozilla/telemetry/glean/rust/LibGleanFFI.kt</code>:</p>
 <pre><code class="language-kotlin">fun glean_new_counter_metric(category: String, name: String, send_in_pings: StringArray, send_in_pings_len: Int, lifetime: Int, disabled: Byte): Long
@@ -2127,8 +2134,8 @@ For Kotlin this would be <code>glean-core/android/src/main/java/mozilla/telemetr
     }
 }
 </code></pre>
-<a class="header" href="#internal-design-details" id="internal-design-details"><h1>Internal design details</h1></a>
-<a class="header" href="#clearing-metrics-when-disablingenabling-glean" id="clearing-metrics-when-disablingenabling-glean"><h2>Clearing metrics when disabling/enabling Glean</h2></a>
+<h1><a class="header" href="#internal-design-details" id="internal-design-details">Internal design details</a></h1>
+<h2><a class="header" href="#clearing-metrics-when-disablingenabling-glean" id="clearing-metrics-when-disablingenabling-glean">Clearing metrics when disabling/enabling Glean</a></h2>
 <p>When disabling upload (<code>Glean.setUploadEnabled(false)</code>), metrics are also cleared to prevent their storage on the local device, and lessen the likelihood
 of accidentally sending them.
 There are a couple of exceptions to this:</p>
@@ -2155,14 +2162,14 @@ There are a couple of exceptions to this:</p>
 <p>Ping lifetime metrics do not need special handling.  They will begin recording again after metric uploading is re-enabled.</p>
 </li>
 </ul>
-<a class="header" href="#reservered-ping-names" id="reservered-ping-names"><h2>Reservered ping names</h2></a>
+<h2><a class="header" href="#reservered-ping-names" id="reservered-ping-names">Reservered ping names</a></h2>
 <p>The Glean SDK reserves all ping names starting with <code>glean_</code>.</p>
 <p>This currently includes, but is not limited to:</p>
 <ul>
 <li><code>glean_client_info</code></li>
 <li><code>glean_internal_info</code></li>
 </ul>
-<a class="header" href="#when-to-use-what-method-of-passing-data-between-rust-and-javaswift" id="when-to-use-what-method-of-passing-data-between-rust-and-javaswift"><h1>When to use what method of passing data between Rust and Java/Swift</h1></a>
+<h1><a class="header" href="#when-to-use-what-method-of-passing-data-between-rust-and-javaswift" id="when-to-use-what-method-of-passing-data-between-rust-and-javaswift">When to use what method of passing data between Rust and Java/Swift</a></h1>
 <hr />
 <p>This is currently copied from <a href="https://github.com/mozilla/application-services/blob/4347ea9c590d2319db1c994680832cc20bc3758d/docs/howtos/when-to-use-what-in-the-ffi.md">application-services documentation</a>.</p>
 <hr />
@@ -2173,7 +2180,7 @@ there are two kinds of values you may want to pass over the FFI.</p>
 isn't really serializable).</li>
 <li>Plain ol' data.</li>
 </ol>
-<a class="header" href="#types-with-identity" id="types-with-identity"><h2>Types with identity</h2></a>
+<h2><a class="header" href="#types-with-identity" id="types-with-identity">Types with identity</a></h2>
 <p>Examples of this are things like database connections, the FirefoxAccounts
 struct, etc. These types are complex, implemented in rust, and it's not
 unreasonable for them to come to Java/Kotlin as a type representing a
@@ -2205,10 +2212,10 @@ discuss how to do this, or take a look at how it's done for
 <code>PlacesInterruptHandle</code>).</p>
 </li>
 </ol>
-<a class="header" href="#plain-old-data" id="plain-old-data"><h2>Plain Old Data</h2></a>
+<h2><a class="header" href="#plain-old-data" id="plain-old-data">Plain Old Data</a></h2>
 <p>This includes both primitive values, strings, arrays, or arbitrarially nested
 structures containing them.</p>
-<a class="header" href="#primitives" id="primitives"><h3>Primitives</h3></a>
+<h3><a class="header" href="#primitives" id="primitives">Primitives</a></h3>
 <p>Specifically numeric primitives. These we'll tackle first since they're the
 easiest.</p>
 <p>In general, you can just pass them as you wish. There are a couple of
@@ -2237,7 +2244,7 @@ bit, and Swift <code>Character</code>s are actually strings (they represent Exte
 Grapheme Clusters, not codepoints).</p>
 </li>
 </ol>
-<a class="header" href="#strings-1" id="strings-1"><h3>Strings</h3></a>
+<h3><a class="header" href="#strings-1" id="strings-1">Strings</a></h3>
 <p>These we pass as nul-terminated UTF-8 C-strings.</p>
 <p>For return values, used <code>*mut c_char</code>, and for input, use
 <a href="https://docs.rs/ffi-support/*/ffi_support/struct.FfiStr.html"><code>ffi_support::FfiStr</code></a></p>
@@ -2267,7 +2274,7 @@ for extracting it's data as <code>&amp;str</code>, <code>Option&lt;&amp;str&gt;<
 </li>
 </ol>
 <p>It's also completely fine to use Protobufs or JSON for this case!</p>
-<a class="header" href="#aggregates" id="aggregates"><h3>Aggregates</h3></a>
+<h3><a class="header" href="#aggregates" id="aggregates">Aggregates</a></h3>
 <p>This is any type that's more complex than a primitive or a string (arrays,
 structures, and combinations there-in). There are two options we recommend for
 these cases:</p>
@@ -2291,7 +2298,7 @@ into the crate that defines the type.</p>
 For test code, this can be a useful performance/simplicity tradeoff to make.</p>
 </li>
 </ol>
-<a class="header" href="#contributing-to-glean" id="contributing-to-glean"><h1>Contributing to Glean</h1></a>
+<h1><a class="header" href="#contributing-to-glean" id="contributing-to-glean">Contributing to Glean</a></h1>
 <p>Anyone is welcome to help with the Glean project. Feel free to get in touch with other community members on IRC
 or through issues here on GitHub.</p>
 <ul>
@@ -2300,10 +2307,10 @@ or through issues here on GitHub.</p>
 </ul>
 <p>Participation in this project is governed by the
 <a href="https://www.mozilla.org/en-US/about/governance/policies/participation/">Mozilla Community Participation Guidelines</a>.</p>
-<a class="header" href="#bug-reports" id="bug-reports"><h2>Bug Reports</h2></a>
+<h2><a class="header" href="#bug-reports" id="bug-reports">Bug Reports</a></h2>
 <p>You can file issues here on GitHub. Please try to include as much information as you can and under what conditions
 you saw the issue.</p>
-<a class="header" href="#making-code-changes" id="making-code-changes"><h2>Making Code Changes</h2></a>
+<h2><a class="header" href="#making-code-changes" id="making-code-changes">Making Code Changes</a></h2>
 <p>To work on the code in this repo you will need to be familiar with
 the <a href="https://www.rust-lang.org/">Rust</a> programming language.
 You can get a working rust compiler and toolchain via <a href="https://rustup.rs/">rustup</a>.</p>
@@ -2313,7 +2320,7 @@ root of your checkout:</p>
 </code></pre>
 <p>If you plan to work on the Android component bindings, you should also review
 the instructions for <a href="https://github.com/mozilla/glean/blob/master/docs/dev/setup-android-build-environment.md">setting up an Android build environment</a></p>
-<a class="header" href="#sending-pull-requests" id="sending-pull-requests"><h2>Sending Pull Requests</h2></a>
+<h2><a class="header" href="#sending-pull-requests" id="sending-pull-requests">Sending Pull Requests</a></h2>
 <p>Patches should be submitted as <a href="https://help.github.com/articles/about-pull-requests/">pull requests</a> (PRs).</p>
 <p>Before submitting a PR:</p>
 <ul>
@@ -2333,12 +2340,12 @@ the instructions for <a href="https://github.com/mozilla/glean/blob/master/docs/
 <li>Run <code>cargo test</code> to make sure your code passes linting and tests.</li>
 <li>Please do not include merge commits in pull requests; include only commits with the new relevant code.</li>
 </ul>
-<a class="header" href="#code-review" id="code-review"><h2>Code Review</h2></a>
+<h2><a class="header" href="#code-review" id="code-review">Code Review</a></h2>
 <p>This project is production Mozilla code and subject to our <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide/Committing_Rules_and_Responsibilities">engineering practices and quality standards</a>. Every patch must be peer reviewed by a member of the Application Services team.</p>
 <p>The following language-specific API docs are available:</p>
 <ul>
-<li><a href="../../javadoc/glean/index.html">Kotlin API docs</a></li>
-<li><a href="../../docs/index.html">Rust core (internal) API docs</a></li>
+<li><a href="api/../../javadoc/glean/index.html">Kotlin API docs</a></li>
+<li><a href="api/../../docs/index.html">Rust core (internal) API docs</a></li>
 </ul>
 
                     </main>
