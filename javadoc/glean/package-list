@@ -3,5 +3,6 @@ $dokka.linkExtension:html
 
 mozilla.telemetry.glean
 mozilla.telemetry.glean.config
+mozilla.telemetry.glean.debug
 mozilla.telemetry.glean.private
 mozilla.telemetry.glean.scheduler
