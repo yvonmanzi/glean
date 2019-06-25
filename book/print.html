@@ -395,7 +395,6 @@ assertEquals(3, events.size)
 assertEquals(&quot;Courier&quot;, events.elementAt(0).extra[&quot;font&quot;])
 </code></pre>
 <h1><a class="header" href="#debugging-products-using-glean" id="debugging-products-using-glean">Debugging products using Glean</a></h1>
-<p><strong>STATUS: <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1554116">Not implemented</a></strong></p>
 <p>Glean exports the <code>GleanDebugActivity</code> that can be used to toggle debugging features on or off. 
 Users can invoke this special activity, at run-time, using the following <a href="https://developer.android.com/studio/command-line/adb"><code>adb</code></a> command:</p>
 <p><code>adb shell am start -n [applicationId]/mozilla.components.service.glean.debug.GleanDebugActivity [extra keys]</code></p>
@@ -844,7 +843,6 @@ assertEquals(listOf(&quot;Google&quot;, &quot;DuckDuckGo&quot;), Search.engines.
 <li><a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-string-list-metric-type/index.html">Kotlin API docs</a></li>
 </ul>
 <h1><a class="header" href="#timespan" id="timespan">Timespan</a></h1>
-<p><strong>STATUS: <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1552863">Not implemented.</a></strong></p>
 <p>Timespans are used to make a summed measurement of how much time is spent in a particular task. </p>
 <p>To measure the distribution of multiple timespans, see <a href="user/metrics/timing_distribution.html">Timing Distributions</a>. To record absolute times, see <a href="user/metrics/datetime.html">Datetimes</a>.</p>
 <h2><a class="header" href="#configuration-6" id="configuration-6">Configuration</a></h2>
@@ -992,7 +990,6 @@ assertTrue(Auth.timesPerStage[&quot;auth_with_server&quot;].testGetValue() &gt; 
 <li>Kotlin API docs <a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-labeled-metric-type/index.html">LabeledMetricType</a>, <a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-timespan-metric-type/index.html">TimespanMetricType</a></li>
 </ul>
 <h1><a class="header" href="#timing-distribution" id="timing-distribution">Timing Distribution</a></h1>
-<p><strong>STATUS: <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1552865">Not implemented.</a></strong></p>
 <p>Timing distributions are used to accumulate and store time measurement, for analyzing distributions of the timing data.</p>
 <p>To measure the distribution of multiple timespans, see <a href="user/metrics/timing_distribution.html">Timing Distributions</a>. To record absolute times, see <a href="user/metrics/datetime.html">Datetimes</a>.</p>
 <h2><a class="header" href="#configuration-8" id="configuration-8">Configuration</a></h2>
@@ -1062,7 +1059,6 @@ assertEquals(2L, snapshot.count())
 <li>See <a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-timing-distribution-metric-type/index.html">Kotlin API docs</a></li>
 </ul>
 <h1><a class="header" href="#uuid" id="uuid">UUID</a></h1>
-<p><strong>STATUS: <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1552870">Not implemented.</a></strong></p>
 <p>UUIDs are used to record values that uniquely identify some entity, such as a client id.</p>
 <h2><a class="header" href="#configuration-9" id="configuration-9">Configuration</a></h2>
 <p>You first need to add an entry for it to the <code>metrics.yaml</code> file:</p>
@@ -1106,7 +1102,6 @@ assertEquals(uuid, User.clientId.testGetValue())
 <li>See <a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-uuid-metric-type/index.html">Kotlin API docs</a>.</li>
 </ul>
 <h1><a class="header" href="#datetime" id="datetime">Datetime</a></h1>
-<p><strong>STATUS: Not implemented.</strong></p>
 <p>Datetimes are used to record an absolute date and time, for example the date and time that the application was first run.</p>
 <p>The device's offset from UTC is recorded and sent with the datetime value in the ping.</p>
 <p>To measure the distribution of multiple timespans, see <a href="user/metrics/timing_distribution.html">Timing Distributions</a>. To record absolute times, see <a href="user/metrics/datetime.html">Datetimes</a>.</p>
@@ -1165,7 +1160,6 @@ assertEquals(&quot;2019-03-25-05:00&quot;, Install.firstRun.testGetValueAsString
 <li><a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-datetime-metric-type/index.html">Kotlin API docs</a></li>
 </ul>
 <h1><a class="header" href="#events" id="events">Events</a></h1>
-<p><strong>Status: <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1552872">Not implemented.</a></strong></p>
 <p>Events allow recording of e.g. individual occurences of user actions, say every time a view was open and from where. Each time you record an event, it records a
 timestamp, the event's name and a set of custom values.</p>
 <h2><a class="header" href="#configuration-11" id="configuration-11">Configuration</a></h2>
@@ -1270,7 +1264,6 @@ Optional fields are marked accordingly.</p>
 </tbody></table>
 <p>All the metrics surviving application restarts (e.g. <code>client_id</code>, ...) are removed once the application using Glean is uninstalled.</p>
 <h3><a class="header" href="#the-experiments-object" id="the-experiments-object">The <code>experiments</code> object</a></h3>
-<p><strong>STATUS: Not implemented.</strong></p>
 <p>This object (included in the <a href="user/pings/#The-ping_info-section"><code>ping_info</code> section</a>) contains experiments keyed by the experiment <code>id</code>. Each listed experiment contains the <code>branch</code> the client is enrolled in and may contain a string to string map with additional data in the <code>extra</code> key. Both the <code>id</code> and <code>branch</code> are truncated to 30 characters.</p>
 <pre><code class="language-json">{
   &quot;&lt;id&gt;&quot;: {
@@ -1359,7 +1352,6 @@ The system may also call <code>onStop()</code> when the activity has finished ru
 }
 </code></pre>
 <h1><a class="header" href="#the-metrics-ping" id="the-metrics-ping">The `metrics** ping</a></h1>
-<p><strong>STATUS: <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1551159">Not implemented.</a></strong></p>
 <h2><a class="header" href="#description-1" id="description-1">Description</a></h2>
 <p>The <code>metrics</code> ping is intended for all of the metrics that are explicitly set by the application or are included in the application's <code>metrics.yaml</code> file (except events). 
 The reported data is tied to the ping's <em>measurement window</em>, which is the time between the collection of two <code>metrics</code> ping. 
@@ -1594,7 +1586,6 @@ For instance, in order to select a String field called <code>test</code> you wou
 </li>
 </ol>
 <h1><a class="header" href="#the-events-ping" id="the-events-ping">The <code>events</code> ping</a></h1>
-<p><strong>STATUS: <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1552872">Not implemented.</a></strong></p>
 <h2><a class="header" href="#description-2" id="description-2">Description</a></h2>
 <p>The events ping's purpose is to transport all of the event metric information.</p>
 <h2><a class="header" href="#scheduling-2" id="scheduling-2">Scheduling</a></h2>

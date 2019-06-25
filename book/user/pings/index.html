@@ -195,7 +195,6 @@ Optional fields are marked accordingly.</p>
 </tbody></table>
 <p>All the metrics surviving application restarts (e.g. <code>client_id</code>, ...) are removed once the application using Glean is uninstalled.</p>
 <h3><a class="header" href="#the-experiments-object" id="the-experiments-object">The <code>experiments</code> object</a></h3>
-<p><strong>STATUS: Not implemented.</strong></p>
 <p>This object (included in the <a href="#The-ping_info-section"><code>ping_info</code> section</a>) contains experiments keyed by the experiment <code>id</code>. Each listed experiment contains the <code>branch</code> the client is enrolled in and may contain a string to string map with additional data in the <code>extra</code> key. Both the <code>id</code> and <code>branch</code> are truncated to 30 characters.</p>
 <pre><code class="language-json">{
   &quot;&lt;id&gt;&quot;: {
