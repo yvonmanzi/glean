@@ -165,7 +165,7 @@ It started out as an <a href="https://github.com/mozilla-mobile/android-componen
 <p>This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/</p>
 <h1><a class="header" href="#user-documentation" id="user-documentation">User Documentation</a></h1>
 <h1><a class="header" href="#adding-glean-to-your-project" id="adding-glean-to-your-project">Adding Glean to your project</a></h1>
-<h2><a class="header" href="#before-using-the-library" id="before-using-the-library">Before using the library</a></h2>
+<h2><a class="header" href="#before-using-glean" id="before-using-glean">Before using Glean</a></h2>
 <p>Products using Glean to collect telemetry <strong>must</strong>:</p>
 <ul>
 <li>add documentation for any new metric collected with the library in its repository (see <a href="user/pings/index.html">an example</a>);</li>
@@ -181,7 +181,7 @@ It started out as an <a href="https://github.com/mozilla-mobile/android-componen
 </code></pre>
 <h3><a class="header" href="#integrating-with-the-build-system" id="integrating-with-the-build-system">Integrating with the build system</a></h3>
 <p>In order for Glean to work, a Python environment must be accessible at build time.
-This is done automatically by the <a href="https://github.com/JetBrains/gradle-python-envs/"><code>com.jetbrains.python.envs</code></a> plugin. 
+This is done automatically by the <a href="https://github.com/JetBrains/gradle-python-envs/"><code>com.jetbrains.python.envs</code></a> plugin.
 The plugin <strong>must</strong> be manually enabled by adding the following <code>plugins</code> block at the top of the <code>build.gradle</code> file for your app module.</p>
 <pre><code class="language-Groovy">plugins {
     id &quot;com.jetbrains.python.envs&quot; version &quot;0.0.26&quot;
@@ -191,11 +191,34 @@ The plugin <strong>must</strong> be manually enabled by adding the following <co
 This script can be referenced directly from the GitHub repo, as shown below:</p>
 <pre><code class="language-Groovy">apply from: 'https://github.com/mozilla/glean/raw/v{latest-version}/glean-core/android/sdk_generator.gradle'
 </code></pre>
-<p><strong>Important:</strong> the <code>{latest-version}</code> placeholder in the above link should be replaced with the version number of the Glean library used by the project. 
+<blockquote>
+<p><strong>Important:</strong> the <code>{latest-version}</code> placeholder in the above link should be replaced with the version number of the Glean library used by the project.
 For example, if version <em>0.34.2</em> is used, then the include directive becomes:</p>
+</blockquote>
 <pre><code class="language-Groovy">apply from: 'https://github.com/mozilla/glean/raw/v0.34.2/glean-core/android/sdk_generator.gradle'
 </code></pre>
+<h3><a class="header" href="#adding-new-metrics" id="adding-new-metrics">Adding new metrics</a></h3>
+<p>All metrics that your project collects must be defined in a <code>metrics.yaml</code> file.
+This file should be at the root of the module (the same directory as the <code>build.gradle</code> file you updated).
+The format of that file is documented <a href="https://mozilla.github.io/glean_parser/metrics-yaml.html">with <code>glean_parser</code></a>.
+To learn more, see <a href="user/adding-new-metrics.html">adding new metrics</a>.</p>
+<blockquote>
+<p><strong>Important</strong>: as stated <a href="user/#before-using-glean">above</a>, any new data collection requires documentation and data-review. This is also required for any new metric automatically collected by Glean.</p>
+</blockquote>
+<h3><a class="header" href="#adding-custom-pings" id="adding-custom-pings">Adding custom pings</a></h3>
+<p>Please refer to the <a href="user/pings/custom.html">custom pings documentation</a>.</p>
+<blockquote>
+<p><strong>Important</strong>: as stated <a href="user/#before-using-glean">above</a>, any new data collection, including new custom pings, requires documentation and data-review. This is also required for any new ping automatically collected by Glean.</p>
+</blockquote>
+<h3><a class="header" href="#testing-metrics" id="testing-metrics">Testing metrics</a></h3>
+<p>In order to make testing metrics easier 'out of the box', all metrics include a set of test API functions in order to facilitate unit testing.  These include functions to test whether a value has been stored, and functions to retrieve the stored value for validation.  For more information, please refer to <a href="user/testing-metrics.html">Unit testing Glean metrics</a>.</p>
+<h3><a class="header" href="#adding-metadata-about-your-project-to-the-pipeline" id="adding-metadata-about-your-project-to-the-pipeline">Adding metadata about your project to the pipeline</a></h3>
+<p>In order for data to be collected from your project, metadata must be added to <code>probe_scraper</code>.</p>
+<p>These specific steps are described in <a href="https://github.com/mozilla/probe-scraper#adding-a-new-glean-repository">the <code>probe_scraper</code> documentation</a>.</p>
+<h2><a class="header" href="#application-specific-steps" id="application-specific-steps">Application-specific steps</a></h2>
+<p>The following steps are required for Glean-using applications, but not libraries.</p>
 <h3><a class="header" href="#initializing-glean" id="initializing-glean">Initializing Glean</a></h3>
+<p>Glean should only be initialized from the main application, not individual libraries.  If you are adding Glean support to a library, you can safely skip this section.</p>
 <p>Before any data collection can take place, Glean <strong>must</strong> be initialized from the application.
 An excellent place to perform this operation is within the <code>onCreate</code> method of the class that extends Android's <code>Application</code> class.</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Pings
@@ -221,28 +244,19 @@ class SampleApplication : Application() {
 }
 </code></pre>
 <p>Once initialized, if collection is enabled, Glean will automatically start collecting <a href="user/pings/metrics.html">baseline metrics</a> and sending its <a href="user/pings/index.html">pings</a>.</p>
-<p>Glean should be initialized as soon as possible, and importantly, before any other libraries in the application start using Glean. 
+<p>Glean should be initialized as soon as possible, and importantly, before any other libraries in the application start using Glean.
 Library code should never call <code>Glean.initialize</code>, since it should be called exactly once per application.</p>
+<blockquote>
 <p><strong>Note</strong>: if the application has the concept of release channels and knows which channel it is on at run-time, then it can provide Glean with this information by setting it as part of the <code>Configuration</code> object parameter of the <code>Glean.initialize</code> method. For example:</p>
+</blockquote>
 <pre><code class="language-Kotlin">Glean.initialize(applicationContext, Configuration(channel = &quot;beta&quot;))
 </code></pre>
 <h3><a class="header" href="#enabling-and-disabling-metrics" id="enabling-and-disabling-metrics">Enabling and disabling metrics</a></h3>
-<p><code>Glean.setUploadEnabled()</code> should be called in response to the user enabling or disabling telemetry.<br />
+<p><code>Glean.setUploadEnabled()</code> should be called in response to the user enabling or disabling telemetry.
 This method should also be called at least once prior to calling <code>Glean.initialize()</code>.</p>
 <p>The application should provide some form of user interface to call this method.</p>
 <p>When going from enabled to disabled, all pending events, metrics and pings are cleared, except for <code>first_run_date</code>.
 When re-enabling, core Glean metrics will be recomputed at that time.</p>
-<h3><a class="header" href="#adding-new-metrics" id="adding-new-metrics">Adding new metrics</a></h3>
-<p>All metrics that your application collects must be defined in a <code>metrics.yaml</code> file. 
-This file should be at the root of the application module (the same directory as the <code>build.gradle</code> file you updated). 
-The format of that file is documented <a href="https://mozilla.github.io/glean_parser/metrics-yaml.html">here</a>.
-To learn more, see <a href="user/adding-new-metrics.html">adding new metrics</a>.</p>
-<p><strong>Important</strong>: as stated <a href="user/#before-using-the-library">here</a>, any new data collection requires documentation and data-review. This is also required for any new metric automatically collected by Glean.</p>
-<h3><a class="header" href="#adding-custom-pings" id="adding-custom-pings">Adding custom pings</a></h3>
-<p>Please refer to the custom pings documentation <a href="user/pings/custom.html">here</a>.</p>
-<p><strong>Important</strong>: as stated <a href="user/#before-using-the-library">here</a>, any new data collection, including new custom pings, requires documentation and data-review. This is also required for any new ping automatically collected by Glean.</p>
-<h3><a class="header" href="#testing-metrics" id="testing-metrics">Testing metrics</a></h3>
-<p>In order to make testing metrics easier 'out of the box', all metrics include a set of test API functions in order to facilitate unit testing.  These include functions to test whether a value has been stored, and functions to retrieve the stored value for validation.  For more information, please refer to <a href="user/testing-metrics.html">Unit testing Glean metrics</a>.</p>
 <h1><a class="header" href="#adding-new-metrics-1" id="adding-new-metrics-1">Adding new metrics</a></h1>
 <p>All metrics that your project collects must be defined in a <code>metrics.yaml</code> file. 
 This file should be at the root of the application or library module (the same directory as the <code>build.gradle</code> file you updated). 
@@ -253,8 +267,10 @@ The format of that file is documented <a href="https://mozilla.github.io/glean_p
 <li>Add a new entry to <a href="user/#The-metricsyaml-file"><code>metrics.yaml</code></a>.</li>
 <li>Add code to your project to record into the metric by calling Glean.</li>
 </ul>
+<blockquote>
 <p><strong>Important</strong>: Any new data collection requires documentation and data-review.
 This is also required for any new metric automatically collected by Glean.</p>
+</blockquote>
 <h2><a class="header" href="#the-metricsyaml-file" id="the-metricsyaml-file">The <code>metrics.yaml</code> file</a></h2>
 <p>The <code>metrics.yaml</code> file defines the metrics your application or library will send. 
 They are organized into categories.
