@@ -147,9 +147,9 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#glean" id="glean">Glean</a></h1>
+                        <h1><a class="header" href="#glean-sdk" id="glean-sdk">Glean SDK</a></h1>
 <p><img src="glean.jpeg" alt="Glean logo" /></p>
-<p><em>Modern Firefox Telemetry for mobile platforms</em></p>
+<p><em>Modern telemetry for mobile platforms</em></p>
 <p>The <code>Glean SDK</code> is a modern approach for a mobile Telemetry library and is part of the <a href="https://docs.telemetry.mozilla.org/concepts/glean/glean.html">Glean project</a>.
 It started out as an <a href="https://github.com/mozilla-mobile/android-components/tree/master/components/service/glean">android-components library</a>, written purely in Kotlin to be used on Android.</p>
 <p>The <code>Glean SDK</code> is a work-in-progress to transform the concepts behind the <code>Glean SDK</code> into a cross-platform library based on a low-level <a href="https://www.rust-lang.org/">Rust</a> library and the necessary platform integrations for Android and iOS (and beyond...).</p>
@@ -166,7 +166,7 @@ It started out as an <a href="https://github.com/mozilla-mobile/android-componen
 <h1><a class="header" href="#user-documentation" id="user-documentation">User Documentation</a></h1>
 <h1><a class="header" href="#adding-glean-to-your-project" id="adding-glean-to-your-project">Adding Glean to your project</a></h1>
 <h2><a class="header" href="#before-using-glean" id="before-using-glean">Before using Glean</a></h2>
-<p>Products using Glean to collect telemetry <strong>must</strong>:</p>
+<p>Products using the Glean SDK to collect telemetry <strong>must</strong>:</p>
 <ul>
 <li>add documentation for any new metric collected with the library in its repository (see <a href="user/pings/index.html">an example</a>);</li>
 <li>go through data review for the newly collected data by following <a href="https://wiki.mozilla.org/Firefox/Data_Collection">this process</a>;</li>
@@ -180,19 +180,19 @@ It started out as an <a href="https://github.com/mozilla-mobile/android-componen
 <pre><code class="language-Groovy">implementation &quot;org.mozilla.components:service-glean:{latest-version}&quot;
 </code></pre>
 <h3><a class="header" href="#integrating-with-the-build-system" id="integrating-with-the-build-system">Integrating with the build system</a></h3>
-<p>In order for Glean to work, a Python environment must be accessible at build time.
+<p>In order for the Glean SDK to generate an API for your metrics, a Python environment must be accessible at build time.
 This is done automatically by the <a href="https://github.com/JetBrains/gradle-python-envs/"><code>com.jetbrains.python.envs</code></a> plugin.
 The plugin <strong>must</strong> be manually enabled by adding the following <code>plugins</code> block at the top of the <code>build.gradle</code> file for your app module.</p>
 <pre><code class="language-Groovy">plugins {
     id &quot;com.jetbrains.python.envs&quot; version &quot;0.0.26&quot;
 }
 </code></pre>
-<p>Right before the end of the same file, the Glean build script must be included.
+<p>Right before the end of the same file, the Glean SDK build script must be included.
 This script can be referenced directly from the GitHub repo, as shown below:</p>
 <pre><code class="language-Groovy">apply from: 'https://github.com/mozilla/glean/raw/v{latest-version}/glean-core/android/sdk_generator.gradle'
 </code></pre>
 <blockquote>
-<p><strong>Important:</strong> the <code>{latest-version}</code> placeholder in the above link should be replaced with the version number of the Glean library used by the project.
+<p><strong>Important:</strong> the <code>{latest-version}</code> placeholder in the above link should be replaced with the version number of the Glean SDK used by the project.
 For example, if version <em>0.34.2</em> is used, then the include directive becomes:</p>
 </blockquote>
 <pre><code class="language-Groovy">apply from: 'https://github.com/mozilla/glean/raw/v0.34.2/glean-core/android/sdk_generator.gradle'
@@ -203,12 +203,12 @@ This file should be at the root of the module (the same directory as the <code>b
 The format of that file is documented <a href="https://mozilla.github.io/glean_parser/metrics-yaml.html">with <code>glean_parser</code></a>.
 To learn more, see <a href="user/adding-new-metrics.html">adding new metrics</a>.</p>
 <blockquote>
-<p><strong>Important</strong>: as stated <a href="user/#before-using-glean">above</a>, any new data collection requires documentation and data-review. This is also required for any new metric automatically collected by Glean.</p>
+<p><strong>Important</strong>: as stated <a href="user/#before-using-glean">above</a>, any new data collection requires documentation and data-review. This is also required for any new metric automatically collected by the Glean SDK.</p>
 </blockquote>
 <h3><a class="header" href="#adding-custom-pings" id="adding-custom-pings">Adding custom pings</a></h3>
 <p>Please refer to the <a href="user/pings/custom.html">custom pings documentation</a>.</p>
 <blockquote>
-<p><strong>Important</strong>: as stated <a href="user/#before-using-glean">above</a>, any new data collection, including new custom pings, requires documentation and data-review. This is also required for any new ping automatically collected by Glean.</p>
+<p><strong>Important</strong>: as stated <a href="user/#before-using-glean">above</a>, any new data collection, including new custom pings, requires documentation and data-review. This is also required for any new ping automatically collected by the Glean SDK.</p>
 </blockquote>
 <h3><a class="header" href="#testing-metrics" id="testing-metrics">Testing metrics</a></h3>
 <p>In order to make testing metrics easier 'out of the box', all metrics include a set of test API functions in order to facilitate unit testing.  These include functions to test whether a value has been stored, and functions to retrieve the stored value for validation.  For more information, please refer to <a href="user/testing-metrics.html">Unit testing Glean metrics</a>.</p>
@@ -216,10 +216,10 @@ To learn more, see <a href="user/adding-new-metrics.html">adding new metrics</a>
 <p>In order for data to be collected from your project, metadata must be added to <code>probe_scraper</code>.</p>
 <p>These specific steps are described in <a href="https://github.com/mozilla/probe-scraper#adding-a-new-glean-repository">the <code>probe_scraper</code> documentation</a>.</p>
 <h2><a class="header" href="#application-specific-steps" id="application-specific-steps">Application-specific steps</a></h2>
-<p>The following steps are required for Glean-using applications, but not libraries.</p>
-<h3><a class="header" href="#initializing-glean" id="initializing-glean">Initializing Glean</a></h3>
-<p>Glean should only be initialized from the main application, not individual libraries.  If you are adding Glean support to a library, you can safely skip this section.</p>
-<p>Before any data collection can take place, Glean <strong>must</strong> be initialized from the application.
+<p>The following steps are required for applications using the Glean SDK, but not libraries.</p>
+<h3><a class="header" href="#initializing-the-glean-sdk" id="initializing-the-glean-sdk">Initializing the Glean SDK</a></h3>
+<p>The Glean SDK should only be initialized from the main application, not individual libraries.  If you are adding Glean support to a library, you can safely skip this section.</p>
+<p>Before any data collection can take place, the Glean SDK <strong>must</strong> be initialized from the application.
 An excellent place to perform this operation is within the <code>onCreate</code> method of the class that extends Android's <code>Application</code> class.</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Pings
 
@@ -243,11 +243,11 @@ class SampleApplication : Application() {
     }
 }
 </code></pre>
-<p>Once initialized, if collection is enabled, Glean will automatically start collecting <a href="user/pings/metrics.html">baseline metrics</a> and sending its <a href="user/pings/index.html">pings</a>.</p>
-<p>Glean should be initialized as soon as possible, and importantly, before any other libraries in the application start using Glean.
+<p>Once initialized, if collection is enabled, the Glean SDK will automatically start collecting <a href="user/pings/metrics.html">baseline metrics</a> and sending its <a href="user/pings/index.html">pings</a>.</p>
+<p>The Glean SDK should be initialized as soon as possible, and importantly, before any other libraries in the application start using Glean.
 Library code should never call <code>Glean.initialize</code>, since it should be called exactly once per application.</p>
 <blockquote>
-<p><strong>Note</strong>: if the application has the concept of release channels and knows which channel it is on at run-time, then it can provide Glean with this information by setting it as part of the <code>Configuration</code> object parameter of the <code>Glean.initialize</code> method. For example:</p>
+<p><strong>Note</strong>: if the application has the concept of release channels and knows which channel it is on at run-time, then it can provide the Glean SDK with this information by setting it as part of the <code>Configuration</code> object parameter of the <code>Glean.initialize</code> method. For example:</p>
 </blockquote>
 <pre><code class="language-Kotlin">Glean.initialize(applicationContext, Configuration(channel = &quot;beta&quot;))
 </code></pre>
@@ -265,11 +265,11 @@ The format of that file is documented <a href="https://mozilla.github.io/glean_p
 <ul>
 <li>Decide on which <a href="user/metrics/index.html">metric type</a> you want to use.</li>
 <li>Add a new entry to <a href="user/#The-metricsyaml-file"><code>metrics.yaml</code></a>.</li>
-<li>Add code to your project to record into the metric by calling Glean.</li>
+<li>Add code to your project to record into the metric by calling the Glean SDK.</li>
 </ul>
 <blockquote>
 <p><strong>Important</strong>: Any new data collection requires documentation and data-review.
-This is also required for any new metric automatically collected by Glean.</p>
+This is also required for any new metric automatically collected by the Glean SDK.</p>
 </blockquote>
 <h2><a class="header" href="#the-metricsyaml-file" id="the-metricsyaml-file">The <code>metrics.yaml</code> file</a></h2>
 <p>The <code>metrics.yaml</code> file defines the metrics your application or library will send. 
@@ -357,11 +357,11 @@ Views.loginOpened...
 </li>
 </ul>
 <h1><a class="header" href="#unit-testing-glean-metrics" id="unit-testing-glean-metrics">Unit testing Glean metrics</a></h1>
-<p>In order to support unit testing inside of client applications using Glean, a set of testing API functions have been included.
-The intent is to make Glean easier to test 'out of the box' in any client application it may be used in.
+<p>In order to support unit testing inside of client applications using the Glean SDK, a set of testing API functions have been included.
+The intent is to make the Glean SDK easier to test 'out of the box' in any client application it may be used in.
 These functions expose a way to inspect and validate recorded metric values within the client application but are restricted to test code only through visibility annotations (<code>@VisibleForTesting(otherwise = VisibleForTesting.NONE)</code>).</p>
 <h2><a class="header" href="#general-test-api-method-semantics" id="general-test-api-method-semantics">General test API method semantics</a></h2>
-<p>In order to prevent issues with async calls when unit testing Glean, it is important to put Glean into testing mode by calling <code>Glean.enableTestingMode()</code>.
+<p>In order to prevent issues with async calls when unit testing Glean, it is important to put the Glean SDK into testing mode by calling <code>Glean.enableTestingMode()</code>.
 This will ensure that metrics are done recording when the other test functions are used.</p>
 <p>To check if a value exists (i.e. it has been recorded), there is a <code>testHasValue()</code> function on each of the metric instances:</p>
 <pre><code class="language-kotlin">assertTrue(GleanMetrics.Foo.UriCount.testHasValue())
@@ -410,8 +410,8 @@ assertEquals(3, events.size)
 // Check extra key/value for first event in the list
 assertEquals(&quot;Courier&quot;, events.elementAt(0).extra[&quot;font&quot;])
 </code></pre>
-<h1><a class="header" href="#debugging-products-using-glean" id="debugging-products-using-glean">Debugging products using Glean</a></h1>
-<p>Glean exports the <code>GleanDebugActivity</code> that can be used to toggle debugging features on or off. 
+<h1><a class="header" href="#debugging-products-using-the-glean-sdk" id="debugging-products-using-the-glean-sdk">Debugging products using the Glean SDK</a></h1>
+<p>The Glean SDK exports the <code>GleanDebugActivity</code> that can be used to toggle debugging features on or off. 
 Users can invoke this special activity, at run-time, using the following <a href="https://developer.android.com/studio/command-line/adb"><code>adb</code></a> command:</p>
 <p><code>adb shell am start -n [applicationId]/mozilla.components.service.glean.debug.GleanDebugActivity [extra keys]</code></p>
 <p>In the above:</p>
@@ -424,7 +424,7 @@ Users can invoke this special activity, at run-time, using the following <a href
 These are the currently supported keys:</p>
 <p>|key|type|description|
 |---|----|-----------|
-| logPings | boolean (--ez) | If set to <code>true</code>, Glean dumps pings to logcat; defaults to <code>false</code> |
+| logPings | boolean (--ez) | If set to <code>true</code>, pings are dumped to logcat; defaults to <code>false</code> |
 | sendPing | string (--es) | Sends the ping with the given name immediately |
 | tagPings | string (--es) | Tags all outgoing pings as debug pings to make them available for real-time validation. The value must match the pattern <code>[a-zA-Z0-9-]{1,20}</code> |</p>
 </li>
@@ -449,7 +449,7 @@ These are the currently supported keys:</p>
 </li>
 </ul>
 <h1><a class="header" href="#error-reporting" id="error-reporting">Error reporting</a></h1>
-<p>Glean records the number of errors that occur when metrics are passed invalid data or are otherwise used incorrectly. 
+<p>The Glean SDK records the number of errors that occur when metrics are passed invalid data or are otherwise used incorrectly. 
 This information is reported back in special labeled counter metrics in the <code>glean.error</code> category. 
 Error metrics are included in the same pings as the metric that caused the error. 
 Additionally, error metrics are always sent in the <a href="user/pings/metrics.html"><code>metrics</code> ping</a> ping.</p>
@@ -475,7 +475,7 @@ Additionally, error metrics are always sent in the <a href="user/pings/metrics.h
   }
 }
 </code></pre>
-<p>If you have a debug build of Glean, details about the errors being recorded are included in the logs. This detailed information is not included in Glean pings.</p>
+<p>If you have a debug build of the Glean SDK, details about the errors being recorded are included in the logs. This detailed information is not included in Glean pings.</p>
 <h1><a class="header" href="#metrics" id="metrics">Metrics</a></h1>
 <p>There are different metrics to choose from, depending on what you want to achieve:</p>
 <ul>
@@ -535,7 +535,7 @@ If a label that isn't part of this set is used at run time, it is converted to t
 </li>
 <li>
 <p><strong>Dynamic labels</strong>: The labels aren't known at build time, so are set at run time.
-Only the first 16 labels seen by Glean will be tracked. After that, any additional labels are converted to the special label <code>__other__</code>.</p>
+Only the first 16 labels seen by the Glean SDK will be tracked. After that, any additional labels are converted to the special label <code>__other__</code>.</p>
 </li>
 </ul>
 <hr />
@@ -721,7 +721,7 @@ assertEquals(&quot;wikipedia&quot;, SearchDefault.name.testGetValue())
 </code></pre>
 <h2><a class="header" href="#limits-3" id="limits-3">Limits</a></h2>
 <ul>
-<li>Fixed maximum string length: 50. Longer strings are truncated. For the original Kotlin implementation of Glean, this is measured in Unicode characters. For the Rust implementation, this is measured in the number of bytes when the string is encoded in UTF-8.</li>
+<li>Fixed maximum string length: 50. Longer strings are truncated. For the original Kotlin implementation of the Glean SDK, this is measured in Unicode characters. For the Rust implementation, this is measured in the number of bytes when the string is encoded in UTF-8.</li>
 </ul>
 <h2><a class="header" href="#examples-3" id="examples-3">Examples</a></h2>
 <ul>
@@ -835,7 +835,7 @@ assertEquals(listOf(&quot;Google&quot;, &quot;DuckDuckGo&quot;), Search.engines.
 <h2><a class="header" href="#limits-5" id="limits-5">Limits</a></h2>
 <ul>
 <li>
-<p>Fixed maximum string length: 50. Longer strings are truncated. For the original Kotlin implementation of Glean, this is measured in Unicode characters. For the Rust implementation, this is measured in the number of bytes when the string is encoded in UTF-8.</p>
+<p>Fixed maximum string length: 50. Longer strings are truncated. For the original Kotlin implementation of the Glean SDK, this is measured in Unicode characters. For the Rust implementation, this is measured in the number of bytes when the string is encoded in UTF-8.</p>
 </li>
 <li>
 <p>Fixed maximum list length: 20 items. Additional strings are dropped.</p>
@@ -962,7 +962,7 @@ fun onLoginCancel(e: Event) {
     // ...
 }
 </code></pre>
-<p>The times reported in Glean will be the sum of all of these timespans recorded during the lifetime of the ping.</p>
+<p>The times reported in the Glean ping will be the sum of all of these timespans recorded during the lifetime of the ping.</p>
 <p>There are test APIs available too:</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Auth
 Glean.enableTestingMode()
@@ -1215,7 +1215,7 @@ assertEquals(&quot;login_opened&quot;, first.name)
 <p>When 500 events are queued on the client, and events pings is immediately sent.</p>
 </li>
 <li>
-<p>Event timestamps use a system timer that is guaranteed to be monotonic only within a particular boot of the device. Therefore, if there are any unsent recorded events on disk when the application starts, any pings containing those events are sent immediately, so that Glean can start over using a new timer and events based on different timers are never sent within the same ping.</p>
+<p>Event timestamps use a system timer that is guaranteed to be monotonic only within a particular boot of the device. Therefore, if there are any unsent recorded events on disk when the application starts, any pings containing those events are sent immediately, so that the Glean SDK can start over using a new timer and events based on different timers are never sent within the same ping.</p>
 </li>
 </ul>
 <h2><a class="header" href="#examples-11" id="examples-11">Examples</a></h2>
@@ -1232,7 +1232,7 @@ assertEquals(&quot;login_opened&quot;, first.name)
 </ul>
 <h1><a class="header" href="#glean-pings" id="glean-pings">Glean Pings</a></h1>
 <p>Every Glean ping is in JSON format and contains one or more of the <a href="user/pings/#ping-sections">common sections</a> with shared information data.</p>
-<p>If data collection is enabled, Glean provides a set of built-in pings that are assembled out of the box without any developer intervention.  The following is a list of these built-in pings:</p>
+<p>If data collection is enabled, the Glean SDK provides a set of built-in pings that are assembled out of the box without any developer intervention.  The following is a list of these built-in pings:</p>
 <ul>
 <li><a href="user/pings/baseline.html"><code>baseline</code> ping</a></li>
 <li><a href="user/pings/events.html"><code>events</code> ping</a></li>
@@ -1260,7 +1260,7 @@ Optional fields are marked accordingly.</p>
 <tr><td><code>start_time</code></td><td>Datetime</td><td>The time of the start of collection of the data in the ping, in local time and with minute precision, including timezone information.</td></tr>
 <tr><td><code>end_time</code></td><td>Datetime</td><td>The time of the end of collection of the data in the ping, in local time and with minute precision, including timezone information. This is also the time this ping was generated and is likely well before ping transmission time.</td></tr>
 </tbody></table>
-<p>All the metrics surviving application restarts (e.g. <code>seq</code>, ...) are removed once the application using Glean is uninstalled.</p>
+<p>All the metrics surviving application restarts (e.g. <code>seq</code>, ...) are removed once the application using the Glean SDK is uninstalled.</p>
 <h3><a class="header" href="#the-client_info-section" id="the-client_info-section">The <code>client_info</code> section</a></h3>
 <p>The following fields are included in the <code>client_info</code> section.
 Optional fields are marked accordingly.</p>
@@ -1276,9 +1276,9 @@ Optional fields are marked accordingly.</p>
 <tr><td><code>os</code></td><td>String</td><td>The name of the operating system (e.g. &quot;linux&quot;, &quot;Android&quot;, &quot;ios&quot;)</td></tr>
 <tr><td><code>os_version</code></td><td>String</td><td>The user visible version of the operating system (e.g. &quot;1.2.3&quot;)</td></tr>
 <tr><td><code>android_sdk_version</code></td><td>String</td><td><em>Optional</em>. The Android specific SDK version of the software running on this hardware device (e.g. &quot;23&quot;)</td></tr>
-<tr><td><code>telemetry_sdk_build</code></td><td>String</td><td>The version of the Glean library</td></tr>
+<tr><td><code>telemetry_sdk_build</code></td><td>String</td><td>The version of the Glean SDK</td></tr>
 </tbody></table>
-<p>All the metrics surviving application restarts (e.g. <code>client_id</code>, ...) are removed once the application using Glean is uninstalled.</p>
+<p>All the metrics surviving application restarts (e.g. <code>client_id</code>, ...) are removed once the application using the Glean SDK is uninstalled.</p>
 <h3><a class="header" href="#the-experiments-object" id="the-experiments-object">The <code>experiments</code> object</a></h3>
 <p>This object (included in the <a href="user/pings/#The-ping_info-section"><code>ping_info</code> section</a>) contains experiments keyed by the experiment <code>id</code>. Each listed experiment contains the <code>branch</code> the client is enrolled in and may contain a string to string map with additional data in the <code>extra</code> key. Both the <code>id</code> and <code>branch</code> are truncated to 30 characters.</p>
 <pre><code class="language-json">{
@@ -1291,14 +1291,14 @@ Optional fields are marked accordingly.</p>
 }
 </code></pre>
 <h2><a class="header" href="#ping-submission" id="ping-submission">Ping submission</a></h2>
-<p>The pings that Glean generates are submitted to the Mozilla servers at specific paths, in order to provide additional metadata without the need to unpack the ping payload. 
+<p>The pings that the Glean SDK generates are submitted to the Mozilla servers at specific paths, in order to provide additional metadata without the need to unpack the ping payload. 
 A typical submission URL looks like</p>
 <p><code>&quot;&lt;server-address&gt;/submit/&lt;application-id&gt;/&lt;doc-type&gt;/&lt;glean-schema-version&gt;/&lt;ping-uuid&gt;&quot;</code></p>
 <p>where:</p>
 <ul>
 <li><code>&lt;server-address&gt;</code>: the address of the server that receives the pings;</li>
-<li><code>&lt;application-id&gt;</code>: a unique application id, automatically detected by Glean; this is the value returned by <a href="http://developer.android.com/reference/android/content/Context.html#getPackageName()"><code>Context.getPackageName()</code></a>;</li>
-<li><code>&lt;doc-type&gt;</code>: the name of the ping; this can be one of the pings available out of the box with Glean, or a custom ping;</li>
+<li><code>&lt;application-id&gt;</code>: a unique application id, automatically detected by the Glean SDK; this is the value returned by <a href="http://developer.android.com/reference/android/content/Context.html#getPackageName()"><code>Context.getPackageName()</code></a>;</li>
+<li><code>&lt;doc-type&gt;</code>: the name of the ping; this can be one of the pings available out of the box with the Glean SDK, or a custom ping;</li>
 <li><code>&lt;glean-schema-version&gt;</code>: the version of the Glean ping schema;</li>
 <li><code>&lt;ping-uuid&gt;</code>: a unique identifier for this ping.</li>
 </ul>
@@ -1306,10 +1306,10 @@ A typical submission URL looks like</p>
 <p>A pre-defined set of headers is additionally sent along with the submitted ping:</p>
 <table><thead><tr><th>Header</th><th>Value</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>Content-Type</code></td><td><code>application/json; charset=utf-8</code></td><td>Describes the data sent to the server</td></tr>
-<tr><td><code>User-Agent</code></td><td>Defaults to e.g. <code>Glean/0.40.0 (Android)</code>, where <code>0.40.0</code> is the Glean version number and <code>Android</code> is the platform name. It can be overriden by user through <a href="user/pings/../../../javadoc/glean/mozilla.telemetry.glean/-configuration/index.html">configuration</a></td><td>Describes the application sending the ping using Glean</td></tr>
+<tr><td><code>User-Agent</code></td><td>Defaults to e.g. <code>Glean/0.40.0 (Android)</code>, where <code>0.40.0</code> is the Glean SDK version number and <code>Android</code> is the platform name. It can be overriden by user through <a href="user/pings/../../../javadoc/glean/mozilla.telemetry.glean/-configuration/index.html">configuration</a></td><td>Describes the application sending the ping using the Glean SDK</td></tr>
 <tr><td><code>Date</code></td><td>e.g. <code>Mon, 23 Jan 2019 10:10:10 GMT+00:00</code></td><td>Submission date/time in GMT/UTC+0 offset</td></tr>
 <tr><td><code>X-Client-Type</code></td><td><code>Glean</code></td><td>Custom header to support handling of Glean pings in the legacy pipeline</td></tr>
-<tr><td><code>X-Client-Version</code></td><td>e.g. <code>0.40.0</code></td><td>The Glean version, sent as a custom header to support handling of Glean pings in the legacy pipeline</td></tr>
+<tr><td><code>X-Client-Version</code></td><td>e.g. <code>0.40.0</code></td><td>The Glean SDK version, sent as a custom header to support handling of Glean pings in the legacy pipeline</td></tr>
 </tbody></table>
 <h2><a class="header" href="#defining-background-state" id="defining-background-state">Defining background state</a></h2>
 <p>These docs refer to application 'background' state in several places. 
@@ -1713,7 +1713,7 @@ search:
     - http://example.com/path/to/data-review
 </code></pre>
 <h2><a class="header" href="#loading-custom-ping-metadata-into-your-application-or-library" id="loading-custom-ping-metadata-into-your-application-or-library">Loading custom ping metadata into your application or library</a></h2>
-<p>Glean generates code from <code>pings.yaml</code> in a <code>Pings</code> object, which must be instantiated so Glean can send pings by name. 
+<p>The Glean SDK build generates code from <code>pings.yaml</code> in a <code>Pings</code> object, which must be instantiated so Glean can send pings by name. 
 This object must be registered with Glean from your startup code (such as in your application's <code>onCreate</code> method or a function called from that method).</p>
 <pre><code>import org.mozilla.yourApplication.GleanMetrics.Pings
 
@@ -1742,7 +1742,7 @@ override fun onCreate() {
       - default
 </code></pre>
 <h2><a class="header" href="#sending-a-custom-ping" id="sending-a-custom-ping">Sending a custom ping</a></h2>
-<p>To send a custom ping, call the <code>send</code> method on the <code>PingType</code> object that Glean generated for your ping.</p>
+<p>To send a custom ping, call the <code>send</code> method on the <code>PingType</code> object that the Glean SDK generated for your ping.</p>
 <p>For example, to send the custom ping defined above:</p>
 <pre><code class="language-kotlin">import org.mozilla.yourApplication.GleanMetrics.Pings
 Pings.search.send()
@@ -1850,7 +1850,7 @@ and all the build details can be left to the IDE.</p>
 it might be required to add its full path to the <code>rust.pythonCommand</code> entry in  <code>$project_root/local.properties</code>.</li>
 </ul>
 <h1><a class="header" href="#glean-core---rust-component" id="glean-core---rust-component">glean-core - Rust component</a></h1>
-<p>The majority of Glean is implemented as a Rust component, to be usable across all platforms.</p>
+<p>The majority of the Glean SDK is implemented as a Rust component, to be usable across all platforms.</p>
 <p>This includes:</p>
 <ul>
 <li>Implementations of all metric types</li>
@@ -1929,7 +1929,7 @@ but should still be given some thought.
 <p>Updating to new versions of existing dependencies is a normal part of software development
 and is not accompanied by any partiulcar ceremony.</p>
 <h1><a class="header" href="#adding-a-new-metric-type" id="adding-a-new-metric-type">Adding a new metric type</a></h1>
-<p>Data in Glean is stored in so-called metrics.
+<p>Data in the Glean SDK is stored in so-called metrics.
 You can find the full list of implemented metric types <a href="dev/core/../../user/metrics/index.html">in the user overview</a>.</p>
 <p>Adding a new metric type involves defining the metric type's API, its persisted and in-memory storage as well as its serialization into the ping payload.</p>
 <h2><a class="header" href="#the-metric-types-api" id="the-metric-types-api">The metric type's API</a></h2>
@@ -1959,7 +1959,7 @@ This also gives you a <code>should_record</code> method on the metric type.</p>
     }
 }
 </code></pre>
-<p>Implement each method for the type. The first argument to accept should always be <code>glean: &amp;Glean</code>, that is: a reference to the Glean object, used to access the storage:</p>
+<p>Implement each method for the type. The first argument to accept should always be <code>glean: &amp;Glean</code>, that is: a reference to the <code>Glean</code> object, used to access the storage:</p>
 <pre><code class="language-rust noplaypen">impl CounterMetric { // same block as above
     pub fn add(&amp;self, glean: &amp;Glean, amount: i32) {
         // Always include this check!
@@ -2157,13 +2157,13 @@ There are a couple of exceptions to this:</p>
 <p>When re-enabling metrics:</p>
 <ul>
 <li>
-<p><code>first_run_date</code> is left as-is. (It should remain a correct date of first run of the application, unaffected by disabling/enabling Glean).</p>
+<p><code>first_run_date</code> is left as-is. (It should remain a correct date of first run of the application, unaffected by disabling/enabling the Glean SDK).</p>
 </li>
 <li>
-<p>The <code>client_id</code> is set to a newly-generated random UUID. It has no connection to the <code>client_id</code> used prior to disabling Glean.</p>
+<p>The <code>client_id</code> is set to a newly-generated random UUID. It has no connection to the <code>client_id</code> used prior to disabling the Glean SDK.</p>
 </li>
 <li>
-<p>Application lifetime metrics owned by Glean are regenerated from scratch so that they will appear in subsequent pings. This is the same process that happens during every startup of the application when Glean is enabled. The application is also responsible for setting any application lifetime metrics that it manages at this time.</p>
+<p>Application lifetime metrics owned by Glean are regenerated from scratch so that they will appear in subsequent pings. This is the same process that happens during every startup of the application when the Glean SDK is enabled. The application is also responsible for setting any application lifetime metrics that it manages at this time.</p>
 </li>
 <li>
 <p>Ping lifetime metrics do not need special handling.  They will begin recording again after metric uploading is re-enabled.</p>
@@ -2305,8 +2305,8 @@ into the crate that defines the type.</p>
 For test code, this can be a useful performance/simplicity tradeoff to make.</p>
 </li>
 </ol>
-<h1><a class="header" href="#contributing-to-glean" id="contributing-to-glean">Contributing to Glean</a></h1>
-<p>Anyone is welcome to help with the Glean project. Feel free to get in touch with other community members on IRC
+<h1><a class="header" href="#contributing-to-the-glean-sdk" id="contributing-to-the-glean-sdk">Contributing to the Glean SDK</a></h1>
+<p>Anyone is welcome to help with the Glean SDK project. Feel free to get in touch with other community members on IRC
 or through issues here on GitHub.</p>
 <ul>
 <li>IRC: <code>#telemetry</code> on <code>irc.mozilla.org</code></li>

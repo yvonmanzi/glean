@@ -187,7 +187,7 @@
 }
 
 <span class="doccomment">/// Initialize the logging system based on the target platform. This ensures</span>
-<span class="doccomment">/// that logging is shown when executing Glean unit tests.</span>
+<span class="doccomment">/// that logging is shown when executing the Glean SDK unit tests.</span>
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
 <span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_enable_logging</span>() {
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>)]</span>

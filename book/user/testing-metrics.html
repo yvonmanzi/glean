@@ -146,11 +146,11 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#unit-testing-glean-metrics" id="unit-testing-glean-metrics">Unit testing Glean metrics</a></h1>
-<p>In order to support unit testing inside of client applications using Glean, a set of testing API functions have been included.
-The intent is to make Glean easier to test 'out of the box' in any client application it may be used in.
+<p>In order to support unit testing inside of client applications using the Glean SDK, a set of testing API functions have been included.
+The intent is to make the Glean SDK easier to test 'out of the box' in any client application it may be used in.
 These functions expose a way to inspect and validate recorded metric values within the client application but are restricted to test code only through visibility annotations (<code>@VisibleForTesting(otherwise = VisibleForTesting.NONE)</code>).</p>
 <h2><a class="header" href="#general-test-api-method-semantics" id="general-test-api-method-semantics">General test API method semantics</a></h2>
-<p>In order to prevent issues with async calls when unit testing Glean, it is important to put Glean into testing mode by calling <code>Glean.enableTestingMode()</code>.
+<p>In order to prevent issues with async calls when unit testing Glean, it is important to put the Glean SDK into testing mode by calling <code>Glean.enableTestingMode()</code>.
 This will ensure that metrics are done recording when the other test functions are used.</p>
 <p>To check if a value exists (i.e. it has been recorded), there is a <code>testHasValue()</code> function on each of the metric instances:</p>
 <pre><code class="language-kotlin">assertTrue(GleanMetrics.Foo.UriCount.testHasValue())

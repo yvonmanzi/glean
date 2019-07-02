@@ -145,8 +145,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#debugging-products-using-glean" id="debugging-products-using-glean">Debugging products using Glean</a></h1>
-<p>Glean exports the <code>GleanDebugActivity</code> that can be used to toggle debugging features on or off. 
+                        <h1><a class="header" href="#debugging-products-using-the-glean-sdk" id="debugging-products-using-the-glean-sdk">Debugging products using the Glean SDK</a></h1>
+<p>The Glean SDK exports the <code>GleanDebugActivity</code> that can be used to toggle debugging features on or off. 
 Users can invoke this special activity, at run-time, using the following <a href="https://developer.android.com/studio/command-line/adb"><code>adb</code></a> command:</p>
 <p><code>adb shell am start -n [applicationId]/mozilla.components.service.glean.debug.GleanDebugActivity [extra keys]</code></p>
 <p>In the above:</p>
@@ -159,7 +159,7 @@ Users can invoke this special activity, at run-time, using the following <a href
 These are the currently supported keys:</p>
 <p>|key|type|description|
 |---|----|-----------|
-| logPings | boolean (--ez) | If set to <code>true</code>, Glean dumps pings to logcat; defaults to <code>false</code> |
+| logPings | boolean (--ez) | If set to <code>true</code>, pings are dumped to logcat; defaults to <code>false</code> |
 | sendPing | string (--es) | Sends the ping with the given name immediately |
 | tagPings | string (--es) | Tags all outgoing pings as debug pings to make them available for real-time validation. The value must match the pattern <code>[a-zA-Z0-9-]{1,20}</code> |</p>
 </li>

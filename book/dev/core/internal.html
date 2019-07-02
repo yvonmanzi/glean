@@ -161,13 +161,13 @@ There are a couple of exceptions to this:</p>
 <p>When re-enabling metrics:</p>
 <ul>
 <li>
-<p><code>first_run_date</code> is left as-is. (It should remain a correct date of first run of the application, unaffected by disabling/enabling Glean).</p>
+<p><code>first_run_date</code> is left as-is. (It should remain a correct date of first run of the application, unaffected by disabling/enabling the Glean SDK).</p>
 </li>
 <li>
-<p>The <code>client_id</code> is set to a newly-generated random UUID. It has no connection to the <code>client_id</code> used prior to disabling Glean.</p>
+<p>The <code>client_id</code> is set to a newly-generated random UUID. It has no connection to the <code>client_id</code> used prior to disabling the Glean SDK.</p>
 </li>
 <li>
-<p>Application lifetime metrics owned by Glean are regenerated from scratch so that they will appear in subsequent pings. This is the same process that happens during every startup of the application when Glean is enabled. The application is also responsible for setting any application lifetime metrics that it manages at this time.</p>
+<p>Application lifetime metrics owned by Glean are regenerated from scratch so that they will appear in subsequent pings. This is the same process that happens during every startup of the application when the Glean SDK is enabled. The application is also responsible for setting any application lifetime metrics that it manages at this time.</p>
 </li>
 <li>
 <p>Ping lifetime metrics do not need special handling.  They will begin recording again after metric uploading is re-enabled.</p>
