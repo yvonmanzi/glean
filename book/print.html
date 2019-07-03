@@ -150,10 +150,12 @@
                         <h1><a class="header" href="#glean-sdk" id="glean-sdk">Glean SDK</a></h1>
 <p><img src="glean.jpeg" alt="Glean logo" /></p>
 <p><em>Modern telemetry for mobile platforms</em></p>
-<p>The <code>Glean SDK</code> is a modern approach for a mobile Telemetry library and is part of the <a href="https://docs.telemetry.mozilla.org/concepts/glean/glean.html">Glean project</a>.
-It started out as an <a href="https://github.com/mozilla-mobile/android-components/tree/master/components/service/glean">android-components library</a>, written purely in Kotlin to be used on Android.</p>
-<p>The <code>Glean SDK</code> is a work-in-progress to transform the concepts behind the <code>Glean SDK</code> into a cross-platform library based on a low-level <a href="https://www.rust-lang.org/">Rust</a> library and the necessary platform integrations for Android and iOS (and beyond...).</p>
-<p><strong>Note: The cross-platform <code>Glean SDK</code> project is in development. It's not finished, and not used. Some of this documentation refers to features that were implemented in an earlier Android-specific version of the Glean SDK, but are not yet implemented in this version.</strong></p>
+<p>The <code>Glean SDK</code> is a modern approach for a mobile Telemetry library and is part of the <a href="https://docs.telemetry.mozilla.org/concepts/glean/glean.html">Glean project</a>.</p>
+<p>There currently two independent implementations of the Glean SDK, both sharing the documentation here:</p>
+<ul>
+<li>An Android-only implementation in <a href="https://github.com/mozilla-mobile/android-components/tree/master/components/service/glean">android-components</a>.</li>
+<li>A <a href="https://github.com/mozilla/glean/">cross-platform implementation</a>.  (This implementation is currently under development and not ready for use).</li>
+</ul>
 <p>To contact us you can:</p>
 <ul>
 <li>Find us on the Mozilla Slack in <em>#glean</em>, on <a href="https://wiki.mozilla.org/IRC">Mozilla IRC</a> in <em>#telemetry</em>.</li>
@@ -422,13 +424,13 @@ Users can invoke this special activity, at run-time, using the following <a href
 <li>
 <p><code>[extra keys]</code> is a list of extra keys to be passed to the debug activity. See the <a href="https://developer.android.com/studio/command-line/adb#IntentSpec">documentation</a> for the command line switches used to pass the extra keys. 
 These are the currently supported keys:</p>
-<p>|key|type|description|
-|---|----|-----------|
-| logPings | boolean (--ez) | If set to <code>true</code>, pings are dumped to logcat; defaults to <code>false</code> |
-| sendPing | string (--es) | Sends the ping with the given name immediately |
-| tagPings | string (--es) | Tags all outgoing pings as debug pings to make them available for real-time validation. The value must match the pattern <code>[a-zA-Z0-9-]{1,20}</code> |</p>
 </li>
 </ul>
+<table><thead><tr><th>key</th><th>type</th><th>description</th></tr></thead><tbody>
+<tr><td>logPings</td><td>boolean (--ez)</td><td>If set to <code>true</code>, pings are dumped to logcat; defaults to <code>false</code></td></tr>
+<tr><td>sendPing</td><td>string (--es)</td><td>Sends the ping with the given name immediately</td></tr>
+<tr><td>tagPings</td><td>string (--es)</td><td>Tags all outgoing pings as debug pings to make them available for real-time validation. The value must match the pattern <code>[a-zA-Z0-9-]{1,20}</code></td></tr>
+</tbody></table>
 <p>For example, to direct a release build of the Glean sample application to (1) dump pings to logcat, (2) tag the ping with the <code>test-metrics-ping</code> tag, and (3) send the &quot;metrics&quot; ping immediately, the following command can be used:</p>
 <pre><code>adb shell am start -n org.mozilla.samples.glean/mozilla.components.service.glean.debug.GleanDebugActivity \
   --ez logPings true \
@@ -1749,6 +1751,9 @@ Pings.search.send()
 </code></pre>
 <h1><a class="header" href="#developer-documentation" id="developer-documentation">Developer Documentation</a></h1>
 <h1><a class="header" href="#running-the-tests" id="running-the-tests">Running the tests</a></h1>
+<blockquote>
+<p><strong>Note:</strong> This document describes testing the cross-platform implementation of the Glean SDK. For information about testing Android-specific implementation, see <a href="https://github.com/mozilla-mobile/android-components">android-components</a>.</p>
+</blockquote>
 <h2><a class="header" href="#running-all-tests" id="running-all-tests">Running all tests</a></h2>
 <p>The tests for all languages may be run from the command line:</p>
 <pre><code>make test
@@ -1781,6 +1786,9 @@ For debugging you can force single-threaded tests:</p>
 You can save this task permanently by opening the task dropdown in the toolbar and selecting &quot;Save glean.rs:glean-core:android [testDebugUnitTest] Configuration&quot;.</p>
 <p>To run a single Android test, navigate to the file containing the test, and right click on the green arrow in the left margin next to the test.  There you have a choice of running or debugging the test.</p>
 <h1><a class="header" href="#setup-the-android-build-environment" id="setup-the-android-build-environment">Setup the Android Build Environment</a></h1>
+<blockquote>
+<p><strong>Important:</strong> This documentation refers to setting up the development environment for the <a href="https://github.com/mozilla/glean">cross-platform implementation of the Glean SDK</a>.  Instructions for setting up the implementation in android-components is documented in the <a href="https://github.com/mozilla-mobile/android-components">android-components repository</a>.</p>
+</blockquote>
 <h2><a class="header" href="#doing-a-local-build-of-the-android-components" id="doing-a-local-build-of-the-android-components">Doing a local build of the Android Components:</a></h2>
 <p>This document describes how to make local builds of the Android components in
 this repository. Most consumers of these components <em>do not</em> need to follow
@@ -2306,6 +2314,9 @@ For test code, this can be a useful performance/simplicity tradeoff to make.</p>
 </li>
 </ol>
 <h1><a class="header" href="#contributing-to-the-glean-sdk" id="contributing-to-the-glean-sdk">Contributing to the Glean SDK</a></h1>
+<blockquote>
+<p><strong>Note:</strong> This document describes contributing to the cross-platform implementation of the Glean SDK. To contribute to the Android-specific implementation, see <a href="https://github.com/mozilla-mobile/android-components">android-components</a>.</p>
+</blockquote>
 <p>Anyone is welcome to help with the Glean SDK project. Feel free to get in touch with other community members on IRC
 or through issues here on GitHub.</p>
 <ul>
