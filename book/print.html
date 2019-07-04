@@ -861,7 +861,7 @@ assertEquals(listOf(&quot;Google&quot;, &quot;DuckDuckGo&quot;), Search.engines.
 <li><a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-string-list-metric-type/index.html">Kotlin API docs</a></li>
 </ul>
 <h1><a class="header" href="#timespan" id="timespan">Timespan</a></h1>
-<p>Timespans are used to make a summed measurement of how much time is spent in a particular task. </p>
+<p>Timespans are used to make a measurement of how much time is spent in a particular task.</p>
 <p>To measure the distribution of multiple timespans, see <a href="user/metrics/timing_distribution.html">Timing Distributions</a>. To record absolute times, see <a href="user/metrics/datetime.html">Datetimes</a>.</p>
 <h2><a class="header" href="#configuration-6" id="configuration-6">Configuration</a></h2>
 <p>Timespans have a required <code>time_unit</code> parameter to specify the smallest unit of resolution that the timespan will record. The allowed values for <code>time_unit</code> are:</p>
@@ -889,21 +889,21 @@ assertEquals(listOf(&quot;Google&quot;, &quot;DuckDuckGo&quot;), Search.engines.
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Auth
 
 fun onShowLogin(e: Event) {
-    Auth.loginTime.start(e.target)
+    Auth.loginTime.start()
     // ...
 }
 
 fun onLogin(e: Event) {
-    Auth.loginTime.stopAndSum(e.target)
+    Auth.loginTime.stop()
     // ...
 }
 
 fun onLoginCancel(e: Event) {
-    Auth.loginTime.cancel(e.target)
+    Auth.loginTime.cancel()
     // ...
 }
 </code></pre>
-<p>The time reported in the telemetry ping will be the sum of all of these timespans recorded during the lifetime of the ping.</p>
+<p>The time reported in the telemetry ping will be timespan recorded during the lifetime of the ping.</p>
 <p>There are test APIs available too:</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Auth
 Glean.enableTestingMode()
@@ -923,7 +923,7 @@ assertTrue(Auth.loginTime.testGetValue() &gt; 0)
 </ul>
 <h2><a class="header" href="#recorded-errors-6" id="recorded-errors-6">Recorded errors</a></h2>
 <ul>
-<li><code>invalid_value</code>: If recording a negative timespan. </li>
+<li><code>invalid_value</code>: If recording a negative timespan.</li>
 </ul>
 <h2><a class="header" href="#reference-6" id="reference-6">Reference</a></h2>
 <ul>
