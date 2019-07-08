@@ -222,6 +222,21 @@
 <span id="222">222</span>
 <span id="223">223</span>
 <span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -414,8 +429,22 @@
             .<span class="ident">map</span>(<span class="op">|</span><span class="ident">ping</span><span class="op">|</span> ::<span class="ident">serde_json</span>::<span class="ident">to_string_pretty</span>(<span class="kw-2">&amp;</span><span class="ident">ping</span>).<span class="ident">unwrap</span>())
     }
 
+    <span class="doccomment">/// Get path to a directory for ping storage.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The directory will be created inside the `data_path`.</span>
+    <span class="doccomment">/// The `pings` directory (and its parents) is created if it does not exist.</span>
     <span class="kw">fn</span> <span class="ident">get_pings_dir</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">data_path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-&gt;</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PathBuf</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">pings_dir</span> <span class="op">=</span> <span class="ident">data_path</span>.<span class="ident">join</span>(<span class="string">&quot;pings&quot;</span>);
+        <span class="ident">create_dir_all</span>(<span class="kw-2">&amp;</span><span class="ident">pings_dir</span>)<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(<span class="ident">pings_dir</span>)
+    }
+
+    <span class="doccomment">/// Get path to a directory for temporary storage.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The directory will be created inside the `data_path`.</span>
+    <span class="doccomment">/// The `tmp` directory (and its parents) is created if it does not exist.</span>
+    <span class="kw">fn</span> <span class="ident">get_tmp_dir</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">data_path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-&gt;</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PathBuf</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">pings_dir</span> <span class="op">=</span> <span class="ident">data_path</span>.<span class="ident">join</span>(<span class="string">&quot;tmp&quot;</span>);
         <span class="ident">create_dir_all</span>(<span class="kw-2">&amp;</span><span class="ident">pings_dir</span>)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">pings_dir</span>)
     }
@@ -429,10 +458,11 @@
         <span class="ident">ping_content</span>: <span class="kw-2">&amp;</span><span class="ident">JsonValue</span>,
     ) <span class="op">-&gt;</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">pings_dir</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_pings_dir</span>(<span class="ident">data_path</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">temp_dir</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_tmp_dir</span>(<span class="ident">data_path</span>)<span class="question-mark">?</span>;
 
         <span class="comment">// Write to a temporary location and then move when done,</span>
         <span class="comment">// for transactional writes.</span>
-        <span class="kw">let</span> <span class="ident">temp_ping_path</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">env</span>::<span class="ident">temp_dir</span>().<span class="ident">join</span>(<span class="ident">doc_id</span>);
+        <span class="kw">let</span> <span class="ident">temp_ping_path</span> <span class="op">=</span> <span class="ident">temp_dir</span>.<span class="ident">join</span>(<span class="ident">doc_id</span>);
         <span class="kw">let</span> <span class="ident">ping_path</span> <span class="op">=</span> <span class="ident">pings_dir</span>.<span class="ident">join</span>(<span class="ident">doc_id</span>);
 
         {

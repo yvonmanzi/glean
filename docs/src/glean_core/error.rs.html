@@ -170,19 +170,19 @@
     <span class="ident">Lifetime</span>(<span class="ident">i32</span>),
 
     <span class="doccomment">/// FFI-Support error</span>
-    <span class="attribute">#[<span class="ident">fail</span>(<span class="ident">display</span> <span class="op">=</span> <span class="string">&quot;Invalid handle&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">fail</span>(<span class="ident">display</span> <span class="op">=</span> <span class="string">&quot;Invalid handle: {}&quot;</span>, <span class="ident">_0</span>)]</span>
     <span class="ident">Handle</span>(<span class="ident">HandleError</span>),
 
     <span class="doccomment">/// IO error</span>
-    <span class="attribute">#[<span class="ident">fail</span>(<span class="ident">display</span> <span class="op">=</span> <span class="string">&quot;An I/O error occurred.&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">fail</span>(<span class="ident">display</span> <span class="op">=</span> <span class="string">&quot;An I/O error occurred: {}&quot;</span>, <span class="ident">_0</span>)]</span>
     <span class="ident">IoError</span>(<span class="ident">io</span>::<span class="ident">Error</span>),
 
     <span class="doccomment">/// IO error</span>
-    <span class="attribute">#[<span class="ident">fail</span>(<span class="ident">display</span> <span class="op">=</span> <span class="string">&quot;An Rkv error occurred.&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">fail</span>(<span class="ident">display</span> <span class="op">=</span> <span class="string">&quot;An Rkv error occurred: {}&quot;</span>, <span class="ident">_0</span>)]</span>
     <span class="ident">Rkv</span>(<span class="ident">StoreError</span>),
 
     <span class="doccomment">/// JSON error</span>
-    <span class="attribute">#[<span class="ident">fail</span>(<span class="ident">display</span> <span class="op">=</span> <span class="string">&quot;A JSON error occurred.&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">fail</span>(<span class="ident">display</span> <span class="op">=</span> <span class="string">&quot;A JSON error occurred: {}&quot;</span>, <span class="ident">_0</span>)]</span>
     <span class="ident">Json</span>(<span class="ident">serde_json</span>::<span class="ident">error</span>::<span class="ident">Error</span>),
 
     <span class="doccomment">/// TimeUnit conversion failed</span>
