@@ -145,12 +145,13 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#the-metrics-ping" id="the-metrics-ping">The `metrics** ping</a></h1>
+                        <h1><a class="header" href="#the-metrics-ping" id="the-metrics-ping">The <code>metrics</code> ping</a></h1>
 <h2><a class="header" href="#description" id="description">Description</a></h2>
 <p>The <code>metrics</code> ping is intended for all of the metrics that are explicitly set by the application or are included in the application's <code>metrics.yaml</code> file (except events). 
 The reported data is tied to the ping's <em>measurement window</em>, which is the time between the collection of two <code>metrics</code> ping. 
 Ideally, this window is expected to be about 24 hours, given that the collection is scheduled daily at 4AM. 
-Data in the <a href="index.html#the-ping_info-section"><code>ping_info</code></a> section of the ping can be used to infer the length of this window.</p>
+Data in the <a href="index.html#the-ping_info-section"><code>ping_info</code></a> section of the ping can be used to infer the length of this window.
+If the application crashes, unsent recorded metrics are sent along with the next <code>metrics</code> ping.</p>
 <h2><a class="header" href="#scheduling" id="scheduling">Scheduling</a></h2>
 <p>The desired behaviour is to collect the ping at the first available opportunity after 4AM local time on a new calendar day. 
 This breaks down into two scenarios:</p>

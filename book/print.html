@@ -1320,7 +1320,8 @@ This may occur, for example, when a newly launched activity covers the entire sc
 The system may also call <code>onStop()</code> when the activity has finished running, and is about to be terminated.</p>
 <h1><a class="header" href="#the-baseline-ping" id="the-baseline-ping">The <code>baseline</code> ping</a></h1>
 <h2><a class="header" href="#description" id="description">Description</a></h2>
-<p>This ping is intended to provide metrics that are managed by the library itself, and not explicitly set by the application or included in the application's <code>metrics.yaml</code> file.</p>
+<p>This ping is intended to provide metrics that are managed by the library itself, and not explicitly set by the application or included in the application's <code>metrics.yaml</code> file.
+If the application crashes no <code>baseline</code> ping is sent, no additional ping is generated with the data from before the crash.</p>
 <h2><a class="header" href="#scheduling" id="scheduling">Scheduling</a></h2>
 <p>The <code>baseline</code> ping is automatically sent when the application is moved to the <a href="user/pings/index.html#defining-background-state">background</a>.</p>
 <h2><a class="header" href="#contents" id="contents">Contents</a></h2>
@@ -1369,12 +1370,13 @@ The system may also call <code>onStop()</code> when the activity has finished ru
   }
 }
 </code></pre>
-<h1><a class="header" href="#the-metrics-ping" id="the-metrics-ping">The `metrics** ping</a></h1>
+<h1><a class="header" href="#the-metrics-ping" id="the-metrics-ping">The <code>metrics</code> ping</a></h1>
 <h2><a class="header" href="#description-1" id="description-1">Description</a></h2>
 <p>The <code>metrics</code> ping is intended for all of the metrics that are explicitly set by the application or are included in the application's <code>metrics.yaml</code> file (except events). 
 The reported data is tied to the ping's <em>measurement window</em>, which is the time between the collection of two <code>metrics</code> ping. 
 Ideally, this window is expected to be about 24 hours, given that the collection is scheduled daily at 4AM. 
-Data in the <a href="user/pings/index.html#the-ping_info-section"><code>ping_info</code></a> section of the ping can be used to infer the length of this window.</p>
+Data in the <a href="user/pings/index.html#the-ping_info-section"><code>ping_info</code></a> section of the ping can be used to infer the length of this window.
+If the application crashes, unsent recorded metrics are sent along with the next <code>metrics</code> ping.</p>
 <h2><a class="header" href="#scheduling-1" id="scheduling-1">Scheduling</a></h2>
 <p>The desired behaviour is to collect the ping at the first available opportunity after 4AM local time on a new calendar day. 
 This breaks down into two scenarios:</p>
@@ -1605,7 +1607,8 @@ For instance, in order to select a String field called <code>test</code> you wou
 </ol>
 <h1><a class="header" href="#the-events-ping" id="the-events-ping">The <code>events</code> ping</a></h1>
 <h2><a class="header" href="#description-2" id="description-2">Description</a></h2>
-<p>The events ping's purpose is to transport all of the event metric information.</p>
+<p>The events ping's purpose is to transport all of the event metric information.
+If the application crashes, an <code>events</code> ping is generated next time the application starts with events that were not sent before the crash.</p>
 <h2><a class="header" href="#scheduling-2" id="scheduling-2">Scheduling</a></h2>
 <p>The <code>events</code> ping is sent under the following circumstances:</p>
 <ul>
