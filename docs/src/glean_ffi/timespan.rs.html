@@ -182,7 +182,7 @@
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
 <span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_timespan_set_start</span>(<span class="ident">glean_handle</span>: <span class="ident">u64</span>, <span class="ident">metric_id</span>: <span class="ident">u64</span>, <span class="ident">start_time</span>: <span class="ident">u64</span>) {
     <span class="ident">GLEAN</span>.<span class="ident">call_infallible</span>(<span class="ident">glean_handle</span>, <span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
-        <span class="ident">TIMESPAN_METRICS</span>.<span class="ident">call_infallible</span>(<span class="ident">metric_id</span>, <span class="op">|</span><span class="ident">metric</span><span class="op">|</span> {
+        <span class="ident">TIMESPAN_METRICS</span>.<span class="ident">call_infallible_mut</span>(<span class="ident">metric_id</span>, <span class="op">|</span><span class="ident">metric</span><span class="op">|</span> {
             <span class="ident">metric</span>.<span class="ident">set_start</span>(<span class="ident">glean</span>, <span class="ident">start_time</span>);
         })
     })
@@ -191,7 +191,7 @@
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
 <span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_timespan_set_stop</span>(<span class="ident">glean_handle</span>: <span class="ident">u64</span>, <span class="ident">metric_id</span>: <span class="ident">u64</span>, <span class="ident">stop_time</span>: <span class="ident">u64</span>) {
     <span class="ident">GLEAN</span>.<span class="ident">call_infallible</span>(<span class="ident">glean_handle</span>, <span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
-        <span class="ident">TIMESPAN_METRICS</span>.<span class="ident">call_infallible</span>(<span class="ident">metric_id</span>, <span class="op">|</span><span class="ident">metric</span><span class="op">|</span> {
+        <span class="ident">TIMESPAN_METRICS</span>.<span class="ident">call_infallible_mut</span>(<span class="ident">metric_id</span>, <span class="op">|</span><span class="ident">metric</span><span class="op">|</span> {
             <span class="ident">metric</span>.<span class="ident">set_stop</span>(<span class="ident">glean</span>, <span class="ident">stop_time</span>);
         })
     })
@@ -199,7 +199,7 @@
 
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
 <span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_timespan_cancel</span>(<span class="ident">metric_id</span>: <span class="ident">u64</span>) {
-    <span class="ident">TIMESPAN_METRICS</span>.<span class="ident">call_infallible</span>(<span class="ident">metric_id</span>, <span class="op">|</span><span class="ident">metric</span><span class="op">|</span> {
+    <span class="ident">TIMESPAN_METRICS</span>.<span class="ident">call_infallible_mut</span>(<span class="ident">metric_id</span>, <span class="op">|</span><span class="ident">metric</span><span class="op">|</span> {
         <span class="ident">metric</span>.<span class="ident">cancel</span>();
     })
 }
