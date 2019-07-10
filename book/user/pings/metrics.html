@@ -154,14 +154,16 @@ Data in the <a href="index.html#the-ping_info-section"><code>ping_info</code></a
 If the application crashes, unsent recorded metrics are sent along with the next <code>metrics</code> ping.</p>
 <h2><a class="header" href="#scheduling" id="scheduling">Scheduling</a></h2>
 <p>The desired behaviour is to collect the ping at the first available opportunity after 4AM local time on a new calendar day. 
-This breaks down into two scenarios:</p>
+This breaks down into three scenarios:</p>
 <ol>
+<li>the application was just installed;</li>
 <li>the application was just started (after a crash or a long inactivity period);</li>
 <li>the application was open and the 4AM due time was hit.</li>
 </ol>
-<p>In the first case, if the <code>metrics</code> ping was already collected on the current calendar day, a new collection will be scheduled for the next calendar day, at 4AM. 
+<p>In the first case, since the application was just installed, if the due time for the current calendar day has passed, a <code>metrics</code> ping is immediately generated and scheduled for sending. Otherwise, if the due time for the current calendar day has not passed, a ping collection is scheduled for that time.</p>
+<p>In the second case, if the <code>metrics</code> ping was already collected on the current calendar day, a new collection will be scheduled for the next calendar day, at 4AM. 
 If no collection happened yet, and the due time for the current calendar day has passed, a <code>metrics</code> ping is immediately generated and scheduled for sending.</p>
-<p>In the second case, similarly to the previous case, if the <code>metrics</code> ping was already collected on the current calendar day when we hit 4AM, then a new collection is scheduled for the next calendar day.
+<p>In the third case, similarly to the previous case, if the <code>metrics</code> ping was already collected on the current calendar day when we hit 4AM, then a new collection is scheduled for the next calendar day.
 Otherwise, the <code>metrics</code> is immediately collected and scheduled for sending.</p>
 <p>More <a href="#Scheduling-examples">scheduling examples</a> are included below.</p>
 <h2><a class="header" href="#contents" id="contents">Contents</a></h2>
