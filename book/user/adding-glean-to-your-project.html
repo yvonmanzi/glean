@@ -199,7 +199,8 @@ To learn more, see <a href="adding-new-metrics.html">adding new metrics</a>.</p>
 <h2><a class="header" href="#application-specific-steps" id="application-specific-steps">Application-specific steps</a></h2>
 <p>The following steps are required for applications using the Glean SDK, but not libraries.</p>
 <h3><a class="header" href="#initializing-the-glean-sdk" id="initializing-the-glean-sdk">Initializing the Glean SDK</a></h3>
-<p>The Glean SDK should only be initialized from the main application, not individual libraries.  If you are adding Glean support to a library, you can safely skip this section.</p>
+<p>The Glean SDK should only be initialized from the main application, not individual libraries.  If you are adding Glean support to a library, you can safely skip this section.
+Please also note that the Glean SDK does not support use across multiple processes, and must only be initialized on the application's main process. Initializing in other processes is a no-op.</p>
 <p>Before any data collection can take place, the Glean SDK <strong>must</strong> be initialized from the application.
 An excellent place to perform this operation is within the <code>onCreate</code> method of the class that extends Android's <code>Application</code> class.</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Pings
