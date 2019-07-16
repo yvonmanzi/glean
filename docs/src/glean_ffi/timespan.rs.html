@@ -131,7 +131,7 @@
     <span class="kw">let</span> <span class="ident">elapsed</span> <span class="op">=</span> <span class="ident">Duration</span>::<span class="ident">from_nanos</span>(<span class="ident">elapsed_nanos</span>);
     <span class="ident">GLEAN</span>.<span class="ident">call_infallible</span>(<span class="ident">glean_handle</span>, <span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
         <span class="ident">TIMESPAN_METRICS</span>.<span class="ident">call_infallible</span>(<span class="ident">metric_id</span>, <span class="op">|</span><span class="ident">metric</span><span class="op">|</span> {
-            <span class="ident">metric</span>.<span class="ident">set_raw</span>(<span class="ident">glean</span>, <span class="ident">elapsed</span>, <span class="bool-val">true</span>);
+            <span class="ident">metric</span>.<span class="ident">set_raw</span>(<span class="ident">glean</span>, <span class="ident">elapsed</span>, <span class="bool-val">false</span>);
         })
     })
 }

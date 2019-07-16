@@ -13,9 +13,7 @@
 <p>Explicitly set the timespan value, in nanoseconds.</p>
 <p>This API should only be used if your library or application requires recording
 times in a way that can not make use of <a href="start.html">start</a>/<a href="stop.html">stop</a>/<a href="cancel.html">cancel</a>.</p>
-<p>Care should be taken using this if the ping lifetime might contain more than one
-timespan measurement.  To be safe, <a href="./set-raw-nanos.html">setRawNanos</a> should generally be followed by
-sending a custom ping containing the timespan.</p>
+<p><a href="./set-raw-nanos.html">setRawNanos</a> does not overwrite a running timer or an already existing value.</p>
 <h3>Parameters</h3>
 <p><a name="elapsedNanos"></a>
 <code>elapsedNanos</code> - The elapsed time to record, in nanoseconds.</p>
