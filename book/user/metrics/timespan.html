@@ -198,6 +198,19 @@ assertTrue(Auth.loginTime.testHasValue())
 // Does the timer have the expected value
 assertTrue(Auth.loginTime.testGetValue() &gt; 0)
 </code></pre>
+<h3><a class="header" href="#raw-api" id="raw-api">Raw API</a></h3>
+<blockquote>
+<p><strong>Note</strong>: The raw API was designed to support a specific set of use-cases.
+Please consider using the higher level APIs listed above.</p>
+</blockquote>
+<p>It's possible to explicitly set the timespan value, in nanoseconds.
+This API should only be used if your library or application requires recording times in a way that can not make use of <code>start</code>/<code>stop</code>/<code>cancel</code>.</p>
+<pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.HistorySync
+
+val duration = SyncResult.status.syncs.took.toLong()
+HistorySync.setRawNanos(duration)
+</code></pre>
+<p>The raw API will not overwrite a running timer or existing timespan value.</p>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
 <ul>
 <li>None.</li>
@@ -208,7 +221,14 @@ assertTrue(Auth.loginTime.testGetValue() &gt; 0)
 </ul>
 <h2><a class="header" href="#recorded-errors" id="recorded-errors">Recorded errors</a></h2>
 <ul>
-<li><code>invalid_value</code>: If recording a negative timespan.</li>
+<li><code>invalid_value</code>
+<ul>
+<li>If recording a negative timespan.</li>
+<li>If starting a timer while a previous timer is running.</li>
+<li>If stopping a timer while it is not running.</li>
+<li>If trying to set a raw timespan while a timer is running.</li>
+</ul>
+</li>
 </ul>
 <h2><a class="header" href="#reference" id="reference">Reference</a></h2>
 <ul>
