@@ -661,7 +661,10 @@ assertEquals(3, Stability.crashCount[&quot;native_code_crash&quot;].testGetValue
 <h2><a class="header" href="#limits-2" id="limits-2">Limits</a></h2>
 <ul>
 <li>
-<p>Each label must be in <code>snake_case</code> (and also may contain <code>.</code>).</p>
+<p>Labels support lowercase alphanumeric characters; they additionally allow for dots (<code>.</code>), underscores (<code>_</code>) and/or hyphens (<code>-</code>).</p>
+</li>
+<li>
+<p>Labels are limited to starting with either a letter or an underscore character.</p>
 </li>
 <li>
 <p>Each label must have a maximum of 60 characters.</p>
@@ -773,7 +776,10 @@ assertTrue(Login.errorsByStage[&quot;server_auth&quot;].testHasValue())
 <h2><a class="header" href="#limits-4" id="limits-4">Limits</a></h2>
 <ul>
 <li>
-<p>Each label must be in <code>snake_case</code> (and also may contain <code>.</code>).</p>
+<p>Labels support lowercase alphanumeric characters; they additionally allow for dots (<code>.</code>), underscores (<code>_</code>) and/or hyphens (<code>-</code>).</p>
+</li>
+<li>
+<p>Labels are limited to starting with either a letter or an underscore character.</p>
 </li>
 <li>
 <p>Each label must have a maximum of 60 characters.</p>
@@ -1000,7 +1006,10 @@ assertTrue(Auth.timesPerStage[&quot;auth_with_server&quot;].testGetValue() &gt; 
 <h2><a class="header" href="#limits-7" id="limits-7">Limits</a></h2>
 <ul>
 <li>
-<p>Each label must be in <code>snake_case</code> (and also may contain <code>.</code>).</p>
+<p>Labels support lowercase alphanumeric characters; they additionally allow for dots (<code>.</code>), underscores (<code>_</code>) and/or hyphens (<code>-</code>).</p>
+</li>
+<li>
+<p>Labels are limited to starting with either a letter or an underscore character.</p>
 </li>
 <li>
 <p>Each label must have a maximum of 60 characters.</p>
@@ -1948,6 +1957,30 @@ For debugging you can force single-threaded tests:</p>
 <p>To run the full Android test suite, in the &quot;Gradle&quot; pane, navigate to <code>glean-core</code> -&gt; <code>Tasks</code> -&gt; <code>verification</code> and double-click either <code>testDebugUnitTest</code> or <code>testReleaseUnitTest</code> (depending on whether you want to run in Debug or Release mode).
 You can save this task permanently by opening the task dropdown in the toolbar and selecting &quot;Save glean.rs:glean-core:android [testDebugUnitTest] Configuration&quot;.</p>
 <p>To run a single Android test, navigate to the file containing the test, and right click on the green arrow in the left margin next to the test.  There you have a choice of running or debugging the test.</p>
+<h2><a class="header" href="#testing-in-ci" id="testing-in-ci">Testing in CI</a></h2>
+<p>We run multiple tests on CI for every Pull Request and every commit to the <code>master</code> branch.
+These include:</p>
+<ul>
+<li>Full Android tests</li>
+<li>Rust tests</li>
+<li>Rust source code formatting</li>
+<li>Rust and Android source code linting</li>
+<li>Generating documentation from Rust &amp; Kotlin code and the book</li>
+<li>Checking link validity of documentation</li>
+<li>Deploying generated documentation</li>
+</ul>
+<p>These checks are required to pass before a Pull Request is merged.</p>
+<h3><a class="header" href="#documentation-only-changes" id="documentation-only-changes">Documentation-only changes</a></h3>
+<p>Documentation is deployed from CI, we therefore need it to run on documentation changes.
+However, some of the long-running code tests can be skipped.
+For that add the following literal string to the last commit message to be pushed:</p>
+<pre><code>[doc only]
+</code></pre>
+<h3><a class="header" href="#skipping-ci-completely" id="skipping-ci-completely">Skipping CI completely</a></h3>
+<p>It is possible to completely skip running CI on a given push by including the following literal string in the commit message:</p>
+<pre><code>[ci skip]
+</code></pre>
+<p>This should only be used for metadata files, such as those in <code>.github</code>, <code>LICENSE</code> or <code>CODE_OF_CONDUCT.md</code>.</p>
 <h1><a class="header" href="#android-bindings" id="android-bindings">Android bindings</a></h1>
 <p>The Glean SDK contains the Kotlin bindings for use by Android applications.
 It makes use of the underlying <a href="dev/android/../core/index.html">Rust component</a> with a Kotlin-specific API on top.

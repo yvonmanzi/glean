@@ -174,7 +174,10 @@ assertTrue(Login.errorsByStage[&quot;server_auth&quot;].testHasValue())
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
 <ul>
 <li>
-<p>Each label must be in <code>snake_case</code> (and also may contain <code>.</code>).</p>
+<p>Labels support lowercase alphanumeric characters; they additionally allow for dots (<code>.</code>), underscores (<code>_</code>) and/or hyphens (<code>-</code>).</p>
+</li>
+<li>
+<p>Labels are limited to starting with either a letter or an underscore character.</p>
 </li>
 <li>
 <p>Each label must have a maximum of 60 characters.</p>
