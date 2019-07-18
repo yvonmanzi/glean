@@ -135,7 +135,21 @@
 <span id="135">135</span>
 <span id="136">136</span>
 <span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
 </pre><div class="example-wrap"><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">OsString</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Display</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">result</span>;
@@ -188,6 +202,10 @@
     <span class="doccomment">/// TimeUnit conversion failed</span>
     <span class="attribute">#[<span class="ident">fail</span>(<span class="ident">display</span> <span class="op">=</span> <span class="string">&quot;TimeUnit conversion from {} failed&quot;</span>, <span class="ident">_0</span>)]</span>
     <span class="ident">TimeUnit</span>(<span class="ident">i32</span>),
+
+    <span class="doccomment">/// OsString conversion failed</span>
+    <span class="attribute">#[<span class="ident">fail</span>(<span class="ident">display</span> <span class="op">=</span> <span class="string">&quot;OsString conversion from {:?} failed&quot;</span>, <span class="ident">_0</span>)]</span>
+    <span class="ident">OsString</span>(<span class="ident">OsString</span>),
 }
 
 <span class="doccomment">/// A specialized [`Error`] type for this crate&#39;s operations.</span>
@@ -270,6 +288,14 @@
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">error</span>: <span class="ident">serde_json</span>::<span class="ident">error</span>::<span class="ident">Error</span>) <span class="op">-&gt;</span> <span class="ident">Error</span> {
         <span class="ident">Error</span> {
             <span class="ident">inner</span>: <span class="ident">Context</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">Json</span>(<span class="ident">error</span>)),
+        }
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">OsString</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">error</span>: <span class="ident">OsString</span>) <span class="op">-&gt;</span> <span class="ident">Error</span> {
+        <span class="ident">Error</span> {
+            <span class="ident">inner</span>: <span class="ident">Context</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">OsString</span>(<span class="ident">error</span>)),
         }
     }
 }
