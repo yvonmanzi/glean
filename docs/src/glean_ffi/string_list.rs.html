@@ -64,6 +64,7 @@
 <span id="64">64</span>
 <span id="65">65</span>
 <span id="66">66</span>
+<span id="67">67</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -93,9 +94,10 @@
     <span class="ident">values_len</span>: <span class="ident">i32</span>,
 ) {
     <span class="ident">GLEAN</span>.<span class="ident">call_infallible</span>(<span class="ident">glean_handle</span>, <span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
-        <span class="ident">STRING_LIST_METRICS</span>.<span class="ident">call_infallible</span>(<span class="ident">metric_id</span>, <span class="op">|</span><span class="ident">metric</span><span class="op">|</span> {
-            <span class="kw">let</span> <span class="ident">values</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">from_raw_string_array</span>(<span class="ident">values</span>, <span class="ident">values_len</span>) };
+        <span class="ident">STRING_LIST_METRICS</span>.<span class="ident">call_with_log</span>(<span class="ident">metric_id</span>, <span class="op">|</span><span class="ident">metric</span><span class="op">|</span> {
+            <span class="kw">let</span> <span class="ident">values</span> <span class="op">=</span> <span class="ident">from_raw_string_array</span>(<span class="ident">values</span>, <span class="ident">values_len</span>)<span class="question-mark">?</span>;
             <span class="ident">metric</span>.<span class="ident">set</span>(<span class="ident">glean</span>, <span class="ident">values</span>);
+            <span class="prelude-val">Ok</span>(())
         })
     })
 }

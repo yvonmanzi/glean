@@ -130,9 +130,9 @@
     <span class="ident">extra_keys_len</span>: <span class="ident">i32</span>,
 ) <span class="op">-&gt;</span> <span class="ident">u64</span> {
     <span class="ident">EVENT_METRICS</span>.<span class="ident">insert_with_log</span>(<span class="op">||</span> {
-        <span class="kw">let</span> <span class="ident">send_in_pings</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">from_raw_string_array</span>(<span class="ident">send_in_pings</span>, <span class="ident">send_in_pings_len</span>) };
+        <span class="kw">let</span> <span class="ident">send_in_pings</span> <span class="op">=</span> <span class="ident">from_raw_string_array</span>(<span class="ident">send_in_pings</span>, <span class="ident">send_in_pings_len</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">lifetime</span> <span class="op">=</span> <span class="ident">Lifetime</span>::<span class="ident">try_from</span>(<span class="ident">lifetime</span>)<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">extra_keys</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">from_raw_string_array</span>(<span class="ident">extra_keys</span>, <span class="ident">extra_keys_len</span>) };
+        <span class="kw">let</span> <span class="ident">extra_keys</span> <span class="op">=</span> <span class="ident">from_raw_string_array</span>(<span class="ident">extra_keys</span>, <span class="ident">extra_keys_len</span>)<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="ident">EventMetric</span>::<span class="ident">new</span>(
             <span class="ident">CommonMetricData</span> {
@@ -157,10 +157,10 @@
     <span class="ident">extra_len</span>: <span class="ident">i32</span>,
 ) {
     <span class="ident">GLEAN</span>.<span class="ident">call_infallible</span>(<span class="ident">glean_handle</span>, <span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
-        <span class="ident">EVENT_METRICS</span>.<span class="ident">call_infallible</span>(<span class="ident">metric_id</span>, <span class="op">|</span><span class="ident">metric</span><span class="op">|</span> {
-            <span class="ident">metric</span>.<span class="ident">record</span>(<span class="ident">glean</span>, <span class="ident">timestamp</span>, <span class="kw">unsafe</span> {
-                <span class="ident">from_raw_int_array_and_string_array</span>(<span class="ident">extra_keys</span>, <span class="ident">extra_values</span>, <span class="ident">extra_len</span>)
-            });
+        <span class="ident">EVENT_METRICS</span>.<span class="ident">call_with_log</span>(<span class="ident">metric_id</span>, <span class="op">|</span><span class="ident">metric</span><span class="op">|</span> {
+            <span class="kw">let</span> <span class="ident">extra</span> <span class="op">=</span> <span class="ident">from_raw_int_array_and_string_array</span>(<span class="ident">extra_keys</span>, <span class="ident">extra_values</span>, <span class="ident">extra_len</span>)<span class="question-mark">?</span>;
+            <span class="ident">metric</span>.<span class="ident">record</span>(<span class="ident">glean</span>, <span class="ident">timestamp</span>, <span class="ident">extra</span>);
+            <span class="prelude-val">Ok</span>(())
         })
     })
 }

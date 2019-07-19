@@ -137,7 +137,7 @@
             $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">new_argname</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">new_argtyp</span>),<span class="op">*</span>
         ) <span class="op">-&gt;</span> <span class="ident">u64</span> {
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">metric_map</span>.<span class="ident">insert_with_log</span>(<span class="op">||</span> {
-                <span class="kw">let</span> <span class="ident">send_in_pings</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="kw">crate</span>::<span class="ident">from_raw_string_array</span>(<span class="ident">send_in_pings</span>, <span class="ident">send_in_pings_len</span>) };
+                <span class="kw">let</span> <span class="ident">send_in_pings</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">from_raw_string_array</span>(<span class="ident">send_in_pings</span>, <span class="ident">send_in_pings_len</span>)<span class="question-mark">?</span>;
                 <span class="kw">let</span> <span class="ident">lifetime</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>::<span class="ident">try_from</span>(<span class="ident">lifetime</span>)<span class="question-mark">?</span>;
 
                 $(
