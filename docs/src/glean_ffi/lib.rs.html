@@ -505,6 +505,8 @@
 <span id="505">505</span>
 <span id="506">506</span>
 <span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -714,7 +716,9 @@
 
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
 <span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_set_upload_enabled</span>(<span class="ident">glean_handle</span>: <span class="ident">u64</span>, <span class="ident">flag</span>: <span class="ident">u8</span>) {
-    <span class="ident">GLEAN</span>.<span class="ident">call_infallible_mut</span>(<span class="ident">glean_handle</span>, <span class="op">|</span><span class="ident">glean</span><span class="op">|</span> <span class="ident">glean</span>.<span class="ident">set_upload_enabled</span>(<span class="ident">flag</span> <span class="op">!=</span> <span class="number">0</span>))
+    <span class="ident">GLEAN</span>.<span class="ident">call_infallible_mut</span>(<span class="ident">glean_handle</span>, <span class="op">|</span><span class="ident">glean</span><span class="op">|</span> <span class="ident">glean</span>.<span class="ident">set_upload_enabled</span>(<span class="ident">flag</span> <span class="op">!=</span> <span class="number">0</span>));
+    <span class="comment">// The return value of set_upload_enabled is an implementation detail</span>
+    <span class="comment">// that isn&#39;t exposed over FFI.</span>
 }
 
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>

@@ -532,6 +532,18 @@
 <span id="532">532</span>
 <span id="533">533</span>
 <span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
+<span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -810,6 +822,18 @@
 
             <span class="ident">writer</span>.<span class="ident">commit</span>().<span class="ident">unwrap</span>();
         });
+    }
+
+    <span class="doccomment">/// Clears all metrics in the database.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clear_all</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">for</span> <span class="ident">lifetime</span> <span class="kw">in</span> [<span class="ident">Lifetime</span>::<span class="ident">User</span>, <span class="ident">Lifetime</span>::<span class="ident">Ping</span>].<span class="ident">iter</span>() {
+            <span class="self">self</span>.<span class="ident">write_with_store</span>(<span class="kw-2">*</span><span class="ident">lifetime</span>, <span class="op">|</span><span class="kw-2">mut</span> <span class="ident">writer</span>, <span class="ident">store</span><span class="op">|</span> {
+                <span class="ident">store</span>.<span class="ident">clear</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">writer</span>).<span class="ident">unwrap</span>();
+                <span class="ident">writer</span>.<span class="ident">commit</span>().<span class="ident">unwrap</span>();
+            });
+        }
+
+        <span class="self">self</span>.<span class="ident">app_lifetime_data</span>.<span class="ident">write</span>().<span class="ident">unwrap</span>().<span class="ident">clear</span>();
     }
 }
 

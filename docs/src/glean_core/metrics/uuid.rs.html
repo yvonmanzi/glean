@@ -94,10 +94,13 @@
 <span id="94">94</span>
 <span id="95">95</span>
 <span id="96">96</span>
+<span id="97">97</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
 <span class="comment">// file, You can obtain one at https://mozilla.org/MPL/2.0/.</span>
+
+<span class="kw">use</span> <span class="ident">uuid</span>::<span class="ident">Uuid</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">metrics</span>::<span class="ident">Metric</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">metrics</span>::<span class="ident">MetricType</span>;
@@ -135,7 +138,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `glean` - The Glean instance this metric belongs to.</span>
     <span class="doccomment">/// * `value` - The UUID to set the metric to.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">value</span>: <span class="ident">uuid</span>::<span class="ident">Uuid</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">value</span>: <span class="ident">Uuid</span>) {
         <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">should_record</span>(<span class="ident">glean</span>) {
             <span class="kw">return</span>;
         }
@@ -150,32 +153,31 @@
     <span class="doccomment">/// ## Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `glean` - The Glean instance this metric belongs to.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">generate_and_set</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">storage</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>) <span class="op">-&gt;</span> <span class="ident">uuid</span>::<span class="ident">Uuid</span> {
-        <span class="kw">let</span> <span class="ident">uuid</span> <span class="op">=</span> <span class="ident">uuid</span>::<span class="ident">Uuid</span>::<span class="ident">new_v4</span>();
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">generate_and_set</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">storage</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>) <span class="op">-&gt;</span> <span class="ident">Uuid</span> {
+        <span class="kw">let</span> <span class="ident">uuid</span> <span class="op">=</span> <span class="ident">Uuid</span>::<span class="ident">new_v4</span>();
         <span class="self">self</span>.<span class="ident">set</span>(<span class="ident">storage</span>, <span class="ident">uuid</span>);
         <span class="ident">uuid</span>
     }
 
-    <span class="doccomment">/// Generate a new random UUID if none is stored yet.</span>
+    <span class="doccomment">/// Get the stored Uuid value.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ## Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `glean` - The Glean instance this metric belongs to.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">generate_if_missing</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>) {
-        <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">should_record</span>(<span class="ident">glean</span>) {
-            <span class="kw">return</span>;
+    <span class="doccomment">/// * `glean` - the Glean instance this metric belongs to.</span>
+    <span class="doccomment">/// * `storage_name` - the storage name to look into.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ## Return value</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns the stored value or `None` if nothing stored.</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">get_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Uuid</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="ident">StorageManager</span>.<span class="ident">snapshot_metric</span>(
+            <span class="ident">glean</span>.<span class="ident">storage</span>(),
+            <span class="ident">storage_name</span>,
+            <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>().<span class="ident">identifier</span>(),
+        ) {
+            <span class="prelude-val">Some</span>(<span class="ident">Metric</span>::<span class="ident">Uuid</span>(<span class="ident">uuid</span>)) <span class="op">=&gt;</span> <span class="ident">Uuid</span>::<span class="ident">parse_str</span>(<span class="kw-2">&amp;</span><span class="ident">uuid</span>).<span class="ident">ok</span>(),
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
         }
-
-        <span class="ident">glean</span>
-            .<span class="ident">storage</span>()
-            .<span class="ident">record_with</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>, <span class="op">|</span><span class="ident">old_value</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">old_value</span> {
-                <span class="prelude-val">Some</span>(<span class="ident">Metric</span>::<span class="ident">Uuid</span>(<span class="ident">old_value</span>)) <span class="op">=&gt;</span> <span class="ident">Metric</span>::<span class="ident">Uuid</span>(<span class="ident">old_value</span>),
-                <span class="kw">_</span> <span class="op">=&gt;</span> {
-                    <span class="kw">let</span> <span class="ident">uuid</span> <span class="op">=</span> <span class="ident">uuid</span>::<span class="ident">Uuid</span>::<span class="ident">new_v4</span>();
-                    <span class="kw">let</span> <span class="ident">new_value</span> <span class="op">=</span> <span class="ident">uuid</span>.<span class="ident">to_string</span>();
-                    <span class="ident">Metric</span>::<span class="ident">Uuid</span>(<span class="ident">new_value</span>)
-                }
-            })
     }
 
     <span class="doccomment">/// **Test-only API (exported for FFI purposes).**</span>
