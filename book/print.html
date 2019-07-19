@@ -2585,7 +2585,70 @@ This is less relevant for end users of the Glean SDK.</p>
 <p>Glean's ping payloads have a formal JSON schema defined in the <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/">mozilla-pipeline-schemas</a> project.
 It is written as a set of <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/master/templates/include/glean">templates</a> that are expanded by the mozilla-pipeline-schemas build infrastructure into a <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/master/schemas/glean/baseline/baseline.1.schema.json">fully expanded schema</a>.</p>
 <h2><a class="header" href="#metric-types" id="metric-types">Metric types</a></h2>
-<p>TODO: Fill in the rest of the metric types. https://bugzilla.mozilla.org/show_bug.cgi?id=1566854</p>
+<h3><a class="header" href="#boolean-1" id="boolean-1">Boolean</a></h3>
+<p>A <a href="dev/core/internal/../../../user/metrics/boolean.html">Boolean</a> is represented by its boolean value.</p>
+<h4><a class="header" href="#example" id="example">Example</a></h4>
+<pre><code class="language-json">true
+</code></pre>
+<h3><a class="header" href="#counter-1" id="counter-1">Counter</a></h3>
+<p>A <a href="dev/core/internal/../../../user/metrics/counter.html">Counter</a> is represented by its integer value.</p>
+<h4><a class="header" href="#example-1" id="example-1">Example</a></h4>
+<pre><code class="language-json">17
+</code></pre>
+<h3><a class="header" href="#string" id="string">String</a></h3>
+<p>A <a href="dev/core/internal/../../../user/metrics/string.html">String</a> is represented by its string value.</p>
+<h4><a class="header" href="#example-2" id="example-2">Example</a></h4>
+<pre><code class="language-json">&quot;sample string&quot;
+</code></pre>
+<h3><a class="header" href="#string-list-1" id="string-list-1">String list</a></h3>
+<p>A <a href="dev/core/internal/../../../user/metrics/string_list.html">String List</a> is represented as an array of strings.</p>
+<pre><code class="language-json">[&quot;sample string&quot;, &quot;another one&quot;]
+</code></pre>
+<h3><a class="header" href="#timespan-1" id="timespan-1">Timespan</a></h3>
+<p>A <a href="dev/core/internal/../../../user/metrics/timespan.html">Timespan</a> is represented as an object of their duration as an integer and the time unit.</p>
+<table><thead><tr><th>Field name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>value</code></td><td>Integer</td><td>The value in the marked time unit.</td></tr>
+<tr><td><code>time_unit</code></td><td>String</td><td>The time unit, see the <a href="dev/core/internal/../../../user/metrics/timespan.html#configuration">timespan's configuration</a> for valid values.</td></tr>
+</tbody></table>
+<h4><a class="header" href="#example-3" id="example-3">Example</a></h4>
+<pre><code class="language-json">{
+    &quot;time_unit&quot;: &quot;milliseconds&quot;,
+    &quot;value&quot;: 10
+}
+</code></pre>
+<h2><a class="header" href="#timing-distribution-1" id="timing-distribution-1">Timing Distribution</a></h2>
+<p>A <a href="dev/core/internal/../../../user/metrics/timing_distribution.html">Timing distribution</a> is represented as an object with the following fields.</p>
+<table><thead><tr><th>Field name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>bucket_count</code></td><td>Integer</td><td>The bucket count of the histogram.</td></tr>
+<tr><td><code>range</code></td><td>Array&lt;Integer&gt;</td><td>The range indicated by its minimum and maxium value.</td></tr>
+<tr><td><code>sum</code></td><td>Integer</td><td>The sum of all recorded values.</td></tr>
+<tr><td><code>time_unit</code></td><td>String</td><td>The timespan's time unit, see the <a href="dev/core/internal/../../../user/metrics/timing_distribution.html#configuration">time distribution's configuration</a> for valid values.</td></tr>
+<tr><td><code>values</code></td><td>Map&lt;String, Integer&gt;</td><td>The values in each bucket. The key is the minimum value for the range of that bucket. Buckets with no values are not reported.</td></tr>
+</tbody></table>
+<h4><a class="header" href="#example-4" id="example-4">Example:</a></h4>
+<pre><code class="language-json">{
+    &quot;bucket_count&quot;: 100,
+    &quot;range&quot;: [0, 60000],
+    &quot;histogram_type&quot;: &quot;expontential&quot;,
+    &quot;sum&quot;: 3,
+    &quot;time_unit&quot;: &quot;milliseconds&quot;,
+    &quot;values&quot;: {
+        &quot;0&quot;: 1,
+        &quot;1&quot;: 3,
+    }
+}
+</code></pre>
+<h3><a class="header" href="#uuid-1" id="uuid-1">UUID</a></h3>
+<p>A <a href="dev/core/internal/../../../user/metrics/uuid.html">UUID</a> is represented by the string representation of the UUID.</p>
+<h4><a class="header" href="#example-5" id="example-5">Example</a></h4>
+<pre><code class="language-json">&quot;29711dc8-a954-11e9-898a-eb4ea7e8fd3f&quot;
+</code></pre>
+<h3><a class="header" href="#datetime-1" id="datetime-1">Datetime</a></h3>
+<p>A <a href="dev/core/internal/../../../user/metrics/datetime.html">Datetime</a> is represented by its ISO8601 string representation, truncated to the metric's time unit.
+It always includes the timezone offset.</p>
+<h4><a class="header" href="#example-6" id="example-6">Example</a></h4>
+<pre><code class="language-json">&quot;2019-07-18T14:06:00.000+02:00&quot;
+</code></pre>
 <h3><a class="header" href="#event" id="event">Event</a></h3>
 <p><a href="dev/core/internal/../../../user/metrics/event.html">Events</a> are represented as an array of objects, with one object for each event.
 Each event object has the following keys:</p>
@@ -2608,7 +2671,7 @@ The keys must be from the set defined for this event in the <code>metrics.yaml</
 The values have a maximum length of 50 bytes, when encoded as UTF-8.</p>
 </li>
 </ul>
-<p>For example:</p>
+<h4><a class="header" href="#example-7" id="example-7">Example</a></h4>
 <pre><code class="language-json">[
   {
     &quot;timestamp&quot;: 0,
@@ -2631,6 +2694,26 @@ When the application starts up again, there is no good way to determine if the d
 To get around this, on application startup, any queued events are immediately collected into pings and then cleared.
 These &quot;startup-triggered pings&quot; are likely to have a very short duration, as recorded in <code>ping_info.start_time</code> and <code>ping_info.end_time</code> (see <a href="dev/core/internal/../../../user/pings/index.html#The-ping_info-section">the <code>ping_info</code> section</a>).
 The maximum timestamp of the events in these pings are quite likely to exceed the duration of the ping, but this is to be expected.</p>
+<h3><a class="header" href="#labeled-metrics-1" id="labeled-metrics-1">Labeled metrics</a></h3>
+<p>Currently several labeled metrics are supported:</p>
+<ul>
+<li><a href="dev/core/internal/../../../user/metrics/labeled_counters.html">Labeled Counters</a>.</li>
+<li><a href="dev/core/internal/../../../user/metrics/labeled_strings.html">Labeled Strings</a>.</li>
+<li><a href="dev/core/internal/../../../user/metrics/labeled_timespans.html">Labeled Timespans</a>.</li>
+</ul>
+<p>All are on the top-level represented in the same way, as an object mapping the label to the metric's value.
+See the individual metric types for details on the value payload:</p>
+<ul>
+<li><a href="dev/core/internal/#counter">Counter</a></li>
+<li><a href="dev/core/internal/#string">String</a></li>
+<li><a href="dev/core/internal/#timespan">Timespan</a></li>
+</ul>
+<h4><a class="header" href="#example-for-labeled-counters" id="example-for-labeled-counters">Example for Labeled Counters</a></h4>
+<pre><code class="language-json">{
+    &quot;label1&quot;: 2,
+    &quot;label2&quot;: 17
+}
+</code></pre>
 <p>The following language-specific API docs are available:</p>
 <ul>
 <li><a href="api/../../javadoc/glean/index.html">Kotlin API docs</a></li>
