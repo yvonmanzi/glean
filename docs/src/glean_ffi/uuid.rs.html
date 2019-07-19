@@ -51,7 +51,6 @@
 <span id="51">51</span>
 <span id="52">52</span>
 <span id="53">53</span>
-<span id="54">54</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -101,10 +100,9 @@
     <span class="ident">storage_name</span>: <span class="ident">FfiStr</span>,
 ) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_char</span> {
     <span class="ident">GLEAN</span>.<span class="ident">call_infallible</span>(<span class="ident">glean_handle</span>, <span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
-        <span class="kw">let</span> <span class="ident">res</span>: <span class="ident">glean_core</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">UUID_METRICS</span>.<span class="ident">get_u64</span>(<span class="ident">metric_id</span>, <span class="op">|</span><span class="ident">metric</span><span class="op">|</span> {
-            <span class="prelude-val">Ok</span>(<span class="ident">metric</span>.<span class="ident">test_get_value</span>(<span class="ident">glean</span>, <span class="ident">storage_name</span>.<span class="ident">as_str</span>()).<span class="ident">unwrap</span>())
-        });
-        <span class="ident">res</span>.<span class="ident">unwrap</span>()
+        <span class="ident">UUID_METRICS</span>.<span class="ident">call_infallible</span>(<span class="ident">metric_id</span>, <span class="op">|</span><span class="ident">metric</span><span class="op">|</span> {
+            <span class="ident">metric</span>.<span class="ident">test_get_value</span>(<span class="ident">glean</span>, <span class="ident">storage_name</span>.<span class="ident">as_str</span>()).<span class="ident">unwrap</span>()
+        })
     })
 }
 </pre></div>
