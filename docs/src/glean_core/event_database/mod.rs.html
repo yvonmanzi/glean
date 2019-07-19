@@ -340,6 +340,11 @@
 <span id="340">340</span>
 <span id="341">341</span>
 <span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -594,7 +599,12 @@
 
             <span class="kw">let</span> <span class="ident">_lock</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">file_lock</span>.<span class="ident">write</span>().<span class="ident">unwrap</span>();
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span> <span class="ident">fs</span>::<span class="ident">remove_file</span>(<span class="self">self</span>.<span class="ident">path</span>.<span class="ident">join</span>(<span class="ident">store_name</span>)) {
-                <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;Error removing events queue file {}: {}&quot;</span>, <span class="ident">store_name</span>, <span class="ident">err</span>);
+                <span class="kw">match</span> <span class="ident">err</span>.<span class="ident">kind</span>() {
+                    <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">NotFound</span> <span class="op">=&gt;</span> {
+                        <span class="comment">// silently drop this error, the file was already non-existing</span>
+                    }
+                    <span class="kw">_</span> <span class="op">=&gt;</span> <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;Error removing events queue file {}: {}&quot;</span>, <span class="ident">store_name</span>, <span class="ident">err</span>),
+                }
             }
         }
 
