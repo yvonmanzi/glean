@@ -295,18 +295,37 @@ toolbar:
       - http://example.com/path/to/data-review
     expires:
       - 2019-06-01  # &lt;-- Update to a date in the future
-    
-  metric2:
+
+  double_click:
     ...
-    
+
 category2.subcategory:  # Categories can contain subcategories
-  metric3:
+  metric:
     ...
 
 </code></pre>
 <p>The details of the metric parameters are described in <a href="user/metric-parameters.html">metric parameters</a>.</p>
 <p>The <code>metrics.yaml</code> file is used to generate <code>Kotlin</code> code that becomes the public API to access your application's metrics.</p>
-<h2><a class="header" href="#metric-naming" id="metric-naming">Metric naming</a></h2>
+<h2><a class="header" href="#recommendations-for-defining-new-metrics" id="recommendations-for-defining-new-metrics">Recommendations for defining new metrics</a></h2>
+<p>“There are only two hard things in Computer Science: cache invalidation and naming things” -- attributed to Phil Karlton.</p>
+<h3><a class="header" href="#lifetimes" id="lifetimes">Lifetimes</a></h3>
+<p>The <code>lifetime</code> parameter of a metric defines when it will be reset. There are three options available:</p>
+<ul>
+<li><code>ping</code> (default): The metric is reset each time it is sent in the ping.
+This is the most common case, and should be used for metrics that are highly dynamic, such as things computed in response to the user's interaction with the application.</li>
+<li><code>application</code>: The metric is related to an application run, and is reset only when the application restarts.
+This should be used for things that are constant during the run of an application, such as the operating system version.
+In practice, these metrics are generally set during application startup.
+A common mistake---using the <code>ping</code> lifetime for these type of metrics---means that they will only be included in the first ping sent during a particular run of the application.</li>
+<li><code>user</code>: The metric is part of the user's profile.
+This should be used for things that change only when the user's profile is created.
+It is rare to use this lifetime outside of some metrics that are built in to Glean, such as <code>client_id</code>.</li>
+</ul>
+<h3><a class="header" href="#naming-things" id="naming-things">Naming things</a></h3>
+<p>Choose the category and names of metrics to be as specific as possible.
+It is not necessary to put the type of the metric in the category or name, since this information is retained in other ways through the entire end-to-end system.</p>
+<p>For example, if defining a set of events related to search, put them in a category called <code>search</code>, rather than just <code>events</code> or <code>search_events</code>.</p>
+<h2><a class="header" href="#a-note-about-case-inflection" id="a-note-about-case-inflection">A note about case inflection</a></h2>
 <p>Category and metric names in the <code>metrics.yaml</code> are in <code>snake_case</code>, but given the Kotlin coding standards defined by <a href="https://github.com/pinterest/ktlint">ktlint</a>, these identifiers must be <code>camelCase</code> in Kotlin. For example, the metric defined in the <code>metrics.yaml</code> as:</p>
 <pre><code class="language-YAML">views:
   login_opened:
@@ -346,8 +365,8 @@ Views.loginOpened...
 <p><code>lifetime</code>: Defines the lifetime of the metric. Different lifetimes affect when the metrics value is reset.</p>
 <ul>
 <li><code>ping</code> (default): The metric is reset each time it is sent in a ping.</li>
-<li><code>user</code>: The metric is part of the user's profile.</li>
 <li><code>application</code>: The metric is related to an application run, and is reset when the application restarts.</li>
+<li><code>user</code>: The metric is part of the user's profile.</li>
 </ul>
 </li>
 <li>
@@ -554,6 +573,7 @@ Only the first 16 labels seen by the Glean SDK will be tracked. After that, any 
     type: boolean
     description: &gt;
       Records whether a11y is enabled on the device.
+    lifetime: application
     ...
 </code></pre>
 <h2><a class="header" href="#api" id="api">API</a></h2>
@@ -707,6 +727,7 @@ assertEquals(3, Stability.crashCount[&quot;native_code_crash&quot;].testGetValue
     type: string
     description: &gt;
       The name of the default search engine.
+    lifetime: application
     ...
 </code></pre>
 <h2><a class="header" href="#api-3" id="api-3">API</a></h2>
@@ -820,6 +841,7 @@ assertTrue(Login.errorsByStage[&quot;server_auth&quot;].testHasValue())
     type: string_list
     description: &gt;
       Records the name of the enabled search engines.
+    lifetime: application
     ...
 </code></pre>
 <h2><a class="header" href="#api-5" id="api-5">API</a></h2>
@@ -1123,6 +1145,7 @@ assertEquals(2L, snapshot.count())
     type: uuid
     description: &gt;
       A unique identifier for the client's profile
+    lifetime: user
     ...
 </code></pre>
 <h2><a class="header" href="#api-9" id="api-9">API</a></h2>
@@ -1180,6 +1203,7 @@ assertEquals(uuid, User.clientId.testGetValue())
     time_unit: day 
     description: &gt;
       Records the date when the application was first run
+    lifetime: user
     ...
 </code></pre>
 <h2><a class="header" href="#api-10" id="api-10">API</a></h2>
