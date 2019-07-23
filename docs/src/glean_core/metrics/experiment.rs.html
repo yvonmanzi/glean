@@ -155,6 +155,7 @@
 <span id="155">155</span>
 <span id="156">156</span>
 <span id="157">157</span>
+<span id="158">158</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -167,6 +168,7 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">metrics</span>::<span class="ident">Metric</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">metrics</span>::<span class="ident">MetricType</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">storage</span>::<span class="ident">StorageManager</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">util</span>::<span class="ident">truncate_string_at_boundary</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">CommonMetricData</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Glean</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Lifetime</span>;
@@ -221,7 +223,7 @@
                 <span class="ident">id</span>.<span class="ident">len</span>(),
                 <span class="ident">MAX_EXPERIMENTS_IDS_LEN</span>
             );
-            <span class="ident">id</span>[<span class="number">0</span>..<span class="ident">MAX_EXPERIMENTS_IDS_LEN</span>].<span class="ident">to_string</span>()
+            <span class="ident">truncate_string_at_boundary</span>(<span class="ident">id</span>, <span class="ident">MAX_EXPERIMENTS_IDS_LEN</span>)
         } <span class="kw">else</span> {
             <span class="ident">id</span>
         };
@@ -264,7 +266,7 @@
                 <span class="ident">branch</span>.<span class="ident">len</span>(),
                 <span class="ident">MAX_EXPERIMENTS_IDS_LEN</span>
             );
-            <span class="ident">branch</span>[<span class="number">0</span>..<span class="ident">MAX_EXPERIMENTS_IDS_LEN</span>].<span class="ident">to_string</span>()
+            <span class="ident">truncate_string_at_boundary</span>(<span class="ident">branch</span>, <span class="ident">MAX_EXPERIMENTS_IDS_LEN</span>)
         } <span class="kw">else</span> {
             <span class="ident">branch</span>
         };

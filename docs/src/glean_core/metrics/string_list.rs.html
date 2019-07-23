@@ -159,15 +159,6 @@
 <span id="159">159</span>
 <span id="160">160</span>
 <span id="161">161</span>
-<span id="162">162</span>
-<span id="163">163</span>
-<span id="164">164</span>
-<span id="165">165</span>
-<span id="166">166</span>
-<span id="167">167</span>
-<span id="168">168</span>
-<span id="169">169</span>
-<span id="170">170</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -177,6 +168,7 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">metrics</span>::<span class="ident">Metric</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">metrics</span>::<span class="ident">MetricType</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">storage</span>::<span class="ident">StorageManager</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">util</span>::<span class="ident">truncate_string_at_boundary_with_error</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">CommonMetricData</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Glean</span>;
 
@@ -224,18 +216,8 @@
             <span class="kw">return</span>;
         }
 
-        <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">into</span>();
-        <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">value</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="ident">MAX_STRING_LENGTH</span> {
-            <span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
-                <span class="string">&quot;Individual value length {} exceeds maximum of {}&quot;</span>,
-                <span class="ident">value</span>.<span class="ident">len</span>(),
-                <span class="ident">MAX_STRING_LENGTH</span>
-            );
-            <span class="ident">record_error</span>(<span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>, <span class="ident">ErrorType</span>::<span class="ident">InvalidValue</span>, <span class="ident">msg</span>);
-            <span class="ident">value</span>[<span class="number">0</span>..<span class="ident">MAX_STRING_LENGTH</span>].<span class="ident">to_string</span>()
-        } <span class="kw">else</span> {
-            <span class="ident">value</span>
-        };
+        <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span>
+            <span class="ident">truncate_string_at_boundary_with_error</span>(<span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>, <span class="ident">value</span>, <span class="ident">MAX_STRING_LENGTH</span>);
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">error</span> <span class="op">=</span> <span class="prelude-val">None</span>;
         <span class="ident">glean</span>
