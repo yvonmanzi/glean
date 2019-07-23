@@ -125,6 +125,7 @@
 <span id="125">125</span>
 <span id="126">126</span>
 <span id="127">127</span>
+<span id="128">128</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -217,10 +218,11 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Metric</span> {
-    <span class="doccomment">/// The category the metric fits into.</span>
+    <span class="doccomment">/// The ping section the metric fits into.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// This determines the category to place the metric data in when assembling the ping payload.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">category</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
+    <span class="doccomment">/// This determines the section of the ping to place the metric data in when</span>
+    <span class="doccomment">/// assembling the ping payload.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ping_section</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="ident">Metric</span>::<span class="ident">Boolean</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;boolean&quot;</span>,
             <span class="ident">Metric</span>::<span class="ident">Counter</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;counter&quot;</span>,

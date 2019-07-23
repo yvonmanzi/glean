@@ -2237,9 +2237,9 @@ pub enum Metric {
     Counter(i32),
 }
 </code></pre>
-<p>Then modify the below implementation and define the right category name for the new type. This will be used in the ping payload:</p>
+<p>Then modify the below implementation and define the right ping section name for the new type. This will be used in the ping payload:</p>
 <pre><code class="language-rust noplaypen">impl Metric {
-    pub fn category(&amp;self) -&gt; &amp;'static str {
+    pub fn ping_section(&amp;self) -&gt; &amp;'static str {
         match self {
             // ...
             Metric::Counter(_) =&gt; &quot;counter&quot;,
