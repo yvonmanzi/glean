@@ -2027,7 +2027,7 @@ may need to repeat some steps (eg, rust updates should be done periodically)</p>
 <p>At the end of this process you should have the following environment variables set up.</p>
 <ul>
 <li><code>ANDROID_HOME</code></li>
-<li><code>NDK_HOME</code></li>
+<li><code>ANDROID_NDK_ROOT</code></li>
 <li><code>JAVA_HOME</code></li>
 </ul>
 <p>The easiest way to install all the dependencies (and automatically
@@ -2043,7 +2043,7 @@ If Android Studio asks you to upgrade the verison of gradle, decline.</p>
 </ul>
 <p>With the dependencies installed, note down the <code>Android SDK Location</code> in <code>Tools &gt; SDK Manager</code>.
 Set the <code>ANDROID_HOME</code> environment variable to that path.
-The <code>NDK_HOME</code> can be set to <code>NDK_HOME=$ANDROID_HOME/ndk-bundle</code>.
+The <code>ANDROID_NDK_ROOT</code> can be set to <code>ANDROID_NDK_ROOT=$ANDROID_HOME/ndk-bundle</code>.
 Set <code>JAVA_HOME</code> to be the location of Android Studio's JDK which can be found in Glean's &quot;Project Structure&quot; menu. (You may need to escape spaces in the path).</p>
 <h3><a class="header" href="#setting-up-rust" id="setting-up-rust">Setting up Rust</a></h3>
 <p>Rust can be installed using <code>rustup</code>, with the following commands:</p>
