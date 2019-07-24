@@ -226,7 +226,7 @@
                         ),
                         <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
                             <span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Invalid key index {}&quot;</span>, <span class="ident">k</span>);
-                            <span class="ident">record_error</span>(<span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>, <span class="ident">ErrorType</span>::<span class="ident">InvalidValue</span>, <span class="ident">msg</span>);
+                            <span class="ident">record_error</span>(<span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>, <span class="ident">ErrorType</span>::<span class="ident">InvalidValue</span>, <span class="ident">msg</span>, <span class="prelude-val">None</span>);
                             <span class="kw">return</span>;
                         }
                     };

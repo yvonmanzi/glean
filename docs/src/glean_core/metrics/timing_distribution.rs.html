@@ -269,6 +269,52 @@
 <span id="269">269</span>
 <span id="270">270</span>
 <span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -443,7 +489,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_stop_and_accumulate</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">id</span>: <span class="ident">TimerId</span>, <span class="ident">stop_time</span>: <span class="ident">u64</span>) {
         <span class="kw">let</span> <span class="ident">duration</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">timings</span>.<span class="ident">set_stop</span>(<span class="ident">id</span>, <span class="ident">stop_time</span>) {
             <span class="prelude-val">Err</span>(<span class="ident">error</span>) <span class="op">=&gt;</span> {
-                <span class="ident">record_error</span>(<span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>, <span class="ident">ErrorType</span>::<span class="ident">InvalidValue</span>, <span class="ident">error</span>);
+                <span class="ident">record_error</span>(<span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>, <span class="ident">ErrorType</span>::<span class="ident">InvalidValue</span>, <span class="ident">error</span>, <span class="prelude-val">None</span>);
                 <span class="kw">return</span>;
             }
             <span class="prelude-val">Ok</span>(<span class="ident">duration</span>) <span class="op">=&gt;</span> <span class="ident">duration</span>,
@@ -470,14 +516,60 @@
             });
     }
 
-    <span class="doccomment">/// Abort a previous [start] call. No error is recorded if no [start] was called.</span>
+    <span class="doccomment">/// Abort a previous `set_start` call. No error is recorded if no `set_start`</span>
+    <span class="doccomment">/// was called.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// @param timerId The [GleanTimerId] to associate with this timing. This allows</span>
-    <span class="doccomment">/// for concurrent timing of events associated with different ids to the</span>
-    <span class="doccomment">/// same timing distribution metric.</span>
+    <span class="doccomment">/// ## Arguments</span>
     <span class="doccomment">///</span>
+    <span class="doccomment">/// * `id` - The `TimerId` to associate with this timing. This allows</span>
+    <span class="doccomment">///   for concurrent timing of events associated with different ids to the</span>
+    <span class="doccomment">///   same timing distribution metric.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cancel</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">id</span>: <span class="ident">TimerId</span>) {
         <span class="self">self</span>.<span class="ident">timings</span>.<span class="ident">cancel</span>(<span class="ident">id</span>);
+    }
+
+    <span class="doccomment">/// Accumulates the provided signed samples in the metric.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This is required so that the platform-specific code can provide us with</span>
+    <span class="doccomment">/// 64 bit signed integers if no `u32` comparable type is available. This</span>
+    <span class="doccomment">/// will take care of filtering and reporting errors for any provided negative</span>
+    <span class="doccomment">/// sample.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Please note that this assumes that the provided samples are already in the</span>
+    <span class="doccomment">/// &quot;unit&quot; declared by the instance of the implementing metric type (e.g. if the</span>
+    <span class="doccomment">/// implementing class is a [TimingDistributionMetricType] and the instance this</span>
+    <span class="doccomment">/// method was called on is using [TimeUnit.Second], then `samples` are assumed</span>
+    <span class="doccomment">/// to be in that unit).</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ## Arguments</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// - `samples` - The vector holding the samples to be recorded by the metric.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ## Notes</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Discards any negative value in `samples` and report an `ErrorType::InvalidValue`</span>
+    <span class="doccomment">/// for each of them.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accumulate_samples_signed</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">samples</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>) {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">num_errors</span> <span class="op">=</span> <span class="number">0</span>;
+
+        <span class="ident">glean</span>.<span class="ident">storage</span>().<span class="ident">record_with</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>, <span class="op">|</span><span class="ident">old_value</span><span class="op">|</span> {
+            <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">hist</span>, <span class="ident">time_unit</span>) <span class="op">=</span> <span class="kw">match</span> <span class="ident">old_value</span> {
+                <span class="prelude-val">Some</span>(<span class="ident">Metric</span>::<span class="ident">TimingDistribution</span>(<span class="ident">hist</span>, <span class="ident">time_unit</span>)) <span class="op">=&gt;</span> (<span class="ident">hist</span>, <span class="ident">time_unit</span>),
+                <span class="kw">_</span> <span class="op">=&gt;</span> (<span class="ident">Histogram</span>::<span class="ident">default</span>(), <span class="self">self</span>.<span class="ident">time_unit</span>),
+            };
+
+            <span class="kw">for</span> <span class="ident">sample</span> <span class="kw">in</span> <span class="ident">samples</span>.<span class="ident">iter</span>() {
+                <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">sample</span> <span class="op">&gt;=</span> <span class="number">0</span> {
+                    <span class="ident">hist</span>.<span class="ident">accumulate</span>(<span class="kw-2">*</span><span class="ident">sample</span> <span class="kw">as</span> <span class="ident">u32</span>);
+                } <span class="kw">else</span> {
+                    <span class="ident">num_errors</span> <span class="op">+=</span> <span class="number">1</span>;
+                }
+            }
+            <span class="ident">Metric</span>::<span class="ident">TimingDistribution</span>(<span class="ident">hist</span>, <span class="ident">time_unit</span>)
+        });
+
+        <span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Accumulated {} negative samples&quot;</span>, <span class="ident">num_errors</span>);
+        <span class="ident">record_error</span>(<span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>, <span class="ident">ErrorType</span>::<span class="ident">InvalidValue</span>, <span class="ident">msg</span>, <span class="ident">num_errors</span>);
     }
 
     <span class="doccomment">/// **Test-only API (exported for FFI purposes).**</span>

@@ -49,6 +49,16 @@
 </tr>
 <tr>
 <td>
+<p><a href="-histogram-base/index.html">HistogramBase</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">HistogramBase</span></code>
+<p>A common interface to be implemented by all the histogram-like metric types
+supported by the Glean SDK.</p>
+</td>
+</tr>
+<tr>
+<td>
 <p><a href="-histogram-type/index.html">HistogramType</a></p>
 </td>
 <td>
@@ -158,7 +168,7 @@ as well as including a helper function to calculate the bucket sizes.</p>
 <p><a href="-timing-distribution-metric-type/index.html">TimingDistributionMetricType</a></p>
 </td>
 <td>
-<code><span class="keyword">class </span><span class="identifier">TimingDistributionMetricType</span></code>
+<code><span class="keyword">class </span><span class="identifier">TimingDistributionMetricType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-histogram-base/index.html"><span class="identifier">HistogramBase</span></a></code>
 <p>This implements the developer facing API for recording timing distribution metrics.</p>
 </td>
 </tr>

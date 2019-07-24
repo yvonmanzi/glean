@@ -175,6 +175,18 @@
 <span id="175">175</span>
 <span id="176">176</span>
 <span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -315,13 +327,25 @@
                         <span class="ident">label</span>.<span class="ident">len</span>(),
                         <span class="ident">MAX_LABEL_LENGTH</span>
                     );
-                    <span class="ident">record_error</span>(<span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">submetric</span>.<span class="ident">meta</span>(), <span class="ident">ErrorType</span>::<span class="ident">InvalidLabel</span>, <span class="ident">msg</span>);
+                    <span class="ident">record_error</span>(
+                        <span class="ident">glean</span>,
+                        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">submetric</span>.<span class="ident">meta</span>(),
+                        <span class="ident">ErrorType</span>::<span class="ident">InvalidLabel</span>,
+                        <span class="ident">msg</span>,
+                        <span class="prelude-val">None</span>,
+                    );
                     <span class="kw">return</span> <span class="ident">OTHER_LABEL</span>;
                 }
 
                 <span class="kw">if</span> <span class="op">!</span><span class="ident">LABEL_REGEX</span>.<span class="ident">is_match</span>(<span class="ident">label</span>) {
                     <span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;label must be snake_case, got &#39;{}&#39;&quot;</span>, <span class="ident">label</span>);
-                    <span class="ident">record_error</span>(<span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">submetric</span>.<span class="ident">meta</span>(), <span class="ident">ErrorType</span>::<span class="ident">InvalidLabel</span>, <span class="ident">msg</span>);
+                    <span class="ident">record_error</span>(
+                        <span class="ident">glean</span>,
+                        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">submetric</span>.<span class="ident">meta</span>(),
+                        <span class="ident">ErrorType</span>::<span class="ident">InvalidLabel</span>,
+                        <span class="ident">msg</span>,
+                        <span class="prelude-val">None</span>,
+                    );
                     <span class="kw">return</span> <span class="ident">OTHER_LABEL</span>;
                 }
 
