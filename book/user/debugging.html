@@ -146,7 +146,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#debugging-products-using-the-glean-sdk" id="debugging-products-using-the-glean-sdk">Debugging products using the Glean SDK</a></h1>
-<p>The Glean SDK exports the <code>GleanDebugActivity</code> that can be used to toggle debugging features on or off. 
+<p>The Glean SDK exports the <code>GleanDebugActivity</code> that can be used to toggle debugging features on or off.
 Users can invoke this special activity, at run-time, using the following <a href="https://developer.android.com/studio/command-line/adb"><code>adb</code></a> command:</p>
 <p><code>adb shell am start -n [applicationId]/mozilla.components.service.glean.debug.GleanDebugActivity [extra keys]</code></p>
 <p>In the above:</p>
@@ -155,7 +155,7 @@ Users can invoke this special activity, at run-time, using the following <a href
 <p><code>[applicationId]</code> is the product's application id as defined in the manifest file and/or build script. For the Glean sample application, this is <code>org.mozilla.samples.glean</code> for a release build and <code>org.mozilla.samples.glean.debug</code> for a debug build.</p>
 </li>
 <li>
-<p><code>[extra keys]</code> is a list of extra keys to be passed to the debug activity. See the <a href="https://developer.android.com/studio/command-line/adb#IntentSpec">documentation</a> for the command line switches used to pass the extra keys. 
+<p><code>[extra keys]</code> is a list of extra keys to be passed to the debug activity. See the <a href="https://developer.android.com/studio/command-line/adb#IntentSpec">documentation</a> for the command line switches used to pass the extra keys.
 These are the currently supported keys:</p>
 </li>
 </ul>
@@ -183,6 +183,33 @@ These are the currently supported keys:</p>
 </ol>
 </li>
 </ul>
+<h2><a class="header" href="#glean-log-messages" id="glean-log-messages">Glean Log messages</a></h2>
+<p>Glean logs warnings and errors through the Android logging framework.
+When running a Glean-powered app in the Android emulator or on a device connected to your computer via cable, there are several ways to read the log output.</p>
+<h3><a class="header" href="#android-studio" id="android-studio">Android Studio</a></h3>
+<p>Android Studio can show the logs of a connected emulator or device.
+To display the log messages for an app:</p>
+<ol>
+<li>Run an app on your device.</li>
+<li>Click <strong>View &gt; Tool Windows &gt; Logcat</strong> (or click <strong>Logcat</strong> in the tool window bar).</li>
+</ol>
+<p>The Logcat window will show all log messages and allows to filter those by the application ID.
+Select the application ID of the product you're debugging.
+You can also filter by <code>Glean</code> only.</p>
+<p>More information can be found in the <a href="https://developer.android.com/studio/debug/am-logcat">View Logs with Logcat</a> help article.</p>
+<h3><a class="header" href="#command-line" id="command-line">Command line</a></h3>
+<p>On the command line you can show all of the log output using:</p>
+<pre><code>adb logcat
+</code></pre>
+<p>This is the unfiltered output of all log messages.
+You can match for <code>glean</code> using grep:</p>
+<pre><code>adb logcat | grep -i glean
+</code></pre>
+<p>A simple way to filter for only the application that is being debugged is by using <a href="https://github.com/JakeWharton/pidcat">pidcat</a>, a wrapper around <code>adb</code>, which adds colors and proper filtering by application ID and log level.
+Run it like this to filter for an application:</p>
+<pre><code>pidcat [applicationId]
+</code></pre>
+<p>In the above <code>[applicationId]</code> is the product's application id as defined in the manifest file and/or build script. For the Glean sample application, this is <code>org.mozilla.samples.glean</code> for a release build and <code>org.mozilla.samples.glean.debug</code> for a debug build.</p>
 
                     </main>
 
