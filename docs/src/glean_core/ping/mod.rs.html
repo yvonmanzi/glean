@@ -294,6 +294,20 @@
 <span id="294">294</span>
 <span id="295">295</span>
 <span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -438,7 +452,9 @@
             <span class="kw">for</span> (<span class="ident">_key</span>, <span class="ident">value</span>) <span class="kw">in</span> <span class="ident">client_info_obj</span> {
                 <span class="ident">merge</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="ident">value</span>);
             }
-        };
+        } <span class="kw">else</span> {
+            <span class="ident">log</span>::<span class="macro">warn</span><span class="macro">!</span>(<span class="string">&quot;Empty client info data.&quot;</span>);
+        }
 
         <span class="kw">if</span> <span class="op">!</span><span class="ident">include_client_id</span> {
             <span class="ident">map</span>.<span class="ident">as_object_mut</span>().<span class="ident">unwrap</span>().<span class="ident">remove</span>(<span class="string">&quot;client_id&quot;</span>);
@@ -540,6 +556,8 @@
         <span class="kw">let</span> <span class="ident">temp_ping_path</span> <span class="op">=</span> <span class="ident">temp_dir</span>.<span class="ident">join</span>(<span class="ident">doc_id</span>);
         <span class="kw">let</span> <span class="ident">ping_path</span> <span class="op">=</span> <span class="ident">pings_dir</span>.<span class="ident">join</span>(<span class="ident">doc_id</span>);
 
+        <span class="ident">log</span>::<span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;Storing ping &#39;{}&#39; at &#39;{}&#39;&quot;</span>, <span class="ident">doc_id</span>, <span class="ident">ping_path</span>.<span class="ident">display</span>());
+
         {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">File</span>::<span class="ident">create</span>(<span class="kw-2">&amp;</span><span class="ident">temp_ping_path</span>)<span class="question-mark">?</span>;
             <span class="ident">file</span>.<span class="ident">write_all</span>(<span class="ident">url_path</span>.<span class="ident">as_bytes</span>())<span class="question-mark">?</span>;
@@ -547,7 +565,14 @@
             <span class="ident">file</span>.<span class="ident">write_all</span>(::<span class="ident">serde_json</span>::<span class="ident">to_string</span>(<span class="ident">ping_content</span>)<span class="question-mark">?</span>.<span class="ident">as_bytes</span>())<span class="question-mark">?</span>;
         }
 
-        <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">rename</span>(<span class="ident">temp_ping_path</span>, <span class="ident">ping_path</span>)<span class="question-mark">?</span>;
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span> <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">rename</span>(<span class="kw-2">&amp;</span><span class="ident">temp_ping_path</span>, <span class="kw-2">&amp;</span><span class="ident">ping_path</span>) {
+            <span class="ident">log</span>::<span class="macro">warn</span><span class="macro">!</span>(
+                <span class="string">&quot;Unable to move &#39;{}&#39; to &#39;{}&quot;</span>,
+                <span class="ident">temp_ping_path</span>.<span class="ident">display</span>(),
+                <span class="ident">ping_path</span>.<span class="ident">display</span>()
+            );
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>);
+        }
 
         <span class="prelude-val">Ok</span>(())
     }
@@ -557,6 +582,9 @@
         <span class="kw">let</span> <span class="ident">pings_dir</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_pings_dir</span>(<span class="ident">data_path</span>)<span class="question-mark">?</span>;
         <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">remove_dir_all</span>(<span class="kw-2">&amp;</span><span class="ident">pings_dir</span>)<span class="question-mark">?</span>;
         <span class="ident">create_dir_all</span>(<span class="kw-2">&amp;</span><span class="ident">pings_dir</span>)<span class="question-mark">?</span>;
+
+        <span class="ident">log</span>::<span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;All pending pings deleted&quot;</span>);
+
         <span class="prelude-val">Ok</span>(())
     }
 }
