@@ -325,7 +325,7 @@
         <span class="kw">let</span> <span class="ident">dir</span> <span class="op">=</span> <span class="ident">tempfile</span>::<span class="ident">tempdir</span>().<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">tmpname</span> <span class="op">=</span> <span class="ident">dir</span>.<span class="ident">path</span>().<span class="ident">display</span>().<span class="ident">to_string</span>();
 
-        <span class="kw">let</span> <span class="ident">glean</span> <span class="op">=</span> <span class="ident">Glean</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">tmpname</span>, <span class="ident">GLOBAL_APPLICATION_ID</span>, <span class="bool-val">true</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">glean</span> <span class="op">=</span> <span class="ident">Glean</span>::<span class="ident">with_options</span>(<span class="kw-2">&amp;</span><span class="ident">tmpname</span>, <span class="ident">GLOBAL_APPLICATION_ID</span>, <span class="bool-val">true</span>).<span class="ident">unwrap</span>();
 
         (<span class="ident">glean</span>, <span class="ident">dir</span>)
     }
