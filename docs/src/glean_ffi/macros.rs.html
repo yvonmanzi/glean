@@ -73,6 +73,8 @@
 <span id="73">73</span>
 <span id="74">74</span>
 <span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">/// Define the global handle map, constructor and destructor functions and any user-defined</span>
 <span class="doccomment">/// functions for a new metric</span>
@@ -119,6 +121,8 @@
             $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">new_argname</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">new_argtyp</span>),<span class="op">*</span>
         ) <span class="op">-&gt;</span> <span class="ident">u64</span> {
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">metric_map</span>.<span class="ident">insert_with_log</span>(<span class="op">||</span> {
+                <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">FallibleToString</span>::<span class="ident">to_string_fallible</span>(<span class="kw-2">&amp;</span><span class="ident">name</span>)<span class="question-mark">?</span>;
+                <span class="kw">let</span> <span class="ident">category</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">FallibleToString</span>::<span class="ident">to_string_fallible</span>(<span class="kw-2">&amp;</span><span class="ident">category</span>)<span class="question-mark">?</span>;
                 <span class="kw">let</span> <span class="ident">send_in_pings</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">from_raw_string_array</span>(<span class="ident">send_in_pings</span>, <span class="ident">send_in_pings_len</span>)<span class="question-mark">?</span>;
                 <span class="kw">let</span> <span class="ident">lifetime</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>::<span class="ident">try_from</span>(<span class="ident">lifetime</span>)<span class="question-mark">?</span>;
 
@@ -127,8 +131,8 @@
                 )<span class="op">*</span>
 
                 <span class="prelude-val">Ok</span>(<span class="ident">glean_core</span>::<span class="ident">metrics</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">metric_type</span>::<span class="ident">new</span>(<span class="ident">glean_core</span>::<span class="ident">CommonMetricData</span> {
-                    <span class="ident">name</span>: <span class="ident">name</span>.<span class="ident">into_string</span>(),
-                    <span class="ident">category</span>: <span class="ident">category</span>.<span class="ident">into_string</span>(),
+                    <span class="ident">name</span>,
+                    <span class="ident">category</span>,
                     <span class="ident">send_in_pings</span>,
                     <span class="ident">lifetime</span>,
                     <span class="ident">disabled</span>: <span class="ident">disabled</span> <span class="op">!=</span> <span class="number">0</span>,
@@ -140,8 +144,8 @@
         $(
             <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
             <span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">op_fn</span>(<span class="ident">glean_handle</span>: <span class="ident">u64</span>, <span class="ident">metric_id</span>: <span class="ident">u64</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">op_argname</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">op_argtyp</span>),<span class="kw-2">*</span>) {
-                <span class="kw">crate</span>::<span class="ident">handlemap_ext</span>::<span class="ident">HandleMapExtension</span>::<span class="ident">call_infallible</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw">crate</span>::<span class="ident">GLEAN</span>, <span class="ident">glean_handle</span>, <span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
-                    <span class="kw">crate</span>::<span class="ident">handlemap_ext</span>::<span class="ident">HandleMapExtension</span>::<span class="ident">call_infallible</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">metric_map</span>, <span class="ident">metric_id</span>, <span class="op">|</span><span class="ident">metric</span><span class="op">|</span> {
+                <span class="kw">crate</span>::<span class="ident">HandleMapExtension</span>::<span class="ident">call_infallible</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw">crate</span>::<span class="ident">GLEAN</span>, <span class="ident">glean_handle</span>, <span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
+                    <span class="kw">crate</span>::<span class="ident">HandleMapExtension</span>::<span class="ident">call_infallible</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">metric_map</span>, <span class="ident">metric_id</span>, <span class="op">|</span><span class="ident">metric</span><span class="op">|</span> {
                         <span class="ident">metric</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">op</span>(<span class="ident">glean</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">op_argname</span>),<span class="kw-2">*</span>);
                     })
                 })
