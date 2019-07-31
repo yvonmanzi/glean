@@ -387,7 +387,7 @@ Views.loginOpened...
 The intent is to make the Glean SDK easier to test 'out of the box' in any client application it may be used in.
 These functions expose a way to inspect and validate recorded metric values within the client application but are restricted to test code only through visibility annotations (<code>@VisibleForTesting(otherwise = VisibleForTesting.NONE)</code>).</p>
 <h2><a class="header" href="#general-test-api-method-semantics" id="general-test-api-method-semantics">General test API method semantics</a></h2>
-<p>In order to prevent issues with async calls when unit testing Glean, it is important to put the Glean SDK into testing mode by applying the JUnit <code>GleanTestRule</code> to your test class, as shown below:</p>
+<p>In order to prevent issues with async calls when unit testing Glean, it is important to put the Glean SDK into testing mode by applying the JUnit <code>GleanTestRule</code> to your test class. When the Glean SDK is in testing mode, it enables uploading and clears the recorded emtrics at the beginning of each test run. The rule can be used as shown below:</p>
 <pre><code class="language-kotlin">@RunWith(AndroidJUnit4::class)
 class ActivityCollectingDataTest {
     // Apply the GleanTestRule to set up a disposable Glean instance.
@@ -1897,8 +1897,6 @@ class MyCustomPingSchedulerTest {
 
     @Test
     fun `verify custom ping metrics`() {
-      setupGleanOnce()
-
       val scheduler = spy(MyCustomPingScheduler())
       doAnswer {
         // Here we validate the content that goes into the ping.
