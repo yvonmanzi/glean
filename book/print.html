@@ -2261,7 +2261,6 @@ Simple operations can be also defined in the same macro invocation:</p>
 define_metric!(CounterMetric =&gt; COUNTER_METRICS {
     new           -&gt; glean_new_counter_metric(),
     destroy       -&gt; glean_destroy_counter_metric,
-    should_record -&gt; glean_counter_should_record,
 
     add -&gt; glean_counter_add(amount: i32),
 });
@@ -2289,7 +2288,6 @@ For Kotlin this is in <code>glean-core/android/src/main/java/mozilla/telemetry/g
 <pre><code class="language-kotlin">fun glean_new_counter_metric(category: String, name: String, send_in_pings: StringArray, send_in_pings_len: Int, lifetime: Int, disabled: Byte): Long
 fun glean_destroy_counter_metric(handle: Long, error: RustError.ByReference)
 fun glean_counter_add(glean_handle: Long, metric_id: Long, amount: Int)
-fun glean_counter_should_record(glean_handle: Long, metric_id: Long): Byte
 </code></pre>
 <p>Finally, create a platform-specific metric type wrapper.
 For Kotlin this would be <code>glean-core/android/src/main/java/mozilla/telemetry/glean/private/CounterMetricType.kt</code>:</p>
@@ -2318,15 +2316,6 @@ For Kotlin this would be <code>glean-core/android/src/main/java/mozilla/telemetr
             val error = RustError.ByReference()
             LibGleanFFI.INSTANCE.glean_destroy_counter_metric(this.handle, error)
         }
-    }
-
-    fun shouldRecord(): Boolean {
-        // Don't record metrics if we aren't initialized
-        if (!Glean.isInitialized()) {
-            return false
-        }
-
-        return LibGleanFFI.INSTANCE.glean_counter_should_record(Glean.handle, this.handle).toBoolean()
     }
 
     fun add(amount: Int = 1) {
