@@ -179,7 +179,6 @@ Install.firstRun.set(Calendar(2019, 3, 25)) // Records a custom datetime
 </code></pre>
 <p>There are test APIs available too.</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Install
-Glean.enableTestingMode()
 
 // Was anything recorded?
 assertTrue(Install.firstRun.testHasValue())

@@ -150,8 +150,20 @@
 The intent is to make the Glean SDK easier to test 'out of the box' in any client application it may be used in.
 These functions expose a way to inspect and validate recorded metric values within the client application but are restricted to test code only through visibility annotations (<code>@VisibleForTesting(otherwise = VisibleForTesting.NONE)</code>).</p>
 <h2><a class="header" href="#general-test-api-method-semantics" id="general-test-api-method-semantics">General test API method semantics</a></h2>
-<p>In order to prevent issues with async calls when unit testing Glean, it is important to put the Glean SDK into testing mode by calling <code>Glean.enableTestingMode()</code>.
-This will ensure that metrics are done recording when the other test functions are used.</p>
+<p>In order to prevent issues with async calls when unit testing Glean, it is important to put the Glean SDK into testing mode by applying the JUnit <code>GleanTestRule</code> to your test class, as shown below:</p>
+<pre><code class="language-kotlin">@RunWith(AndroidJUnit4::class)
+class ActivityCollectingDataTest {
+    // Apply the GleanTestRule to set up a disposable Glean instance.
+    // Please note that this clears the Glean data across tests.
+    @get:Rule
+    val gleanRule = GleanTestRule(ApplicationProvider.getApplicationContext())
+
+    fun checkCollectedData() {
+      // The Glean SDK testing API can be called here.
+    }
+}
+</code></pre>
+<p>This will ensure that metrics are done recording when the other test functions are used.</p>
 <p>To check if a value exists (i.e. it has been recorded), there is a <code>testHasValue()</code> function on each of the metric instances:</p>
 <pre><code class="language-kotlin">assertTrue(GleanMetrics.Foo.UriCount.testHasValue())
 </code></pre>
@@ -172,11 +184,7 @@ GleanMetrics.Foo.UriCount.testGetValue(&quot;customPing&quot;)
 </code></pre>
 <h2><a class="header" href="#example-of-using-the-test-api" id="example-of-using-the-test-api">Example of using the test API</a></h2>
 <p>Here is a longer example to better illustrate the intended use of the test API:</p>
-<pre><code class="language-kotlin">// Enable testing mode
-// (Perhaps called from a @Before method so it precedes every test in the suite.)
-Glean.enableTestingMode()
-
-// Record a metric value with extra to validate against
+<pre><code class="language-kotlin">// Record a metric value with extra to validate against
 GleanMetrics.BrowserEngagement.click.record(
     mapOf(
         BrowserEngagement.clickKeys.font to &quot;Courier&quot;

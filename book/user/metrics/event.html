@@ -168,7 +168,6 @@ Views.loginOpened.record(mapOf(Views.loginOpenedKeys.sourceOfLogin to &quot;tool
 </code></pre>
 <p>There are test APIs available too, for example:</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Views
-Glean.enableTestingMode()
 
 // Was any event recorded?
 assertTrue(Views.loginOpened.testHasValue())

@@ -167,7 +167,6 @@ Please also note that the <code>extra</code> map is non-nested arbitrary <code>S
 <p>There are test APIs available too:</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.SearchDefault
 
-Glean.enableTestingMode()
 // Was the experiment annotated in Glean pings?
 assertTrue(Glean.testIsExperimentActive(&quot;blue-button-effective&quot;))
 // Was the correct branch reported?

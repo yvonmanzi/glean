@@ -164,7 +164,6 @@ Flags.a11yEnabled.set(System.isAccesibilityEnabled())
 </code></pre>
 <p>There are test APIs available too:</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Flags
-Glean.enableTestingMode()
 
 // Was anything recorded?
 assertTrue(Flags.a11yEnabled.testHasValue())

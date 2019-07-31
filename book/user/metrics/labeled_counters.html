@@ -167,7 +167,6 @@ Stability.crashCount[&quot;native_code_crash&quot;].add(3) // Adds 3 to the &quo
 </code></pre>
 <p>There are test APIs available too:</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Stability
-Glean.enableTestingMode()
 // Was anything recorded?
 assertTrue(Stability.crashCount[&quot;uncaught_exception&quot;].testHasValue())
 assertTrue(Stability.crashCount[&quot;native_code_crash&quot;].testHasValue())

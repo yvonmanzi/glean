@@ -191,7 +191,6 @@ fun onLoginCancel(e: Event) {
 <p>The time reported in the telemetry ping will be timespan recorded during the lifetime of the ping.</p>
 <p>There are test APIs available too:</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Auth
-Glean.enableTestingMode()
 
 // Was anything recorded?
 assertTrue(Auth.loginTime.testHasValue())

@@ -190,7 +190,6 @@ fun onPageLoaded(e: Event) {
 <p>There are test APIs available too.  For convenience, properties <code>sum</code> and <code>count</code> are exposed to facilitate validating that data was recorded correctly.</p>
 <p>Continuing the <code>pageLoad</code> example above, at this point the metric should have a <code>sum == 11</code> and a <code>count == 2</code>:</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Pages
-Glean.enableTestingMode()
 
 // Was anything recorded?
 assertTrue(pages.pageLoad.testHasValue())

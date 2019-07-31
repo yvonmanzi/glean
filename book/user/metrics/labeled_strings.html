@@ -166,7 +166,6 @@ Login.errorsByStage[&quot;server_auth&quot;].set(&quot;Invalid password&quot;)
 </code></pre>
 <p>There are test APIs available too:</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Login
-Glean.enableTestingMode()
 
 // Was anything recorded?
 assertTrue(Login.errorsByStage[&quot;server_auth&quot;].testHasValue())

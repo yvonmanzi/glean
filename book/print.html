@@ -387,8 +387,20 @@ Views.loginOpened...
 The intent is to make the Glean SDK easier to test 'out of the box' in any client application it may be used in.
 These functions expose a way to inspect and validate recorded metric values within the client application but are restricted to test code only through visibility annotations (<code>@VisibleForTesting(otherwise = VisibleForTesting.NONE)</code>).</p>
 <h2><a class="header" href="#general-test-api-method-semantics" id="general-test-api-method-semantics">General test API method semantics</a></h2>
-<p>In order to prevent issues with async calls when unit testing Glean, it is important to put the Glean SDK into testing mode by calling <code>Glean.enableTestingMode()</code>.
-This will ensure that metrics are done recording when the other test functions are used.</p>
+<p>In order to prevent issues with async calls when unit testing Glean, it is important to put the Glean SDK into testing mode by applying the JUnit <code>GleanTestRule</code> to your test class, as shown below:</p>
+<pre><code class="language-kotlin">@RunWith(AndroidJUnit4::class)
+class ActivityCollectingDataTest {
+    // Apply the GleanTestRule to set up a disposable Glean instance.
+    // Please note that this clears the Glean data across tests.
+    @get:Rule
+    val gleanRule = GleanTestRule(ApplicationProvider.getApplicationContext())
+
+    fun checkCollectedData() {
+      // The Glean SDK testing API can be called here.
+    }
+}
+</code></pre>
+<p>This will ensure that metrics are done recording when the other test functions are used.</p>
 <p>To check if a value exists (i.e. it has been recorded), there is a <code>testHasValue()</code> function on each of the metric instances:</p>
 <pre><code class="language-kotlin">assertTrue(GleanMetrics.Foo.UriCount.testHasValue())
 </code></pre>
@@ -409,11 +421,7 @@ GleanMetrics.Foo.UriCount.testGetValue(&quot;customPing&quot;)
 </code></pre>
 <h2><a class="header" href="#example-of-using-the-test-api" id="example-of-using-the-test-api">Example of using the test API</a></h2>
 <p>Here is a longer example to better illustrate the intended use of the test API:</p>
-<pre><code class="language-kotlin">// Enable testing mode
-// (Perhaps called from a @Before method so it precedes every test in the suite.)
-Glean.enableTestingMode()
-
-// Record a metric value with extra to validate against
+<pre><code class="language-kotlin">// Record a metric value with extra to validate against
 GleanMetrics.BrowserEngagement.click.record(
     mapOf(
         BrowserEngagement.clickKeys.font to &quot;Courier&quot;
@@ -551,7 +559,6 @@ Please also note that the <code>extra</code> map is non-nested arbitrary <code>S
 <p>There are test APIs available too:</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.SearchDefault
 
-Glean.enableTestingMode()
 // Was the experiment annotated in Glean pings?
 assertTrue(Glean.testIsExperimentActive(&quot;blue-button-effective&quot;))
 // Was the correct branch reported?
@@ -648,7 +655,6 @@ Flags.a11yEnabled.set(System.isAccesibilityEnabled())
 </code></pre>
 <p>There are test APIs available too:</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Flags
-Glean.enableTestingMode()
 
 // Was anything recorded?
 assertTrue(Flags.a11yEnabled.testHasValue())
@@ -690,7 +696,6 @@ Controls.refreshPressed.add(5) // Adds 5 to the counter.
 </code></pre>
 <p>There are test APIs available too:</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Controls
-Glean.enableTestingMode()
 
 // Was anything recorded?
 assertTrue(Controls.refreshPressed.testHasValue())
@@ -735,7 +740,6 @@ Stability.crashCount[&quot;native_code_crash&quot;].add(3) // Adds 3 to the &quo
 </code></pre>
 <p>There are test APIs available too:</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Stability
-Glean.enableTestingMode()
 // Was anything recorded?
 assertTrue(Stability.crashCount[&quot;uncaught_exception&quot;].testHasValue())
 assertTrue(Stability.crashCount[&quot;native_code_crash&quot;].testHasValue())
@@ -806,7 +810,6 @@ SearchDefault.name.set(&quot;wikipedia&quot;)
 <p>There are test APIs available too:</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.SearchDefault
 
-Glean.enableTestingMode()
 // Was anything recorded?
 assertTrue(SearchDefault.name.testHasValue())
 // Does the string metric have the expected value?
@@ -854,7 +857,6 @@ Login.errorsByStage[&quot;server_auth&quot;].set(&quot;Invalid password&quot;)
 </code></pre>
 <p>There are test APIs available too:</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Login
-Glean.enableTestingMode()
 
 // Was anything recorded?
 assertTrue(Login.errorsByStage[&quot;server_auth&quot;].testHasValue())
@@ -922,7 +924,6 @@ Search.engines.set(engines)
 </code></pre>
 <p>There are test APIs available too:</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Search
-Glean.enableTestingMode()
 
 // Was anything recorded?
 assertTrue(Search.engines.testHasValue())
@@ -1001,7 +1002,6 @@ fun onLoginCancel(e: Event) {
 <p>The time reported in the telemetry ping will be timespan recorded during the lifetime of the ping.</p>
 <p>There are test APIs available too:</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Auth
-Glean.enableTestingMode()
 
 // Was anything recorded?
 assertTrue(Auth.loginTime.testHasValue())
@@ -1089,7 +1089,6 @@ fun onPageLoaded(e: Event) {
 <p>There are test APIs available too.  For convenience, properties <code>sum</code> and <code>count</code> are exposed to facilitate validating that data was recorded correctly.</p>
 <p>Continuing the <code>pageLoad</code> example above, at this point the metric should have a <code>sum == 11</code> and a <code>count == 2</code>:</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Pages
-Glean.enableTestingMode()
 
 // Was anything recorded?
 assertTrue(pages.pageLoad.testHasValue())
@@ -1141,11 +1140,10 @@ User.clientId.set(UUID.randomUUID())  // Set a UUID explicitly
 </code></pre>
 <p>There are test APIs available too.</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.User
-Glean.enableTestingMode()
 
 // Was anything recorded?
 assertTrue(User.clientId.testHasValue())
-// Was it the expected value? 
+// Was it the expected value?
 assertEquals(uuid, User.clientId.testGetValue())
 </code></pre>
 <h2><a class="header" href="#limits-9" id="limits-9">Limits</a></h2>
@@ -1198,7 +1196,6 @@ Install.firstRun.set(Calendar(2019, 3, 25)) // Records a custom datetime
 </code></pre>
 <p>There are test APIs available too.</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Install
-Glean.enableTestingMode()
 
 // Was anything recorded?
 assertTrue(Install.firstRun.testHasValue())
@@ -1246,7 +1243,6 @@ Views.loginOpened.record(mapOf(Views.loginOpenedKeys.sourceOfLogin to &quot;tool
 </code></pre>
 <p>There are test APIs available too, for example:</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Views
-Glean.enableTestingMode()
 
 // Was any event recorded?
 assertTrue(Views.loginOpened.testHasValue())
@@ -1891,41 +1887,32 @@ import my.component.GleanMetrics.CustomPingData
 import org.mockito.Mockito.spy
 import org.mockito.Mockito.`when`
 
-/**
- * This is an helper function used to enable testing mode for Glean.
- * Should only be called once before the tests, but nothing breaks if it's
- * called more than once!
- */
-fun setupGleanOnce() {
-  // Enable testing mode
-  // (Perhaps called from a @Before method so it precedes every test in the suite.)
-  Glean.enableTestingMode()
+@RunWith(AndroidJUnit4::class)
+class MyCustomPingSchedulerTest {
+    // Apply the GleanTestRule to set up a disposable Glean instance.
+    // Please note that this clears the Glean data across tests.
+    @get:Rule
+    val gleanRule = GleanTestRule(ApplicationProvider.getApplicationContext())
 
-  // We're using the WorkManager in a bunch of places, and Glean will crash
-  // in tests without this line. Let's simply put it here.
-  WorkManagerTestInitHelper.initializeTestWorkManager(context)
+    @Test
+    fun `verify custom ping metrics`() {
+      setupGleanOnce()
 
-  Glean.initialize(context)
-}
+      val scheduler = spy(MyCustomPingScheduler())
+      doAnswer {
+        // Here we validate the content that goes into the ping.
+        assertTrue(CustomPingData.sampleString.testHasValue())
+        assertEquals(&quot;test-data&quot;, CustomPingData.sampleString.testGetValue())
 
-@Test
-fun `verify custom ping metrics`() {
-  setupGleanOnce()
+        // We want to intercept this call, but we also want to make sure the
+        // real Glean API is called in order to clear the ping store and to provide
+        // consistent behaviour with respect to the application.
+        it.callRealMethod()
+      }.`when`(scheduler).sendPing()
 
-  val scheduler = spy(MyCustomPingScheduler())
-  doAnswer {
-    // Here we validate the content that goes into the ping.
-    assertTrue(CustomPingData.sampleString.testHasValue())
-    assertEquals(&quot;test-data&quot;, CustomPingData.sampleString.testGetValue())
-
-    // We want to intercept this call, but we also want to make sure the
-    // real Glean API is called in order to clear the ping store and to provide
-    // consistent behaviour with respect to the application.
-    it.callRealMethod()
-  }.`when`(scheduler).sendPing()
-
-  scheduler.addSomeData()
-  scheduler.schedulePing()
+      scheduler.addSomeData()
+      scheduler.schedulePing()
+    }
 }
 </code></pre>
 <h1><a class="header" href="#developing-the-glean-sdk" id="developing-the-glean-sdk">Developing the Glean SDK</a></h1>

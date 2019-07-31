@@ -173,7 +173,6 @@ SearchDefault.name.set(&quot;wikipedia&quot;)
 <p>There are test APIs available too:</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.SearchDefault
 
-Glean.enableTestingMode()
 // Was anything recorded?
 assertTrue(SearchDefault.name.testHasValue())
 // Does the string metric have the expected value?

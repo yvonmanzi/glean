@@ -166,11 +166,10 @@ User.clientId.set(UUID.randomUUID())  // Set a UUID explicitly
 </code></pre>
 <p>There are test APIs available too.</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.User
-Glean.enableTestingMode()
 
 // Was anything recorded?
 assertTrue(User.clientId.testHasValue())
-// Was it the expected value? 
+// Was it the expected value?
 assertEquals(uuid, User.clientId.testGetValue())
 </code></pre>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
