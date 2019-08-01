@@ -11,7 +11,9 @@
 <a name="mozilla.telemetry.glean.private.TimespanMetricType$stop()"></a>
 <code><span class="keyword">fun </span><span class="identifier">stop</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
 <p>Stop tracking time for the provided metric.
-Sets the metric to the elapsed time.
-This will record an error if no <a href="start.html">start</a> was called.</p>
+Sets the metric to the elapsed time, but does not overwrite an already
+existing value.
+This will record an error if no <a href="start.html">start</a> was called or there is an already
+existing value.</p>
 </BODY>
 </HTML>
