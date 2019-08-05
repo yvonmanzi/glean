@@ -2281,15 +2281,22 @@ fun glean_counter_add(glean_handle: Long, metric_id: Long, amount: Int)
 <p>Finally, create a platform-specific metric type wrapper.
 For Kotlin this would be <code>glean-core/android/src/main/java/mozilla/telemetry/glean/private/CounterMetricType.kt</code>:</p>
 <pre><code class="language-kotlin">class CounterMetricType(
-    disabled: Boolean,
-    category: String,
-    lifetime: Lifetime,
-    name: String,
-    val sendInPings: List&lt;String&gt;
+    private var handle: Long,
+    private val disabled: Boolean,
+    private val sendInPings: List&lt;String&gt;
 ) {
     private var handle: Long
 
-    init {
+    /**
+     * The public constructor used by automatically generated metrics.
+     */
+    constructor(
+        disabled: Boolean,
+        category: String,
+        lifetime: Lifetime,
+        name: String,
+        sendInPings: List&lt;String&gt;
+    ) : this(handle = 0, disabled = disabled, sendInPings = sendInPings) {
         val ffiPingsList = StringArray(sendInPings.toTypedArray(), &quot;utf-8&quot;)
         this.handle = LibGleanFFI.INSTANCE.glean_new_counter_metric(
                 category = category,
@@ -2308,7 +2315,7 @@ For Kotlin this would be <code>glean-core/android/src/main/java/mozilla/telemetr
     }
 
     fun add(amount: Int = 1) {
-        if (!shouldRecord()) {
+        if (disabled) {
             return
         }
 
