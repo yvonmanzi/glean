@@ -155,12 +155,14 @@
 <code>Glean.setUploadEnabled()</code>).</li>
 </ul>
 <h2><a class="header" href="#usage" id="usage">Usage</a></h2>
-<h3><a class="header" href="#setting-up-the-dependency" id="setting-up-the-dependency">Setting up the dependency</a></h3>
-<p>Use Gradle to download the library from <a href="https://maven.mozilla.org/">maven.mozilla.org</a>
-(<a href="../../../README.html#maven-repository">Setup repository</a>):</p>
+<h3><a class="header" href="#integrating-with-your-project" id="integrating-with-your-project">Integrating with your project</a></h3>
+<h4><a class="header" href="#setting-up-the-dependency" id="setting-up-the-dependency">Setting up the dependency</a></h4>
+<p>Use Gradle to download the library from <a href="https://maven.mozilla.org/">maven.mozilla.org</a> (<a href="https://github.com/mozilla-mobile/android-components/blob/master/README.md#maven-repository">Setup repository</a>) by adding the following to your Gradle configuration:</p>
 <pre><code class="language-Groovy">implementation &quot;org.mozilla.components:service-glean:{latest-version}&quot;
 </code></pre>
-<h3><a class="header" href="#integrating-with-the-build-system" id="integrating-with-the-build-system">Integrating with the build system</a></h3>
+<p>The Glean SDK is released as part of <a href="https://github.com/mozilla-mobile/android-components">android-components</a>.  Therefore, it follows android-components' versions.
+The <a href="https://github.com/mozilla-mobile/android-components/releases/">android-components release page</a> can be used to determine the latest version.</p>
+<h4><a class="header" href="#integrating-with-the-build-system" id="integrating-with-the-build-system">Integrating with the build system</a></h4>
 <p>In order for the Glean SDK to generate an API for your metrics, a Python environment must be accessible at build time.
 This is done automatically by the <a href="https://github.com/JetBrains/gradle-python-envs/"><code>com.jetbrains.python.envs</code></a> plugin.
 The plugin <strong>must</strong> be manually enabled by adding the following <code>plugins</code> block at the top of the <code>build.gradle</code> file for your app module.</p>
@@ -170,13 +172,13 @@ The plugin <strong>must</strong> be manually enabled by adding the following <co
 </code></pre>
 <p>Right before the end of the same file, the Glean SDK build script must be included.
 This script can be referenced directly from the GitHub repo, as shown below:</p>
-<pre><code class="language-Groovy">apply from: 'https://github.com/mozilla/glean/raw/v{latest-version}/glean-core/android/sdk_generator.gradle'
+<pre><code class="language-Groovy">apply from: 'https://github.com/mozilla-mobile/android-components/raw/v{latest-version}/components/service/scripts/sdk_generator.gradle'
 </code></pre>
 <blockquote>
 <p><strong>Important:</strong> the <code>{latest-version}</code> placeholder in the above link should be replaced with the version number of the Glean SDK used by the project.
-For example, if version <em>0.34.2</em> is used, then the include directive becomes:</p>
+For example, if version <em>6.0.2</em> is used, then the include directive becomes:</p>
 </blockquote>
-<pre><code class="language-Groovy">apply from: 'https://github.com/mozilla/glean/raw/v0.34.2/glean-core/android/sdk_generator.gradle'
+<pre><code class="language-Groovy">apply from: 'https://github.com/mozilla-mobile/android-components/raw/v6.0.2/components/service/scripts/sdk_generator.gradle'
 </code></pre>
 <h3><a class="header" href="#adding-new-metrics" id="adding-new-metrics">Adding new metrics</a></h3>
 <p>All metrics that your project collects must be defined in a <code>metrics.yaml</code> file.
