@@ -146,12 +146,13 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#reserved-ping-names" id="reserved-ping-names">Reserved ping names</a></h1>
-<p>The Glean SDK reserves all ping names starting with <code>glean_</code>.</p>
+<p>The Glean SDK reserves all ping names in <code>send_in_pings</code> starting with <code>glean_</code>.</p>
 <p>This currently includes, but is not limited to:</p>
 <ul>
 <li><code>glean_client_info</code></li>
 <li><code>glean_internal_info</code></li>
 </ul>
+<p>Additionally, only Glean may specify <code>all_pings</code>.  This special value has no effect in the client, but indicates to the backend infrastructure that a metric may appear in any ping.</p>
 
                     </main>
 
