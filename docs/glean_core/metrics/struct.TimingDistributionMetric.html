@@ -31,7 +31,7 @@ same timing distribution metric.</li>
 </ul>
 </div><h4 id='method.accumulate_samples_signed' class="method"><code id='accumulate_samples_signed.v'>pub fn <a href='#method.accumulate_samples_signed' class='fnname'>accumulate_samples_signed</a>(&amp;mut self, glean: &amp;<a class="struct" href="../../glean_core/struct.Glean.html" title="struct glean_core::Glean">Glean</a>, samples: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>&gt;)</code><a class='srclink' href='../../src/glean_core/metrics/timing_distribution.rs.html#234-257' title='goto source code'>[src]</a></h4><div class='docblock'><p>Accumulates the provided signed samples in the metric.</p>
 <p>This is required so that the platform-specific code can provide us with
-64 bit signed integers if no <code>u32</code> comparable type is available. This
+64 bit signed integers if no <code>u64</code> comparable type is available. This
 will take care of filtering and reporting errors for any provided negative
 sample.</p>
 <p>Please note that this assumes that the provided samples are already in the

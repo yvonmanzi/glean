@@ -408,10 +408,10 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Serialize</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Snapshot</span> {
     <span class="ident">bucket_count</span>: <span class="ident">usize</span>,
-    <span class="ident">range</span>: [<span class="ident">u32</span>; <span class="number">2</span>],
+    <span class="ident">range</span>: [<span class="ident">u64</span>; <span class="number">2</span>],
     <span class="ident">histogram_type</span>: <span class="ident">Type</span>,
-    <span class="ident">values</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">u32</span><span class="op">&gt;</span>,
-    <span class="ident">sum</span>: <span class="ident">u32</span>,
+    <span class="ident">values</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">u64</span>, <span class="ident">u64</span><span class="op">&gt;</span>,
+    <span class="ident">sum</span>: <span class="ident">u64</span>,
     <span class="ident">time_unit</span>: <span class="ident">TimeUnit</span>,
 }
 
@@ -507,12 +507,12 @@
             .<span class="ident">storage</span>()
             .<span class="ident">record_with</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>, <span class="op">|</span><span class="ident">old_value</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">old_value</span> {
                 <span class="prelude-val">Some</span>(<span class="ident">Metric</span>::<span class="ident">TimingDistribution</span>(<span class="kw-2">mut</span> <span class="ident">hist</span>, <span class="ident">time_unit</span>)) <span class="op">=&gt;</span> {
-                    <span class="ident">hist</span>.<span class="ident">accumulate</span>(<span class="ident">duration</span> <span class="kw">as</span> <span class="ident">u32</span>);
+                    <span class="ident">hist</span>.<span class="ident">accumulate</span>(<span class="ident">duration</span>);
                     <span class="ident">Metric</span>::<span class="ident">TimingDistribution</span>(<span class="ident">hist</span>, <span class="ident">time_unit</span>)
                 }
                 <span class="kw">_</span> <span class="op">=&gt;</span> {
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hist</span> <span class="op">=</span> <span class="ident">Histogram</span>::<span class="ident">default</span>();
-                    <span class="ident">hist</span>.<span class="ident">accumulate</span>(<span class="ident">duration</span> <span class="kw">as</span> <span class="ident">u32</span>);
+                    <span class="ident">hist</span>.<span class="ident">accumulate</span>(<span class="ident">duration</span>);
                     <span class="ident">Metric</span>::<span class="ident">TimingDistribution</span>(<span class="ident">hist</span>, <span class="self">self</span>.<span class="ident">time_unit</span>)
                 }
             });
@@ -533,7 +533,7 @@
     <span class="doccomment">/// Accumulates the provided signed samples in the metric.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This is required so that the platform-specific code can provide us with</span>
-    <span class="doccomment">/// 64 bit signed integers if no `u32` comparable type is available. This</span>
+    <span class="doccomment">/// 64 bit signed integers if no `u64` comparable type is available. This</span>
     <span class="doccomment">/// will take care of filtering and reporting errors for any provided negative</span>
     <span class="doccomment">/// sample.</span>
     <span class="doccomment">///</span>
@@ -562,7 +562,7 @@
 
             <span class="kw">for</span> <span class="ident">sample</span> <span class="kw">in</span> <span class="ident">samples</span>.<span class="ident">iter</span>() {
                 <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">sample</span> <span class="op">&gt;=</span> <span class="number">0</span> {
-                    <span class="ident">hist</span>.<span class="ident">accumulate</span>(<span class="kw-2">*</span><span class="ident">sample</span> <span class="kw">as</span> <span class="ident">u32</span>);
+                    <span class="ident">hist</span>.<span class="ident">accumulate</span>(<span class="kw-2">*</span><span class="ident">sample</span> <span class="kw">as</span> <span class="ident">u64</span>);
                 } <span class="kw">else</span> {
                     <span class="ident">num_errors</span> <span class="op">+=</span> <span class="number">1</span>;
                 }

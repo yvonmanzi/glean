@@ -258,6 +258,19 @@
 <span id="258">258</span>
 <span id="259">259</span>
 <span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -271,8 +284,8 @@
 <span class="comment">// of millisecond.  The values arrived at were approximated using existing &quot;_MS&quot;</span>
 <span class="comment">// telemetry probes as a guide.</span>
 <span class="kw">const</span> <span class="ident">DEFAULT_BUCKET_COUNT</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">100</span>;
-<span class="kw">const</span> <span class="ident">DEFAULT_RANGE_MIN</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="number">0</span>;
-<span class="kw">const</span> <span class="ident">DEFAULT_RANGE_MAX</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="number">60_000</span>;
+<span class="kw">const</span> <span class="ident">DEFAULT_RANGE_MIN</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">0</span>;
+<span class="kw">const</span> <span class="ident">DEFAULT_RANGE_MAX</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">60_000</span>;
 
 <span class="doccomment">/// Create the possible ranges in an exponential distribution from `min` to `max` with</span>
 <span class="doccomment">/// `bucket_count` buckets.</span>
@@ -283,8 +296,8 @@
 <span class="doccomment">/// Bucket limits are the minimal bucket value.</span>
 <span class="doccomment">/// That means values in a bucket `i` are `bucket[i] &lt;= value &lt; bucket[i+1]`.</span>
 <span class="doccomment">/// It will always contain an underflow bucket (`&lt; 1`).</span>
-<span class="kw">fn</span> <span class="ident">exponential_range</span>(<span class="ident">min</span>: <span class="ident">u32</span>, <span class="ident">max</span>: <span class="ident">u32</span>, <span class="ident">bucket_count</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">log_max</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">from</span>(<span class="ident">max</span>).<span class="ident">ln</span>();
+<span class="kw">fn</span> <span class="ident">exponential_range</span>(<span class="ident">min</span>: <span class="ident">u64</span>, <span class="ident">max</span>: <span class="ident">u64</span>, <span class="ident">bucket_count</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">log_max</span> <span class="op">=</span> (<span class="ident">max</span> <span class="kw">as</span> <span class="ident">f64</span>).<span class="ident">ln</span>();
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ranges</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">bucket_count</span>);
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">current</span> <span class="op">=</span> <span class="ident">min</span>;
@@ -297,10 +310,10 @@
     <span class="ident">ranges</span>.<span class="ident">push</span>(<span class="ident">current</span>);
 
     <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">2</span>..<span class="ident">bucket_count</span> {
-        <span class="kw">let</span> <span class="ident">log_current</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">from</span>(<span class="ident">current</span>).<span class="ident">ln</span>();
+        <span class="kw">let</span> <span class="ident">log_current</span> <span class="op">=</span> (<span class="ident">current</span> <span class="kw">as</span> <span class="ident">f64</span>).<span class="ident">ln</span>();
         <span class="kw">let</span> <span class="ident">log_ratio</span> <span class="op">=</span> (<span class="ident">log_max</span> <span class="op">-</span> <span class="ident">log_current</span>) <span class="op">/</span> (<span class="ident">bucket_count</span> <span class="op">-</span> <span class="ident">i</span>) <span class="kw">as</span> <span class="ident">f64</span>;
         <span class="kw">let</span> <span class="ident">log_next</span> <span class="op">=</span> <span class="ident">log_current</span> <span class="op">+</span> <span class="ident">log_ratio</span>;
-        <span class="kw">let</span> <span class="ident">next_value</span> <span class="op">=</span> <span class="ident">log_next</span>.<span class="ident">exp</span>().<span class="ident">round</span>() <span class="kw">as</span> <span class="ident">u32</span>;
+        <span class="kw">let</span> <span class="ident">next_value</span> <span class="op">=</span> <span class="ident">log_next</span>.<span class="ident">exp</span>().<span class="ident">round</span>() <span class="kw">as</span> <span class="ident">u64</span>;
         <span class="ident">current</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">next_value</span> <span class="op">&gt;</span> <span class="ident">current</span> {
             <span class="ident">next_value</span>
         } <span class="kw">else</span> {
@@ -338,13 +351,13 @@
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Histogram</span> {
-    <span class="ident">min</span>: <span class="ident">u32</span>,
-    <span class="ident">max</span>: <span class="ident">u32</span>,
-    <span class="ident">bucket_ranges</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>,
-    <span class="ident">values</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>,
+    <span class="ident">min</span>: <span class="ident">u64</span>,
+    <span class="ident">max</span>: <span class="ident">u64</span>,
+    <span class="ident">bucket_ranges</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>,
+    <span class="ident">values</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>,
 
-    <span class="ident">count</span>: <span class="ident">u32</span>,
-    <span class="ident">sum</span>: <span class="ident">u32</span>,
+    <span class="ident">count</span>: <span class="ident">u64</span>,
+    <span class="ident">sum</span>: <span class="ident">u64</span>,
     <span class="ident">typ</span>: <span class="ident">Type</span>,
 }
 
@@ -356,7 +369,7 @@
 
 <span class="kw">impl</span> <span class="ident">Histogram</span> {
     <span class="doccomment">/// Create a histogram with `count` exponential buckets in the range `min` to `max`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exponential</span>(<span class="ident">min</span>: <span class="ident">u32</span>, <span class="ident">max</span>: <span class="ident">u32</span>, <span class="ident">bucket_count</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Histogram</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exponential</span>(<span class="ident">min</span>: <span class="ident">u64</span>, <span class="ident">max</span>: <span class="ident">u64</span>, <span class="ident">bucket_count</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Histogram</span> {
         <span class="kw">let</span> <span class="ident">bucket_ranges</span> <span class="op">=</span> <span class="ident">exponential_range</span>(<span class="ident">min</span>, <span class="ident">max</span>, <span class="ident">bucket_count</span>);
 
         <span class="ident">Histogram</span> {
@@ -376,19 +389,19 @@
     }
 
     <span class="doccomment">/// Add a single value to this histogram.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accumulate</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sample</span>: <span class="ident">u32</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accumulate</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sample</span>: <span class="ident">u64</span>) {
         <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_bucket_for_sample</span>(<span class="ident">sample</span>) <span class="op">+=</span> <span class="number">1</span>;
-        <span class="self">self</span>.<span class="ident">sum</span> <span class="op">+=</span> <span class="ident">sample</span>;
+        <span class="self">self</span>.<span class="ident">sum</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">sum</span>.<span class="ident">saturating_add</span>(<span class="ident">sample</span>);
         <span class="self">self</span>.<span class="ident">count</span> <span class="op">+=</span> <span class="number">1</span>;
     }
 
     <span class="doccomment">/// Get the total sum of values recorded in this histogram.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sum</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u32</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sum</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> {
         <span class="self">self</span>.<span class="ident">sum</span>
     }
 
     <span class="doccomment">/// Get the total count of values recorded in this histogram.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u32</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> {
         <span class="self">self</span>.<span class="ident">count</span>
     }
 
@@ -396,7 +409,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This uses a binary search to locate the index `i` of the bucket such that:</span>
     <span class="doccomment">/// bucket[i] &lt;= sample &lt; bucket[i+1]</span>
-    <span class="kw">fn</span> <span class="ident">get_bucket_for_sample</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sample</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">u32</span> {
+    <span class="kw">fn</span> <span class="ident">get_bucket_for_sample</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sample</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">u64</span> {
         <span class="kw">let</span> <span class="ident">limit</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">bucket_ranges</span>.<span class="ident">binary_search</span>(<span class="kw-2">&amp;</span><span class="ident">sample</span>) {
             <span class="comment">// Found an exact match to fit it in</span>
             <span class="prelude-val">Ok</span>(<span class="ident">i</span>) <span class="op">=&gt;</span> <span class="ident">i</span>,
@@ -408,24 +421,24 @@
     }
 
     <span class="doccomment">/// Get the list of ranges.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bucket_ranges</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u32</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bucket_ranges</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u64</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bucket_ranges</span>
     }
 
     <span class="doccomment">/// Get the filled values.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">values</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u32</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">values</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u64</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">values</span>
     }
 
     <span class="doccomment">/// Get the minimal recordable value.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">min</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u32</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">min</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> {
         <span class="self">self</span>.<span class="ident">min</span>
     }
 
     <span class="doccomment">/// Get the maximal recordable value.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Samples bigger than  the `max` will be recorded into the overflow bucket.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u32</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> {
         <span class="self">self</span>.<span class="ident">max</span>
     }
 
@@ -517,6 +530,19 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">1</span>, <span class="ident">hist</span>.<span class="ident">values</span>[<span class="number">33</span>]); <span class="comment">// bucket_ranges[33] = 92</span>
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">1</span>, <span class="ident">hist</span>.<span class="ident">values</span>[<span class="number">57</span>]); <span class="comment">// bucket_ranges[57] = 964</span>
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">1</span>, <span class="ident">hist</span>.<span class="ident">values</span>[<span class="number">80</span>]); <span class="comment">// bucket_ranges[80] = 9262</span>
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">accumulate_large_numbers</span>() {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hist</span> <span class="op">=</span> <span class="ident">Histogram</span>::<span class="ident">exponential</span>(<span class="number">1</span>, <span class="number">500</span>, <span class="number">10</span>);
+
+        <span class="ident">hist</span>.<span class="ident">accumulate</span>(<span class="ident">u64</span>::<span class="ident">max_value</span>());
+        <span class="ident">hist</span>.<span class="ident">accumulate</span>(<span class="ident">u64</span>::<span class="ident">max_value</span>());
+
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">2</span>, <span class="ident">hist</span>.<span class="ident">count</span>());
+        <span class="comment">// Saturate before overflowing</span>
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">u64</span>::<span class="ident">max_value</span>(), <span class="ident">hist</span>.<span class="ident">sum</span>());
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">2</span>, <span class="ident">hist</span>.<span class="ident">values</span>[<span class="number">9</span>]);
     }
 }
 </pre></div>
