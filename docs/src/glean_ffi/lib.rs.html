@@ -214,6 +214,11 @@
 <span id="214">214</span>
 <span id="215">215</span>
 <span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -427,6 +432,11 @@
         <span class="kw">let</span> <span class="ident">experiment_id</span> <span class="op">=</span> <span class="ident">experiment_id</span>.<span class="ident">to_string_fallible</span>()<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">glean</span>.<span class="ident">test_get_experiment_data_as_json</span>(<span class="ident">experiment_id</span>))
     })
+}
+
+<span class="attribute">#[<span class="ident">no_mangle</span>]</span>
+<span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_test_clear_all_stores</span>(<span class="ident">glean_handle</span>: <span class="ident">u64</span>) {
+    <span class="ident">GLEAN</span>.<span class="ident">call_infallible</span>(<span class="ident">glean_handle</span>, <span class="op">|</span><span class="ident">glean</span><span class="op">|</span> <span class="ident">glean</span>.<span class="ident">test_clear_all_stores</span>());
 }
 
 <span class="macro">define_handle_map_deleter</span><span class="macro">!</span>(<span class="ident">GLEAN</span>, <span class="ident">glean_destroy_glean</span>);

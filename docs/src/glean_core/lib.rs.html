@@ -780,6 +780,17 @@
 <span id="780">780</span>
 <span id="781">781</span>
 <span id="782">782</span>
+<span id="783">783</span>
+<span id="784">784</span>
+<span id="785">785</span>
+<span id="786">786</span>
+<span id="787">787</span>
+<span id="788">788</span>
+<span id="789">789</span>
+<span id="790">790</span>
+<span id="791">791</span>
+<span id="792">792</span>
+<span id="793">793</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -1284,6 +1295,17 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_get_experiment_data_as_json</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">experiment_id</span>: <span class="ident">String</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">metric</span> <span class="op">=</span> <span class="ident">metrics</span>::<span class="ident">ExperimentMetric</span>::<span class="ident">new</span>(<span class="ident">experiment_id</span>);
         <span class="ident">metric</span>.<span class="ident">test_get_value_as_json_string</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
+    }
+
+    <span class="doccomment">/// **Test-only API (exported for FFI purposes).**</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Delete all stored metrics.</span>
+    <span class="doccomment">/// Note that this also includes the ping sequence numbers, so it has</span>
+    <span class="doccomment">/// the effect of resetting those to their initial values.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_clear_all_stores</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">data_store</span>.<span class="ident">clear_all</span>();
+        <span class="comment">// We don&#39;t care about this failing, maybe the data does just not exist.</span>
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">event_data_store</span>.<span class="ident">clear_all</span>();
     }
 }
 
