@@ -39,7 +39,9 @@ can be done via adb using the following command:</p>
 <p><a href="on-create.html">onCreate</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">onCreate</span><span class="symbol">(</span><span class="identifier" id="mozilla.telemetry.glean.debug.GleanDebugActivity$onCreate(android.os.Bundle)/savedInstanceState">savedInstanceState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">onCreate</span><span class="symbol">(</span><span class="identifier" id="mozilla.telemetry.glean.debug.GleanDebugActivity$onCreate(android.os.Bundle)/savedInstanceState">savedInstanceState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>On creation of the debug activity, launch the requested command.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -51,28 +53,28 @@ can be done via adb using the following command:</p>
 <p><a href="-l-o-g_-p-i-n-g-s_-e-x-t-r-a_-k-e-y.html">LOG_PINGS_EXTRA_KEY</a></p>
 </td>
 <td>
-<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">LOG_PINGS_EXTRA_KEY</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">LOG_PINGS_EXTRA_KEY</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>If set to <code>true</code>, pings are dumped to logcat, defaults to <code>false</code>.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="-s-e-n-d_-p-i-n-g_-e-x-t-r-a_-k-e-y.html">SEND_PING_EXTRA_KEY</a></p>
 </td>
 <td>
-<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">SEND_PING_EXTRA_KEY</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">SEND_PING_EXTRA_KEY</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>Sends the ping with the given name immediately</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="-t-a-g_-d-e-b-u-g_-v-i-e-w_-e-x-t-r-a_-k-e-y.html">TAG_DEBUG_VIEW_EXTRA_KEY</a></p>
 </td>
 <td>
-<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">TAG_DEBUG_VIEW_EXTRA_KEY</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
-</tr>
-<tr>
-<td>
-<p><a href="ping-tag-pattern.html">pingTagPattern</a></p>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">TAG_DEBUG_VIEW_EXTRA_KEY</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>Tags all outgoing pings as debug pings to make them available for real-time validation.
+The value must match the pattern <code>[a-zA-Z0-9-]{1,20}</code>.</p>
 </td>
-<td>
-<code><span class="keyword">val </span><span class="identifier">pingTagPattern</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/-regex/index.html"><span class="identifier">Regex</span></a></code></td>
 </tr>
 </tbody>
 </table>
