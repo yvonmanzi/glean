@@ -174,9 +174,9 @@ search:
 <p>Note: the names <code>baseline</code>, <code>metrics</code>, <code>events</code> and <code>all_pings</code> are reserved and may not be used as the name of a custom ping.</p>
 </blockquote>
 <h2><a class="header" href="#loading-custom-ping-metadata-into-your-application-or-library" id="loading-custom-ping-metadata-into-your-application-or-library">Loading custom ping metadata into your application or library</a></h2>
-<p>The Glean SDK build generates code from <code>pings.yaml</code> in a <code>Pings</code> object, which must be instantiated so Glean can send pings by name. 
+<p>The Glean SDK build generates code from <code>pings.yaml</code> in a <code>Pings</code> object, which must be instantiated so Glean can send pings by name.
 This object must be registered with Glean from your startup code (such as in your application's <code>onCreate</code> method or a function called from that method).</p>
-<pre><code>import org.mozilla.yourApplication.GleanMetrics.Pings
+<pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Pings
 
 ...
 

@@ -159,7 +159,7 @@ If the application crashes no <code>baseline</code> ping is sent, no additional 
 </tbody></table>
 <p>The <code>baseline</code> ping shall also include the common <a href="index.html#ping-sections">ping sections</a> found in all pings.</p>
 <h3><a class="header" href="#querying-ping-contents" id="querying-ping-contents">Querying ping contents</a></h3>
-<p>A quick note about querying ping contents (i.e. for https://sql.telemetry.mozilla.org):  Each metric in the baseline ping is organized by its metric type, and uses a namespace of <code>glean.baseline</code>. For instance, in order to select <code>duration</code> you would use <code>metrics.timespan['glean.baseline.duration']</code>. If you were trying to select a String based metric such as <code>os</code>, then you would use <code>metrics.string['glean.baseline.os']</code></p>
+<p>A quick note about querying ping contents (i.e. for <a href="https://sql.telemetry.mozilla.org">sql.telemetry.mozilla.org</a>):  Each metric in the baseline ping is organized by its metric type, and uses a namespace of <code>glean.baseline</code>. For instance, in order to select <code>duration</code> you would use <code>metrics.timespan['glean.baseline.duration']</code>. If you were trying to select a String based metric such as <code>os</code>, then you would use <code>metrics.string['glean.baseline.os']</code></p>
 <h2><a class="header" href="#example-baseline-ping" id="example-baseline-ping">Example baseline ping</a></h2>
 <pre><code class="language-json">{
   &quot;ping_info&quot;: {

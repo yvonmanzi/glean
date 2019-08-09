@@ -147,11 +147,12 @@
                     <main>
                         <h1><a class="header" href="#strings" id="strings">Strings</a></h1>
 <p>This allows recording a Unicode string value with arbitrary content.</p>
-<hr />
-<p><em>Note:</em> Be careful using arbitrary strings and make sure they can't accidentally contain identifying data (like directory paths or user input).</p>
-<hr />
-<p><em>Note:</em> This is does not support recording JSON blobs - please get in contact with the Telemetry team if you're missing a type.</p>
-<hr />
+<blockquote>
+<p><strong>Note</strong>: Be careful using arbitrary strings and make sure they can't accidentally contain identifying data (like directory paths or user input).</p>
+</blockquote>
+<blockquote>
+<p><strong>Note</strong>: This is does not support recording JSON blobs - please get in contact with the Telemetry team if you're missing a type.</p>
+</blockquote>
 <h2><a class="header" href="#configuration" id="configuration">Configuration</a></h2>
 <p>Say you're adding a metric to find out what the default search in a browser is. First you need to add an entry for the metric to the <code>metrics.yaml</code> file:</p>
 <pre><code class="language-YAML">search.default:

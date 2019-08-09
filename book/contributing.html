@@ -150,16 +150,17 @@
 <p><strong>Note:</strong> This document describes contributing to the cross-platform implementation of the Glean SDK. To contribute to the Android-specific implementation, see <a href="https://github.com/mozilla-mobile/android-components">android-components</a>.</p>
 </blockquote>
 <p>Anyone is welcome to help with the Glean SDK project. Feel free to get in touch with other community members on IRC
-or through issues here on GitHub.</p>
+or through issues on GitHub or Bugzilla.</p>
 <ul>
 <li>IRC: <code>#telemetry</code> on <code>irc.mozilla.org</code></li>
-<li>and of course, <a href="https://github.com/mozilla/glean/issues">the issues list</a></li>
+<li><a href="https://bugzilla.mozilla.org/buglist.cgi?list_id=14844212&amp;resolution=---&amp;classification=Client%20Software&amp;classification=Developer%20Infrastructure&amp;classification=Components&amp;classification=Server%20Software&amp;classification=Other&amp;query_format=advanced&amp;bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;component=Glean%3A%20SDK&amp;product=Data%20Platform%20and%20Tools">the Bugzilla issues list</a></li>
+<li><a href="https://github.com/mozilla/glean/issues">the GitHub issues list</a></li>
 </ul>
 <p>Participation in this project is governed by the
 <a href="https://www.mozilla.org/en-US/about/governance/policies/participation/">Mozilla Community Participation Guidelines</a>.</p>
 <h2><a class="header" href="#bug-reports" id="bug-reports">Bug Reports</a></h2>
-<p>You can file issues here on GitHub. Please try to include as much information as you can and under what conditions
-you saw the issue.</p>
+<p>To report issues or request changes, file a bug in <a href="https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&amp;bug_ignored=0&amp;bug_severity=normal&amp;bug_status=NEW&amp;cf_fission_milestone=---&amp;cf_fx_iteration=---&amp;cf_fx_points=---&amp;cf_status_firefox65=---&amp;cf_status_firefox66=---&amp;cf_status_firefox67=---&amp;cf_status_firefox_esr60=---&amp;cf_status_thunderbird_esr60=---&amp;cf_tracking_firefox65=---&amp;cf_tracking_firefox66=---&amp;cf_tracking_firefox67=---&amp;cf_tracking_firefox_esr60=---&amp;cf_tracking_firefox_relnote=---&amp;cf_tracking_thunderbird_esr60=---&amp;product=Data%20Platform%20and%20Tools&amp;component=Glean%3A%20SDK&amp;contenttypemethod=list&amp;contenttypeselection=text%2Fplain&amp;defined_groups=1&amp;flag_type-203=X&amp;flag_type-37=X&amp;flag_type-41=X&amp;flag_type-607=X&amp;flag_type-721=X&amp;flag_type-737=X&amp;flag_type-787=X&amp;flag_type-799=X&amp;flag_type-800=X&amp;flag_type-803=X&amp;flag_type-835=X&amp;flag_type-846=X&amp;flag_type-855=X&amp;flag_type-864=X&amp;flag_type-916=X&amp;flag_type-929=X&amp;flag_type-930=X&amp;flag_type-935=X&amp;flag_type-936=X&amp;flag_type-937=X&amp;form_name=enter_bug&amp;maketemplate=Remember%20values%20as%20bookmarkable%20template&amp;op_sys=Unspecified&amp;priority=P3&amp;&amp;rep_platform=Unspecified&amp;status_whiteboard=%5Btelemetry%3Aglean-rs%3Am%3F%5D&amp;target_milestone=---&amp;version=unspecified">Bugzilla in Data Platform &amp; Tools :: Glean: SDK</a>.</p>
+<p>If you don't have a Bugzilla account, we also accept <a href="https://github.com/mozilla/glean/issues/new">issues on GitHub</a>.</p>
 <h2><a class="header" href="#making-code-changes" id="making-code-changes">Making Code Changes</a></h2>
 <p>To work on the code in this repo you will need to be familiar with
 the <a href="https://www.rust-lang.org/">Rust</a> programming language.
@@ -184,7 +185,7 @@ the instructions for <a href="https://github.com/mozilla/glean/blob/master/docs/
 </ul>
 <p>When submitting a PR:</p>
 <ul>
-<li>You agree to license your code under the project's open source license (<a href="/LICENSE">MPL 2.0</a>).</li>
+<li>You agree to license your code under the project's open source license (<a href="https://mozilla.org/MPL/2.0/">MPL 2.0</a>).</li>
 <li>Base your branch off the current <code>master</code> (see below for an example workflow).</li>
 <li>Add both your code and new tests if relevant.</li>
 <li>Run <code>cargo test</code> to make sure your code passes linting and tests.</li>
