@@ -187,19 +187,12 @@ It is written as a set of <a href="https://github.com/mozilla-services/mozilla-p
 <h2><a class="header" href="#timing-distribution" id="timing-distribution">Timing Distribution</a></h2>
 <p>A <a href="../../../user/metrics/timing_distribution.html">Timing distribution</a> is represented as an object with the following fields.</p>
 <table><thead><tr><th>Field name</th><th>Type</th><th>Description</th></tr></thead><tbody>
-<tr><td><code>bucket_count</code></td><td>Integer</td><td>The bucket count of the histogram.</td></tr>
-<tr><td><code>range</code></td><td>Array&lt;Integer&gt;</td><td>The range indicated by its minimum and maxium value.</td></tr>
 <tr><td><code>sum</code></td><td>Integer</td><td>The sum of all recorded values.</td></tr>
-<tr><td><code>time_unit</code></td><td>String</td><td>The timespan's time unit, see the <a href="../../../user/metrics/timing_distribution.html#configuration">time distribution's configuration</a> for valid values.</td></tr>
 <tr><td><code>values</code></td><td>Map&lt;String, Integer&gt;</td><td>The values in each bucket. The key is the minimum value for the range of that bucket. Buckets with no values are not reported.</td></tr>
 </tbody></table>
 <h4><a class="header" href="#example-4" id="example-4">Example:</a></h4>
 <pre><code class="language-json">{
-    &quot;bucket_count&quot;: 100,
-    &quot;range&quot;: [0, 60000],
-    &quot;histogram_type&quot;: &quot;expontential&quot;,
     &quot;sum&quot;: 3,
-    &quot;time_unit&quot;: &quot;milliseconds&quot;,
     &quot;values&quot;: {
         &quot;0&quot;: 1,
         &quot;1&quot;: 3,

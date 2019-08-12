@@ -147,28 +147,21 @@
                     <main>
                         <h1><a class="header" href="#timing-distribution" id="timing-distribution">Timing Distribution</a></h1>
 <p>Timing distributions are used to accumulate and store time measurement, for analyzing distributions of the timing data.</p>
-<p>To measure the distribution of multiple timespans, see <a href="timing_distribution.html">Timing Distributions</a>. To record absolute times, see <a href="datetime.html">Datetimes</a>.</p>
+<p>To measure the distribution of single timespans, see <a href="timespan.html">Timespans</a>. To record absolute times, see <a href="datetime.html">Datetimes</a>.</p>
+<p>Timing distributions are recorded in a histogram where the buckets have an exponential distribution, specifically with 8 buckets for every power of 2.
+This makes them suitable for measuring timings on a number of time scales without any configuration.</p>
 <h2><a class="header" href="#configuration" id="configuration">Configuration</a></h2>
-<p>Timing distributions have a required <code>time_unit</code> parameter to specify the resolution and range of the values that are recorded. The allowed values for <code>time_unit</code> are:</p>
-<ul>
-<li><code>nanosecond</code></li>
-<li><code>microsecond</code></li>
-<li><code>millisecond</code></li>
-<li><code>second</code></li>
-<li><code>minute</code></li>
-<li><code>hour</code></li>
-<li><code>day</code></li>
-</ul>
-<p>Which range of values is recorded in detail depends on the <code>time_unit</code>, e.g. for milliseconds, all values greater 60000 are recorded as overflow values.</p>
 <p>If you wanted to create a timing distribution to measure page load times, first you need to add an entry for it to the <code>metrics.yaml</code> file:</p>
 <pre><code class="language-YAML">pages:
   page_load:
     type: timing_distribution
-    time_unit: millisecond
     description: &gt;
       Counts how long each page takes to load
     ...
 </code></pre>
+<blockquote>
+<p>Note: Timing distributions have an optional <code>time_unit</code> parameter that is only used when samples are provided directly from an external tool in a unit other than nanoseconds.</p>
+</blockquote>
 <h2><a class="header" href="#api" id="api">API</a></h2>
 <p>Now you can use the timing distribution from the application's code.
 Starting a timer returns a timer ID that needs to be used to stop or cancel the timer at a later point.
@@ -205,7 +198,13 @@ assertEquals(2L, snapshot.count())
 </code></pre>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
 <ul>
-<li>Which range of values is recorded in detail depends on the <code>time_unit</code>, e.g. for milliseconds, all values greater 60000 are recorded as overflow values.</li>
+<li>
+<p>Timings are recorded in nanoseconds.
+On Android, the <a href="https://developer.android.com/reference/android/os/SystemClock.html#elapsedRealtimeNanos()">SystemClock.getElapsedNanos()</a> function is used, so it is limited by the accuracy and performance of that timer.</p>
+</li>
+<li>
+<p>The maxmimum timing value that will be recorded is 10 minutes. Longer times will be truncated to 10 minutes and an error will be recorded.</p>
+</li>
 </ul>
 <h2><a class="header" href="#examples" id="examples">Examples</a></h2>
 <ul>
@@ -215,6 +214,7 @@ assertEquals(2L, snapshot.count())
 <ul>
 <li><code>invalid_value</code>: If recording a negative timespan.</li>
 <li><code>invalid_value</code>: If a non-existing/stopped timer is stopped again.</li>
+<li><code>invalid_value</code>: If recording a time longer than 10 minutes.</li>
 </ul>
 <h2><a class="header" href="#reference" id="reference">Reference</a></h2>
 <ul>
