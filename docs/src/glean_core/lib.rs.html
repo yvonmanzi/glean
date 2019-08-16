@@ -810,6 +810,61 @@
 <span id="810">810</span>
 <span id="811">811</span>
 <span id="812">812</span>
+<span id="813">813</span>
+<span id="814">814</span>
+<span id="815">815</span>
+<span id="816">816</span>
+<span id="817">817</span>
+<span id="818">818</span>
+<span id="819">819</span>
+<span id="820">820</span>
+<span id="821">821</span>
+<span id="822">822</span>
+<span id="823">823</span>
+<span id="824">824</span>
+<span id="825">825</span>
+<span id="826">826</span>
+<span id="827">827</span>
+<span id="828">828</span>
+<span id="829">829</span>
+<span id="830">830</span>
+<span id="831">831</span>
+<span id="832">832</span>
+<span id="833">833</span>
+<span id="834">834</span>
+<span id="835">835</span>
+<span id="836">836</span>
+<span id="837">837</span>
+<span id="838">838</span>
+<span id="839">839</span>
+<span id="840">840</span>
+<span id="841">841</span>
+<span id="842">842</span>
+<span id="843">843</span>
+<span id="844">844</span>
+<span id="845">845</span>
+<span id="846">846</span>
+<span id="847">847</span>
+<span id="848">848</span>
+<span id="849">849</span>
+<span id="850">850</span>
+<span id="851">851</span>
+<span id="852">852</span>
+<span id="853">853</span>
+<span id="854">854</span>
+<span id="855">855</span>
+<span id="856">856</span>
+<span id="857">857</span>
+<span id="858">858</span>
+<span id="859">859</span>
+<span id="860">860</span>
+<span id="861">861</span>
+<span id="862">862</span>
+<span id="863">863</span>
+<span id="864">864</span>
+<span id="865">865</span>
+<span id="866">866</span>
+<span id="867">867</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -1407,6 +1462,61 @@
         <span class="kw">let</span> <span class="ident">parsed_json</span>: <span class="ident">RecordedExperimentData</span> <span class="op">=</span>
             ::<span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="kw-2">&amp;</span><span class="ident">experiment_data</span>.<span class="ident">unwrap</span>()).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">expected_branch_id</span>, <span class="ident">parsed_json</span>.<span class="ident">branch</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">limits_on_experiments_extras_are_applied_correctly</span>() {
+        <span class="kw">let</span> <span class="ident">t</span> <span class="op">=</span> <span class="ident">tempfile</span>::<span class="ident">tempdir</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">t</span>.<span class="ident">path</span>().<span class="ident">display</span>().<span class="ident">to_string</span>();
+        <span class="kw">let</span> <span class="ident">glean</span> <span class="op">=</span> <span class="ident">Glean</span>::<span class="ident">with_options</span>(<span class="kw-2">&amp;</span><span class="ident">name</span>, <span class="string">&quot;org.mozilla.glean.tests&quot;</span>, <span class="bool-val">true</span>).<span class="ident">unwrap</span>();
+
+        <span class="kw">let</span> <span class="ident">experiment_id</span> <span class="op">=</span> <span class="string">&quot;test-experiment_id&quot;</span>.<span class="ident">to_string</span>();
+        <span class="kw">let</span> <span class="ident">branch_id</span> <span class="op">=</span> <span class="string">&quot;test-branch-id&quot;</span>.<span class="ident">to_string</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">extras</span> <span class="op">=</span> <span class="ident">HashMap</span>::<span class="ident">new</span>();
+
+        <span class="kw">let</span> <span class="ident">too_long_key</span> <span class="op">=</span> <span class="string">&quot;0123456789&quot;</span>.<span class="ident">repeat</span>(<span class="number">5</span>);
+        <span class="kw">let</span> <span class="ident">too_long_value</span> <span class="op">=</span> <span class="string">&quot;0123456789&quot;</span>.<span class="ident">repeat</span>(<span class="number">6</span>);
+
+        <span class="comment">// Build and extras HashMap that&#39;s a little too long in every way</span>
+        <span class="kw">for</span> <span class="ident">n</span> <span class="kw">in</span> <span class="number">0</span>..<span class="number">21</span> {
+            <span class="ident">extras</span>.<span class="ident">insert</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}-{}&quot;</span>, <span class="ident">n</span>, <span class="ident">too_long_key</span>), <span class="ident">too_long_value</span>.<span class="ident">clone</span>());
+        }
+
+        <span class="comment">// Mark the experiment as active.</span>
+        <span class="ident">glean</span>.<span class="ident">set_experiment_active</span>(<span class="ident">experiment_id</span>.<span class="ident">clone</span>(), <span class="ident">branch_id</span>.<span class="ident">clone</span>(), <span class="prelude-val">Some</span>(<span class="ident">extras</span>));
+
+        <span class="comment">// Make sure it is active</span>
+        <span class="macro">assert</span><span class="macro">!</span>(
+            <span class="ident">glean</span>.<span class="ident">test_is_experiment_active</span>(<span class="ident">experiment_id</span>.<span class="ident">clone</span>()),
+            <span class="string">&quot;An experiment with the truncated id should be available&quot;</span>
+        );
+
+        <span class="comment">// Get the data</span>
+        <span class="kw">let</span> <span class="ident">experiment_data</span> <span class="op">=</span> <span class="ident">glean</span>.<span class="ident">test_get_experiment_data_as_json</span>(<span class="ident">experiment_id</span>.<span class="ident">clone</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(
+            <span class="op">!</span><span class="ident">experiment_data</span>.<span class="ident">is_none</span>(),
+            <span class="string">&quot;Experiment data must be available&quot;</span>
+        );
+
+        <span class="comment">// Parse the JSON and validate the lengths</span>
+        <span class="kw">let</span> <span class="ident">parsed_json</span>: <span class="ident">RecordedExperimentData</span> <span class="op">=</span>
+            ::<span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="kw-2">&amp;</span><span class="ident">experiment_data</span>.<span class="ident">unwrap</span>()).<span class="ident">unwrap</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            <span class="number">20</span>,
+            <span class="ident">parsed_json</span>.<span class="ident">clone</span>().<span class="ident">extra</span>.<span class="ident">unwrap</span>().<span class="ident">len</span>(),
+            <span class="string">&quot;Experiments extra must be less than max length&quot;</span>
+        );
+
+        <span class="kw">for</span> (<span class="ident">key</span>, <span class="ident">value</span>) <span class="kw">in</span> <span class="ident">parsed_json</span>.<span class="ident">extra</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap</span>().<span class="ident">iter</span>() {
+            <span class="macro">assert</span><span class="macro">!</span>(
+                <span class="ident">key</span>.<span class="ident">len</span>() <span class="op">&lt;=</span> <span class="number">30</span>,
+                <span class="string">&quot;Experiments extra key must be less than max length&quot;</span>
+            );
+            <span class="macro">assert</span><span class="macro">!</span>(
+                <span class="ident">value</span>.<span class="ident">len</span>() <span class="op">&lt;=</span> <span class="number">50</span>,
+                <span class="string">&quot;Experiments extra value must be less than max length&quot;</span>
+            );
+        }
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
