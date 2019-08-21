@@ -1342,7 +1342,7 @@
         <span class="ident">branch</span>: <span class="ident">String</span>,
         <span class="ident">extra</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;&gt;</span>,
     ) {
-        <span class="kw">let</span> <span class="ident">metric</span> <span class="op">=</span> <span class="ident">metrics</span>::<span class="ident">ExperimentMetric</span>::<span class="ident">new</span>(<span class="ident">experiment_id</span>);
+        <span class="kw">let</span> <span class="ident">metric</span> <span class="op">=</span> <span class="ident">metrics</span>::<span class="ident">ExperimentMetric</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">experiment_id</span>);
         <span class="ident">metric</span>.<span class="ident">set_active</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">branch</span>, <span class="ident">extra</span>);
     }
 
@@ -1352,7 +1352,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `experiment_id` - The id of the active experiment to deactivate (maximum 30 bytes).</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_experiment_inactive</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">experiment_id</span>: <span class="ident">String</span>) {
-        <span class="kw">let</span> <span class="ident">metric</span> <span class="op">=</span> <span class="ident">metrics</span>::<span class="ident">ExperimentMetric</span>::<span class="ident">new</span>(<span class="ident">experiment_id</span>);
+        <span class="kw">let</span> <span class="ident">metric</span> <span class="op">=</span> <span class="ident">metrics</span>::<span class="ident">ExperimentMetric</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">experiment_id</span>);
         <span class="ident">metric</span>.<span class="ident">set_inactive</span>(<span class="kw-2">&amp;</span><span class="self">self</span>);
     }
 
@@ -1386,7 +1386,7 @@
     <span class="doccomment">/// { &#39;branch&#39;: &#39;the-branch-name&#39;, &#39;extra&#39;: {&#39;key&#39;: &#39;value&#39;, ...}}</span>
     <span class="doccomment">/// Otherwise, None.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_get_experiment_data_as_json</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">experiment_id</span>: <span class="ident">String</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">metric</span> <span class="op">=</span> <span class="ident">metrics</span>::<span class="ident">ExperimentMetric</span>::<span class="ident">new</span>(<span class="ident">experiment_id</span>);
+        <span class="kw">let</span> <span class="ident">metric</span> <span class="op">=</span> <span class="ident">metrics</span>::<span class="ident">ExperimentMetric</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">experiment_id</span>);
         <span class="ident">metric</span>.<span class="ident">test_get_value_as_json_string</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
     }
 
