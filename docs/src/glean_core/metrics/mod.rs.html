@@ -130,6 +130,14 @@
 <span id="130">130</span>
 <span id="131">131</span>
 <span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -147,6 +155,8 @@
 <span class="kw">mod</span> <span class="ident">event</span>;
 <span class="kw">mod</span> <span class="ident">experiment</span>;
 <span class="kw">mod</span> <span class="ident">labeled</span>;
+<span class="kw">mod</span> <span class="ident">memory_distribution</span>;
+<span class="kw">mod</span> <span class="ident">memory_unit</span>;
 <span class="kw">mod</span> <span class="ident">ping</span>;
 <span class="kw">mod</span> <span class="ident">quantity</span>;
 <span class="kw">mod</span> <span class="ident">string</span>;
@@ -171,6 +181,8 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="self">self</span>::<span class="ident">experiment</span>::<span class="ident">RecordedExperimentData</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">labeled</span>::<span class="ident">LabeledMetric</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">memory_distribution</span>::<span class="ident">MemoryDistributionMetric</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">memory_unit</span>::<span class="ident">MemoryUnit</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">ping</span>::<span class="ident">PingType</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">quantity</span>::<span class="ident">QuantityMetric</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">string</span>::<span class="ident">StringMetric</span>;
@@ -206,6 +218,8 @@
     <span class="ident">Timespan</span>(<span class="ident">std</span>::<span class="ident">time</span>::<span class="ident">Duration</span>, <span class="ident">TimeUnit</span>),
     <span class="doccomment">/// A timing distribution. See [`TimingDistributionMetric`](struct.TimingDistributionMetric.html) for more information.</span>
     <span class="ident">TimingDistribution</span>(<span class="ident">Histogram</span><span class="op">&lt;</span><span class="ident">Functional</span><span class="op">&gt;</span>),
+    <span class="doccomment">/// A memory distribution. See [`MemoryDistributionMetric`](struct.MemoryDistributionMetric.html) for more information.</span>
+    <span class="ident">MemoryDistribution</span>(<span class="ident">Histogram</span><span class="op">&lt;</span><span class="ident">Functional</span><span class="op">&gt;</span>),
 }
 
 <span class="doccomment">/// A `MetricType` describes common behavior across all metrics.</span>
@@ -242,6 +256,7 @@
             <span class="ident">Metric</span>::<span class="ident">Timespan</span>(..) <span class="op">=&gt;</span> <span class="string">&quot;timespan&quot;</span>,
             <span class="ident">Metric</span>::<span class="ident">TimingDistribution</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;timing_distribution&quot;</span>,
             <span class="ident">Metric</span>::<span class="ident">Uuid</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;uuid&quot;</span>,
+            <span class="ident">Metric</span>::<span class="ident">MemoryDistribution</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;memory_distribution&quot;</span>,
         }
     }
 
@@ -260,6 +275,7 @@
             }
             <span class="ident">Metric</span>::<span class="ident">TimingDistribution</span>(<span class="ident">hist</span>) <span class="op">=&gt;</span> <span class="macro">json</span><span class="macro">!</span>(<span class="ident">timing_distribution</span>::<span class="ident">snapshot</span>(<span class="ident">hist</span>)),
             <span class="ident">Metric</span>::<span class="ident">Uuid</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="macro">json</span><span class="macro">!</span>(<span class="ident">s</span>),
+            <span class="ident">Metric</span>::<span class="ident">MemoryDistribution</span>(<span class="ident">hist</span>) <span class="op">=&gt;</span> <span class="macro">json</span><span class="macro">!</span>(<span class="ident">memory_distribution</span>::<span class="ident">snapshot</span>(<span class="ident">hist</span>)),
         }
     }
 }

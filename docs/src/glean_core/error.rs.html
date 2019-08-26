@@ -161,6 +161,10 @@
 <span id="161">161</span>
 <span id="162">162</span>
 <span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">OsString</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Display</span>};
@@ -215,6 +219,10 @@
     <span class="doccomment">/// TimeUnit conversion failed</span>
     <span class="attribute">#[<span class="ident">fail</span>(<span class="ident">display</span> <span class="op">=</span> <span class="string">&quot;TimeUnit conversion from {} failed&quot;</span>, <span class="ident">_0</span>)]</span>
     <span class="ident">TimeUnit</span>(<span class="ident">i32</span>),
+
+    <span class="doccomment">/// MemoryUnit conversion failed</span>
+    <span class="attribute">#[<span class="ident">fail</span>(<span class="ident">display</span> <span class="op">=</span> <span class="string">&quot;MemoryUnit conversion from {} failed&quot;</span>, <span class="ident">_0</span>)]</span>
+    <span class="ident">MemoryUnit</span>(<span class="ident">i32</span>),
 
     <span class="doccomment">/// OsString conversion failed</span>
     <span class="attribute">#[<span class="ident">fail</span>(<span class="ident">display</span> <span class="op">=</span> <span class="string">&quot;OsString conversion from {:?} failed&quot;</span>, <span class="ident">_0</span>)]</span>

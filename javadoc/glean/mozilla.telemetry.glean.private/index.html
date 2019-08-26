@@ -40,6 +40,17 @@
 </tr>
 <tr>
 <td>
+<p><a href="-distribution-data/index.html">DistributionData</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">DistributionData</span></code>
+<p>This class represents the structure of a timing distribution according to the pipeline schema. It
+is meant to help serialize and deserialize data to the correct format for transport and storage,
+as well as including a helper function to calculate the bucket sizes.</p>
+</td>
+</tr>
+<tr>
+<td>
 <p><a href="-event-metric-type/index.html">EventMetricType</a></p>
 </td>
 <td>
@@ -82,6 +93,24 @@ supported by the Glean SDK.</p>
 <td>
 <code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">Lifetime</span></code>
 <p>Enumeration of different metric lifetimes.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-memory-distribution-metric-type/index.html">MemoryDistributionMetricType</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">MemoryDistributionMetricType</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-histogram-base/index.html"><span class="identifier">HistogramBase</span></a></code>
+<p>This implements the developer facing API for recording memory distribution metrics.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-memory-unit/index.html">MemoryUnit</a></p>
+</td>
+<td>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">MemoryUnit</span></code>
+<p>Enumeration of different resolutions supported by the MemoryDistribution metric type.</p>
 </td>
 </tr>
 <tr>
@@ -165,17 +194,6 @@ the Timespan and TimingDistribution metric types.</p>
 <td>
 <code><span class="keyword">class </span><span class="identifier">TimespanMetricType</span></code>
 <p>This implements the developer facing API for recording timespans.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-timing-distribution-data/index.html">TimingDistributionData</a></p>
-</td>
-<td>
-<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">TimingDistributionData</span></code>
-<p>This class represents the structure of a timing distribution according to the pipeline schema. It
-is meant to help serialize and deserialize data to the correct format for transport and storage,
-as well as including a helper function to calculate the bucket sizes.</p>
 </td>
 </tr>
 <tr>
