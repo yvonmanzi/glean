@@ -13,12 +13,6 @@
 is meant to help serialize and deserialize data to the correct format for transport and storage,
 as well as including a helper function to calculate the bucket sizes.</p>
 <h3>Parameters</h3>
-<p><a name="bucketCount"></a>
-<code>bucketCount</code> - total number of buckets</p>
-<p><a name="rangeMin"></a>
-<code>rangeMin</code> - the minimum bucket value</p>
-<p><a name="rangeMax"></a>
-<code>rangeMax</code> - the maximum bucket value</p>
 <p><a name="histogramType"></a>
 <code>histogramType</code> - the <a href="../-histogram-type/index.html">HistogramType</a> representing the bucket layout</p>
 <p><a name="values"></a>
@@ -33,7 +27,7 @@ as well as including a helper function to calculate the bucket sizes.</p>
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">TimingDistributionData</span><span class="symbol">(</span><span class="identifier" id="mozilla.telemetry.glean.private.TimingDistributionData$<init>(kotlin.Int, kotlin.Long, kotlin.Long, kotlin.collections.MutableMap((kotlin.Int, kotlin.Long)), kotlin.Long)/bucketCount">bucketCount</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.private.TimingDistributionData$<init>(kotlin.Int, kotlin.Long, kotlin.Long, kotlin.collections.MutableMap((kotlin.Int, kotlin.Long)), kotlin.Long)/rangeMin">rangeMin</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.private.TimingDistributionData$<init>(kotlin.Int, kotlin.Long, kotlin.Long, kotlin.collections.MutableMap((kotlin.Int, kotlin.Long)), kotlin.Long)/rangeMax">rangeMax</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.private.TimingDistributionData$<init>(kotlin.Int, kotlin.Long, kotlin.Long, kotlin.collections.MutableMap((kotlin.Int, kotlin.Long)), kotlin.Long)/values">values</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html"><span class="identifier">MutableMap</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.private.TimingDistributionData$<init>(kotlin.Int, kotlin.Long, kotlin.Long, kotlin.collections.MutableMap((kotlin.Int, kotlin.Long)), kotlin.Long)/sum">sum</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span></code>
+<code><span class="identifier">TimingDistributionData</span><span class="symbol">(</span><span class="identifier" id="mozilla.telemetry.glean.private.TimingDistributionData$<init>(kotlin.collections.MutableMap((kotlin.Long, )), kotlin.Long)/values">values</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html"><span class="identifier">MutableMap</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.private.TimingDistributionData$<init>(kotlin.collections.MutableMap((kotlin.Long, )), kotlin.Long)/sum">sum</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span></code>
 <p>This class represents the structure of a timing distribution according to the pipeline schema. It
 is meant to help serialize and deserialize data to the correct format for transport and storage,
 as well as including a helper function to calculate the bucket sizes.</p>
@@ -46,38 +40,11 @@ as well as including a helper function to calculate the bucket sizes.</p>
 <tbody>
 <tr>
 <td>
-<p><a href="bucket-count.html">bucketCount</a></p>
-</td>
-<td>
-<code><span class="keyword">val </span><span class="identifier">bucketCount</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
-<p>total number of buckets</p>
-</td>
-</tr>
-<tr>
-<td>
 <p><a href="count.html">count</a></p>
 </td>
 <td>
 <code><span class="keyword">val </span><span class="identifier">count</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
 <p>The total count of accumulated values.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="range-max.html">rangeMax</a></p>
-</td>
-<td>
-<code><span class="keyword">val </span><span class="identifier">rangeMax</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
-<p>the maximum bucket value</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="range-min.html">rangeMin</a></p>
-</td>
-<td>
-<code><span class="keyword">val </span><span class="identifier">rangeMin</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
-<p>the minimum bucket value</p>
 </td>
 </tr>
 <tr>
@@ -94,7 +61,7 @@ as well as including a helper function to calculate the bucket sizes.</p>
 <p><a href="values.html">values</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">values</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html"><span class="identifier">MutableMap</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">&gt;</span></code>
+<code><span class="keyword">val </span><span class="identifier">values</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html"><span class="identifier">MutableMap</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">&gt;</span></code>
 <p>a map containing the bucket index mapped to the accumulated count</p>
 </td>
 </tr>
