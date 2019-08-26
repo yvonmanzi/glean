@@ -126,6 +126,12 @@
 <span id="126">126</span>
 <span id="127">127</span>
 <span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -144,6 +150,7 @@
 <span class="kw">mod</span> <span class="ident">experiment</span>;
 <span class="kw">mod</span> <span class="ident">labeled</span>;
 <span class="kw">mod</span> <span class="ident">ping</span>;
+<span class="kw">mod</span> <span class="ident">quantity</span>;
 <span class="kw">mod</span> <span class="ident">string</span>;
 <span class="kw">mod</span> <span class="ident">string_list</span>;
 <span class="kw">mod</span> <span class="ident">time_unit</span>;
@@ -167,6 +174,7 @@
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="self">self</span>::<span class="ident">experiment</span>::<span class="ident">RecordedExperimentData</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">labeled</span>::<span class="ident">LabeledMetric</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">ping</span>::<span class="ident">PingType</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">quantity</span>::<span class="ident">QuantityMetric</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">string</span>::<span class="ident">StringMetric</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">string_list</span>::<span class="ident">StringListMetric</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">time_unit</span>::<span class="ident">TimeUnit</span>;
@@ -188,6 +196,8 @@
     <span class="ident">Datetime</span>(<span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">FixedOffset</span><span class="op">&gt;</span>, <span class="ident">TimeUnit</span>),
     <span class="doccomment">/// An experiment metric. See [`ExperimentMetric`](struct.ExperimentMetric.html) for more information.</span>
     <span class="ident">Experiment</span>(<span class="ident">experiment</span>::<span class="ident">RecordedExperimentData</span>),
+    <span class="doccomment">/// A quantity metric. See [`QuantityMetric`](struct.QuantityMetric.html) for more information.</span>
+    <span class="ident">Quantity</span>(<span class="ident">i64</span>),
     <span class="doccomment">/// A string metric. See [`StringMetric`](struct.StringMetric.html) for more information.</span>
     <span class="ident">String</span>(<span class="ident">String</span>),
     <span class="doccomment">/// A string list metric. See [`StringListMetric`](struct.StringListMetric.html) for more information.</span>
@@ -228,11 +238,12 @@
             <span class="ident">Metric</span>::<span class="ident">Counter</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;counter&quot;</span>,
             <span class="ident">Metric</span>::<span class="ident">Datetime</span>(<span class="kw">_</span>, <span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;datetime&quot;</span>,
             <span class="ident">Metric</span>::<span class="ident">Experiment</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Experiments should not be serialized through this&quot;</span>),
+            <span class="ident">Metric</span>::<span class="ident">Quantity</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;quantity&quot;</span>,
             <span class="ident">Metric</span>::<span class="ident">String</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;string&quot;</span>,
             <span class="ident">Metric</span>::<span class="ident">StringList</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;string_list&quot;</span>,
-            <span class="ident">Metric</span>::<span class="ident">Uuid</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;uuid&quot;</span>,
             <span class="ident">Metric</span>::<span class="ident">Timespan</span>(..) <span class="op">=&gt;</span> <span class="string">&quot;timespan&quot;</span>,
             <span class="ident">Metric</span>::<span class="ident">TimingDistribution</span>(..) <span class="op">=&gt;</span> <span class="string">&quot;timing_distribution&quot;</span>,
+            <span class="ident">Metric</span>::<span class="ident">Uuid</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;uuid&quot;</span>,
         }
     }
 
@@ -243,15 +254,16 @@
             <span class="ident">Metric</span>::<span class="ident">Counter</span>(<span class="ident">c</span>) <span class="op">=&gt;</span> <span class="macro">json</span><span class="macro">!</span>(<span class="ident">c</span>),
             <span class="ident">Metric</span>::<span class="ident">Datetime</span>(<span class="ident">d</span>, <span class="ident">time_unit</span>) <span class="op">=&gt;</span> <span class="macro">json</span><span class="macro">!</span>(<span class="ident">get_iso_time_string</span>(<span class="kw-2">*</span><span class="ident">d</span>, <span class="kw-2">*</span><span class="ident">time_unit</span>)),
             <span class="ident">Metric</span>::<span class="ident">Experiment</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">json</span><span class="macro">!</span>(<span class="ident">e</span>),
+            <span class="ident">Metric</span>::<span class="ident">Quantity</span>(<span class="ident">q</span>) <span class="op">=&gt;</span> <span class="macro">json</span><span class="macro">!</span>(<span class="ident">q</span>),
             <span class="ident">Metric</span>::<span class="ident">String</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="macro">json</span><span class="macro">!</span>(<span class="ident">s</span>),
             <span class="ident">Metric</span>::<span class="ident">StringList</span>(<span class="ident">v</span>) <span class="op">=&gt;</span> <span class="macro">json</span><span class="macro">!</span>(<span class="ident">v</span>),
-            <span class="ident">Metric</span>::<span class="ident">Uuid</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="macro">json</span><span class="macro">!</span>(<span class="ident">s</span>),
             <span class="ident">Metric</span>::<span class="ident">Timespan</span>(<span class="ident">time</span>, <span class="ident">time_unit</span>) <span class="op">=&gt;</span> {
                 <span class="macro">json</span><span class="macro">!</span>({<span class="string">&quot;value&quot;</span>: <span class="ident">time_unit</span>.<span class="ident">duration_convert</span>(<span class="kw-2">*</span><span class="ident">time</span>), <span class="string">&quot;time_unit&quot;</span>: <span class="ident">time_unit</span>})
             }
             <span class="ident">Metric</span>::<span class="ident">TimingDistribution</span>(<span class="ident">hist</span>, <span class="ident">time_unit</span>) <span class="op">=&gt;</span> {
                 <span class="macro">json</span><span class="macro">!</span>(<span class="ident">timing_distribution</span>::<span class="ident">snapshot</span>(<span class="ident">hist</span>, <span class="kw-2">*</span><span class="ident">time_unit</span>))
             }
+            <span class="ident">Metric</span>::<span class="ident">Uuid</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="macro">json</span><span class="macro">!</span>(<span class="ident">s</span>),
         }
     }
 }
