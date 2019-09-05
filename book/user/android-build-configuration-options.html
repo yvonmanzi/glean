@@ -148,17 +148,28 @@
                         <h1><a class="header" href="#android-build-script-configuration-options" id="android-build-script-configuration-options">Android build script configuration options</a></h1>
 <p>This chapter describes build configuration options that control the behavior of Glean's <code>sdk_generator.gradle</code> script.
 These options are not usually required for normal use.</p>
+<p>Options can be turned on by setting a variable on the Gradle <a href="https://docs.gradle.org/current/dsl/org.gradle.api.plugins.ExtraPropertiesExtension.html"><code>ext</code></a> object.</p>
 <h2><a class="header" href="#allowmetricsfromaar" id="allowmetricsfromaar"><code>allowMetricsFromAAR</code></a></h2>
 <p>Normally, Glean looks for <code>metrics.yaml</code> and <code>pings.yaml</code> files in the root directory of the Glean-using project.
 However, in some cases, these files may need to ship inside the dependencies of the project.
 For example, this is used in the <code>engine-gecko</code> component to grab the <code>metrics.yaml</code> from the <code>geckoview</code> AAR.</p>
-<p>To turn on this behavior, set a variable on the Gradle <a href="https://docs.gradle.org/current/dsl/org.gradle.api.plugins.ExtraPropertiesExtension.html">ext</a> object:</p>
 <pre><code class="language-groovy">ext.allowMetricsFromAAR = true
 </code></pre>
 <p>When this flag is set, every direct dependency of your library will be searched for a <code>metrics.yaml</code> file, and those metrics will be treated as the metrics as if they were defined by your library.
 That is, API wrappers accessible from your library will be generated for those metrics.</p>
 <p>The <code>metrics.yaml</code> can be added to the dependency itself by calling this on each relevant build variant:</p>
 <pre><code class="language-groovy">variant.packageLibraryProvider.get().from(&quot;${topsrcdir}/path/metrics.yaml&quot;)
+</code></pre>
+<h2><a class="header" href="#gleangeneratemarkdowndocs" id="gleangeneratemarkdowndocs"><code>gleanGenerateMarkdownDocs</code></a></h2>
+<p>The Glean SDK can automatically generate Markdown documentation for metrics and pings defined in the registry files, in addition to the metrics API code.</p>
+<pre><code class="language-groovy">ext.gleanGenerateMarkdownDocs = true
+</code></pre>
+<p>Flipping the feature to <code>true</code> will generate a <code>metrics.md</code> file in <code>$projectDir/docs</code> at build-time.</p>
+<h2><a class="header" href="#gleandocsdirectory" id="gleandocsdirectory"><code>gleanDocsDirectory</code></a></h2>
+<p>The <code>gleanDocsDirectory</code> can be used to customise the path of the documentation output directory.
+If <code>gleanGenerateMarkdownDocs</code> is disabled, it does nothing.
+Please note that only the <code>metrics.md</code> will be overwritten: any other file available in the target directory will be preserved.</p>
+<pre><code class="language-groovy">ext.gleanDocsDirectory = &quot;$rootDir/docs/user/telemetry&quot;
 </code></pre>
 
                     </main>
