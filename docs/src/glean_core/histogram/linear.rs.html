@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `glean-core/src/histogram/exponential.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>exponential.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../glean_core/index.html'><div class='logo-container'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `glean-core/src/histogram/linear.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>linear.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../glean_core/index.html'><div class='logo-container'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -176,34 +176,12 @@
 <span id="176">176</span>
 <span id="177">177</span>
 <span id="178">178</span>
-<span id="179">179</span>
-<span id="180">180</span>
-<span id="181">181</span>
-<span id="182">182</span>
-<span id="183">183</span>
-<span id="184">184</span>
-<span id="185">185</span>
-<span id="186">186</span>
-<span id="187">187</span>
-<span id="188">188</span>
-<span id="189">189</span>
-<span id="190">190</span>
-<span id="191">191</span>
-<span id="192">192</span>
-<span id="193">193</span>
-<span id="194">194</span>
-<span id="195">195</span>
-<span id="196">196</span>
-<span id="197">197</span>
-<span id="198">198</span>
-<span id="199">199</span>
-<span id="200">200</span>
-<span id="201">201</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
 <span class="comment">// file, You can obtain one at https://mozilla.org/MPL/2.0/.</span>
 
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 
 <span class="kw">use</span> <span class="ident">once_cell</span>::<span class="ident">unsync</span>::<span class="ident">OnceCell</span>;
@@ -211,50 +189,34 @@
 
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">Bucketing</span>, <span class="ident">Histogram</span>};
 
-<span class="doccomment">/// Create the possible ranges in an exponential distribution from `min` to `max` with</span>
+<span class="doccomment">/// Create the possible ranges in a linear distribution from `min` to `max` with</span>
 <span class="doccomment">/// `bucket_count` buckets.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// This algorithm calculates the bucket sizes using a natural log approach to get `bucket_count` number of buckets,</span>
-<span class="doccomment">/// exponentially spaced between `min` and `max`</span>
+<span class="doccomment">/// This algorithm calculates `bucket_count` number of buckets of equal sizes between `min` and `max`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Bucket limits are the minimal bucket value.</span>
 <span class="doccomment">/// That means values in a bucket `i` are `bucket[i] &lt;= value &lt; bucket[i+1]`.</span>
 <span class="doccomment">/// It will always contain an underflow bucket (`&lt; 1`).</span>
-<span class="kw">fn</span> <span class="ident">exponential_range</span>(<span class="ident">min</span>: <span class="ident">u64</span>, <span class="ident">max</span>: <span class="ident">u64</span>, <span class="ident">bucket_count</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">log_max</span> <span class="op">=</span> (<span class="ident">max</span> <span class="kw">as</span> <span class="ident">f64</span>).<span class="ident">ln</span>();
-
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ranges</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">bucket_count</span>);
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">current</span> <span class="op">=</span> <span class="ident">min</span>;
-    <span class="kw">if</span> <span class="ident">current</span> <span class="op">==</span> <span class="number">0</span> {
-        <span class="ident">current</span> <span class="op">=</span> <span class="number">1</span>;
-    }
-
-    <span class="comment">// undeflow bucket</span>
+<span class="kw">fn</span> <span class="ident">linear_range</span>(<span class="ident">min</span>: <span class="ident">u64</span>, <span class="ident">max</span>: <span class="ident">u64</span>, <span class="ident">count</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ranges</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">count</span>);
     <span class="ident">ranges</span>.<span class="ident">push</span>(<span class="number">0</span>);
-    <span class="ident">ranges</span>.<span class="ident">push</span>(<span class="ident">current</span>);
 
-    <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">2</span>..<span class="ident">bucket_count</span> {
-        <span class="kw">let</span> <span class="ident">log_current</span> <span class="op">=</span> (<span class="ident">current</span> <span class="kw">as</span> <span class="ident">f64</span>).<span class="ident">ln</span>();
-        <span class="kw">let</span> <span class="ident">log_ratio</span> <span class="op">=</span> (<span class="ident">log_max</span> <span class="op">-</span> <span class="ident">log_current</span>) <span class="op">/</span> (<span class="ident">bucket_count</span> <span class="op">-</span> <span class="ident">i</span>) <span class="kw">as</span> <span class="ident">f64</span>;
-        <span class="kw">let</span> <span class="ident">log_next</span> <span class="op">=</span> <span class="ident">log_current</span> <span class="op">+</span> <span class="ident">log_ratio</span>;
-        <span class="kw">let</span> <span class="ident">next_value</span> <span class="op">=</span> <span class="ident">log_next</span>.<span class="ident">exp</span>().<span class="ident">round</span>() <span class="kw">as</span> <span class="ident">u64</span>;
-        <span class="ident">current</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">next_value</span> <span class="op">&gt;</span> <span class="ident">current</span> {
-            <span class="ident">next_value</span>
-        } <span class="kw">else</span> {
-            <span class="ident">current</span> <span class="op">+</span> <span class="number">1</span>
-        };
-        <span class="ident">ranges</span>.<span class="ident">push</span>(<span class="ident">current</span>);
+    <span class="kw">let</span> <span class="ident">min</span> <span class="op">=</span> <span class="ident">cmp</span>::<span class="ident">max</span>(<span class="number">1</span>, <span class="ident">min</span>);
+    <span class="kw">let</span> <span class="ident">count</span> <span class="op">=</span> <span class="ident">count</span> <span class="kw">as</span> <span class="ident">u64</span>;
+    <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">1</span>..<span class="ident">count</span> {
+        <span class="kw">let</span> <span class="ident">range</span> <span class="op">=</span> (<span class="ident">min</span> <span class="op">*</span> (<span class="ident">count</span> <span class="op">-</span> <span class="number">1</span> <span class="op">-</span> <span class="ident">i</span>) <span class="op">+</span> <span class="ident">max</span> <span class="op">*</span> (<span class="ident">i</span> <span class="op">-</span> <span class="number">1</span>)) <span class="op">/</span> (<span class="ident">count</span> <span class="op">-</span> <span class="number">2</span>);
+        <span class="ident">ranges</span>.<span class="ident">push</span>(<span class="ident">range</span>);
     }
 
     <span class="ident">ranges</span>
 }
 
-<span class="doccomment">/// An exponential bucketing algorithm.</span>
+<span class="doccomment">/// A linear bucketing algorithm.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Buckets are pre-computed at instantiation with an exponential distribution from `min` to `max`</span>
+<span class="doccomment">/// Buckets are pre-computed at instantiation with a linear  distribution from `min` to `max`</span>
 <span class="doccomment">/// and `bucket_count` buckets.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PrecomputedExponential</span> {
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PrecomputedLinear</span> {
     <span class="comment">// Don&#39;t serialize the (potentially large) array of ranges, instead compute them on first</span>
     <span class="comment">// access.</span>
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">skip</span>)]</span>
@@ -264,7 +226,7 @@
     <span class="ident">bucket_count</span>: <span class="ident">usize</span>,
 }
 
-<span class="kw">impl</span> <span class="ident">Bucketing</span> <span class="kw">for</span> <span class="ident">PrecomputedExponential</span> {
+<span class="kw">impl</span> <span class="ident">Bucketing</span> <span class="kw">for</span> <span class="ident">PrecomputedLinear</span> {
     <span class="doccomment">/// Get the bucket for the sample.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This uses a binary search to locate the index `i` of the bucket such that:</span>
@@ -281,24 +243,20 @@
     }
 
     <span class="kw">fn</span> <span class="ident">ranges</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u64</span>] {
-        <span class="comment">// Create the exponential range on first access.</span>
+        <span class="comment">// Create the linear range on first access.</span>
         <span class="self">self</span>.<span class="ident">bucket_ranges</span>
-            .<span class="ident">get_or_init</span>(<span class="op">||</span> <span class="ident">exponential_range</span>(<span class="self">self</span>.<span class="ident">min</span>, <span class="self">self</span>.<span class="ident">max</span>, <span class="self">self</span>.<span class="ident">bucket_count</span>))
+            .<span class="ident">get_or_init</span>(<span class="op">||</span> <span class="ident">linear_range</span>(<span class="self">self</span>.<span class="ident">min</span>, <span class="self">self</span>.<span class="ident">max</span>, <span class="self">self</span>.<span class="ident">bucket_count</span>))
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Histogram</span><span class="op">&lt;</span><span class="ident">PrecomputedExponential</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Create a histogram with `count` exponential buckets in the range `min` to `max`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exponential</span>(
-        <span class="ident">min</span>: <span class="ident">u64</span>,
-        <span class="ident">max</span>: <span class="ident">u64</span>,
-        <span class="ident">bucket_count</span>: <span class="ident">usize</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">Histogram</span><span class="op">&lt;</span><span class="ident">PrecomputedExponential</span><span class="op">&gt;</span> {
+<span class="kw">impl</span> <span class="ident">Histogram</span><span class="op">&lt;</span><span class="ident">PrecomputedLinear</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Create a histogram with `bucket_count` linear buckets in the range `min` to `max`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">linear</span>(<span class="ident">min</span>: <span class="ident">u64</span>, <span class="ident">max</span>: <span class="ident">u64</span>, <span class="ident">bucket_count</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Histogram</span><span class="op">&lt;</span><span class="ident">PrecomputedLinear</span><span class="op">&gt;</span> {
         <span class="ident">Histogram</span> {
             <span class="ident">values</span>: <span class="ident">HashMap</span>::<span class="ident">new</span>(),
             <span class="ident">count</span>: <span class="number">0</span>,
             <span class="ident">sum</span>: <span class="number">0</span>,
-            <span class="ident">bucketing</span>: <span class="ident">PrecomputedExponential</span> {
+            <span class="ident">bucketing</span>: <span class="ident">PrecomputedLinear</span> {
                 <span class="ident">bucket_ranges</span>: <span class="ident">OnceCell</span>::<span class="ident">new</span>(),
                 <span class="ident">min</span>,
                 <span class="ident">max</span>,
@@ -314,11 +272,11 @@
 
     <span class="kw">const</span> <span class="ident">DEFAULT_BUCKET_COUNT</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">100</span>;
     <span class="kw">const</span> <span class="ident">DEFAULT_RANGE_MIN</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">0</span>;
-    <span class="kw">const</span> <span class="ident">DEFAULT_RANGE_MAX</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">60_000</span>;
+    <span class="kw">const</span> <span class="ident">DEFAULT_RANGE_MAX</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">100</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">can_count</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hist</span> <span class="op">=</span> <span class="ident">Histogram</span>::<span class="ident">exponential</span>(<span class="number">1</span>, <span class="number">500</span>, <span class="number">10</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hist</span> <span class="op">=</span> <span class="ident">Histogram</span>::<span class="ident">linear</span>(<span class="number">1</span>, <span class="number">500</span>, <span class="number">10</span>);
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">hist</span>.<span class="ident">is_empty</span>());
 
         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">1</span>..=<span class="number">10</span> {
@@ -332,46 +290,44 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">overflow_values_accumulate_in_the_last_bucket</span>() {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hist</span> <span class="op">=</span>
-            <span class="ident">Histogram</span>::<span class="ident">exponential</span>(<span class="ident">DEFAULT_RANGE_MIN</span>, <span class="ident">DEFAULT_RANGE_MAX</span>, <span class="ident">DEFAULT_BUCKET_COUNT</span>);
+            <span class="ident">Histogram</span>::<span class="ident">linear</span>(<span class="ident">DEFAULT_RANGE_MIN</span>, <span class="ident">DEFAULT_RANGE_MAX</span>, <span class="ident">DEFAULT_BUCKET_COUNT</span>);
 
         <span class="ident">hist</span>.<span class="ident">accumulate</span>(<span class="ident">DEFAULT_RANGE_MAX</span> <span class="op">+</span> <span class="number">100</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">1</span>, <span class="ident">hist</span>.<span class="ident">values</span>[<span class="kw-2">&amp;</span><span class="ident">DEFAULT_RANGE_MAX</span>]);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">short_exponential_buckets_are_correct</span>() {
-        <span class="kw">let</span> <span class="ident">test_buckets</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="number">16</span>, <span class="number">29</span>, <span class="number">54</span>, <span class="number">100</span>];
+    <span class="kw">fn</span> <span class="ident">short_linear_buckets_are_correct</span>() {
+        <span class="kw">let</span> <span class="ident">test_buckets</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">10</span>];
 
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">test_buckets</span>, <span class="ident">exponential_range</span>(<span class="number">1</span>, <span class="number">100</span>, <span class="number">10</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">test_buckets</span>, <span class="ident">linear_range</span>(<span class="number">1</span>, <span class="number">10</span>, <span class="number">10</span>));
         <span class="comment">// There&#39;s always a zero bucket, so we increase the lower limit.</span>
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">test_buckets</span>, <span class="ident">exponential_range</span>(<span class="number">0</span>, <span class="number">100</span>, <span class="number">10</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">test_buckets</span>, <span class="ident">linear_range</span>(<span class="number">0</span>, <span class="number">10</span>, <span class="number">10</span>));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">default_exponential_buckets_are_correct</span>() {
+    <span class="kw">fn</span> <span class="ident">long_linear_buckets_are_correct</span>() {
         <span class="comment">// Hand calculated values using current default range 0 - 60000 and bucket count of 100.</span>
         <span class="comment">// NOTE: The final bucket, regardless of width, represents the overflow bucket to hold any</span>
         <span class="comment">// values beyond the maximum (in this case the maximum is 60000)</span>
         <span class="kw">let</span> <span class="ident">test_buckets</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
-            <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>, <span class="number">17</span>, <span class="number">19</span>, <span class="number">21</span>, <span class="number">23</span>, <span class="number">25</span>, <span class="number">28</span>, <span class="number">31</span>, <span class="number">34</span>,
-            <span class="number">38</span>, <span class="number">42</span>, <span class="number">46</span>, <span class="number">51</span>, <span class="number">56</span>, <span class="number">62</span>, <span class="number">68</span>, <span class="number">75</span>, <span class="number">83</span>, <span class="number">92</span>, <span class="number">101</span>, <span class="number">111</span>, <span class="number">122</span>, <span class="number">135</span>, <span class="number">149</span>, <span class="number">164</span>, <span class="number">181</span>, <span class="number">200</span>, <span class="number">221</span>,
-            <span class="number">244</span>, <span class="number">269</span>, <span class="number">297</span>, <span class="number">328</span>, <span class="number">362</span>, <span class="number">399</span>, <span class="number">440</span>, <span class="number">485</span>, <span class="number">535</span>, <span class="number">590</span>, <span class="number">651</span>, <span class="number">718</span>, <span class="number">792</span>, <span class="number">874</span>, <span class="number">964</span>, <span class="number">1064</span>, <span class="number">1174</span>,
-            <span class="number">1295</span>, <span class="number">1429</span>, <span class="number">1577</span>, <span class="number">1740</span>, <span class="number">1920</span>, <span class="number">2118</span>, <span class="number">2337</span>, <span class="number">2579</span>, <span class="number">2846</span>, <span class="number">3140</span>, <span class="number">3464</span>, <span class="number">3822</span>, <span class="number">4217</span>, <span class="number">4653</span>,
-            <span class="number">5134</span>, <span class="number">5665</span>, <span class="number">6250</span>, <span class="number">6896</span>, <span class="number">7609</span>, <span class="number">8395</span>, <span class="number">9262</span>, <span class="number">10219</span>, <span class="number">11275</span>, <span class="number">12440</span>, <span class="number">13726</span>, <span class="number">15144</span>, <span class="number">16709</span>,
-            <span class="number">18436</span>, <span class="number">20341</span>, <span class="number">22443</span>, <span class="number">24762</span>, <span class="number">27321</span>, <span class="number">30144</span>, <span class="number">33259</span>, <span class="number">36696</span>, <span class="number">40488</span>, <span class="number">44672</span>, <span class="number">49288</span>, <span class="number">54381</span>,
-            <span class="number">60000</span>,
+            <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>, <span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>,
+            <span class="number">24</span>, <span class="number">25</span>, <span class="number">26</span>, <span class="number">27</span>, <span class="number">28</span>, <span class="number">29</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">32</span>, <span class="number">33</span>, <span class="number">34</span>, <span class="number">35</span>, <span class="number">36</span>, <span class="number">37</span>, <span class="number">38</span>, <span class="number">39</span>, <span class="number">40</span>, <span class="number">41</span>, <span class="number">42</span>, <span class="number">43</span>, <span class="number">44</span>, <span class="number">45</span>,
+            <span class="number">46</span>, <span class="number">47</span>, <span class="number">48</span>, <span class="number">49</span>, <span class="number">50</span>, <span class="number">51</span>, <span class="number">52</span>, <span class="number">53</span>, <span class="number">54</span>, <span class="number">55</span>, <span class="number">56</span>, <span class="number">57</span>, <span class="number">58</span>, <span class="number">59</span>, <span class="number">60</span>, <span class="number">61</span>, <span class="number">62</span>, <span class="number">63</span>, <span class="number">64</span>, <span class="number">65</span>, <span class="number">66</span>, <span class="number">67</span>,
+            <span class="number">68</span>, <span class="number">69</span>, <span class="number">70</span>, <span class="number">71</span>, <span class="number">72</span>, <span class="number">73</span>, <span class="number">74</span>, <span class="number">75</span>, <span class="number">76</span>, <span class="number">77</span>, <span class="number">78</span>, <span class="number">79</span>, <span class="number">80</span>, <span class="number">81</span>, <span class="number">82</span>, <span class="number">83</span>, <span class="number">84</span>, <span class="number">85</span>, <span class="number">86</span>, <span class="number">87</span>, <span class="number">88</span>, <span class="number">89</span>,
+            <span class="number">90</span>, <span class="number">91</span>, <span class="number">92</span>, <span class="number">93</span>, <span class="number">94</span>, <span class="number">95</span>, <span class="number">96</span>, <span class="number">97</span>, <span class="number">98</span>, <span class="number">100</span>,
         ];
 
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">test_buckets</span>,
-            <span class="ident">exponential_range</span>(<span class="ident">DEFAULT_RANGE_MIN</span>, <span class="ident">DEFAULT_RANGE_MAX</span>, <span class="ident">DEFAULT_BUCKET_COUNT</span>)
+            <span class="ident">linear_range</span>(<span class="ident">DEFAULT_RANGE_MIN</span>, <span class="ident">DEFAULT_RANGE_MAX</span>, <span class="ident">DEFAULT_BUCKET_COUNT</span>)
         );
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">default_buckets_correctly_accumulate</span>() {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hist</span> <span class="op">=</span>
-            <span class="ident">Histogram</span>::<span class="ident">exponential</span>(<span class="ident">DEFAULT_RANGE_MIN</span>, <span class="ident">DEFAULT_RANGE_MAX</span>, <span class="ident">DEFAULT_BUCKET_COUNT</span>);
+            <span class="ident">Histogram</span>::<span class="ident">linear</span>(<span class="ident">DEFAULT_RANGE_MIN</span>, <span class="ident">DEFAULT_RANGE_MAX</span>, <span class="ident">DEFAULT_BUCKET_COUNT</span>);
 
         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="kw-2">&amp;</span>[<span class="number">1</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="number">1000</span>, <span class="number">10000</span>] {
             <span class="ident">hist</span>.<span class="ident">accumulate</span>(<span class="kw-2">*</span><span class="ident">i</span>);
@@ -380,17 +336,15 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">11111</span>, <span class="ident">hist</span>.<span class="ident">sum</span>());
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">5</span>, <span class="ident">hist</span>.<span class="ident">count</span>());
 
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">None</span>, <span class="ident">hist</span>.<span class="ident">values</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="number">0</span>)); <span class="comment">// underflow is empty</span>
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">1</span>, <span class="ident">hist</span>.<span class="ident">values</span>[<span class="kw-2">&amp;</span><span class="number">1</span>]); <span class="comment">// bucket_ranges[1]  = 1</span>
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">1</span>, <span class="ident">hist</span>.<span class="ident">values</span>[<span class="kw-2">&amp;</span><span class="number">10</span>]); <span class="comment">// bucket_ranges[10] = 10</span>
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">1</span>, <span class="ident">hist</span>.<span class="ident">values</span>[<span class="kw-2">&amp;</span><span class="number">92</span>]); <span class="comment">// bucket_ranges[33] = 92</span>
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">1</span>, <span class="ident">hist</span>.<span class="ident">values</span>[<span class="kw-2">&amp;</span><span class="number">964</span>]); <span class="comment">// bucket_ranges[57] = 964</span>
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">1</span>, <span class="ident">hist</span>.<span class="ident">values</span>[<span class="kw-2">&amp;</span><span class="number">9262</span>]); <span class="comment">// bucket_ranges[80] = 9262</span>
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">None</span>, <span class="ident">hist</span>.<span class="ident">values</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="number">0</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">1</span>, <span class="ident">hist</span>.<span class="ident">values</span>[<span class="kw-2">&amp;</span><span class="number">1</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">1</span>, <span class="ident">hist</span>.<span class="ident">values</span>[<span class="kw-2">&amp;</span><span class="number">10</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">3</span>, <span class="ident">hist</span>.<span class="ident">values</span>[<span class="kw-2">&amp;</span><span class="number">100</span>]);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">accumulate_large_numbers</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hist</span> <span class="op">=</span> <span class="ident">Histogram</span>::<span class="ident">exponential</span>(<span class="number">1</span>, <span class="number">500</span>, <span class="number">10</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hist</span> <span class="op">=</span> <span class="ident">Histogram</span>::<span class="ident">linear</span>(<span class="number">1</span>, <span class="number">500</span>, <span class="number">10</span>);
 
         <span class="ident">hist</span>.<span class="ident">accumulate</span>(<span class="ident">u64</span>::<span class="ident">max_value</span>());
         <span class="ident">hist</span>.<span class="ident">accumulate</span>(<span class="ident">u64</span>::<span class="ident">max_value</span>());

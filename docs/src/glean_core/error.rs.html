@@ -165,6 +165,19 @@
 <span id="165">165</span>
 <span id="166">166</span>
 <span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">OsString</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Display</span>};
@@ -223,6 +236,10 @@
     <span class="doccomment">/// MemoryUnit conversion failed</span>
     <span class="attribute">#[<span class="ident">fail</span>(<span class="ident">display</span> <span class="op">=</span> <span class="string">&quot;MemoryUnit conversion from {} failed&quot;</span>, <span class="ident">_0</span>)]</span>
     <span class="ident">MemoryUnit</span>(<span class="ident">i32</span>),
+
+    <span class="doccomment">/// HistogramType conversion failed</span>
+    <span class="attribute">#[<span class="ident">fail</span>(<span class="ident">display</span> <span class="op">=</span> <span class="string">&quot;HistogramType conversion from {} failed&quot;</span>, <span class="ident">_0</span>)]</span>
+    <span class="ident">HistogramType</span>(<span class="ident">i32</span>),
 
     <span class="doccomment">/// OsString conversion failed</span>
     <span class="attribute">#[<span class="ident">fail</span>(<span class="ident">display</span> <span class="op">=</span> <span class="string">&quot;OsString conversion from {:?} failed&quot;</span>, <span class="ident">_0</span>)]</span>
@@ -331,6 +348,15 @@
         <span class="ident">Error</span> {
             <span class="ident">inner</span>: <span class="ident">Context</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">OsString</span>(<span class="ident">error</span>)),
         }
+    }
+}
+
+<span class="doccomment">/// To satisfy integer conversion done by the macros on the FFI side, we need to be able to turn</span>
+<span class="doccomment">/// something infallible into an error.</span>
+<span class="doccomment">/// This will never actually be reached, as an integer-to-integer conversion is infallible.</span>
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">Infallible</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="kw">_</span>: <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">Infallible</span>) <span class="op">-&gt;</span> <span class="ident">Error</span> {
+        <span class="macro">unreachable</span><span class="macro">!</span>()
     }
 }
 </pre></div>
