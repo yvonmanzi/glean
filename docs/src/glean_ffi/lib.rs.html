@@ -217,6 +217,21 @@
 <span id="217">217</span>
 <span id="218">218</span>
 <span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -275,10 +290,25 @@
             <span class="ident">log</span>::<span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;Android logging should be hooked up!&quot;</span>)
         });
     }
+
+    <span class="comment">// On iOS always enable Debug logging</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>)]</span>
+    {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">builder</span> <span class="op">=</span> <span class="ident">env_logger</span>::<span class="ident">Builder</span>::<span class="ident">new</span>();
+        <span class="ident">builder</span>.<span class="ident">filter</span>(<span class="prelude-val">None</span>, <span class="ident">log</span>::<span class="ident">LevelFilter</span>::<span class="ident">Debug</span>);
+        <span class="kw">match</span> <span class="ident">builder</span>.<span class="ident">try_init</span>() {
+            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="ident">log</span>::<span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;stdout logging should be hooked up!&quot;</span>),
+            <span class="comment">// Please note that this is only expected to fail during unit tests,</span>
+            <span class="comment">// where the logger might have already been initialized by a previous</span>
+            <span class="comment">// test. So it&#39;s fine to print with the &quot;logger&quot;.</span>
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="ident">log</span>::<span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;stdout was already initialized&quot;</span>),
+        };
+    }
+
     <span class="comment">// Make sure logging does something on non Android platforms as well. Use</span>
     <span class="comment">// the RUST_LOG environment variable to set the desired log level, e.g.</span>
     <span class="comment">// setting RUST_LOG=debug sets the log level to debug.</span>
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>))]</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>), <span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>)))]</span>
     {
         <span class="kw">match</span> <span class="ident">env_logger</span>::<span class="ident">try_init</span>() {
             <span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="ident">log</span>::<span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;stdout logging should be hooked up!&quot;</span>),
