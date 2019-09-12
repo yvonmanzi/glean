@@ -2617,12 +2617,12 @@ For Swift this would be <code>glean-core/ios/Glean/Metrics/CounterMetric.swift</
         glean_counter_add(Glean.shared.handle, self.handle, amount)
     }
 
-    public func testHasValue(_ pingName: String? = nil) -&gt; Bool {
+    func testHasValue(_ pingName: String? = nil) -&gt; Bool {
         let pingName = pingName ?? self.sendInPings[0]
         return glean_counter_test_has_value(Glean.shared.handle, self.handle, pingName) != 0
     }
 
-    public func testGetValue(_ pingName: String? = nil) throws -&gt; Int32 {
+    func testGetValue(_ pingName: String? = nil) throws -&gt; Int32 {
         let pingName = pingName ?? self.sendInPings[0]
 
         if !testHasValue(pingName) {
