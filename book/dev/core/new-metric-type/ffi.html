@@ -1,0 +1,243 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>FFI - Glean - Cross-platform Telemetry library</title>
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li><a href="../../../index.html"><strong aria-hidden="true">1.</strong> Glean</a></li><li><a href="../../../user/index.html"><strong aria-hidden="true">2.</strong> Using the Glean SDK</a></li><li><ol class="section"><li><a href="../../../user/adding-glean-to-your-project.html"><strong aria-hidden="true">2.1.</strong> Adding Glean to your project</a></li><li><a href="../../../user/adding-new-metrics.html"><strong aria-hidden="true">2.2.</strong> Adding new metrics</a></li><li><a href="../../../user/metric-parameters.html"><strong aria-hidden="true">2.3.</strong> Metric parameters</a></li><li><a href="../../../user/testing-metrics.html"><strong aria-hidden="true">2.4.</strong> Testing metrics</a></li><li><a href="../../../user/debugging.html"><strong aria-hidden="true">2.5.</strong> Debugging products using Glean</a></li><li><a href="../../../user/error-reporting.html"><strong aria-hidden="true">2.6.</strong> Error reporting</a></li><li><a href="../../../user/experiments-api.html"><strong aria-hidden="true">2.7.</strong> Using the experiments API</a></li><li><a href="../../../user/metrics/index.html"><strong aria-hidden="true">2.8.</strong> Metric types</a></li><li><ol class="section"><li><a href="../../../user/metrics/boolean.html"><strong aria-hidden="true">2.8.1.</strong> Boolean</a></li><li><a href="../../../user/metrics/counter.html"><strong aria-hidden="true">2.8.2.</strong> Counter</a></li><li><a href="../../../user/metrics/labeled_counters.html"><strong aria-hidden="true">2.8.3.</strong> Labeled Counters</a></li><li><a href="../../../user/metrics/string.html"><strong aria-hidden="true">2.8.4.</strong> String</a></li><li><a href="../../../user/metrics/labeled_strings.html"><strong aria-hidden="true">2.8.5.</strong> Labeled Strings</a></li><li><a href="../../../user/metrics/string_list.html"><strong aria-hidden="true">2.8.6.</strong> String List</a></li><li><a href="../../../user/metrics/timespan.html"><strong aria-hidden="true">2.8.7.</strong> Timespan</a></li><li><a href="../../../user/metrics/timing_distribution.html"><strong aria-hidden="true">2.8.8.</strong> Timing Distribution</a></li><li><a href="../../../user/metrics/memory_distribution.html"><strong aria-hidden="true">2.8.9.</strong> Memory Distribution</a></li><li><a href="../../../user/metrics/uuid.html"><strong aria-hidden="true">2.8.10.</strong> UUID</a></li><li><a href="../../../user/metrics/datetime.html"><strong aria-hidden="true">2.8.11.</strong> Datetime</a></li><li><a href="../../../user/metrics/event.html"><strong aria-hidden="true">2.8.12.</strong> Event</a></li><li><a href="../../../user/metrics/custom_distribution.html"><strong aria-hidden="true">2.8.13.</strong> Custom Distribution</a></li><li><a href="../../../user/metrics/quantity.html"><strong aria-hidden="true">2.8.14.</strong> Quantity</a></li></ol></li><li><a href="../../../user/pings/index.html"><strong aria-hidden="true">2.9.</strong> Pings</a></li><li><ol class="section"><li><a href="../../../user/pings/baseline.html"><strong aria-hidden="true">2.9.1.</strong> Baseline Ping</a></li><li><a href="../../../user/pings/metrics.html"><strong aria-hidden="true">2.9.2.</strong> Metrics Ping</a></li><li><a href="../../../user/pings/events.html"><strong aria-hidden="true">2.9.3.</strong> Events Ping</a></li><li><a href="../../../user/pings/custom.html"><strong aria-hidden="true">2.9.4.</strong> Custom Pings</a></li><li><a href="../../../user/pings/testing-custom-pings.html"><strong aria-hidden="true">2.9.5.</strong> Testing custom pings</a></li></ol></li><li><a href="../../../user/android-build-configuration-options.html"><strong aria-hidden="true">2.10.</strong> Android build configuration options</a></li></ol></li><li><a href="../../../dev/index.html"><strong aria-hidden="true">3.</strong> Developing the Glean SDK</a></li><li><ol class="section"><li><a href="../../../dev/testing.html"><strong aria-hidden="true">3.1.</strong> Testing</a></li><li><a href="../../../dev/android/index.html"><strong aria-hidden="true">3.2.</strong> Android bindings</a></li><li><ol class="section"><li><a href="../../../dev/android/setup-android-build-environment.html"><strong aria-hidden="true">3.2.1.</strong> Setup Build Environment</a></li></ol></li><li><a href="../../../dev/core/index.html"><strong aria-hidden="true">3.3.</strong> Rust Component</a></li><li><ol class="section"><li><a href="../../../dev/core/dependency-management.html"><strong aria-hidden="true">3.3.1.</strong> Dependency Management</a></li><li><a href="../../../dev/core/new-metric-type.html"><strong aria-hidden="true">3.3.2.</strong> Adding a new metric type</a></li><li><ol class="section"><li><a href="../../../dev/core/new-metric-type/ffi.html" class="active"><strong aria-hidden="true">3.3.2.1.</strong> FFI</a></li><li><a href="../../../dev/core/new-metric-type/kotlin.html"><strong aria-hidden="true">3.3.2.2.</strong> Kotlin</a></li><li><a href="../../../dev/core/new-metric-type/swift.html"><strong aria-hidden="true">3.3.2.3.</strong> Swift</a></li></ol></li></ol></li><li><a href="../../../dev/ffi/index.html"><strong aria-hidden="true">3.4.</strong> FFI Layer</a></li><li><ol class="section"><li><a href="../../../dev/ffi/when-to-use-what-in-the-ffi.html"><strong aria-hidden="true">3.4.1.</strong> When/How FFI</a></li></ol></li><li><a href="../../../contributing.html"><strong aria-hidden="true">3.5.</strong> Contributing</a></li><li><ol class="section"><li><a href="../../../code_coverage.html"><strong aria-hidden="true">3.5.1.</strong> Code coverage</a></li></ol></li><li><a href="../../../dev/core/internal/index.html"><strong aria-hidden="true">3.6.</strong> Internal implementation details</a></li><li><ol class="section"><li><a href="../../../dev/core/internal/reserved-ping-names.html"><strong aria-hidden="true">3.6.1.</strong> Reserved ping names</a></li><li><a href="../../../dev/core/internal/clearing.html"><strong aria-hidden="true">3.6.2.</strong> Clearing metrics when disabling/enabling Glean</a></li><li><a href="../../../dev/core/internal/payload.html"><strong aria-hidden="true">3.6.3.</strong> Payload format</a></li></ol></li></ol></li><li><a href="../../../api/index.html"><strong aria-hidden="true">4.</strong> API Documentation</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Glean - Cross-platform Telemetry library</h1>
+
+                        <div class="right-buttons">
+                            <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#adding-a-new-metric-type---ffi-layer" id="adding-a-new-metric-type---ffi-layer">Adding a new metric type - FFI layer</a></h1>
+<p>In order to use a new metric type over the FFI layer, it needs implementations in the FFI component.</p>
+<h2><a class="header" href="#ffi-component" id="ffi-component">FFI component</a></h2>
+<p>The FFI component implementation can be found in <code>glean-core/ffi/src</code>.
+Each metric type is implemented in its own module.</p>
+<p>Add a new file named after your metric, e.g. <code>glean-core/ffi/src/counter.rs</code>, and declare it in <code>glean-core/ffi/src/lib.rs</code> with <code>mod counter;</code>.</p>
+<p>In the metric type module define your metric type using the <code>define_metric</code> macro.
+This allows referencing the metric name and defines the global map as well as some common functions such as the constructor and destructor.
+Simple operations can be also defined in the same macro invocation:</p>
+<pre><code class="language-rust noplaypen">use crate::{define_metric, handlemap_ext::HandleMapExtension, GLEAN};
+
+define_metric!(CounterMetric =&gt; COUNTER_METRICS {
+    new           -&gt; glean_new_counter_metric(),
+    destroy       -&gt; glean_destroy_counter_metric,
+
+    add -&gt; glean_counter_add(amount: i32),
+});
+</code></pre>
+<p>More complex operations need to be defined as plain functions.
+For example the test helper function for a counter metric can be defined as:</p>
+<pre><code class="language-rust noplaypen">#[no_mangle]
+pub extern &quot;C&quot; fn glean_counter_test_has_value(
+    glean_handle: u64,
+    metric_id: u64,
+    storage_name: FfiStr,
+) -&gt; u8 {
+    GLEAN.call_infallible(glean_handle, |glean| {
+        COUNTER_METRICS.call_infallible(metric_id, |metric| {
+            metric
+                .test_get_value(glean, storage_name.as_str())
+                .is_some()
+        })
+    })
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../../dev/core/new-metric-type.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../../dev/core/new-metric-type/kotlin.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../../../dev/core/new-metric-type.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../../../dev/core/new-metric-type/kotlin.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
