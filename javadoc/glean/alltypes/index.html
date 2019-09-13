@@ -10,6 +10,14 @@
 <tbody>
 <tr>
 <td>
+<a href="../mozilla.telemetry.glean.net/-base-uploader/index.html">mozilla.telemetry.glean.net.BaseUploader</a></td>
+<td>
+<p>The logic for uploading pings: this leaves the actual upload implementation
+to the user-provided delegate.</p>
+</td>
+</tr>
+<tr>
+<td>
 <a href="../mozilla.telemetry.glean.private/-boolean-metric-type/index.html">mozilla.telemetry.glean.private.BooleanMetricType</a></td>
 <td>
 <p>This implements the developer facing API for recording boolean metrics.</p>
@@ -99,6 +107,12 @@ can be done via adb using the following command:</p>
 </tr>
 <tr>
 <td>
+<a href="../mozilla.telemetry.glean.net/-headers-list.html">mozilla.telemetry.glean.net.HeadersList</a></td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
 <a href="../mozilla.telemetry.glean.private/-histogram-base/index.html">mozilla.telemetry.glean.private.HistogramBase</a></td>
 <td>
 <p>A common interface to be implemented by all the histogram-like metric types
@@ -110,6 +124,14 @@ supported by the Glean SDK.</p>
 <a href="../mozilla.telemetry.glean.private/-histogram-type/index.html">mozilla.telemetry.glean.private.HistogramType</a></td>
 <td>
 <p>Enumeration of the different kinds of histograms supported by metrics based on histograms.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../mozilla.telemetry.glean.net/-http-u-r-l-connection-uploader/index.html">mozilla.telemetry.glean.net.HttpURLConnectionUploader</a></td>
+<td>
+<p>A simple ping Uploader, which implements a "send once" policy, never
+storing or attempting to send the ping again.</p>
 </td>
 </tr>
 <tr>
@@ -165,6 +187,13 @@ that an <a href="../mozilla.telemetry.glean.private/-event-metric-type/index.htm
 <a href="../mozilla.telemetry.glean.private/-ping-type/index.html">mozilla.telemetry.glean.private.PingType</a></td>
 <td>
 <p>This implements the developer facing API for custom pings.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../mozilla.telemetry.glean.net/-ping-uploader/index.html">mozilla.telemetry.glean.net.PingUploader</a></td>
+<td>
+<p>The interface defining how to send pings.</p>
 </td>
 </tr>
 <tr>

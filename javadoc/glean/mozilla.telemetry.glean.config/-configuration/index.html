@@ -18,7 +18,7 @@
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">Configuration</span><span class="symbol">(</span><span class="identifier" id="mozilla.telemetry.glean.config.Configuration$<init>(kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Lazy((mozilla.components.concept.fetch.Client)), kotlin.String)/connectionTimeout">connectionTimeout</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a>&nbsp;<span class="symbol">=</span>&nbsp;DEFAULT_CONNECTION_TIMEOUT<span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.config.Configuration$<init>(kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Lazy((mozilla.components.concept.fetch.Client)), kotlin.String)/readTimeout">readTimeout</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a>&nbsp;<span class="symbol">=</span>&nbsp;DEFAULT_READ_TIMEOUT<span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.config.Configuration$<init>(kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Lazy((mozilla.components.concept.fetch.Client)), kotlin.String)/maxEvents">maxEvents</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.config.Configuration$<init>(kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Lazy((mozilla.components.concept.fetch.Client)), kotlin.String)/httpClient">httpClient</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-lazy/index.html"><span class="identifier">Lazy</span></a><span class="symbol">&lt;</span><span class="identifier">Client</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">=</span>&nbsp;lazy { HttpURLConnectionClient() }<span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.config.Configuration$<init>(kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Lazy((mozilla.components.concept.fetch.Client)), kotlin.String)/channel">channel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span></code>
+<code><span class="identifier">Configuration</span><span class="symbol">(</span><span class="identifier" id="mozilla.telemetry.glean.config.Configuration$<init>(kotlin.Int, mozilla.telemetry.glean.net.PingUploader, kotlin.String)/maxEvents">maxEvents</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.config.Configuration$<init>(kotlin.Int, mozilla.telemetry.glean.net.PingUploader, kotlin.String)/httpClient">httpClient</span><span class="symbol">:</span>&nbsp;<a href="../../mozilla.telemetry.glean.net/-ping-uploader/index.html"><span class="identifier">PingUploader</span></a>&nbsp;<span class="symbol">=</span>&nbsp;HttpURLConnectionUploader()<span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.config.Configuration$<init>(kotlin.Int, mozilla.telemetry.glean.net.PingUploader, kotlin.String)/channel">channel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span></code>
 <p>Configuration for Glean.</p>
 </td>
 </tr>
@@ -39,20 +39,10 @@
 </tr>
 <tr>
 <td>
-<p><a href="connection-timeout.html">connectionTimeout</a></p>
-</td>
-<td>
-<code><span class="keyword">val </span><span class="identifier">connectionTimeout</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
-<p>the timeout, in milliseconds, to use when connecting to
-    the <a href="server-endpoint.html">serverEndpoint</a></p>
-</td>
-</tr>
-<tr>
-<td>
 <p><a href="http-client.html">httpClient</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">httpClient</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-lazy/index.html"><span class="identifier">Lazy</span></a><span class="symbol">&lt;</span><span class="identifier">Client</span><span class="symbol">&gt;</span></code>
+<code><span class="keyword">val </span><span class="identifier">httpClient</span><span class="symbol">: </span><a href="../../mozilla.telemetry.glean.net/-ping-uploader/index.html"><span class="identifier">PingUploader</span></a></code>
 <p>The HTTP client implementation to use for uploading pings.</p>
 </td>
 </tr>
@@ -87,16 +77,6 @@
 </tr>
 <tr>
 <td>
-<p><a href="read-timeout.html">readTimeout</a></p>
-</td>
-<td>
-<code><span class="keyword">val </span><span class="identifier">readTimeout</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
-<p>the timeout, in milliseconds, to use when connecting to
-    the <a href="server-endpoint.html">serverEndpoint</a></p>
-</td>
-</tr>
-<tr>
-<td>
 <p><a href="server-endpoint.html">serverEndpoint</a></p>
 </td>
 <td>
@@ -121,29 +101,11 @@
 <tbody>
 <tr>
 <td>
-<p><a href="-d-e-f-a-u-l-t_-c-o-n-n-e-c-t-i-o-n_-t-i-m-e-o-u-t.html">DEFAULT_CONNECTION_TIMEOUT</a></p>
-</td>
-<td>
-<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">DEFAULT_CONNECTION_TIMEOUT</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
-<p>The default connection timeout when sending pings.</p>
-</td>
-</tr>
-<tr>
-<td>
 <p><a href="-d-e-f-a-u-l-t_-l-o-g_-p-i-n-g-s.html">DEFAULT_LOG_PINGS</a></p>
 </td>
 <td>
 <code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">DEFAULT_LOG_PINGS</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
 <p>Whether to log pings by default.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-d-e-f-a-u-l-t_-r-e-a-d_-t-i-m-e-o-u-t.html">DEFAULT_READ_TIMEOUT</a></p>
-</td>
-<td>
-<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">DEFAULT_READ_TIMEOUT</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
-<p>The default read timeout when sending pings.</p>
 </td>
 </tr>
 <tr>

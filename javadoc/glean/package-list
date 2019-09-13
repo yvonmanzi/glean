@@ -7,6 +7,7 @@ $dokka.location:mozilla.telemetry.glean.utils$tryGetLong(org.json.JSONObject, ko
 mozilla.telemetry.glean
 mozilla.telemetry.glean.config
 mozilla.telemetry.glean.debug
+mozilla.telemetry.glean.net
 mozilla.telemetry.glean.private
 mozilla.telemetry.glean.testing
 mozilla.telemetry.glean.utils
