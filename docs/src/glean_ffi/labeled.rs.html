@@ -152,7 +152,7 @@
             <span class="kw">static</span> <span class="kw-2">ref</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">global</span>: <span class="ident">ConcurrentHandleMap</span><span class="op">&lt;</span><span class="ident">LabeledMetric</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">metric</span><span class="op">&gt;&gt;</span> <span class="op">=</span>
                 <span class="ident">ConcurrentHandleMap</span>::<span class="ident">new</span>();
         }
-        <span class="macro">define_handle_map_deleter</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">global</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">destroy_name</span>);
+        <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">define_infallible_handle_map_deleter</span><span class="op">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">global</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">destroy_name</span>);
 
         <span class="doccomment">/// Create a new labeled metric.</span>
         <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
