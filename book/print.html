@@ -409,11 +409,12 @@ class ActivityCollectingDataTest {
 </code></pre>
 <p>This will ensure that metrics are done recording when the other test functions are used.</p>
 <p>To check if a value exists (i.e. it has been recorded), there is a <code>testHasValue()</code> function on each of the metric instances:</p>
-<pre><code class="language-kotlin">assertTrue(GleanMetrics.Foo.UriCount.testHasValue())
+<pre><code class="language-kotlin">assertTrue(GleanMetrics.Search.defaultSearchEngineUrl.testHasValue())
 </code></pre>
 <p>To check the actual values, there is a <code>testGetValue()</code> function on each of the metric instances.
+It is important to check that the values are recorded as expected, since many of the metric types may truncate or error-correct the value.
 This function will return a datatype appropriate to the specific type of the metric it is being used with:</p>
-<pre><code class="language-kotlin">assertEquals(5, GleanMetrics.Foo.UriCount.testGetValue())
+<pre><code class="language-kotlin">assertEquals(&quot;https://example.com/search?&quot;, GleanMetrics.Search.defaultSearchEngineUrl.testGetValue())
 </code></pre>
 <p>Note that each of these functions has its visibility limited to the scope of unit tests by making use of the <code>@VisibleForTesting</code> annotation, so the IDE should complain if you attempt to use them inside of client code.</p>
 <h2><a class="header" href="#testing-metrics-for-custom-pings" id="testing-metrics-for-custom-pings">Testing metrics for custom pings</a></h2>
@@ -834,6 +835,7 @@ SearchDefault.name.set(&quot;wikipedia&quot;)
 // Was anything recorded?
 assertTrue(SearchDefault.name.testHasValue())
 // Does the string metric have the expected value?
+// IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
 assertEquals(&quot;wikipedia&quot;, SearchDefault.name.testGetValue())
 </code></pre>
 <h2><a class="header" href="#limits-4" id="limits-4">Limits</a></h2>
@@ -949,6 +951,7 @@ Search.engines.set(engines)
 // Was anything recorded?
 assertTrue(Search.engines.testHasValue())
 // Does it have the expected value?
+// IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
 assertEquals(listOf(&quot;Google&quot;, &quot;DuckDuckGo&quot;), Search.engines.testGetValue())
 </code></pre>
 <h2><a class="header" href="#limits-6" id="limits-6">Limits</a></h2>

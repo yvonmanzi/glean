@@ -177,6 +177,7 @@ Search.engines.set(engines)
 // Was anything recorded?
 assertTrue(Search.engines.testHasValue())
 // Does it have the expected value?
+// IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
 assertEquals(listOf(&quot;Google&quot;, &quot;DuckDuckGo&quot;), Search.engines.testGetValue())
 </code></pre>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>

@@ -177,6 +177,7 @@ SearchDefault.name.set(&quot;wikipedia&quot;)
 // Was anything recorded?
 assertTrue(SearchDefault.name.testHasValue())
 // Does the string metric have the expected value?
+// IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
 assertEquals(&quot;wikipedia&quot;, SearchDefault.name.testGetValue())
 </code></pre>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
