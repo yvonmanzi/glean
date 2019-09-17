@@ -170,7 +170,7 @@ For Swift this would be <code>glean-core/ios/Glean/Metrics/CounterMetric.swift</
                 pingArray,
                 Int32(sendInPings.count),
                 lifetime.rawValue,
-                disabled ? 1 : 0
+                disabled.toByte()
             )
         }
     }
