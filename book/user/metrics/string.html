@@ -166,6 +166,7 @@
     ...
 </code></pre>
 <h2><a class="header" href="#api" id="api">API</a></h2>
+<h3><a class="header" href="#kotlin" id="kotlin">Kotlin</a></h3>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.SearchDefault
 
 // Record a value into the metric.
@@ -181,6 +182,21 @@ assertTrue(SearchDefault.name.testHasValue())
 // Does the string metric have the expected value?
 // IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
 assertEquals(&quot;wikipedia&quot;, SearchDefault.name.testGetValue())
+</code></pre>
+<h3><a class="header" href="#swift" id="swift">Swift</a></h3>
+<pre><code class="language-Swift">// Record a value into the metric.
+SearchDefault.name.set(&quot;duck duck go&quot;)
+// If it changed later, you can record the new value:
+SearchDefault.name.set(&quot;wikipedia&quot;)
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-Kotlin">@testable import Glean
+
+// Was anything recorded?
+XCTAssert(SearchDefault.name.testHasValue())
+// Does the string metric have the expected value?
+// IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
+XCTAssertEqual(&quot;wikipedia&quot;, try SearchDefault.name.testGetValue())
 </code></pre>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
 <ul>
