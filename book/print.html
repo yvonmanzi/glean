@@ -31,6 +31,8 @@
 
         <!-- Custom theme stylesheets -->
         
+        <link rel="stylesheet" href="tabs.css">
+        
 
         
     </head>
@@ -710,7 +712,12 @@ assertTrue(Flags.a11yEnabled.testGetValue())
     ...
 </code></pre>
 <h2><a class="header" href="#api-2" id="api-2">API</a></h2>
-<h3><a class="header" href="#kotlin" id="kotlin">Kotlin</a></h3>
+<div class="tabs">
+<div class="tabbar">
+  <button id="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
+  <button id="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
+</div>
+<div id="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Controls
 
 Controls.refreshPressed.add() // Adds 1 to the counter.
@@ -724,7 +731,8 @@ assertTrue(Controls.refreshPressed.testHasValue())
 // Does the counter have the expected value?
 assertEquals(6, Controls.refreshPressed.testGetValue())
 </code></pre>
-<h3><a class="header" href="#swift" id="swift">Swift</a></h3>
+</div>
+<div id="Swift" class="tab">
 <pre><code class="language-Swift">Controls.refreshPressed.add() // Adds 1 to the counter.
 Controls.refreshPressed.add(5) // Adds 5 to the counter.
 </code></pre>
@@ -736,6 +744,8 @@ XCTAssert(Controls.refreshPressed.testHasValue())
 // Does the counter have the expected value?
 XCTAssertEqual(6, try Controls.refreshPressed.testGetValue())
 </code></pre>
+</div>
+</div>
 <h2><a class="header" href="#limits-2" id="limits-2">Limits</a></h2>
 <ul>
 <li>Only increments, saturates at the limits of a 32-bit signed integer.</li>
@@ -1024,7 +1034,7 @@ assertEquals(listOf(&quot;Google&quot;, &quot;DuckDuckGo&quot;), Search.engines.
     ...
 </code></pre>
 <h2><a class="header" href="#api-7" id="api-7">API</a></h2>
-<h3><a class="header" href="#kotlin-1" id="kotlin-1">Kotlin</a></h3>
+<h3><a class="header" href="#kotlin" id="kotlin">Kotlin</a></h3>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Auth
 
 fun onShowLogin() {
@@ -1051,7 +1061,7 @@ assertTrue(Auth.loginTime.testHasValue())
 // Does the timer have the expected value
 assertTrue(Auth.loginTime.testGetValue() &gt; 0)
 </code></pre>
-<h3><a class="header" href="#swift-1" id="swift-1">Swift</a></h3>
+<h3><a class="header" href="#swift" id="swift">Swift</a></h3>
 <pre><code class="language-Swift">func onShowLogin() {
     Auth.loginTime.start()
     // ...
@@ -1084,13 +1094,13 @@ Please consider using the higher level APIs listed above.</p>
 <p>It's possible to explicitly set the timespan value, in nanoseconds.
 This API should only be used if your library or application requires recording times in a way that can not make use of <code>start</code>/<code>stop</code>/<code>cancel</code>.</p>
 <p>The raw API will not overwrite a running timer or existing timespan value.</p>
-<h3><a class="header" href="#kotlin-2" id="kotlin-2">Kotlin</a></h3>
+<h3><a class="header" href="#kotlin-1" id="kotlin-1">Kotlin</a></h3>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.HistorySync
 
 val duration = SyncResult.status.syncs.took.toLong()
 HistorySync.setRawNanos(duration)
 </code></pre>
-<h3><a class="header" href="#swift-2" id="swift-2">Swift</a></h3>
+<h3><a class="header" href="#swift-1" id="swift-1">Swift</a></h3>
 <pre><code class="language-Swift">let duration = SyncResult.status.syncs.took.toLong()
 HistorySync.setRawNanos(duration)
 </code></pre>
@@ -3169,6 +3179,8 @@ See the individual metric types for details on the value payload:</p>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="tabs.js"></script>
         
 
         
