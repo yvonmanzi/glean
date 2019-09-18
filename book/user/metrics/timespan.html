@@ -172,7 +172,12 @@
     ...
 </code></pre>
 <h2><a class="header" href="#api" id="api">API</a></h2>
-<h3><a class="header" href="#kotlin" id="kotlin">Kotlin</a></h3>
+<div class="tabs">
+<div class="tabbar">
+  <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
+  <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
+</div>
+<div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Auth
 
 fun onShowLogin() {
@@ -199,7 +204,8 @@ assertTrue(Auth.loginTime.testHasValue())
 // Does the timer have the expected value
 assertTrue(Auth.loginTime.testGetValue() &gt; 0)
 </code></pre>
-<h3><a class="header" href="#swift" id="swift">Swift</a></h3>
+</div>
+<div data-lang="Swift" class="tab">
 <pre><code class="language-Swift">func onShowLogin() {
     Auth.loginTime.start()
     // ...
@@ -224,6 +230,8 @@ XCTAssert(Auth.loginTime.testHasValue())
 // Does the timer have the expected value
 XCTAssert(try Auth.loginTime.testGetValue() &gt; 0)
 </code></pre>
+</div>
+</div>
 <h2><a class="header" href="#raw-api" id="raw-api">Raw API</a></h2>
 <blockquote>
 <p><strong>Note</strong>: The raw API was designed to support a specific set of use-cases.
@@ -232,16 +240,24 @@ Please consider using the higher level APIs listed above.</p>
 <p>It's possible to explicitly set the timespan value, in nanoseconds.
 This API should only be used if your library or application requires recording times in a way that can not make use of <code>start</code>/<code>stop</code>/<code>cancel</code>.</p>
 <p>The raw API will not overwrite a running timer or existing timespan value.</p>
-<h3><a class="header" href="#kotlin-1" id="kotlin-1">Kotlin</a></h3>
+<div class="tabs">
+<div class="tabbar">
+  <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
+  <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
+</div>
+<div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.HistorySync
 
 val duration = SyncResult.status.syncs.took.toLong()
 HistorySync.setRawNanos(duration)
 </code></pre>
-<h3><a class="header" href="#swift-1" id="swift-1">Swift</a></h3>
+</div>
+<div data-lang="Swift" class="tab">
 <pre><code class="language-Swift">let duration = SyncResult.status.syncs.took.toLong()
 HistorySync.setRawNanos(duration)
 </code></pre>
+</div>
+</div>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
 <ul>
 <li>None.</li>

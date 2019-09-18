@@ -714,10 +714,10 @@ assertTrue(Flags.a11yEnabled.testGetValue())
 <h2><a class="header" href="#api-2" id="api-2">API</a></h2>
 <div class="tabs">
 <div class="tabbar">
-  <button id="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
-  <button id="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
+  <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
+  <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
-<div id="Kotlin" class="tab">
+<div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Controls
 
 Controls.refreshPressed.add() // Adds 1 to the counter.
@@ -732,7 +732,7 @@ assertTrue(Controls.refreshPressed.testHasValue())
 assertEquals(6, Controls.refreshPressed.testGetValue())
 </code></pre>
 </div>
-<div id="Swift" class="tab">
+<div data-lang="Swift" class="tab">
 <pre><code class="language-Swift">Controls.refreshPressed.add() // Adds 1 to the counter.
 Controls.refreshPressed.add(5) // Adds 5 to the counter.
 </code></pre>
@@ -845,7 +845,12 @@ assertEquals(3, Stability.crashCount[&quot;native_code_crash&quot;].testGetValue
     ...
 </code></pre>
 <h2><a class="header" href="#api-4" id="api-4">API</a></h2>
-<h3><a class="header" href="#kotlin" id="kotlin">Kotlin</a></h3>
+<div class="tabs">
+<div class="tabbar">
+  <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
+  <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
+</div>
+<div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.SearchDefault
 
 // Record a value into the metric.
@@ -862,14 +867,15 @@ assertTrue(SearchDefault.name.testHasValue())
 // IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
 assertEquals(&quot;wikipedia&quot;, SearchDefault.name.testGetValue())
 </code></pre>
-<h3><a class="header" href="#swift" id="swift">Swift</a></h3>
+</div>
+<div data-lang="Swift" class="tab">
 <pre><code class="language-Swift">// Record a value into the metric.
 SearchDefault.name.set(&quot;duck duck go&quot;)
 // If it changed later, you can record the new value:
 SearchDefault.name.set(&quot;wikipedia&quot;)
 </code></pre>
 <p>There are test APIs available too:</p>
-<pre><code class="language-Kotlin">@testable import Glean
+<pre><code class="language-Swift">@testable import Glean
 
 // Was anything recorded?
 XCTAssert(SearchDefault.name.testHasValue())
@@ -877,6 +883,8 @@ XCTAssert(SearchDefault.name.testHasValue())
 // IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
 XCTAssertEqual(&quot;wikipedia&quot;, try SearchDefault.name.testGetValue())
 </code></pre>
+</div>
+</div>
 <h2><a class="header" href="#limits-4" id="limits-4">Limits</a></h2>
 <ul>
 <li>Fixed maximum string length: 50. Longer strings are truncated. For the original Kotlin implementation of the Glean SDK, this is measured in Unicode characters. For the Rust implementation, this is measured in the number of bytes when the string is encoded in UTF-8.</li>
@@ -1050,7 +1058,12 @@ assertEquals(listOf(&quot;Google&quot;, &quot;DuckDuckGo&quot;), Search.engines.
     ...
 </code></pre>
 <h2><a class="header" href="#api-7" id="api-7">API</a></h2>
-<h3><a class="header" href="#kotlin-1" id="kotlin-1">Kotlin</a></h3>
+<div class="tabs">
+<div class="tabbar">
+  <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
+  <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
+</div>
+<div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Auth
 
 fun onShowLogin() {
@@ -1077,7 +1090,8 @@ assertTrue(Auth.loginTime.testHasValue())
 // Does the timer have the expected value
 assertTrue(Auth.loginTime.testGetValue() &gt; 0)
 </code></pre>
-<h3><a class="header" href="#swift-1" id="swift-1">Swift</a></h3>
+</div>
+<div data-lang="Swift" class="tab">
 <pre><code class="language-Swift">func onShowLogin() {
     Auth.loginTime.start()
     // ...
@@ -1102,6 +1116,8 @@ XCTAssert(Auth.loginTime.testHasValue())
 // Does the timer have the expected value
 XCTAssert(try Auth.loginTime.testGetValue() &gt; 0)
 </code></pre>
+</div>
+</div>
 <h2><a class="header" href="#raw-api" id="raw-api">Raw API</a></h2>
 <blockquote>
 <p><strong>Note</strong>: The raw API was designed to support a specific set of use-cases.
@@ -1110,16 +1126,24 @@ Please consider using the higher level APIs listed above.</p>
 <p>It's possible to explicitly set the timespan value, in nanoseconds.
 This API should only be used if your library or application requires recording times in a way that can not make use of <code>start</code>/<code>stop</code>/<code>cancel</code>.</p>
 <p>The raw API will not overwrite a running timer or existing timespan value.</p>
-<h3><a class="header" href="#kotlin-2" id="kotlin-2">Kotlin</a></h3>
+<div class="tabs">
+<div class="tabbar">
+  <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
+  <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
+</div>
+<div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.HistorySync
 
 val duration = SyncResult.status.syncs.took.toLong()
 HistorySync.setRawNanos(duration)
 </code></pre>
-<h3><a class="header" href="#swift-2" id="swift-2">Swift</a></h3>
+</div>
+<div data-lang="Swift" class="tab">
 <pre><code class="language-Swift">let duration = SyncResult.status.syncs.took.toLong()
 HistorySync.setRawNanos(duration)
 </code></pre>
+</div>
+</div>
 <h2><a class="header" href="#limits-7" id="limits-7">Limits</a></h2>
 <ul>
 <li>None.</li>
