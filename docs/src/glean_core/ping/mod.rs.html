@@ -525,7 +525,7 @@
     <span class="doccomment">/// The directory will be created inside the `data_path`.</span>
     <span class="doccomment">/// The `pings` directory (and its parents) is created if it does not exist.</span>
     <span class="kw">fn</span> <span class="ident">get_pings_dir</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">data_path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-&gt;</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PathBuf</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">pings_dir</span> <span class="op">=</span> <span class="ident">data_path</span>.<span class="ident">join</span>(<span class="string">&quot;pings&quot;</span>);
+        <span class="kw">let</span> <span class="ident">pings_dir</span> <span class="op">=</span> <span class="ident">data_path</span>.<span class="ident">join</span>(<span class="string">&quot;pending_pings&quot;</span>);
         <span class="ident">create_dir_all</span>(<span class="kw-2">&amp;</span><span class="ident">pings_dir</span>)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">pings_dir</span>)
     }
