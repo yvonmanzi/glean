@@ -344,6 +344,18 @@
 <span id="344">344</span>
 <span id="345">345</span>
 <span id="346">346</span>
+<span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -445,10 +457,17 @@
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `glean` - The Glean instance.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">flush_pending_events_on_startup</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>) {
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Return value</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// `true` if at least one ping was generated, `false` otherwise.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">flush_pending_events_on_startup</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">load_events_from_disk</span>() {
             <span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">send_all_events</span>(<span class="ident">glean</span>),
-            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;Error loading pings from disk: {}&quot;</span>, <span class="ident">err</span>),
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> {
+                <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;Error loading events from disk: {}&quot;</span>, <span class="ident">err</span>);
+                <span class="bool-val">false</span>
+            }
         }
     }
 
@@ -472,12 +491,13 @@
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="kw">fn</span> <span class="ident">send_all_events</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>) {
+    <span class="kw">fn</span> <span class="ident">send_all_events</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="kw">let</span> <span class="ident">store_names</span> <span class="op">=</span> {
             <span class="kw">let</span> <span class="ident">db</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">event_stores</span>.<span class="ident">read</span>().<span class="ident">unwrap</span>();
             <span class="ident">db</span>.<span class="ident">keys</span>().<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>()
         };
 
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ping_sent</span> <span class="op">=</span> <span class="bool-val">false</span>;
         <span class="kw">for</span> <span class="ident">store_name</span> <span class="kw">in</span> <span class="ident">store_names</span> {
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span> <span class="ident">glean</span>.<span class="ident">send_ping_by_name</span>(<span class="kw-2">&amp;</span><span class="ident">store_name</span>, <span class="bool-val">false</span>) {
                 <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(
@@ -485,8 +505,12 @@
                     <span class="ident">store_name</span>,
                     <span class="ident">err</span>
                 );
+            } <span class="kw">else</span> {
+                <span class="ident">ping_sent</span> <span class="op">=</span> <span class="bool-val">true</span>;
             }
         }
+
+        <span class="ident">ping_sent</span>
     }
 
     <span class="doccomment">/// Record an event in the desired stores.</span>

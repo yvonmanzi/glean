@@ -574,6 +574,10 @@
 <span id="574">574</span>
 <span id="575">575</span>
 <span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
+<span id="580">580</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -799,8 +803,12 @@
     <span class="doccomment">/// assemble pings. Usually called from the language specific layer after all</span>
     <span class="doccomment">/// of the core metrics have been set and the ping types have been</span>
     <span class="doccomment">/// registered.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">on_ready_to_send_pings</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="self">self</span>.<span class="ident">event_data_store</span>.<span class="ident">flush_pending_events_on_startup</span>(<span class="kw-2">&amp;</span><span class="self">self</span>);
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Return value</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// `true` if at least one ping was generated, `false` otherwise.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">on_ready_to_send_pings</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">event_data_store</span>.<span class="ident">flush_pending_events_on_startup</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
     }
 
     <span class="doccomment">/// Set whether upload is enabled or not.</span>
