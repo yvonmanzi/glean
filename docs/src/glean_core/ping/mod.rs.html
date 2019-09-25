@@ -308,6 +308,37 @@
 <span id="308">308</span>
 <span id="309">309</span>
 <span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -359,7 +390,33 @@
         <span class="self">Self</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">get_ping_seq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="doccomment">/// Set the next ping sequence number to the provided one.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This function stores the next sequence number (the one that</span>
+    <span class="doccomment">/// will be returned next time `get_ping_seq` is called) in the</span>
+    <span class="doccomment">/// glean-core store. The main purpose of this function is to allow</span>
+    <span class="doccomment">/// overriding sequence numbers with migration data coming from</span>
+    <span class="doccomment">/// glean-ac.</span>
+    <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn</span> <span class="ident">set_ping_seq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">next_seq</span>: <span class="ident">i32</span>) {
+        <span class="comment">// Sequence numbers are stored as a counter under a name that includes the storage name</span>
+        <span class="kw">let</span> <span class="ident">seq</span> <span class="op">=</span> <span class="ident">CounterMetric</span>::<span class="ident">new</span>(<span class="ident">CommonMetricData</span> {
+            <span class="ident">name</span>: <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}#sequence&quot;</span>, <span class="ident">storage_name</span>),
+            <span class="comment">// We don&#39;t need a category, the name is already unique</span>
+            <span class="ident">category</span>: <span class="string">&quot;&quot;</span>.<span class="ident">into</span>(),
+            <span class="ident">send_in_pings</span>: <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">INTERNAL_STORAGE</span>.<span class="ident">into</span>()],
+            <span class="ident">lifetime</span>: <span class="ident">Lifetime</span>::<span class="ident">User</span>,
+            ..<span class="ident">Default</span>::<span class="ident">default</span>()
+        });
+
+        <span class="comment">// It&#39;s safe to add `next_seq` because the glean-ac migration code</span>
+        <span class="comment">// clears the glean-core database before the migration starts.</span>
+        <span class="ident">seq</span>.<span class="ident">add</span>(<span class="ident">glean</span>, <span class="ident">next_seq</span>);
+    }
+
+    <span class="doccomment">/// Get, and then increment, the sequence number for a given ping.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This is crate-internal exclusively for enabling the migration tests.</span>
+    <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn</span> <span class="ident">get_ping_seq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         <span class="comment">// Sequence numbers are stored as a counter under a name that includes the storage name</span>
         <span class="kw">let</span> <span class="ident">seq</span> <span class="op">=</span> <span class="ident">CounterMetric</span>::<span class="ident">new</span>(<span class="ident">CommonMetricData</span> {
             <span class="ident">name</span>: <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}#sequence&quot;</span>, <span class="ident">storage_name</span>),
@@ -592,14 +649,7 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">test</span> {
     <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
-
-    <span class="kw">const</span> <span class="ident">GLOBAL_APPLICATION_ID</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;org.mozilla.glean.test.app&quot;</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_glean</span>() <span class="op">-&gt;</span> (<span class="ident">Glean</span>, <span class="ident">tempfile</span>::<span class="ident">TempDir</span>) {
-        <span class="kw">let</span> <span class="ident">dir</span> <span class="op">=</span> <span class="ident">tempfile</span>::<span class="ident">tempdir</span>().<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">tmpname</span> <span class="op">=</span> <span class="ident">dir</span>.<span class="ident">path</span>().<span class="ident">display</span>().<span class="ident">to_string</span>();
-        <span class="kw">let</span> <span class="ident">glean</span> <span class="op">=</span> <span class="ident">Glean</span>::<span class="ident">with_options</span>(<span class="kw-2">&amp;</span><span class="ident">tmpname</span>, <span class="ident">GLOBAL_APPLICATION_ID</span>, <span class="bool-val">true</span>).<span class="ident">unwrap</span>();
-        (<span class="ident">glean</span>, <span class="ident">dir</span>)
-    }
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">tests</span>::<span class="ident">new_glean</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">sequence_numbers_should_be_reset_when_toggling_uploading</span>() {
@@ -618,6 +668,18 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">1</span>, <span class="ident">ping_maker</span>.<span class="ident">get_ping_seq</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="string">&quot;custom&quot;</span>));
     }
 
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">set_ping_seq_must_correctly_set_sequence_numbers</span>() {
+        <span class="kw">let</span> (<span class="ident">glean</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">new_glean</span>();
+        <span class="kw">let</span> <span class="ident">ping_maker</span> <span class="op">=</span> <span class="ident">PingMaker</span>::<span class="ident">new</span>();
+
+        <span class="ident">ping_maker</span>.<span class="ident">set_ping_seq</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="string">&quot;custom&quot;</span>, <span class="number">3</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">3</span>, <span class="ident">ping_maker</span>.<span class="ident">get_ping_seq</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="string">&quot;custom&quot;</span>));
+
+        <span class="ident">ping_maker</span>.<span class="ident">set_ping_seq</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="string">&quot;other&quot;</span>, <span class="number">7</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">7</span>, <span class="ident">ping_maker</span>.<span class="ident">get_ping_seq</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="string">&quot;other&quot;</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">8</span>, <span class="ident">ping_maker</span>.<span class="ident">get_ping_seq</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="string">&quot;other&quot;</span>));
+    }
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g., <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g., <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g., <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../../../";window.currentCrate = "glean_core";</script><script src="../../../aliases.js"></script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>
