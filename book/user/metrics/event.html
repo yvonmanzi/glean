@@ -163,6 +163,12 @@ timestamp, the event's name and a set of custom values.</p>
         description: The source from which the login view was opened, e.g. &quot;toolbar&quot;.
 </code></pre>
 <h2><a class="header" href="#api" id="api">API</a></h2>
+<div class="tabs">
+<div class="tabbar">
+  <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
+  <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
+</div>
+<div data-lang="Kotlin" class="tab">
 <p>Note that an <code>enum</code> has been generated for handling the <code>extra_keys</code>: it has the same name as the event metric, with <code>Keys</code> added.</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Views
 
@@ -180,6 +186,25 @@ assertEquals(2, snapshot.size)
 val first = snapshot.single()
 assertEquals(&quot;login_opened&quot;, first.name)
 </code></pre>
+</div>
+<div data-lang="Swift" class="tab">
+<p>Note that an <code>enum</code> has been generated for handling the <code>extra_keys</code>: it has the same name as the event metric, with <code>Keys</code> added.</p>
+<pre><code class="language-Swift">Views.loginOpened.record(extra: [.sourceOfLogin: &quot;toolbar&quot;])
+</code></pre>
+<p>There are test APIs available too, for example:</p>
+<pre><code class="language-Kotlin">@testable import Glean
+
+// Was any event recorded?
+XCTAssert(Views.loginOpened.testHasValue())
+// Get a List of the recorded events.
+val snapshot = try! Views.loginOpened.testGetValue()
+// Check that two events were recorded.
+XCTAssertEqual(2, snapshot.size)
+val first = snapshot[0]
+XCTAssertEqual(&quot;login_opened&quot;, first.name)
+</code></pre>
+</div>
+</div>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
 <ul>
 <li>
