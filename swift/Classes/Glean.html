@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Glean Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/Glean" class="dashAnchor"></a>
+    <a title="Glean Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">Glean Docs</a> (95% documented)</p>
+        <p class="header-right"><a href="https://github.com/mozilla/glean"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">Glean Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        Glean Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/BooleanMetricType.html">BooleanMetricType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CounterMetricType.html">CounterMetricType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DatetimeMetricType.html">DatetimeMetricType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/EventMetricType.html">EventMetricType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Glean.html">Glean</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/HttpPingUploader.html">HttpPingUploader</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LabeledMetricType.html">LabeledMetricType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Ping.html">Ping</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/StringMetricType.html">StringMetricType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TimespanMetricType.html">TimespanMetricType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/UuidMetricType.html">UuidMetricType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums.html#/s:5Glean0A7MetricsO">GleanMetrics</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Lifetime.html">Lifetime</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/NoExtraKeys.html">NoExtraKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TimeUnit.html">TimeUnit</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/String.html">String</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:5Glean17assertUnreachable_4file4lines5NeverOSSyXK_s12StaticStringVSutF">assertUnreachable(_:file:line:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:5Glean11unreachables5NeverOyF">unreachable()</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/ExtraKeys.html">ExtraKeys</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/Configuration.html">Configuration</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Glean</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Glean</span></code></pre>
+
+                </div>
+              </div>
+            <p>The main Glean API.</p>
+
+<p>This is exposed through the global <code><a href="../Classes/Glean.html#/s:5GleanAAC6sharedABvpZ">Glean.shared</a></code> object.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:5GleanAAC6sharedABvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/shared" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5GleanAAC6sharedABvpZ">shared</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The main Glean object.</p>
+
+<p>Before any data collection can take place, the Glean SDK <strong>must</strong> be initialized from the application.</p>
+<pre class="highlight swift"><code><span class="kt">Glean</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">setUploadEnabled</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<span class="kt">Glean</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">initialize</span><span class="p">()</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">shared</span><span class="p">:</span> <span class="kt">Glean</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:5GleanAAC10initialize13configurationyAA13ConfigurationV_tF"></a>
+                    <a name="//apple_ref/swift/Method/initialize(configuration:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5GleanAAC10initialize13configurationyAA13ConfigurationV_tF">initialize(configuration:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initialize the Glean SDK.</p>
+
+<p>This should only be initialized once by the application, and not by
+libraries using the Glean SDK. A message is logged to error and no
+changes are made to the state if initialize is called a more than
+once.</p>
+
+<p>A LifecycleObserver will be added to send pings when the application goes
+into the background.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">initialize</span><span class="p">(</span><span class="nv">configuration</span><span class="p">:</span> <span class="kt"><a href="../Structs/Configuration.html">Configuration</a></span> <span class="o">=</span> <span class="kt"><a href="../Structs/Configuration.html">Configuration</a></span><span class="p">())</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>configuration</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A Glean <code><a href="../Structs/Configuration.html">Configuration</a></code> object with global settings.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:5GleanAAC16setUploadEnabledyySbF"></a>
+                    <a name="//apple_ref/swift/Method/setUploadEnabled(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5GleanAAC16setUploadEnabledyySbF">setUploadEnabled(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Enable or disable Glean collection and upload.</p>
+
+<p>Metric collection is enabled by default.</p>
+
+<p>When uploading is disabled, metrics aren&rsquo;t recorded at all and no data
+is uploaded.</p>
+
+<p>When disabling, all pending metrics, events and queued pings are cleared.</p>
+
+<p>When enabling, the core Glean metrics are recreated.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setUploadEnabled</span><span class="p">(</span><span class="n">_</span> <span class="nv">enabled</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>enabled</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>When true, enable metric collection.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:5GleanAAC16getUploadEnabledSbyF"></a>
+                    <a name="//apple_ref/swift/Method/getUploadEnabled()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5GleanAAC16getUploadEnabledSbyF">getUploadEnabled()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Get whether or not Glean is allowed to record and upload data.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getUploadEnabled</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:5GleanAAC13registerPingsyyypF"></a>
+                    <a name="//apple_ref/swift/Method/registerPings(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5GleanAAC13registerPingsyyypF">registerPings(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Register the pings generated from <code>pings.yaml</code> with the Glean SDK.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">registerPings</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">Any</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>pings</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The <code>Pings</code> object generated for your library or application
+     by the Glean SDK.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2019 <a class="link" href="https://mozilla.github.com/glean" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2019-09-30)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
