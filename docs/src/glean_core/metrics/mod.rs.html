@@ -152,8 +152,6 @@
 <span id="152">152</span>
 <span id="153">153</span>
 <span id="154">154</span>
-<span id="155">155</span>
-<span id="156">156</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -302,9 +300,7 @@
             <span class="ident">Metric</span>::<span class="ident">Quantity</span>(<span class="ident">q</span>) <span class="op">=&gt;</span> <span class="macro">json</span><span class="macro">!</span>(<span class="ident">q</span>),
             <span class="ident">Metric</span>::<span class="ident">String</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="macro">json</span><span class="macro">!</span>(<span class="ident">s</span>),
             <span class="ident">Metric</span>::<span class="ident">StringList</span>(<span class="ident">v</span>) <span class="op">=&gt;</span> <span class="macro">json</span><span class="macro">!</span>(<span class="ident">v</span>),
-            <span class="ident">Metric</span>::<span class="ident">Timespan</span>(<span class="ident">time</span>, <span class="ident">time_unit</span>) <span class="op">=&gt;</span> {
-                <span class="macro">json</span><span class="macro">!</span>({<span class="string">&quot;value&quot;</span>: <span class="ident">time_unit</span>.<span class="ident">duration_convert</span>(<span class="kw-2">*</span><span class="ident">time</span>), <span class="string">&quot;time_unit&quot;</span>: <span class="ident">time_unit</span>})
-            }
+            <span class="ident">Metric</span>::<span class="ident">Timespan</span>(<span class="ident">time</span>, <span class="ident">time_unit</span>) <span class="op">=&gt;</span> <span class="macro">json</span><span class="macro">!</span>({<span class="string">&quot;value&quot;</span>: <span class="ident">time_unit</span>.<span class="ident">duration_convert</span>(<span class="kw-2">*</span><span class="ident">time</span>), <span class="string">&quot;time_unit&quot;</span>: <span class="ident">time_unit</span>}),
             <span class="ident">Metric</span>::<span class="ident">TimingDistribution</span>(<span class="ident">hist</span>) <span class="op">=&gt;</span> <span class="macro">json</span><span class="macro">!</span>(<span class="ident">timing_distribution</span>::<span class="ident">snapshot</span>(<span class="ident">hist</span>)),
             <span class="ident">Metric</span>::<span class="ident">Uuid</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="macro">json</span><span class="macro">!</span>(<span class="ident">s</span>),
             <span class="ident">Metric</span>::<span class="ident">MemoryDistribution</span>(<span class="ident">hist</span>) <span class="op">=&gt;</span> <span class="macro">json</span><span class="macro">!</span>(<span class="ident">memory_distribution</span>::<span class="ident">snapshot</span>(<span class="ident">hist</span>)),

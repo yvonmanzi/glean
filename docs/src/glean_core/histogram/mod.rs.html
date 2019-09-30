@@ -200,7 +200,7 @@
         <span class="kw">match</span> <span class="ident">value</span> {
             <span class="number">0</span> <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">HistogramType</span>::<span class="ident">Linear</span>),
             <span class="number">1</span> <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">HistogramType</span>::<span class="ident">Exponential</span>),
-            <span class="ident">e</span> <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ErrorKind</span>::<span class="ident">HistogramType</span>(<span class="ident">e</span>))<span class="question-mark">?</span>,
+            <span class="ident">e</span> <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ErrorKind</span>::<span class="ident">HistogramType</span>(<span class="ident">e</span>).<span class="ident">into</span>()),
         }
     }
 }

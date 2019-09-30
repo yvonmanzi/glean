@@ -225,7 +225,7 @@
             <span class="number">4</span> <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TimeUnit</span>::<span class="ident">Minute</span>),
             <span class="number">5</span> <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TimeUnit</span>::<span class="ident">Hour</span>),
             <span class="number">6</span> <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TimeUnit</span>::<span class="ident">Day</span>),
-            <span class="ident">e</span> <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ErrorKind</span>::<span class="ident">TimeUnit</span>(<span class="ident">e</span>))<span class="question-mark">?</span>,
+            <span class="ident">e</span> <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ErrorKind</span>::<span class="ident">TimeUnit</span>(<span class="ident">e</span>).<span class="ident">into</span>()),
         }
     }
 }

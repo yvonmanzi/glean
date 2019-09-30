@@ -121,7 +121,7 @@
             <span class="number">1</span> <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">MemoryUnit</span>::<span class="ident">Kilobyte</span>),
             <span class="number">2</span> <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">MemoryUnit</span>::<span class="ident">Megabyte</span>),
             <span class="number">3</span> <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">MemoryUnit</span>::<span class="ident">Gigabyte</span>),
-            <span class="ident">e</span> <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ErrorKind</span>::<span class="ident">MemoryUnit</span>(<span class="ident">e</span>))<span class="question-mark">?</span>,
+            <span class="ident">e</span> <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ErrorKind</span>::<span class="ident">MemoryUnit</span>(<span class="ident">e</span>).<span class="ident">into</span>()),
         }
     }
 }

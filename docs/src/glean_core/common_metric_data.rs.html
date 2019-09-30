@@ -150,7 +150,7 @@
             <span class="number">0</span> <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Lifetime</span>::<span class="ident">Ping</span>),
             <span class="number">1</span> <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Lifetime</span>::<span class="ident">Application</span>),
             <span class="number">2</span> <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Lifetime</span>::<span class="ident">User</span>),
-            <span class="ident">e</span> <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ErrorKind</span>::<span class="ident">Lifetime</span>(<span class="ident">e</span>))<span class="question-mark">?</span>,
+            <span class="ident">e</span> <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ErrorKind</span>::<span class="ident">Lifetime</span>(<span class="ident">e</span>).<span class="ident">into</span>()),
         }
     }
 }
