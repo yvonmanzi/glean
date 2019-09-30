@@ -1,13 +1,6 @@
 {
   "warnings": [
     {
-      "file": "/Users/distiller/project/glean-core/ios/Glean/Metrics/BooleanMetric.swift",
-      "line": 46,
-      "symbol": "BooleanMetricType.set(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/distiller/project/glean-core/ios/Glean/Net/HttpPingUploader.swift",
       "line": 23,
       "symbol": "HttpPingUploader.init(configuration:)",
