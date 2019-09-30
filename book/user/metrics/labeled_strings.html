@@ -162,6 +162,12 @@
 </code></pre>
 <h2><a class="header" href="#api" id="api">API</a></h2>
 <p>Now you can use the labeled string from the application's code:</p>
+<div class="tabs">
+<div class="tabbar">
+  <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
+  <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
+</div>
+<div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Login
 
 Login.errorsByStage[&quot;server_auth&quot;].set(&quot;Invalid password&quot;)
@@ -172,6 +178,18 @@ Login.errorsByStage[&quot;server_auth&quot;].set(&quot;Invalid password&quot;)
 // Was anything recorded?
 assertTrue(Login.errorsByStage[&quot;server_auth&quot;].testHasValue())
 </code></pre>
+</div>
+<div data-lang="Swift" class="tab">
+<pre><code class="language-Swift">Login.errorsByStage[&quot;server_auth&quot;].set(&quot;Invalid password&quot;)
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-Swift">@testable import Glean
+
+// Was anything recorded?
+XCTAssert(Login.errorsByStage[&quot;server_auth&quot;].testHasValue())
+</code></pre>
+</div>
+</div>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
 <ul>
 <li>
@@ -192,7 +210,7 @@ assertTrue(Login.errorsByStage[&quot;server_auth&quot;].testHasValue())
 </ul>
 <h2><a class="header" href="#examples" id="examples">Examples</a></h2>
 <ul>
-<li>What kind of errors occurred at each step in the login process? </li>
+<li>What kind of errors occurred at each step in the login process?</li>
 </ul>
 <h2><a class="header" href="#recorded-errors" id="recorded-errors">Recorded Errors</a></h2>
 <ul>

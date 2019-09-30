@@ -163,6 +163,12 @@
 </code></pre>
 <h2><a class="header" href="#api" id="api">API</a></h2>
 <p>Now you can use the labeled counter from the application's code:</p>
+<div class="tabs">
+<div class="tabbar">
+  <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
+  <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
+</div>
+<div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Stability
 Stability.crashCount[&quot;uncaught_exception&quot;].add() // Adds 1 to the &quot;uncaught_exception&quot; counter.
 Stability.crashCount[&quot;native_code_crash&quot;].add(3) // Adds 3 to the &quot;native_code_crash&quot; counter.
@@ -176,6 +182,23 @@ assertTrue(Stability.crashCount[&quot;native_code_crash&quot;].testHasValue())
 assertEquals(1, Stability.crashCount[&quot;uncaught_exception&quot;].testGetValue())
 assertEquals(3, Stability.crashCount[&quot;native_code_crash&quot;].testGetValue())
 </code></pre>
+</div>
+<div data-lang="Swift" class="tab">
+<pre><code class="language-Swift">Stability.crashCount[&quot;uncaught_exception&quot;].add() // Adds 1 to the &quot;uncaught_exception&quot; counter.
+Stability.crashCount[&quot;native_code_crash&quot;].add(3) // Adds 3 to the &quot;native_code_crash&quot; counter.
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-Swift">@testable import Glean
+
+// Was anything recorded?
+XCTAssert(Stability.crashCount[&quot;uncaught_exception&quot;].testHasValue())
+XCTAssert(Stability.crashCount[&quot;native_code_crash&quot;].testHasValue())
+// Do the counters have the expected values?
+XCTAssertEqual(1, try Stability.crashCount[&quot;uncaught_exception&quot;].testGetValue())
+XCTAssertEqual(3, try Stability.crashCount[&quot;native_code_crash&quot;].testGetValue())
+</code></pre>
+</div>
+</div>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
 <ul>
 <li>
