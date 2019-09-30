@@ -208,7 +208,15 @@ This should be used for things that change only when the user's profile is creat
 It is rare to use this lifetime outside of some metrics that are built in to Glean, such as <code>client_id</code>.</li>
 </ul>
 <h3><a class="header" href="#naming-things" id="naming-things">Naming things</a></h3>
-<p>Choose the category and names of metrics to be as specific as possible.
+<p>Metric identifiers (the combination of a metric's category and name) must be unique across all metrics that are sent by an application.
+This includes not only the metrics defined in the app's <code>metrics.yaml</code>, but the <code>metrics.yaml</code> of any Glean-using library that the application uses, including Glean itself.
+Therefore, care should be taken to name things specifically enough so as to avoid namespace collisions.
+In practice, this generally involves thinking carefully about the <code>category</code> of the metric, more than the <code>name</code>.</p>
+<blockquote>
+<p><strong>Note:</strong> Duplicate metric identifiers are not currently detected at build time. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1578383">bug 1578383</a> for progress on that.
+However, the <a href="https://github.com/mozilla/probe-scraper">probe_scraper</a> process, which runs nightly, will detect duplicate metrics and e-mail the <code>notification_emails</code> associated with the given metrics.</p>
+</blockquote>
+<p>More broadly, you should choose the category and names of metrics to be as specific as possible.
 It is not necessary to put the type of the metric in the category or name, since this information is retained in other ways through the entire end-to-end system.</p>
 <p>For example, if defining a set of events related to search, put them in a category called <code>search</code>, rather than just <code>events</code> or <code>search_events</code>.</p>
 <h2><a class="header" href="#a-note-about-case-inflection" id="a-note-about-case-inflection">A note about case inflection</a></h2>
