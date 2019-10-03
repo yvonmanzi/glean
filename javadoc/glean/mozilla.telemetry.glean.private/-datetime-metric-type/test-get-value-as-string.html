@@ -9,7 +9,7 @@
 <br/>
 <h1>testGetValueAsString</h1>
 <a name="mozilla.telemetry.glean.private.DatetimeMetricType$testGetValueAsString(kotlin.String)"></a>
-<code><span class="keyword">fun </span><span class="identifier">testGetValueAsString</span><span class="symbol">(</span><span class="identifier" id="mozilla.telemetry.glean.private.DatetimeMetricType$testGetValueAsString(kotlin.String)/pingName">pingName</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a>&nbsp;<span class="symbol">=</span>&nbsp;sendInPings.first()<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<code><span class="identifier">@JvmOverloads</span> <span class="keyword">fun </span><span class="identifier">testGetValueAsString</span><span class="symbol">(</span><span class="identifier" id="mozilla.telemetry.glean.private.DatetimeMetricType$testGetValueAsString(kotlin.String)/pingName">pingName</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a>&nbsp;<span class="symbol">=</span>&nbsp;sendInPings.first()<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
 <p>Returns the string representation of the stored value for testing purposes only. This
 function will attempt to await the last task (if any) writing to the the metric's storage
 engine before returning a value.</p>
