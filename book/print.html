@@ -2513,7 +2513,7 @@ If Android Studio asks you to upgrade the verison of gradle, decline.</p>
 <p>The following dependencies can be installed in Android Studio through <code>Tools &gt; SDK Manager &gt; SDK Tools</code>:</p>
 <ul>
 <li>Android SDK Tools (may already be selected)</li>
-<li>NDK</li>
+<li>NDK r20</li>
 <li>CMake</li>
 <li>LLDB</li>
 </ul>
@@ -2521,6 +2521,16 @@ If Android Studio asks you to upgrade the verison of gradle, decline.</p>
 Set the <code>ANDROID_HOME</code> environment variable to that path.
 The <code>ANDROID_NDK_ROOT</code> can be set to <code>ANDROID_NDK_ROOT=$ANDROID_HOME/ndk-bundle</code>.
 Set <code>JAVA_HOME</code> to be the location of Android Studio's JDK which can be found in Glean's &quot;Project Structure&quot; menu. (You may need to escape spaces in the path).</p>
+<p>If you want to install the NDK manually:</p>
+<ol>
+<li>Download NDK r20 from <a href="https://developer.android.com/ndk/downloads">https://developer.android.com/ndk/downloads</a>.</li>
+<li>Extract it and put it somewhere (<code>$HOME/.android-ndk-r20</code> is a reasonable choice, but it doesn't matter).</li>
+<li>Set <code>ANDROID_NDK_ROOT</code> to this path.
+<ul>
+<li>Set <code>ANDROID_NDK_HOME</code> to match <code>ANDROID_NDK_ROOT</code>, for compatibility with some android grandle plugins.</li>
+</ul>
+</li>
+</ol>
 <h3><a class="header" href="#setting-up-rust" id="setting-up-rust">Setting up Rust</a></h3>
 <p>Rust can be installed using <code>rustup</code>, with the following commands:</p>
 <ul>
