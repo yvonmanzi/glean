@@ -1269,6 +1269,12 @@ This makes them suitable for measuring timings on a number of time scales withou
 Starting a timer returns a timer ID that needs to be used to stop or cancel the timer at a later point.
 Multiple intervals can be measured concurrently.
 For example, to measure page load time on a number of tabs that are loading at the same time, each tab object needs to store the running timer ID.</p>
+<div class="tabs">
+<div class="tabbar">
+  <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
+  <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
+</div>
+<div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import mozilla.components.service.glean.timing.GleanTimerId
 import org.mozilla.yourApplication.GleanMetrics.Pages
 
@@ -1289,15 +1295,47 @@ fun onPageLoaded(e: Event) {
 // Was anything recorded?
 assertTrue(pages.pageLoad.testHasValue())
 
-// Get snapshot
+// Get snapshot.
 val snapshot = pages.pageLoad.testGetValue()
 
 // Does the sum have the expected value?
 assertEquals(11, snapshot.sum)
 
 // Usually you don't know the exact timing values, but how many should have been recorded.
-assertEquals(2L, snapshot.count())
+assertEquals(2L, snapshot.count)
 </code></pre>
+</div>
+<div data-lang="Swift" class="tab">
+<pre><code class="language-Swift">import Glean
+
+var timerId : GleanTimerId
+
+func onPageStart() {
+    timerId = Pages.pageLoad.start()
+}
+
+func onPageLoaded() {
+    Pages.pageLoad.stopAndAccumulate(timerId)
+}
+</code></pre>
+<p>There are test APIs available too.  For convenience, properties <code>sum</code> and <code>count</code> are exposed to facilitate validating that data was recorded correctly.</p>
+<p>Continuing the <code>pageLoad</code> example above, at this point the metric should have a <code>sum == 11</code> and a <code>count == 2</code>:</p>
+<pre><code class="language-Swift">@testable import Glean
+
+// Was anything recorded?
+XCTAssert(pages.pageLoad.testHasValue())
+
+// Get snapshot.
+let snapshot = try! pages.pageLoad.testGetValue()
+
+// Does the sum have the expected value?
+XCTAssertEqual(11, snapshot.sum)
+
+// Usually you don't know the exact timing values, but how many should have been recorded.
+XCTAssertEqual(2, snapshot.count)
+</code></pre>
+</div>
+</div>
 <h2><a class="header" href="#limits-8" id="limits-8">Limits</a></h2>
 <ul>
 <li>
