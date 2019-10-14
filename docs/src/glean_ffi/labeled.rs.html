@@ -115,6 +115,16 @@
 <span id="115">115</span>
 <span id="116">116</span>
 <span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -194,12 +204,22 @@
         <span class="doccomment">/// Create a new instance of the sub-metric of this labeled metric.</span>
         <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
         <span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">get_name</span>(<span class="ident">glean_handle</span>: <span class="ident">u64</span>, <span class="ident">handle</span>: <span class="ident">u64</span>, <span class="ident">label</span>: <span class="ident">FfiStr</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> {
-            <span class="ident">GLEAN</span>.<span class="ident">call_infallible</span>(<span class="ident">glean_handle</span>, <span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
+            <span class="comment">// If Glean is not yet initialized on the platform side (no handle available),</span>
+            <span class="comment">// let&#39;s not crash, but let the core handle it by ignoring previously stored dynamic</span>
+            <span class="comment">// labels.</span>
+            <span class="kw">if</span> <span class="ident">glean_handle</span> <span class="op">==</span> <span class="number">0</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">global</span>.<span class="ident">call_infallible_mut</span>(<span class="ident">handle</span>, <span class="op">|</span><span class="ident">labeled</span><span class="op">|</span> {
-                    <span class="kw">let</span> <span class="ident">metric</span> <span class="op">=</span> <span class="ident">labeled</span>.<span class="ident">get</span>(<span class="ident">glean</span>, <span class="ident">label</span>.<span class="ident">as_str</span>());
+                    <span class="kw">let</span> <span class="ident">metric</span> <span class="op">=</span> <span class="ident">labeled</span>.<span class="ident">get</span>(<span class="prelude-val">None</span>, <span class="ident">label</span>.<span class="ident">as_str</span>());
                     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">metric_global</span>.<span class="ident">insert_with_log</span>(<span class="op">||</span> <span class="prelude-val">Ok</span>(<span class="ident">metric</span>))
                 })
-            })
+            } <span class="kw">else</span> {
+                <span class="ident">GLEAN</span>.<span class="ident">call_infallible</span>(<span class="ident">glean_handle</span>, <span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
+                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">global</span>.<span class="ident">call_infallible_mut</span>(<span class="ident">handle</span>, <span class="op">|</span><span class="ident">labeled</span><span class="op">|</span> {
+                        <span class="kw">let</span> <span class="ident">metric</span> <span class="op">=</span> <span class="ident">labeled</span>.<span class="ident">get</span>(<span class="prelude-val">Some</span>(<span class="ident">glean</span>), <span class="ident">label</span>.<span class="ident">as_str</span>());
+                        <span class="macro-nonterminal">$</span><span class="macro-nonterminal">metric_global</span>.<span class="ident">insert_with_log</span>(<span class="op">||</span> <span class="prelude-val">Ok</span>(<span class="ident">metric</span>))
+                    })
+                })
+            }
         }
     };
 }
