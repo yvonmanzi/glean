@@ -341,6 +341,12 @@ However, the <a href="https://github.com/mozilla/probe-scraper">probe_scraper</a
 <p>More broadly, you should choose the category and names of metrics to be as specific as possible.
 It is not necessary to put the type of the metric in the category or name, since this information is retained in other ways through the entire end-to-end system.</p>
 <p>For example, if defining a set of events related to search, put them in a category called <code>search</code>, rather than just <code>events</code> or <code>search_events</code>.</p>
+<h3><a class="header" href="#expiration" id="expiration">Expiration</a></h3>
+<p>You should think carefully about how long the metric will be needed, and set it to expire at the soonest time possible.
+When a metric is about to expire, emails will be sent to the <code>notification_emails</code> addresses associated with the metric.
+At that time, the metric should be removed, which involves removing it from the <code>metrics.yaml</code> file and removing uses of it in the source code.
+Removing a metric does not affect the availability of data already collected by the pipeline.</p>
+<p>If the metric is still needed, it should go back for <a href="https://wiki.mozilla.org/Firefox/Data_Collection">another round of data review</a> to have its expiration date extended.</p>
 <h2><a class="header" href="#a-note-about-case-inflection" id="a-note-about-case-inflection">A note about case inflection</a></h2>
 <p>Category and metric names in the <code>metrics.yaml</code> are in <code>snake_case</code>, but given the Kotlin coding standards defined by <a href="https://github.com/pinterest/ktlint">ktlint</a>, these identifiers must be <code>camelCase</code> in Kotlin. For example, the metric defined in the <code>metrics.yaml</code> as:</p>
 <pre><code class="language-YAML">views:
@@ -352,7 +358,7 @@ It is not necessary to put the type of the metric in the category or name, since
 Views.loginOpened...
 </code></pre>
 <h1><a class="header" href="#metric-parameters" id="metric-parameters">Metric parameters</a></h1>
-<p>All metric types must include the following required parameters:</p>
+<h2><a class="header" href="#required-metric-parameters" id="required-metric-parameters">Required metric parameters</a></h2>
 <ul>
 <li>
 <p><code>type</code>: <strong>Required.</strong>  Specifies the type of a metric, like &quot;counter&quot; or &quot;event&quot;. This defines which operations are valid for the metric, how it is stored and how data analysis tooling displays it. See the list of <a href="user/metrics/index.html">supported metric types</a>.</p>
@@ -373,13 +379,15 @@ Views.loginOpened...
 <li>
 <p><code>expires</code>: <strong>Required.</strong> May be one of the following values:</p>
 <ul>
-<li><code>&lt;build date&gt;</code>: An ISO date <code>yyyy-mm-dd</code> in UTC on which the metric expires. For example, <code>2019-03-13</code>. This date is checked at build time. Except in special cases, this form should be used so that the metric automatically &quot;sunsets&quot; after a period of time.</li>
+<li><code>&lt;build date&gt;</code>: An ISO date <code>yyyy-mm-dd</code> in UTC on which the metric expires. For example, <code>2019-03-13</code>. This date is checked at build time. Except in special cases, this form should be used so that the metric automatically &quot;sunsets&quot; after a period of time.
+Emails will be sent to the <code>notification_emails</code> addresses when the metric is about to expire.
+Generally, when a metric is no longer needed, it should simply be removed. This does not affect the availability of data already collected by the pipeline.</li>
 <li><code>never</code>: This metric never expires.</li>
 <li><code>expired</code>: This metric is manually expired.</li>
 </ul>
 </li>
 </ul>
-<p>All metric types also support the following optional parameters:</p>
+<h2><a class="header" href="#optional-metric-parameters" id="optional-metric-parameters">Optional metric parameters</a></h2>
 <ul>
 <li>
 <p><code>lifetime</code>: Defines the lifetime of the metric. Different lifetimes affect when the metrics value is reset.</p>
@@ -390,10 +398,12 @@ Views.loginOpened...
 </ul>
 </li>
 <li>
-<p><code>send_in_pings</code>: Defines which pings the metric should be sent on. If not specified, the metric is sent on the &quot;default ping&quot;, which is the <code>events</code> ping for events and the <code>metrics</code> ping for everything else. Most metrics don't need to specify this unless they are sent on custom pings.</p>
+<p><code>send_in_pings</code>: Defines which pings the metric should be sent on. If not specified, the metric is sent on the &quot;default ping&quot;, which is the <code>events</code> ping for events and the <code>metrics</code> ping for everything else. Most metrics don't need to specify this unless they are sent on <a href="user/pings/custom.html">custom pings</a>.</p>
 </li>
 <li>
-<p><code>disabled</code>: (default: <code>false</code>) Data collection for this metric is disabled.</p>
+<p><code>disabled</code>: (default: <code>false</code>) Data collection for this metric is disabled.
+This is useful when you want to temporarily disable the collection for a specific metric without removing references to it in your source code.
+Generally, when a metric is no longer needed, it should simply be removed. This does not affect the availability of data already collected by the pipeline.</p>
 </li>
 <li>
 <p><code>version</code>: (default: 0) The version of the metric. A monotonically increasing integer value. This should be bumped if the metric changes in a backward-incompatible way.</p>

@@ -219,6 +219,12 @@ However, the <a href="https://github.com/mozilla/probe-scraper">probe_scraper</a
 <p>More broadly, you should choose the category and names of metrics to be as specific as possible.
 It is not necessary to put the type of the metric in the category or name, since this information is retained in other ways through the entire end-to-end system.</p>
 <p>For example, if defining a set of events related to search, put them in a category called <code>search</code>, rather than just <code>events</code> or <code>search_events</code>.</p>
+<h3><a class="header" href="#expiration" id="expiration">Expiration</a></h3>
+<p>You should think carefully about how long the metric will be needed, and set it to expire at the soonest time possible.
+When a metric is about to expire, emails will be sent to the <code>notification_emails</code> addresses associated with the metric.
+At that time, the metric should be removed, which involves removing it from the <code>metrics.yaml</code> file and removing uses of it in the source code.
+Removing a metric does not affect the availability of data already collected by the pipeline.</p>
+<p>If the metric is still needed, it should go back for <a href="https://wiki.mozilla.org/Firefox/Data_Collection">another round of data review</a> to have its expiration date extended.</p>
 <h2><a class="header" href="#a-note-about-case-inflection" id="a-note-about-case-inflection">A note about case inflection</a></h2>
 <p>Category and metric names in the <code>metrics.yaml</code> are in <code>snake_case</code>, but given the Kotlin coding standards defined by <a href="https://github.com/pinterest/ktlint">ktlint</a>, these identifiers must be <code>camelCase</code> in Kotlin. For example, the metric defined in the <code>metrics.yaml</code> as:</p>
 <pre><code class="language-YAML">views:
