@@ -161,6 +161,12 @@
 </code></pre>
 <h2><a class="header" href="#api" id="api">API</a></h2>
 <p>Now that the UUID is defined in <code>metrics.yaml</code>, you can use the metric to record values in the application's code.</p>
+<div class="tabs">
+<div class="tabbar">
+  <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
+  <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
+</div>
+<div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.User
 
 User.clientId.generateAndSet() // Generate a new UUID and record it
@@ -174,6 +180,21 @@ assertTrue(User.clientId.testHasValue())
 // Was it the expected value?
 assertEquals(uuid, User.clientId.testGetValue())
 </code></pre>
+</div>
+<div data-lang="Swift" class="tab">
+<pre><code class="language-Swift">User.clientId.generateAndSet() // Generate a new UUID and record it
+User.clientId.set(UUID())  // Set a UUID explicitly
+</code></pre>
+<p>There are test APIs available too.</p>
+<pre><code class="language-Swift">@testable import Glean
+
+// Was anything recorded?
+XCTAssert(User.clientId.testHasValue())
+// Was it the expected value?
+XCTAssertEqual(uuid, try User.clientId.testGetValue())
+</code></pre>
+</div>
+</div>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
 <ul>
 <li>None.</li>
