@@ -148,8 +148,8 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#adding-new-metrics" id="adding-new-metrics">Adding new metrics</a></h1>
-<p>All metrics that your project collects must be defined in a <code>metrics.yaml</code> file. 
-This file should be at the root of the application or library module (the same directory as the <code>build.gradle</code> file you updated). 
+<p>All metrics that your project collects must be defined in a <code>metrics.yaml</code> file.
+This file should be at the root of the application or library module (the same directory as the <code>build.gradle</code> file you updated).
 The format of that file is documented <a href="https://mozilla.github.io/glean_parser/metrics-yaml.html">here</a>.</p>
 <p>When adding a new metric, the workflow is:</p>
 <ul>
@@ -162,7 +162,7 @@ The format of that file is documented <a href="https://mozilla.github.io/glean_p
 This is also required for any new metric automatically collected by the Glean SDK.</p>
 </blockquote>
 <h2><a class="header" href="#the-metricsyaml-file" id="the-metricsyaml-file">The <code>metrics.yaml</code> file</a></h2>
-<p>The <code>metrics.yaml</code> file defines the metrics your application or library will send. 
+<p>The <code>metrics.yaml</code> file defines the metrics your application or library will send.
 They are organized into categories.
 The overall organization is:</p>
 <pre><code class="language-YAML"># Required to indicate this is a `metrics.yaml` file
@@ -179,8 +179,7 @@ toolbar:
       - 123456789
     data_reviews:
       - http://example.com/path/to/data-review
-    expires:
-      - 2019-06-01  # &lt;-- Update to a date in the future
+    expires: 2019-06-01  # &lt;-- Update to a date in the future
 
   double_click:
     ...

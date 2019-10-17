@@ -195,16 +195,16 @@ The plugin <strong>must</strong> be manually enabled by adding the following <co
 </code></pre>
 <p>Right before the end of the same file, the Glean SDK build script must be included.
 This script can be referenced directly from the GitHub repo, as shown below:</p>
-<pre><code class="language-Groovy">apply from: 'https://github.com/mozilla-mobile/android-components/raw/v{latest-version}/components/service/scripts/sdk_generator.gradle'
+<pre><code class="language-Groovy">apply from: 'https://raw.githubusercontent.com/mozilla-mobile/android-components/v{latest-version}/components/service/glean/scripts/sdk_generator.gradle'
 </code></pre>
 <blockquote>
 <p><strong>Important:</strong> the <code>{latest-version}</code> placeholder in the above link should be replaced with the version number of the Glean SDK used by the project.
 For example, if version <em>6.0.2</em> is used, then the include directive becomes:</p>
 </blockquote>
-<pre><code class="language-Groovy">apply from: 'https://github.com/mozilla-mobile/android-components/raw/v6.0.2/components/service/scripts/sdk_generator.gradle'
+<pre><code class="language-Groovy">apply from: 'https://raw.githubusercontent.com/mozilla-mobile/android-components/v16.0.0/components/service/glean/scripts/sdk_generator.gradle'
 </code></pre>
 <p>If you are using a <code>SNAPSHOT</code> build of <code>android-components</code>, it is best to use the master branch, for example:</p>
-<pre><code class="language-Groovy">apply from: 'https://github.com/mozilla-mobile/android-components/raw/master/components/service/scripts/sdk_generator.gradle'
+<pre><code class="language-Groovy">apply from: 'https://raw.githubusercontent.com/mozilla-mobile/android-components/master/components/service/glean/scripts/sdk_generator.gradle'
 </code></pre>
 <p>There are <a href="user/android-build-configuration-options.html">additional parameters</a> that can be set to control the behavior of the <code>sdk_generator.gradle</code> script, but they are rarely used in normal use.</p>
 <h3><a class="header" href="#adding-new-metrics" id="adding-new-metrics">Adding new metrics</a></h3>
@@ -270,8 +270,8 @@ This method should also be called at least once prior to calling <code>Glean.ini
 <p>When going from enabled to disabled, all pending events, metrics and pings are cleared, except for <code>first_run_date</code>.
 When re-enabling, core Glean metrics will be recomputed at that time.</p>
 <h1><a class="header" href="#adding-new-metrics-1" id="adding-new-metrics-1">Adding new metrics</a></h1>
-<p>All metrics that your project collects must be defined in a <code>metrics.yaml</code> file. 
-This file should be at the root of the application or library module (the same directory as the <code>build.gradle</code> file you updated). 
+<p>All metrics that your project collects must be defined in a <code>metrics.yaml</code> file.
+This file should be at the root of the application or library module (the same directory as the <code>build.gradle</code> file you updated).
 The format of that file is documented <a href="https://mozilla.github.io/glean_parser/metrics-yaml.html">here</a>.</p>
 <p>When adding a new metric, the workflow is:</p>
 <ul>
@@ -284,7 +284,7 @@ The format of that file is documented <a href="https://mozilla.github.io/glean_p
 This is also required for any new metric automatically collected by the Glean SDK.</p>
 </blockquote>
 <h2><a class="header" href="#the-metricsyaml-file" id="the-metricsyaml-file">The <code>metrics.yaml</code> file</a></h2>
-<p>The <code>metrics.yaml</code> file defines the metrics your application or library will send. 
+<p>The <code>metrics.yaml</code> file defines the metrics your application or library will send.
 They are organized into categories.
 The overall organization is:</p>
 <pre><code class="language-YAML"># Required to indicate this is a `metrics.yaml` file
@@ -301,8 +301,7 @@ toolbar:
       - 123456789
     data_reviews:
       - http://example.com/path/to/data-review
-    expires:
-      - 2019-06-01  # &lt;-- Update to a date in the future
+    expires: 2019-06-01  # &lt;-- Update to a date in the future
 
   double_click:
     ...
