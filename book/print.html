@@ -476,7 +476,12 @@ assertEquals(&quot;Courier&quot;, events.elementAt(0).extra[&quot;font&quot;])
 <h1><a class="header" href="#debugging-products-using-the-glean-sdk" id="debugging-products-using-the-glean-sdk">Debugging products using the Glean SDK</a></h1>
 <p>The Glean SDK exports the <code>GleanDebugActivity</code> that can be used to toggle debugging features on or off.
 Users can invoke this special activity, at run-time, using the following <a href="https://developer.android.com/studio/command-line/adb"><code>adb</code></a> command:</p>
-<p><code>adb shell am start -n [applicationId]/mozilla.components.service.glean.debug.GleanDebugActivity [extra keys]</code></p>
+<p><code>adb shell am start -n [applicationId]/mozilla.telemetry.glean.debug.GleanDebugActivity [extra keys]</code></p>
+<blockquote>
+<p><strong>Note:</strong> In previous versions of Glean the activity was available with the name <code>mozilla.components.service.glean.debug.GleanDebugActivity</code>.</p>
+<p>If you're debugging an old build, try running:
+<code>adb shell am start -n [applicationId]/mozilla.components.service.glean.debug.GleanDebugActivity [extra keys]</code></p>
+</blockquote>
 <p>In the above:</p>
 <ul>
 <li>
@@ -493,11 +498,20 @@ These are the currently supported keys:</p>
 <tr><td>tagPings</td><td>string (--es)</td><td>Tags all outgoing pings as debug pings to make them available for real-time validation, on the <a href="https://docs.telemetry.mozilla.org/concepts/glean/debug_ping_view.html">Glean Debug View</a>. The value must match the pattern <code>[a-zA-Z0-9-]{1,20}</code></td></tr>
 </tbody></table>
 <p>For example, to direct a release build of the Glean sample application to (1) dump pings to logcat, (2) tag the ping with the <code>test-metrics-ping</code> tag, and (3) send the &quot;metrics&quot; ping immediately, the following command can be used:</p>
+<pre><code>adb shell am start -n org.mozilla.samples.glean/mozilla.telemetry.glean.debug.GleanDebugActivity \
+  --ez logPings true \
+  --es sendPing metrics \
+  --es tagPings test-metrics-ping
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong> In previous versions of Glean the activity was available with the name <code>mozilla.components.service.glean.debug.GleanDebugActivity</code>.</p>
+<p>If you're debugging an old build, try running:</p>
 <pre><code>adb shell am start -n org.mozilla.samples.glean/mozilla.components.service.glean.debug.GleanDebugActivity \
   --ez logPings true \
   --es sendPing metrics \
   --es tagPings test-metrics-ping
 </code></pre>
+</blockquote>
 <h3><a class="header" href="#important-gleandebugactivity-notes" id="important-gleandebugactivity-notes">Important GleanDebugActivity notes!</a></h3>
 <ul>
 <li>
