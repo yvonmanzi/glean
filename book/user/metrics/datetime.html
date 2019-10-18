@@ -166,8 +166,8 @@
 <p>You first need to add an entry for it to the <code>metrics.yaml</code> file:</p>
 <pre><code class="language-YAML">install:
   first_run:
-    type: datetime 
-    time_unit: day 
+    type: datetime
+    time_unit: day
     description: &gt;
       Records the date when the application was first run
     lifetime: user
@@ -191,7 +191,7 @@ Install.firstRun.set(Calendar(2019, 3, 25)) // Records a custom datetime
 // Was anything recorded?
 assertTrue(Install.firstRun.testHasValue())
 // Was it the expected value?
-// NOTE: Datetimes always include a timezone offset from UTC, hence the 
+// NOTE: Datetimes always include a timezone offset from UTC, hence the
 // &quot;-05:00&quot; suffix.
 assertEquals(&quot;2019-03-25-05:00&quot;, Install.firstRun.testGetValueAsString())
 </code></pre>
@@ -230,6 +230,7 @@ XCTAssertEqual(6, try Controls.refreshPressed.testGetValue())
 <h2><a class="header" href="#reference" id="reference">Reference</a></h2>
 <ul>
 <li><a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-datetime-metric-type/index.html">Kotlin API docs</a></li>
+<li><a href="../../../swift/Classes/DatetimeMetricType.html">Swift API docs</a></li>
 </ul>
 
                     </main>

@@ -149,7 +149,7 @@
                     <main>
                         <h1><a class="header" href="#adding-new-metrics" id="adding-new-metrics">Adding new metrics</a></h1>
 <p>All metrics that your project collects must be defined in a <code>metrics.yaml</code> file.
-This file should be at the root of the application or library module (the same directory as the <code>build.gradle</code> file you updated).
+This file should be at the root of the application or library module.
 The format of that file is documented <a href="https://mozilla.github.io/glean_parser/metrics-yaml.html">here</a>.</p>
 <p>When adding a new metric, the workflow is:</p>
 <ul>
@@ -190,7 +190,7 @@ category2.subcategory:  # Categories can contain subcategories
 
 </code></pre>
 <p>The details of the metric parameters are described in <a href="metric-parameters.html">metric parameters</a>.</p>
-<p>The <code>metrics.yaml</code> file is used to generate <code>Kotlin</code> code that becomes the public API to access your application's metrics.</p>
+<p>The <code>metrics.yaml</code> file is used to generate code in the target language (e.g. Kotlin, Swift, ...) that becomes the public API to access your application's metrics.</p>
 <h2><a class="header" href="#recommendations-for-defining-new-metrics" id="recommendations-for-defining-new-metrics">Recommendations for defining new metrics</a></h2>
 <p>“There are only two hard things in Computer Science: cache invalidation and naming things” -- attributed to Phil Karlton.</p>
 <h3><a class="header" href="#lifetimes" id="lifetimes">Lifetimes</a></h3>
@@ -225,15 +225,39 @@ At that time, the metric should be removed, which involves removing it from the 
 Removing a metric does not affect the availability of data already collected by the pipeline.</p>
 <p>If the metric is still needed, it should go back for <a href="https://wiki.mozilla.org/Firefox/Data_Collection">another round of data review</a> to have its expiration date extended.</p>
 <h2><a class="header" href="#a-note-about-case-inflection" id="a-note-about-case-inflection">A note about case inflection</a></h2>
-<p>Category and metric names in the <code>metrics.yaml</code> are in <code>snake_case</code>, but given the Kotlin coding standards defined by <a href="https://github.com/pinterest/ktlint">ktlint</a>, these identifiers must be <code>camelCase</code> in Kotlin. For example, the metric defined in the <code>metrics.yaml</code> as:</p>
+<div class="tabs">
+<div class="tabbar">
+  <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
+  <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
+</div>
+<div data-lang="Kotlin" class="tab">
+<p>Category and metric names in the <code>metrics.yaml</code> are in <code>snake_case</code>,
+but given the Kotlin coding standards defined by <a href="https://github.com/pinterest/ktlint">ktlint</a>,
+these identifiers must be <code>camelCase</code> in Kotlin.
+For example, the metric defined in the <code>metrics.yaml</code> as:</p>
 <pre><code class="language-YAML">views:
   login_opened:
     ...
 </code></pre>
 <p>is accessible in Kotlin as:</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Views
-Views.loginOpened...
+GleanMetrics.Views.loginOpened...
 </code></pre>
+</div>
+<div data-lang="Swift" class="tab">
+<p>Category and metric names in the <code>metrics.yaml</code> are in <code>snake_case</code>,
+but given the Swift coding standards defined by <a href="https://github.com/realm/SwiftLint">swiftlint</a>,
+these identifiers must be <code>camelCase</code> in Swift.
+For example, the metric defined in the <code>metrics.yaml</code> as:</p>
+<pre><code class="language-YAML">views:
+  login_opened:
+    ...
+</code></pre>
+<p>is accessible in Kotlin as:</p>
+<pre><code class="language-Swift">GleanMetrics.Views.loginOpened...
+</code></pre>
+</div>
+</div>
 
                     </main>
 

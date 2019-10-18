@@ -158,6 +158,12 @@
 </ul>
 <h2><a class="header" href="#usage" id="usage">Usage</a></h2>
 <h3><a class="header" href="#integrating-with-your-project" id="integrating-with-your-project">Integrating with your project</a></h3>
+<div class="tabs">
+<div class="tabbar">
+  <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
+  <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
+</div>
+<div data-lang="Kotlin" class="tab">
 <h4><a class="header" href="#setting-up-the-dependency" id="setting-up-the-dependency">Setting up the dependency</a></h4>
 <p>Use Gradle to download the library from <a href="https://maven.mozilla.org/">maven.mozilla.org</a> (<a href="https://github.com/mozilla-mobile/android-components/blob/master/README.md#maven-repository">Setup repository</a>) by adding the following to your Gradle configuration:</p>
 <pre><code class="language-Groovy">implementation &quot;org.mozilla.components:service-glean:{latest-version}&quot;
@@ -186,18 +192,33 @@ For example, if version <em>6.0.2</em> is used, then the include directive becom
 <pre><code class="language-Groovy">apply from: 'https://raw.githubusercontent.com/mozilla-mobile/android-components/master/components/service/glean/scripts/sdk_generator.gradle'
 </code></pre>
 <p>There are <a href="android-build-configuration-options.html">additional parameters</a> that can be set to control the behavior of the <code>sdk_generator.gradle</code> script, but they are rarely used in normal use.</p>
+</div>
+<div data-lang="Swift" class="tab">
+<h4><a class="header" href="#setting-up-the-dependency-1" id="setting-up-the-dependency-1">Setting up the dependency</a></h4>
+<p>Glean can be consumed through <a href="https://github.com/Carthage/Carthage">Carthage</a>, a dependency manager for macOS and iOS.
+For consuming the latest version of Glean, add the following line to your <code>Cartfile</code>::</p>
+<pre><code>github &quot;mozilla/glean&quot; &quot;master&quot;
+</code></pre>
+<h4><a class="header" href="#integrating-with-the-build-system-1" id="integrating-with-the-build-system-1">Integrating with the build system</a></h4>
+<blockquote>
+<p><strong>Note:</strong> This is not yet documented, as the exact mechanism is not finalized. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1589383">Bug 1589383</a> for more information.</p>
+</blockquote>
+</div>
+</div>
 <h3><a class="header" href="#adding-new-metrics" id="adding-new-metrics">Adding new metrics</a></h3>
 <p>All metrics that your project collects must be defined in a <code>metrics.yaml</code> file.
-This file should be at the root of the module (the same directory as the <code>build.gradle</code> file you updated).
+Add this file to your project and define it as an input file for the <code>sdk_generator.sh</code> script in the <code>Run Script</code> step defined before.
 The format of that file is documented <a href="https://mozilla.github.io/glean_parser/metrics-yaml.html">with <code>glean_parser</code></a>.
 To learn more, see <a href="adding-new-metrics.html">adding new metrics</a>.</p>
 <blockquote>
-<p><strong>Important</strong>: as stated <a href="#before-using-glean">above</a>, any new data collection requires documentation and data-review. This is also required for any new metric automatically collected by the Glean SDK.</p>
+<p><strong>Important</strong>: as stated <a href="adding-glean-to-your-project.html#before-using-glean">before</a>, any new data collection requires documentation and data-review.
+This is also required for any new metric automatically collected by the Glean SDK.</p>
 </blockquote>
 <h3><a class="header" href="#adding-custom-pings" id="adding-custom-pings">Adding custom pings</a></h3>
 <p>Please refer to the <a href="pings/custom.html">custom pings documentation</a>.</p>
 <blockquote>
-<p><strong>Important</strong>: as stated <a href="#before-using-glean">above</a>, any new data collection, including new custom pings, requires documentation and data-review. This is also required for any new ping automatically collected by the Glean SDK.</p>
+<p><strong>Important</strong>: as stated <a href="adding-glean-to-your-project.html#before-using-glean">before</a>, any new data collection requires documentation and data-review.
+This is also required for any new metric automatically collected by the Glean SDK.</p>
 </blockquote>
 <h3><a class="header" href="#testing-metrics" id="testing-metrics">Testing metrics</a></h3>
 <p>In order to make testing metrics easier 'out of the box', all metrics include a set of test API functions in order to facilitate unit testing.  These include functions to test whether a value has been stored, and functions to retrieve the stored value for validation.  For more information, please refer to <a href="testing-metrics.html">Unit testing Glean metrics</a>.</p>
@@ -206,12 +227,17 @@ To learn more, see <a href="adding-new-metrics.html">adding new metrics</a>.</p>
 <p>These specific steps are described in <a href="https://github.com/mozilla/probe-scraper#adding-a-new-glean-repository">the <code>probe_scraper</code> documentation</a>.</p>
 <h2><a class="header" href="#application-specific-steps" id="application-specific-steps">Application-specific steps</a></h2>
 <p>The following steps are required for applications using the Glean SDK, but not libraries.</p>
+<div class="tabs">
+<div class="tabbar">
+  <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
+  <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
+</div>
+<div data-lang="Kotlin" class="tab">
 <h3><a class="header" href="#initializing-the-glean-sdk" id="initializing-the-glean-sdk">Initializing the Glean SDK</a></h3>
 <p>The Glean SDK should only be initialized from the main application, not individual libraries.  If you are adding Glean support to a library, you can safely skip this section.
 Please also note that the Glean SDK does not support use across multiple processes, and must only be initialized on the application's main process. Initializing in other processes is a no-op.
 Additionally, Glean must be initialized on the main (UI) thread of the applications main process. Failure to do so will throw an <code>IllegalThreadStateException</code>.</p>
-<p>Before any data collection can take place, the Glean SDK <strong>must</strong> be initialized from the application.
-An excellent place to perform this operation is within the <code>onCreate</code> method of the class that extends Android's <code>Application</code> class.</p>
+<p>An excellent place to initialize Glean is within the <code>onCreate</code> method of the class that extends Android's <code>Application</code> class.</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Pings
 
 class SampleApplication : Application() {
@@ -248,6 +274,51 @@ This method should also be called at least once prior to calling <code>Glean.ini
 <p>The application should provide some form of user interface to call this method.</p>
 <p>When going from enabled to disabled, all pending events, metrics and pings are cleared, except for <code>first_run_date</code>.
 When re-enabling, core Glean metrics will be recomputed at that time.</p>
+</div>
+<div data-lang="Swift" class="tab">
+<h3><a class="header" href="#initializing-the-glean-sdk-1" id="initializing-the-glean-sdk-1">Initializing the Glean SDK</a></h3>
+<p>The Glean SDK should only be initialized from the main application, not individual libraries.
+If you are adding Glean support to a library, you can safely skip this section.
+Please also note that the Glean SDK does not support use across multiple processes, and must only be initialized on the application's main process.</p>
+<p>An excellent place to initialize Glean is within the <code>application(_:)</code> method of the class that extends the <code>UIApplicationDelegate</code> class.</p>
+<pre><code class="language-Swift">import Glean
+import UIKit
+
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -&gt; Bool {
+        // If you have custom pings in your application, you must register them
+        // using the following command. This command should be omitted for
+        // applications not using custom pings.
+        Glean.shared.registerPings(GleanMetrics.Pings)
+
+        // Call setUploadEnabled first, since Glean.initialize
+        // might send pings if there are any metrics queued up
+        // from a previous run.
+        Glean.shared.setUploadEnabled(Settings.isTelemetryEnabled)
+
+        // Initialize the Glean library.
+        Glean.shared.initialize()
+    }
+}
+</code></pre>
+<p>Once initialized, if collection is enabled, the Glean SDK will automatically start collecting <a href="pings/metrics.html">baseline metrics</a> and sending its <a href="pings/index.html">pings</a>.</p>
+<p>The Glean SDK should be initialized as soon as possible, and importantly, before any other libraries in the application start using Glean.
+Library code should never call <code>Glean.shared.initialize</code>, since it should be called exactly once per application.</p>
+<blockquote>
+<p><strong>Note</strong>: if the application has the concept of release channels and knows which channel it is on at run-time,
+then it can provide the Glean SDK with this information by setting it as part of the <code>Configuration</code> object parameter of the <code>Glean.shared.initialize</code> method. For example:</p>
+</blockquote>
+<pre><code class="language-Swift">Glean.shared.initialize(Configuration(channel: &quot;beta&quot;))
+</code></pre>
+<h3><a class="header" href="#enabling-and-disabling-metrics-1" id="enabling-and-disabling-metrics-1">Enabling and disabling metrics</a></h3>
+<p><code>Glean.shared.setUploadEnabled()</code> should be called in response to the user enabling or disabling telemetry.
+This method should also be called at least once prior to calling <code>Glean.shared.initialize()</code>.</p>
+<p>The application should provide some form of user interface to call this method.</p>
+<p>When going from enabled to disabled, all pending events, metrics and pings are cleared, except for <code>first_run_date</code>.
+When re-enabling, core Glean metrics will be recomputed at that time.</p>
+</div>
+</div>
 
                     </main>
 

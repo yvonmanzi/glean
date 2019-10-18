@@ -154,6 +154,12 @@
 The application or consuming library is responsible for setting the relevant experiment annotations at each run.</p>
 </blockquote>
 <h2><a class="header" href="#api" id="api">API</a></h2>
+<div class="tabs">
+<div class="tabbar">
+  <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
+  <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
+</div>
+<div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">// Annotate Glean pings with experiments data.
 Glean.setExperimentActive(
   experimentId = &quot;blue-button-effective&quot;,
@@ -180,6 +186,13 @@ assertEquals(
   &quot;branch-with-blue-button&quot;, Glean.testGetExperimentData(&quot;blue-button-effective&quot;)?.branch
 )
 </code></pre>
+</div>
+<div data-lang="Swift" class="tab">
+<blockquote>
+<p><strong>Note</strong>: Experiments are currently not supported by Glean for iOS.</p>
+</blockquote>
+</div>
+</div>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
 <ul>
 <li><code>experimentId</code>, <code>branch</code>, and the keys of the 'extra' field are fixed at a maximum length of 30. Length for the values of the <code>extra</code> field is fixed at 50. Longer strings used as ids, keys, or values are truncated to their respective maximum length. For the original Kotlin implementation of the Glean SDK, this is measured in Unicode characters. For the Rust implementation, this is measured in the number of bytes when the string is encoded in UTF-8.</li>

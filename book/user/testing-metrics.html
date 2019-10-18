@@ -150,9 +150,19 @@
                         <h1><a class="header" href="#unit-testing-glean-metrics" id="unit-testing-glean-metrics">Unit testing Glean metrics</a></h1>
 <p>In order to support unit testing inside of client applications using the Glean SDK, a set of testing API functions have been included.
 The intent is to make the Glean SDK easier to test 'out of the box' in any client application it may be used in.
-These functions expose a way to inspect and validate recorded metric values within the client application but are restricted to test code only through visibility annotations (<code>@VisibleForTesting(otherwise = VisibleForTesting.NONE)</code>).</p>
+These functions expose a way to inspect and validate recorded metric values within the client application but are restricted to test code only through visibility annotations
+(<code>@VisibleForTesting(otherwise = VisibleForTesting.NONE)</code> for Kotlin, <code>internal</code> methods for Swift).</p>
 <h2><a class="header" href="#general-test-api-method-semantics" id="general-test-api-method-semantics">General test API method semantics</a></h2>
-<p>In order to prevent issues with async calls when unit testing Glean, it is important to put the Glean SDK into testing mode by applying the JUnit <code>GleanTestRule</code> to your test class. When the Glean SDK is in testing mode, it enables uploading and clears the recorded metrics at the beginning of each test run. The rule can be used as shown below:</p>
+<div class="tabs">
+<div class="tabbar">
+  <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
+  <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
+</div>
+<div data-lang="Kotlin" class="tab">
+<p>In order to prevent issues with async calls when unit testing Glean,
+it is important to put the Glean SDK into testing mode by applying the JUnit <code>GleanTestRule</code> to your test class.
+When the Glean SDK is in testing mode, it enables uploading and clears the recorded metrics at the beginning of each test run.
+The rule can be used as shown below:</p>
 <pre><code class="language-kotlin">@RunWith(AndroidJUnit4::class)
 class ActivityCollectingDataTest {
     // Apply the GleanTestRule to set up a disposable Glean instance.
@@ -175,7 +185,41 @@ It is important to check that the values are recorded as expected, since many of
 This function will return a datatype appropriate to the specific type of the metric it is being used with:</p>
 <pre><code class="language-kotlin">assertEquals(&quot;https://example.com/search?&quot;, GleanMetrics.Search.defaultSearchEngineUrl.testGetValue())
 </code></pre>
-<p>Note that each of these functions has its visibility limited to the scope of unit tests by making use of the <code>@VisibleForTesting</code> annotation, so the IDE should complain if you attempt to use them inside of client code.</p>
+<p>Note that each of these functions has its visibility limited to the scope of unit tests by making use of the <code>@VisibleForTesting</code> annotation,
+so the IDE should complain if you attempt to use them inside of client code.</p>
+</div>
+<div data-lang="Swift" class="tab">
+<blockquote>
+<p><strong>NOTE</strong>: There's no automatic test rule for Glean tests implemented.</p>
+</blockquote>
+<p>In order to prevent issues with async calls when unit testing Glean, it is important to put the Glean SDK into testing mode.
+When the Glean SDK is in testing mode, it enables uploading and clears the recorded metrics at the beginning of each test run.</p>
+<p>Activate it by resetting Glean in your test's setup:</p>
+<pre><code class="language-swift">@testable import Glean
+import XCTest
+
+class GleanUsageTests: XCTestCase {
+    override func setUp() {
+        Glean.shared.resetGlean(clearStores: true)
+    }
+
+    // ...
+}
+</code></pre>
+<p>This will ensure that metrics are done recording when the other test functions are used.</p>
+<p>To check if a value exists (i.e. it has been recorded), there is a <code>testHasValue()</code> function on each of the metric instances:</p>
+<pre><code class="language-Swift">XCTAssertTrue(GleanMetrics.Search.defaultSearchEngineUrl.testHasValue())
+</code></pre>
+<p>To check the actual values, there is a <code>testGetValue()</code> function on each of the metric instances.
+It is important to check that the values are recorded as expected, since many of the metric types may truncate or error-correct the value.
+This function will return a datatype appropriate to the specific type of the metric it is being used with:</p>
+<pre><code class="language-Swift">XCTAssertEqual(&quot;https://example.com/search?&quot;, try GleanMetrics.Search.defaultSearchEngineUrl.testGetValue())
+</code></pre>
+<p>Note that each of these functions is marked as <code>internal</code>, you need to import <code>Glean</code> explicitly in test mode:</p>
+<pre><code class="language-Swift">@testable import Glean
+</code></pre>
+</div>
+</div>
 <h2><a class="header" href="#testing-metrics-for-custom-pings" id="testing-metrics-for-custom-pings">Testing metrics for custom pings</a></h2>
 <p>In order to test metrics where the metric is included in more than one ping, the test functions take an optional <code>pingName</code> argument.
 This is the name of the ping that the metric is being sent in, such as <code>&quot;events&quot;</code> for the <a href="pings/events.html"><code>events</code> ping</a>,
@@ -184,10 +228,16 @@ This could also be a custom ping name that the metric is being sent in.
 In most cases you should not have to supply the ping name to the test function and can just use the default which is the &quot;default&quot; ping that this metric is sent in.
 You should only need to provide a <code>pingName</code> if the metric is being sent in more than one ping in order to identify the correct metric store.</p>
 <p>You can call the <code>testHasValue()</code> and <code>testGetValue()</code> functions with <code>pingName</code> like this:</p>
-<pre><code class="language-kotlin">GleanMetrics.Foo.UriCount.testHasValue(&quot;customPing&quot;)
-GleanMetrics.Foo.UriCount.testGetValue(&quot;customPing&quot;)
+<pre><code class="language-kotlin">GleanMetrics.Foo.uriCount.testHasValue(&quot;customPing&quot;)
+GleanMetrics.Foo.uriCount.testGetValue(&quot;customPing&quot;)
 </code></pre>
 <h2><a class="header" href="#example-of-using-the-test-api" id="example-of-using-the-test-api">Example of using the test API</a></h2>
+<div class="tabs">
+<div class="tabbar">
+  <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
+  <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
+</div>
+<div data-lang="Kotlin" class="tab">
 <p>Here is a longer example to better illustrate the intended use of the test API:</p>
 <pre><code class="language-kotlin">// Record a metric value with extra to validate against
 GleanMetrics.BrowserEngagement.click.record(
@@ -212,6 +262,30 @@ assertEquals(3, events.size)
 // Check extra key/value for first event in the list
 assertEquals(&quot;Courier&quot;, events.elementAt(0).extra[&quot;font&quot;])
 </code></pre>
+</div>
+<div data-lang="Swift" class="tab">
+<p>Here is a longer example to better illustrate the intended use of the test API:</p>
+<pre><code class="language-Swift">// Record a metric value with extra to validate against
+GleanMetrics.BrowserEngagement.click.record([.font: &quot;Courier&quot;])
+
+// Record more events without extras attached
+BrowserEngagement.click.record()
+BrowserEngagement.click.record()
+
+// Check if we collected any events into the 'click' metric
+XCTAssertTrue(BrowserEngagement.click.testHasValue())
+
+// Retrieve a snapshot of the recorded events
+let events = try! BrowserEngagement.click.testGetValue()
+
+// Check if we collected all 3 events in the snapshot
+XCTAssertEqual(3, events.count)
+
+// Check extra key/value for first event in the list
+XCTAssertEqual(&quot;Courier&quot;, events[0].extra?[&quot;font&quot;])
+</code></pre>
+</div>
+</div>
 
                     </main>
 
