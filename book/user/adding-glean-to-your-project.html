@@ -163,6 +163,7 @@
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <h4><a class="header" href="#setting-up-the-dependency" id="setting-up-the-dependency">Setting up the dependency</a></h4>
 <p>Use Gradle to download the library from <a href="https://maven.mozilla.org/">maven.mozilla.org</a> (<a href="https://github.com/mozilla-mobile/android-components/blob/master/README.md#maven-repository">Setup repository</a>) by adding the following to your Gradle configuration:</p>
@@ -205,6 +206,7 @@ For consuming the latest version of Glean, add the following line to your <code>
 </blockquote>
 </div>
 </div>
+</div>
 <h3><a class="header" href="#adding-new-metrics" id="adding-new-metrics">Adding new metrics</a></h3>
 <p>All metrics that your project collects must be defined in a <code>metrics.yaml</code> file.
 Add this file to your project and define it as an input file for the <code>sdk_generator.sh</code> script in the <code>Run Script</code> step defined before.
@@ -232,6 +234,7 @@ This is also required for any new metric automatically collected by the Glean SD
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <h3><a class="header" href="#initializing-the-glean-sdk" id="initializing-the-glean-sdk">Initializing the Glean SDK</a></h3>
 <p>The Glean SDK should only be initialized from the main application, not individual libraries.  If you are adding Glean support to a library, you can safely skip this section.
@@ -317,6 +320,7 @@ This method should also be called at least once prior to calling <code>Glean.sha
 <p>The application should provide some form of user interface to call this method.</p>
 <p>When going from enabled to disabled, all pending events, metrics and pings are cleared, except for <code>first_run_date</code>.
 When re-enabling, core Glean metrics will be recomputed at that time.</p>
+</div>
 </div>
 </div>
 

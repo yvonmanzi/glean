@@ -169,6 +169,7 @@ This makes them suitable for measuring memory sizes on a number of different sca
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Memory
 
@@ -216,6 +217,7 @@ XCTAssertEqual(11, snapshot.sum)
 // Usually you don't know the exact memory values, but how many should have been recorded.
 XCTAssertEqual(2, snapshot.count)
 </code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>

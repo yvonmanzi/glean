@@ -168,6 +168,7 @@ timestamp, the event's name and a set of custom values.</p>
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <p>Note that an <code>enum</code> has been generated for handling the <code>extra_keys</code>: it has the same name as the event metric, with <code>Keys</code> added.</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Views
@@ -203,6 +204,7 @@ XCTAssertEqual(2, snapshot.size)
 val first = snapshot[0]
 XCTAssertEqual(&quot;login_opened&quot;, first.name)
 </code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>

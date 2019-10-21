@@ -158,6 +158,7 @@ These functions expose a way to inspect and validate recorded metric values with
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <p>In order to prevent issues with async calls when unit testing Glean,
 it is important to put the Glean SDK into testing mode by applying the JUnit <code>GleanTestRule</code> to your test class.
@@ -220,6 +221,7 @@ This function will return a datatype appropriate to the specific type of the met
 </code></pre>
 </div>
 </div>
+</div>
 <h2><a class="header" href="#testing-metrics-for-custom-pings" id="testing-metrics-for-custom-pings">Testing metrics for custom pings</a></h2>
 <p>In order to test metrics where the metric is included in more than one ping, the test functions take an optional <code>pingName</code> argument.
 This is the name of the ping that the metric is being sent in, such as <code>&quot;events&quot;</code> for the <a href="pings/events.html"><code>events</code> ping</a>,
@@ -237,6 +239,7 @@ GleanMetrics.Foo.uriCount.testGetValue(&quot;customPing&quot;)
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <p>Here is a longer example to better illustrate the intended use of the test API:</p>
 <pre><code class="language-kotlin">// Record a metric value with extra to validate against
@@ -284,6 +287,7 @@ XCTAssertEqual(3, events.count)
 // Check extra key/value for first event in the list
 XCTAssertEqual(&quot;Courier&quot;, events[0].extra?[&quot;font&quot;])
 </code></pre>
+</div>
 </div>
 </div>
 

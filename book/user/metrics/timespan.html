@@ -177,6 +177,7 @@
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Auth
 
@@ -232,6 +233,7 @@ XCTAssert(try Auth.loginTime.testGetValue() &gt; 0)
 </code></pre>
 </div>
 </div>
+</div>
 <h2><a class="header" href="#raw-api" id="raw-api">Raw API</a></h2>
 <blockquote>
 <p><strong>Note</strong>: The raw API was designed to support a specific set of use-cases.
@@ -245,6 +247,7 @@ This API should only be used if your library or application requires recording t
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.HistorySync
 
@@ -256,6 +259,7 @@ HistorySync.setRawNanos(duration)
 <pre><code class="language-Swift">let duration = SyncResult.status.syncs.took.toLong()
 HistorySync.setRawNanos(duration)
 </code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>

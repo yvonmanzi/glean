@@ -167,6 +167,7 @@
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Login
 
@@ -188,6 +189,7 @@ assertTrue(Login.errorsByStage[&quot;server_auth&quot;].testHasValue())
 // Was anything recorded?
 XCTAssert(Login.errorsByStage[&quot;server_auth&quot;].testHasValue())
 </code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>

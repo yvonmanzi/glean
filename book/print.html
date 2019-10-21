@@ -184,6 +184,7 @@
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <h4><a class="header" href="#setting-up-the-dependency" id="setting-up-the-dependency">Setting up the dependency</a></h4>
 <p>Use Gradle to download the library from <a href="https://maven.mozilla.org/">maven.mozilla.org</a> (<a href="https://github.com/mozilla-mobile/android-components/blob/master/README.md#maven-repository">Setup repository</a>) by adding the following to your Gradle configuration:</p>
@@ -226,6 +227,7 @@ For consuming the latest version of Glean, add the following line to your <code>
 </blockquote>
 </div>
 </div>
+</div>
 <h3><a class="header" href="#adding-new-metrics" id="adding-new-metrics">Adding new metrics</a></h3>
 <p>All metrics that your project collects must be defined in a <code>metrics.yaml</code> file.
 Add this file to your project and define it as an input file for the <code>sdk_generator.sh</code> script in the <code>Run Script</code> step defined before.
@@ -253,6 +255,7 @@ This is also required for any new metric automatically collected by the Glean SD
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <h3><a class="header" href="#initializing-the-glean-sdk" id="initializing-the-glean-sdk">Initializing the Glean SDK</a></h3>
 <p>The Glean SDK should only be initialized from the main application, not individual libraries.  If you are adding Glean support to a library, you can safely skip this section.
@@ -340,6 +343,7 @@ This method should also be called at least once prior to calling <code>Glean.sha
 When re-enabling, core Glean metrics will be recomputed at that time.</p>
 </div>
 </div>
+</div>
 <h1><a class="header" href="#adding-new-metrics-1" id="adding-new-metrics-1">Adding new metrics</a></h1>
 <p>All metrics that your project collects must be defined in a <code>metrics.yaml</code> file.
 This file should be at the root of the application or library module.
@@ -423,6 +427,7 @@ Removing a metric does not affect the availability of data already collected by 
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <p>Category and metric names in the <code>metrics.yaml</code> are in <code>snake_case</code>,
 but given the Kotlin coding standards defined by <a href="https://github.com/pinterest/ktlint">ktlint</a>,
@@ -449,6 +454,7 @@ For example, the metric defined in the <code>metrics.yaml</code> as:</p>
 <p>is accessible in Kotlin as:</p>
 <pre><code class="language-Swift">GleanMetrics.Views.loginOpened...
 </code></pre>
+</div>
 </div>
 </div>
 <h1><a class="header" href="#metric-parameters" id="metric-parameters">Metric parameters</a></h1>
@@ -514,6 +520,7 @@ These functions expose a way to inspect and validate recorded metric values with
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <p>In order to prevent issues with async calls when unit testing Glean,
 it is important to put the Glean SDK into testing mode by applying the JUnit <code>GleanTestRule</code> to your test class.
@@ -576,6 +583,7 @@ This function will return a datatype appropriate to the specific type of the met
 </code></pre>
 </div>
 </div>
+</div>
 <h2><a class="header" href="#testing-metrics-for-custom-pings" id="testing-metrics-for-custom-pings">Testing metrics for custom pings</a></h2>
 <p>In order to test metrics where the metric is included in more than one ping, the test functions take an optional <code>pingName</code> argument.
 This is the name of the ping that the metric is being sent in, such as <code>&quot;events&quot;</code> for the <a href="user/pings/events.html"><code>events</code> ping</a>,
@@ -593,6 +601,7 @@ GleanMetrics.Foo.uriCount.testGetValue(&quot;customPing&quot;)
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <p>Here is a longer example to better illustrate the intended use of the test API:</p>
 <pre><code class="language-kotlin">// Record a metric value with extra to validate against
@@ -640,6 +649,7 @@ XCTAssertEqual(3, events.count)
 // Check extra key/value for first event in the list
 XCTAssertEqual(&quot;Courier&quot;, events[0].extra?[&quot;font&quot;])
 </code></pre>
+</div>
 </div>
 </div>
 <h1><a class="header" href="#debugging-products-using-the-glean-sdk" id="debugging-products-using-the-glean-sdk">Debugging products using the Glean SDK</a></h1>
@@ -761,6 +771,7 @@ The application or consuming library is responsible for setting the relevant exp
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">// Annotate Glean pings with experiments data.
 Glean.setExperimentActive(
@@ -793,6 +804,7 @@ assertEquals(
 <blockquote>
 <p><strong>Note</strong>: Experiments are currently not supported by Glean for iOS.</p>
 </blockquote>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
@@ -891,6 +903,7 @@ Only the first 16 labels seen by the Glean SDK will be tracked. After that, any 
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Flags
 
@@ -916,6 +929,7 @@ XCTAssertTrue(Flags.a11yEnabled.testHasValue())
 // Does the counter have the expected value?
 XCTAssertTrue(try Flags.a11yEnabled.testGetValue())
 </code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits-1" id="limits-1">Limits</a></h2>
@@ -952,6 +966,7 @@ XCTAssertTrue(try Flags.a11yEnabled.testGetValue())
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Controls
 
@@ -979,6 +994,7 @@ XCTAssert(Controls.refreshPressed.testHasValue())
 // Does the counter have the expected value?
 XCTAssertEqual(6, try Controls.refreshPressed.testGetValue())
 </code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits-2" id="limits-2">Limits</a></h2>
@@ -1019,6 +1035,7 @@ XCTAssertEqual(6, try Controls.refreshPressed.testGetValue())
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Stability
 Stability.crashCount[&quot;uncaught_exception&quot;].add() // Adds 1 to the &quot;uncaught_exception&quot; counter.
@@ -1048,6 +1065,7 @@ XCTAssert(Stability.crashCount[&quot;native_code_crash&quot;].testHasValue())
 XCTAssertEqual(1, try Stability.crashCount[&quot;uncaught_exception&quot;].testGetValue())
 XCTAssertEqual(3, try Stability.crashCount[&quot;native_code_crash&quot;].testGetValue())
 </code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits-3" id="limits-3">Limits</a></h2>
@@ -1110,6 +1128,7 @@ XCTAssertEqual(3, try Stability.crashCount[&quot;native_code_crash&quot;].testGe
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.SearchDefault
 
@@ -1143,6 +1162,7 @@ XCTAssert(SearchDefault.name.testHasValue())
 // IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
 XCTAssertEqual(&quot;wikipedia&quot;, try SearchDefault.name.testGetValue())
 </code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits-4" id="limits-4">Limits</a></h2>
@@ -1187,6 +1207,7 @@ XCTAssertEqual(&quot;wikipedia&quot;, try SearchDefault.name.testGetValue())
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Login
 
@@ -1208,6 +1229,7 @@ assertTrue(Login.errorsByStage[&quot;server_auth&quot;].testHasValue())
 // Was anything recorded?
 XCTAssert(Login.errorsByStage[&quot;server_auth&quot;].testHasValue())
 </code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits-5" id="limits-5">Limits</a></h2>
@@ -1343,6 +1365,7 @@ assertEquals(listOf(&quot;Google&quot;, &quot;DuckDuckGo&quot;), Search.engines.
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Auth
 
@@ -1398,6 +1421,7 @@ XCTAssert(try Auth.loginTime.testGetValue() &gt; 0)
 </code></pre>
 </div>
 </div>
+</div>
 <h2><a class="header" href="#raw-api" id="raw-api">Raw API</a></h2>
 <blockquote>
 <p><strong>Note</strong>: The raw API was designed to support a specific set of use-cases.
@@ -1411,6 +1435,7 @@ This API should only be used if your library or application requires recording t
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.HistorySync
 
@@ -1422,6 +1447,7 @@ HistorySync.setRawNanos(duration)
 <pre><code class="language-Swift">let duration = SyncResult.status.syncs.took.toLong()
 HistorySync.setRawNanos(duration)
 </code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits-7" id="limits-7">Limits</a></h2>
@@ -1475,6 +1501,7 @@ For example, to measure page load time on a number of tabs that are loading at t
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import mozilla.components.service.glean.GleanTimerId
 import org.mozilla.yourApplication.GleanMetrics.Pages
@@ -1537,6 +1564,7 @@ XCTAssertEqual(2, snapshot.count)
 </code></pre>
 </div>
 </div>
+</div>
 <h2><a class="header" href="#limits-8" id="limits-8">Limits</a></h2>
 <ul>
 <li>
@@ -1584,6 +1612,7 @@ This makes them suitable for measuring memory sizes on a number of different sca
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Memory
 
@@ -1633,6 +1662,7 @@ XCTAssertEqual(2, snapshot.count)
 </code></pre>
 </div>
 </div>
+</div>
 <h2><a class="header" href="#limits-9" id="limits-9">Limits</a></h2>
 <ul>
 <li>The maxmimum memory size that can be recorded is 1 Terabyte (2<sup>40</sup> bytes). Larger sizes will be truncated to 1 Terabyte.</li>
@@ -1670,6 +1700,7 @@ XCTAssertEqual(2, snapshot.count)
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.User
 
@@ -1697,6 +1728,7 @@ XCTAssert(User.clientId.testHasValue())
 // Was it the expected value?
 XCTAssertEqual(uuid, try User.clientId.testGetValue())
 </code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits-10" id="limits-10">Limits</a></h2>
@@ -1748,6 +1780,7 @@ XCTAssertEqual(uuid, try User.clientId.testGetValue())
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Install
 
@@ -1782,6 +1815,7 @@ XCTAssert(Controls.refreshPressed.testHasValue())
 // Does the counter have the expected value?
 XCTAssertEqual(6, try Controls.refreshPressed.testGetValue())
 </code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits-11" id="limits-11">Limits</a></h2>
@@ -1822,6 +1856,7 @@ timestamp, the event's name and a set of custom values.</p>
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <p>Note that an <code>enum</code> has been generated for handling the <code>extra_keys</code>: it has the same name as the event metric, with <code>Keys</code> added.</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Views
@@ -1857,6 +1892,7 @@ XCTAssertEqual(2, snapshot.size)
 val first = snapshot[0]
 XCTAssertEqual(&quot;login_opened&quot;, first.name)
 </code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits-12" id="limits-12">Limits</a></h2>

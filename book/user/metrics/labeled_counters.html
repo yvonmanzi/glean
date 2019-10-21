@@ -168,6 +168,7 @@
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Stability
 Stability.crashCount[&quot;uncaught_exception&quot;].add() // Adds 1 to the &quot;uncaught_exception&quot; counter.
@@ -197,6 +198,7 @@ XCTAssert(Stability.crashCount[&quot;native_code_crash&quot;].testHasValue())
 XCTAssertEqual(1, try Stability.crashCount[&quot;uncaught_exception&quot;].testGetValue())
 XCTAssertEqual(3, try Stability.crashCount[&quot;native_code_crash&quot;].testGetValue())
 </code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>

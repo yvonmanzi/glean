@@ -230,6 +230,7 @@ Removing a metric does not affect the availability of data already collected by 
   <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
   <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
 </div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <p>Category and metric names in the <code>metrics.yaml</code> are in <code>snake_case</code>,
 but given the Kotlin coding standards defined by <a href="https://github.com/pinterest/ktlint">ktlint</a>,
@@ -256,6 +257,7 @@ For example, the metric defined in the <code>metrics.yaml</code> as:</p>
 <p>is accessible in Kotlin as:</p>
 <pre><code class="language-Swift">GleanMetrics.Views.loginOpened...
 </code></pre>
+</div>
 </div>
 </div>
 
