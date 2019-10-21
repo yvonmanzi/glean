@@ -544,6 +544,54 @@
 <span id="544">544</span>
 <span id="545">545</span>
 <span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
+<span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
+<span id="556">556</span>
+<span id="557">557</span>
+<span id="558">558</span>
+<span id="559">559</span>
+<span id="560">560</span>
+<span id="561">561</span>
+<span id="562">562</span>
+<span id="563">563</span>
+<span id="564">564</span>
+<span id="565">565</span>
+<span id="566">566</span>
+<span id="567">567</span>
+<span id="568">568</span>
+<span id="569">569</span>
+<span id="570">570</span>
+<span id="571">571</span>
+<span id="572">572</span>
+<span id="573">573</span>
+<span id="574">574</span>
+<span id="575">575</span>
+<span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -558,6 +606,7 @@
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">metrics</span>::<span class="ident">Metric</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">CommonMetricData</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Glean</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Lifetime</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="prelude-ty">Result</span>;
 
@@ -613,13 +662,31 @@
         }
     }
 
-    <span class="doccomment">/// Iterates with the provided transaction function on the data from</span>
-    <span class="doccomment">/// the given storage.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter_store_from</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">lifetime</span>: <span class="ident">Lifetime</span>, <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">mut</span> <span class="ident">transaction_fn</span>: <span class="ident">F</span>)
-    <span class="kw">where</span>
+    <span class="doccomment">/// Iterates with the provided transaction function over the requested data</span>
+    <span class="doccomment">/// from the given storage.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ## Arguments</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `lifetime`: The metric lifetime to iterate over.</span>
+    <span class="doccomment">/// * `storage_name`: The storage name to iterate over.</span>
+    <span class="doccomment">/// * `metric_key`: The metric key to iterate over. All metrics iterated over</span>
+    <span class="doccomment">///   will have this prefix. For example, if `metric_key` is of the form `{category}.`,</span>
+    <span class="doccomment">///   it will iterate over all metrics in the given category. If the `metric_key` is of the</span>
+    <span class="doccomment">///   form `{category}.{name}/`, the iterator will iterate over all specific metrics for</span>
+    <span class="doccomment">///   a given labeled metric. If not provided, the entire storage for the given lifetime</span>
+    <span class="doccomment">///   will be iterated over.</span>
+    <span class="doccomment">/// * `transaction_fn`: Called for each entry being iterated over. It is</span>
+    <span class="doccomment">///   passed two arguments: `(metric_name: &amp;[u8], metric: &amp;Metric)`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter_store_from</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">lifetime</span>: <span class="ident">Lifetime</span>,
+        <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">metric_key</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
+        <span class="kw-2">mut</span> <span class="ident">transaction_fn</span>: <span class="ident">F</span>,
+    ) <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="kw-2">&amp;</span><span class="ident">Metric</span>),
     {
-        <span class="kw">let</span> <span class="ident">iter_start</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">get_storage_key</span>(<span class="ident">storage_name</span>, <span class="prelude-val">None</span>);
+        <span class="kw">let</span> <span class="ident">iter_start</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">get_storage_key</span>(<span class="ident">storage_name</span>, <span class="ident">metric_key</span>);
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">iter_start</span>.<span class="ident">len</span>();
 
         <span class="comment">// Lifetime::Application data is not persisted to disk</span>
@@ -656,6 +723,35 @@
         }
     }
 
+    <span class="doccomment">/// Determine if the storage has the given metric.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ## Arguments</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `lifetime`: The lifetime of the metric.</span>
+    <span class="doccomment">/// * `storage_name`: The storage name to look in.</span>
+    <span class="doccomment">/// * `metric_identifier`: The metric identifier.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_metric</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">lifetime</span>: <span class="ident">Lifetime</span>,
+        <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">metric_identifier</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+    ) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">get_storage_key</span>(<span class="ident">storage_name</span>, <span class="prelude-val">Some</span>(<span class="ident">metric_identifier</span>));
+
+        <span class="comment">// Lifetime::Application data is not persisted to disk</span>
+        <span class="kw">if</span> <span class="ident">lifetime</span> <span class="op">==</span> <span class="ident">Lifetime</span>::<span class="ident">Application</span> {
+            <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">app_lifetime_data</span>.<span class="ident">read</span>().<span class="ident">unwrap</span>();
+            <span class="kw">return</span> <span class="ident">data</span>.<span class="ident">contains_key</span>(<span class="kw-2">&amp;</span><span class="ident">key</span>);
+        }
+
+        <span class="kw">let</span> <span class="ident">store</span>: <span class="ident">SingleStore</span> <span class="op">=</span> <span class="self">self</span>
+            .<span class="ident">rkv</span>
+            .<span class="ident">open_single</span>(<span class="ident">lifetime</span>.<span class="ident">as_str</span>(), <span class="ident">StoreOptions</span>::<span class="ident">create</span>())
+            .<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">reader</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">rkv</span>.<span class="ident">read</span>().<span class="ident">unwrap</span>();
+        <span class="ident">store</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">reader</span>, <span class="kw-2">&amp;</span><span class="ident">key</span>).<span class="ident">unwrap_or</span>(<span class="prelude-val">None</span>).<span class="ident">is_some</span>()
+    }
+
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write_with_store</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">store_name</span>: <span class="ident">Lifetime</span>, <span class="kw-2">mut</span> <span class="ident">transaction_fn</span>: <span class="ident">F</span>)
     <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">rkv</span>::<span class="ident">Writer</span>, <span class="ident">SingleStore</span>),
@@ -673,8 +769,8 @@
     }
 
     <span class="doccomment">/// Records a metric in the underlying storage system.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">record</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="ident">CommonMetricData</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">Metric</span>) {
-        <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">identifier</span>();
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">record</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="ident">CommonMetricData</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">Metric</span>) {
+        <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">identifier</span>(<span class="ident">glean</span>);
 
         <span class="kw">for</span> <span class="ident">ping_name</span> <span class="kw">in</span> <span class="ident">data</span>.<span class="ident">storage_names</span>() {
             <span class="self">self</span>.<span class="ident">record_per_lifetime</span>(<span class="ident">data</span>.<span class="ident">lifetime</span>, <span class="ident">ping_name</span>, <span class="kw-2">&amp;</span><span class="ident">name</span>, <span class="ident">value</span>);
@@ -714,11 +810,11 @@
 
     <span class="doccomment">/// Records the provided value, with the given lifetime, after</span>
     <span class="doccomment">/// applying a transformation function.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">record_with</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="ident">CommonMetricData</span>, <span class="kw-2">mut</span> <span class="ident">transform</span>: <span class="ident">F</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">record_with</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="ident">CommonMetricData</span>, <span class="kw-2">mut</span> <span class="ident">transform</span>: <span class="ident">F</span>)
     <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Metric</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Metric</span>,
     {
-        <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">identifier</span>();
+        <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">identifier</span>(<span class="ident">glean</span>);
         <span class="kw">for</span> <span class="ident">ping_name</span> <span class="kw">in</span> <span class="ident">data</span>.<span class="ident">storage_names</span>() {
             <span class="self">self</span>.<span class="ident">record_per_lifetime_with</span>(<span class="ident">data</span>.<span class="ident">lifetime</span>, <span class="ident">ping_name</span>, <span class="kw-2">&amp;</span><span class="ident">name</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">transform</span>);
         }
@@ -888,7 +984,7 @@
             }
         };
 
-        <span class="ident">db</span>.<span class="ident">iter_store_from</span>(<span class="ident">Lifetime</span>::<span class="ident">Ping</span>, <span class="ident">test_storage</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">snapshotter</span>);
+        <span class="ident">db</span>.<span class="ident">iter_store_from</span>(<span class="ident">Lifetime</span>::<span class="ident">Ping</span>, <span class="ident">test_storage</span>, <span class="prelude-val">None</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">snapshotter</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">1</span>, <span class="ident">found_metrics</span>, <span class="string">&quot;We only expect 1 Lifetime.Ping metric.&quot;</span>);
     }
 
@@ -922,7 +1018,7 @@
             }
         };
 
-        <span class="ident">db</span>.<span class="ident">iter_store_from</span>(<span class="ident">Lifetime</span>::<span class="ident">Application</span>, <span class="ident">test_storage</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">snapshotter</span>);
+        <span class="ident">db</span>.<span class="ident">iter_store_from</span>(<span class="ident">Lifetime</span>::<span class="ident">Application</span>, <span class="ident">test_storage</span>, <span class="prelude-val">None</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">snapshotter</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="number">1</span>, <span class="ident">found_metrics</span>,
             <span class="string">&quot;We only expect 1 Lifetime.Application metric.&quot;</span>
@@ -959,7 +1055,7 @@
             }
         };
 
-        <span class="ident">db</span>.<span class="ident">iter_store_from</span>(<span class="ident">Lifetime</span>::<span class="ident">User</span>, <span class="ident">test_storage</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">snapshotter</span>);
+        <span class="ident">db</span>.<span class="ident">iter_store_from</span>(<span class="ident">Lifetime</span>::<span class="ident">User</span>, <span class="ident">test_storage</span>, <span class="prelude-val">None</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">snapshotter</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">1</span>, <span class="ident">found_metrics</span>, <span class="string">&quot;We only expect 1 Lifetime.User metric.&quot;</span>);
     }
 
@@ -1002,9 +1098,9 @@
                 };
             };
 
-            <span class="ident">db</span>.<span class="ident">iter_store_from</span>(<span class="ident">Lifetime</span>::<span class="ident">User</span>, <span class="ident">test_storage</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">snapshotter</span>);
-            <span class="ident">db</span>.<span class="ident">iter_store_from</span>(<span class="ident">Lifetime</span>::<span class="ident">Ping</span>, <span class="ident">test_storage</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">snapshotter</span>);
-            <span class="ident">db</span>.<span class="ident">iter_store_from</span>(<span class="ident">Lifetime</span>::<span class="ident">Application</span>, <span class="ident">test_storage</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">snapshotter</span>);
+            <span class="ident">db</span>.<span class="ident">iter_store_from</span>(<span class="ident">Lifetime</span>::<span class="ident">User</span>, <span class="ident">test_storage</span>, <span class="prelude-val">None</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">snapshotter</span>);
+            <span class="ident">db</span>.<span class="ident">iter_store_from</span>(<span class="ident">Lifetime</span>::<span class="ident">Ping</span>, <span class="ident">test_storage</span>, <span class="prelude-val">None</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">snapshotter</span>);
+            <span class="ident">db</span>.<span class="ident">iter_store_from</span>(<span class="ident">Lifetime</span>::<span class="ident">Application</span>, <span class="ident">test_storage</span>, <span class="prelude-val">None</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">snapshotter</span>);
 
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">3</span>, <span class="ident">snapshot</span>.<span class="ident">len</span>(), <span class="string">&quot;We expect all lifetimes to be present.&quot;</span>);
             <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">snapshot</span>.<span class="ident">contains_key</span>(<span class="string">&quot;telemetry_test.test_name_user&quot;</span>));
@@ -1026,9 +1122,9 @@
                 };
             };
 
-            <span class="ident">db</span>.<span class="ident">iter_store_from</span>(<span class="ident">Lifetime</span>::<span class="ident">User</span>, <span class="ident">test_storage</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">snapshotter</span>);
-            <span class="ident">db</span>.<span class="ident">iter_store_from</span>(<span class="ident">Lifetime</span>::<span class="ident">Ping</span>, <span class="ident">test_storage</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">snapshotter</span>);
-            <span class="ident">db</span>.<span class="ident">iter_store_from</span>(<span class="ident">Lifetime</span>::<span class="ident">Application</span>, <span class="ident">test_storage</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">snapshotter</span>);
+            <span class="ident">db</span>.<span class="ident">iter_store_from</span>(<span class="ident">Lifetime</span>::<span class="ident">User</span>, <span class="ident">test_storage</span>, <span class="prelude-val">None</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">snapshotter</span>);
+            <span class="ident">db</span>.<span class="ident">iter_store_from</span>(<span class="ident">Lifetime</span>::<span class="ident">Ping</span>, <span class="ident">test_storage</span>, <span class="prelude-val">None</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">snapshotter</span>);
+            <span class="ident">db</span>.<span class="ident">iter_store_from</span>(<span class="ident">Lifetime</span>::<span class="ident">Application</span>, <span class="ident">test_storage</span>, <span class="prelude-val">None</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">snapshotter</span>);
 
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">2</span>, <span class="ident">snapshot</span>.<span class="ident">len</span>(), <span class="string">&quot;We only expect 2 metrics to be left.&quot;</span>);
             <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">snapshot</span>.<span class="ident">contains_key</span>(<span class="string">&quot;telemetry_test.test_name_user&quot;</span>));
@@ -1083,7 +1179,7 @@
             };
 
             <span class="comment">// Check the User lifetime.</span>
-            <span class="ident">db</span>.<span class="ident">iter_store_from</span>(<span class="kw-2">*</span><span class="ident">lifetime</span>, <span class="ident">test_storage</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">snapshotter</span>);
+            <span class="ident">db</span>.<span class="ident">iter_store_from</span>(<span class="kw-2">*</span><span class="ident">lifetime</span>, <span class="ident">test_storage</span>, <span class="prelude-val">None</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">snapshotter</span>);
             <span class="macro">assert_eq</span><span class="macro">!</span>(
                 <span class="number">1</span>, <span class="ident">found_metrics</span>,
                 <span class="string">&quot;We only expect 1 metric for this lifetime.&quot;</span>

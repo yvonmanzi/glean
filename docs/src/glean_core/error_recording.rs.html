@@ -190,6 +190,8 @@
 <span id="190">190</span>
 <span id="191">191</span>
 <span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -208,7 +210,7 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Display</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">metrics</span>::<span class="ident">CounterMetric</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">metrics</span>::<span class="ident">MetricType</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">metrics</span>::{<span class="ident">combine_base_identifier_and_label</span>, <span class="ident">strip_label</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">CommonMetricData</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Glean</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Lifetime</span>;
@@ -232,6 +234,28 @@
     }
 }
 
+<span class="doccomment">/// For a given metric, get the metric in which to record errors</span>
+<span class="kw">fn</span> <span class="ident">get_error_metric_for_metric</span>(<span class="ident">meta</span>: <span class="kw-2">&amp;</span><span class="ident">CommonMetricData</span>, <span class="ident">error</span>: <span class="ident">ErrorType</span>) <span class="op">-&gt;</span> <span class="ident">CounterMetric</span> {
+    <span class="comment">// Can&#39;t use meta.identifier here, since that might cause infinite recursion</span>
+    <span class="comment">// if the label on this metric needs to report an error.</span>
+    <span class="kw">let</span> <span class="ident">identifier</span> <span class="op">=</span> <span class="ident">meta</span>.<span class="ident">base_identifier</span>();
+    <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">strip_label</span>(<span class="kw-2">&amp;</span><span class="ident">identifier</span>);
+
+    <span class="comment">// Record errors in the pings the metric is in, as well as the metrics ping.</span>
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">send_in_pings</span> <span class="op">=</span> <span class="ident">meta</span>.<span class="ident">send_in_pings</span>.<span class="ident">clone</span>();
+    <span class="kw">if</span> <span class="op">!</span><span class="ident">send_in_pings</span>.<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="string">&quot;metrics&quot;</span>.<span class="ident">to_string</span>()) {
+        <span class="ident">send_in_pings</span>.<span class="ident">push</span>(<span class="string">&quot;metrics&quot;</span>.<span class="ident">into</span>());
+    }
+
+    <span class="ident">CounterMetric</span>::<span class="ident">new</span>(<span class="ident">CommonMetricData</span> {
+        <span class="ident">name</span>: <span class="ident">combine_base_identifier_and_label</span>(<span class="ident">error</span>.<span class="ident">to_string</span>(), <span class="ident">name</span>),
+        <span class="ident">category</span>: <span class="string">&quot;glean.error&quot;</span>.<span class="ident">into</span>(),
+        <span class="ident">lifetime</span>: <span class="ident">Lifetime</span>::<span class="ident">Ping</span>,
+        <span class="ident">send_in_pings</span>,
+        ..<span class="ident">Default</span>::<span class="ident">default</span>()
+    })
+}
+
 <span class="doccomment">/// Records an error into Glean.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Errors are recorded as labeled counters in the `glean.error` category.</span>
@@ -247,7 +271,7 @@
 <span class="doccomment">/// * error -  The error type to record</span>
 <span class="doccomment">/// * message - The message to log. This message is not sent with the ping.</span>
 <span class="doccomment">///             It does not need to include the metric name, as that is automatically prepended to the message.</span>
-<span class="comment">//  * num_errors - The number of errors of the same type to report.</span>
+<span class="doccomment">///  * num_errors - The number of errors of the same type to report.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">record_error</span><span class="op">&lt;</span><span class="ident">O</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>(
     <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>,
     <span class="ident">meta</span>: <span class="kw-2">&amp;</span><span class="ident">CommonMetricData</span>,
@@ -255,25 +279,9 @@
     <span class="ident">message</span>: <span class="kw">impl</span> <span class="ident">Display</span>,
     <span class="ident">num_errors</span>: <span class="ident">O</span>,
 ) {
-    <span class="comment">// Split off any label of the identifier</span>
-    <span class="kw">let</span> <span class="ident">identifier</span> <span class="op">=</span> <span class="ident">meta</span>.<span class="ident">identifier</span>();
-    <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">identifier</span>.<span class="ident">splitn</span>(<span class="number">2</span>, <span class="string">&#39;/&#39;</span>).<span class="ident">next</span>().<span class="ident">unwrap</span>(); <span class="comment">// safe unwrap, first field of a split always valid</span>
+    <span class="kw">let</span> <span class="ident">metric</span> <span class="op">=</span> <span class="ident">get_error_metric_for_metric</span>(<span class="ident">meta</span>, <span class="ident">error</span>);
 
-    <span class="comment">// Record errors in the pings the metric is in, as well as the metrics ping.</span>
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">send_in_pings</span> <span class="op">=</span> <span class="ident">meta</span>.<span class="ident">send_in_pings</span>.<span class="ident">clone</span>();
-    <span class="kw">if</span> <span class="op">!</span><span class="ident">send_in_pings</span>.<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="string">&quot;metrics&quot;</span>.<span class="ident">to_string</span>()) {
-        <span class="ident">send_in_pings</span>.<span class="ident">push</span>(<span class="string">&quot;metrics&quot;</span>.<span class="ident">into</span>());
-    }
-
-    <span class="kw">let</span> <span class="ident">metric</span> <span class="op">=</span> <span class="ident">CounterMetric</span>::<span class="ident">new</span>(<span class="ident">CommonMetricData</span> {
-        <span class="ident">name</span>: <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}/{}&quot;</span>, <span class="ident">error</span>.<span class="ident">to_string</span>(), <span class="ident">name</span>),
-        <span class="ident">category</span>: <span class="string">&quot;glean.error&quot;</span>.<span class="ident">into</span>(),
-        <span class="ident">lifetime</span>: <span class="ident">Lifetime</span>::<span class="ident">Ping</span>,
-        <span class="ident">send_in_pings</span>,
-        ..<span class="ident">Default</span>::<span class="ident">default</span>()
-    });
-
-    <span class="ident">log</span>::<span class="macro">warn</span><span class="macro">!</span>(<span class="string">&quot;{}: {}&quot;</span>, <span class="ident">identifier</span>, <span class="ident">message</span>);
+    <span class="ident">log</span>::<span class="macro">warn</span><span class="macro">!</span>(<span class="string">&quot;{}: {}&quot;</span>, <span class="ident">meta</span>.<span class="ident">base_identifier</span>(), <span class="ident">message</span>);
     <span class="kw">let</span> <span class="ident">to_report</span> <span class="op">=</span> <span class="ident">num_errors</span>.<span class="ident">into</span>().<span class="ident">unwrap_or</span>(<span class="number">1</span>);
     <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">to_report</span> <span class="op">&gt;</span> <span class="number">0</span>);
     <span class="ident">metric</span>.<span class="ident">add</span>(<span class="ident">glean</span>, <span class="ident">to_report</span>);
@@ -299,17 +307,12 @@
     <span class="ident">ping_name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
 ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">i32</span>, <span class="ident">String</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">use_ping_name</span> <span class="op">=</span> <span class="ident">ping_name</span>.<span class="ident">unwrap_or</span>(<span class="kw-2">&amp;</span><span class="ident">meta</span>.<span class="ident">send_in_pings</span>[<span class="number">0</span>]);
-    <span class="kw">let</span> <span class="ident">metric</span> <span class="op">=</span> <span class="ident">CounterMetric</span>::<span class="ident">new</span>(<span class="ident">CommonMetricData</span> {
-        <span class="ident">name</span>: <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}/{}&quot;</span>, <span class="ident">error</span>.<span class="ident">to_string</span>(), <span class="ident">meta</span>.<span class="ident">identifier</span>()),
-        <span class="ident">category</span>: <span class="string">&quot;glean.error&quot;</span>.<span class="ident">into</span>(),
-        <span class="ident">lifetime</span>: <span class="ident">Lifetime</span>::<span class="ident">Ping</span>,
-        ..<span class="ident">meta</span>.<span class="ident">clone</span>()
-    });
+    <span class="kw">let</span> <span class="ident">metric</span> <span class="op">=</span> <span class="ident">get_error_metric_for_metric</span>(<span class="ident">meta</span>, <span class="ident">error</span>);
 
     <span class="ident">metric</span>.<span class="ident">test_get_value</span>(<span class="ident">glean</span>, <span class="ident">use_ping_name</span>).<span class="ident">ok_or_else</span>(<span class="op">||</span> {
         <span class="macro">format</span><span class="macro">!</span>(
             <span class="string">&quot;No error recorded for {} in &#39;{}&#39; store&quot;</span>,
-            <span class="ident">metric</span>.<span class="ident">meta</span>().<span class="ident">identifier</span>(),
+            <span class="ident">meta</span>.<span class="ident">base_identifier</span>(),
             <span class="ident">use_ping_name</span>
         )
     })
@@ -340,6 +343,7 @@
             <span class="ident">send_in_pings</span>: <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;store1&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;store2&quot;</span>.<span class="ident">into</span>()],
             <span class="ident">disabled</span>: <span class="bool-val">false</span>,
             <span class="ident">lifetime</span>: <span class="ident">Lifetime</span>::<span class="ident">User</span>,
+            ..<span class="ident">Default</span>::<span class="ident">default</span>()
         });
 
         <span class="kw">let</span> <span class="ident">expected_invalid_values_errors</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="number">1</span>;

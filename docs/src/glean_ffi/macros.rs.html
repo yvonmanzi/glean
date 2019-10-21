@@ -90,6 +90,7 @@
 <span id="90">90</span>
 <span id="91">91</span>
 <span id="92">92</span>
+<span id="93">93</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">define_infallible_handle_map_deleter</span> {
@@ -166,6 +167,7 @@
                     <span class="ident">send_in_pings</span>,
                     <span class="ident">lifetime</span>,
                     <span class="ident">disabled</span>: <span class="ident">disabled</span> <span class="op">!=</span> <span class="number">0</span>,
+                    ..<span class="ident">Default</span>::<span class="ident">default</span>()
                 }, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">new_argname</span>),<span class="kw-2">*</span>))
             })
         }

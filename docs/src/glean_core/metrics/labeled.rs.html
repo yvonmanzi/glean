@@ -202,31 +202,18 @@
 <span id="202">202</span>
 <span id="203">203</span>
 <span id="204">204</span>
-<span id="205">205</span>
-<span id="206">206</span>
-<span id="207">207</span>
-<span id="208">208</span>
-<span id="209">209</span>
-<span id="210">210</span>
-<span id="211">211</span>
-<span id="212">212</span>
-<span id="213">213</span>
-<span id="214">214</span>
-<span id="215">215</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
 <span class="comment">// file, You can obtain one at https://mozilla.org/MPL/2.0/.</span>
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashSet</span>;
-
 <span class="kw">use</span> <span class="ident">lazy_static</span>::<span class="ident">lazy_static</span>;
 <span class="kw">use</span> <span class="ident">regex</span>::<span class="ident">Regex</span>;
 
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">common_metric_data</span>::<span class="ident">CommonMetricData</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error_recording</span>::{<span class="ident">record_error</span>, <span class="ident">ErrorType</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">metrics</span>::{<span class="ident">Metric</span>, <span class="ident">MetricType</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Glean</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Lifetime</span>;
 
 <span class="kw">const</span> <span class="ident">MAX_LABELS</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">16</span>;
 <span class="kw">const</span> <span class="ident">OTHER_LABEL</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;__other__&quot;</span>;
@@ -254,30 +241,6 @@
     <span class="kw">static</span> <span class="kw-2">ref</span> <span class="ident">LABEL_REGEX</span>: <span class="ident">Regex</span> <span class="op">=</span> <span class="ident">Regex</span>::<span class="ident">new</span>(<span class="string">&quot;^[a-z_][a-z0-9_-]{0,29}(\\.[a-z0-9_-]{0,29})*$&quot;</span>).<span class="ident">unwrap</span>();
 }
 
-<span class="doccomment">/// Validate a label against the restrictions.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// * Shorter than the allowed `MAX_LABEL_LENGTH`.</span>
-<span class="doccomment">/// * Matches the label regex (only alphanumeric characters and dots, underscores, hyphens)</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Returns an error message to be reported through Glean.</span>
-<span class="kw">fn</span> <span class="ident">validate_label</span>(<span class="ident">label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">String</span><span class="op">&gt;</span> {
-    <span class="kw">if</span> <span class="ident">label</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="ident">MAX_LABEL_LENGTH</span> {
-        <span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
-            <span class="string">&quot;label length {} exceeds maximum of {}&quot;</span>,
-            <span class="ident">label</span>.<span class="ident">len</span>(),
-            <span class="ident">MAX_LABEL_LENGTH</span>
-        );
-        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">msg</span>);
-    }
-
-    <span class="kw">if</span> <span class="op">!</span><span class="ident">LABEL_REGEX</span>.<span class="ident">is_match</span>(<span class="ident">label</span>) {
-        <span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;label must be snake_case, got &#39;{}&#39;&quot;</span>, <span class="ident">label</span>);
-        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">msg</span>);
-    }
-
-    <span class="prelude-val">Ok</span>(<span class="ident">label</span>)
-}
-
 <span class="doccomment">/// A labeled metric.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Labeled metrics allow to record multiple sub-metrics of the same type under different string labels.</span>
@@ -287,8 +250,6 @@
     <span class="doccomment">/// Type of the underlying metric</span>
     <span class="doccomment">/// We hold on to an instance of it, which is cloned to create new modified instances.</span>
     <span class="ident">submetric</span>: <span class="ident">T</span>,
-
-    <span class="ident">seen_labels</span>: <span class="ident">HashSet</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">LabeledMetric</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
@@ -299,16 +260,25 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// See [`get`](#method.get) for information on how static or dynamic labels are handled.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">submetric</span>: <span class="ident">T</span>, <span class="ident">labels</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="ident">LabeledMetric</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="ident">LabeledMetric</span> {
-            <span class="ident">labels</span>,
-            <span class="ident">submetric</span>,
-            <span class="ident">seen_labels</span>: <span class="ident">HashSet</span>::<span class="ident">new</span>(),
-        }
+        <span class="ident">LabeledMetric</span> { <span class="ident">labels</span>, <span class="ident">submetric</span> }
     }
 
+    <span class="doccomment">/// Creates a new metric with a specific label.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This is used for static labels where we can just set the name to be `name/label`.</span>
     <span class="kw">fn</span> <span class="ident">new_metric_with_name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">name</span>: <span class="ident">String</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">t</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">submetric</span>.<span class="ident">clone</span>();
         <span class="ident">t</span>.<span class="ident">meta_mut</span>().<span class="ident">name</span> <span class="op">=</span> <span class="ident">name</span>;
+        <span class="ident">t</span>
+    }
+
+    <span class="doccomment">/// Creates a new metric with a specific label.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This is used for dynamic labels where we have to actually validate and correct the</span>
+    <span class="doccomment">/// label later when we have a Glean object.</span>
+    <span class="kw">fn</span> <span class="ident">new_metric_with_dynamic_label</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">label</span>: <span class="ident">String</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">t</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">submetric</span>.<span class="ident">clone</span>();
+        <span class="ident">t</span>.<span class="ident">meta_mut</span>().<span class="ident">dynamic_label</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">label</span>);
         <span class="ident">t</span>
     }
 
@@ -331,64 +301,6 @@
         }
     }
 
-    <span class="doccomment">/// Create a dynamic label</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Checkes the requested label against limitations, such as the label length and allowed</span>
-    <span class="doccomment">/// characters.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `label` - The requested label</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Return value</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns the valid label if within the limitations,</span>
-    <span class="doccomment">/// or `OTHER_LABEL` on any errors.</span>
-    <span class="doccomment">/// The errors are logged.</span>
-    <span class="kw">fn</span> <span class="ident">dynamic_label</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">label</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">seen_labels</span>.<span class="ident">is_empty</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">submetric</span>.<span class="ident">meta</span>().<span class="ident">lifetime</span> <span class="op">!=</span> <span class="ident">Lifetime</span>::<span class="ident">Application</span> {
-            <span class="comment">// Fetch all labels that are already stored by iterating through existing data.</span>
-
-            <span class="kw">let</span> <span class="ident">prefix</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}/&quot;</span>, <span class="self">self</span>.<span class="ident">submetric</span>.<span class="ident">meta</span>().<span class="ident">identifier</span>());
-            <span class="kw">let</span> <span class="ident">seen_labels</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">seen_labels</span>;
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">snapshotter</span> <span class="op">=</span> <span class="op">|</span><span class="ident">metric_name</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="ident">Metric</span><span class="op">|</span> {
-                <span class="kw">let</span> <span class="ident">metric_name</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_utf8_lossy</span>(<span class="ident">metric_name</span>);
-                <span class="kw">if</span> <span class="ident">metric_name</span>.<span class="ident">starts_with</span>(<span class="kw-2">&amp;</span><span class="ident">prefix</span>) {
-                    <span class="kw">let</span> <span class="ident">label</span> <span class="op">=</span> <span class="ident">metric_name</span>.<span class="ident">splitn</span>(<span class="number">2</span>, <span class="string">&#39;/&#39;</span>).<span class="ident">nth</span>(<span class="number">1</span>).<span class="ident">unwrap</span>(); <span class="comment">// safe unwrap, we know it contains a slash</span>
-                    <span class="ident">seen_labels</span>.<span class="ident">insert</span>(<span class="ident">label</span>.<span class="ident">into</span>());
-                }
-            };
-
-            <span class="kw">let</span> <span class="ident">lifetime</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">submetric</span>.<span class="ident">meta</span>().<span class="ident">lifetime</span>;
-            <span class="kw">for</span> <span class="ident">store</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">submetric</span>.<span class="ident">meta</span>().<span class="ident">send_in_pings</span> {
-                <span class="ident">glean</span>
-                    .<span class="ident">storage</span>()
-                    .<span class="ident">iter_store_from</span>(<span class="ident">lifetime</span>, <span class="ident">store</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">snapshotter</span>);
-            }
-        }
-
-        <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">seen_labels</span>.<span class="ident">contains</span>(<span class="ident">label</span>) {
-            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">seen_labels</span>.<span class="ident">len</span>() <span class="op">&gt;=</span> <span class="ident">MAX_LABELS</span> {
-                <span class="kw">return</span> <span class="ident">OTHER_LABEL</span>;
-            } <span class="kw">else</span> {
-                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">msg</span>) <span class="op">=</span> <span class="ident">validate_label</span>(<span class="ident">label</span>) {
-                    <span class="ident">record_error</span>(
-                        <span class="ident">glean</span>,
-                        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">submetric</span>.<span class="ident">meta</span>(),
-                        <span class="ident">ErrorType</span>::<span class="ident">InvalidLabel</span>,
-                        <span class="ident">msg</span>,
-                        <span class="prelude-val">None</span>,
-                    );
-                    <span class="kw">return</span> <span class="ident">OTHER_LABEL</span>;
-                }
-
-                <span class="self">self</span>.<span class="ident">seen_labels</span>.<span class="ident">insert</span>(<span class="ident">label</span>.<span class="ident">into</span>());
-            }
-        }
-
-        <span class="ident">label</span>
-    }
-
     <span class="doccomment">/// Get a specific metric for a given label.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// If a set of acceptable labels were specified in the `metrics.yaml` file,</span>
@@ -400,33 +312,99 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Labels must be `snake_case` and less than 30 characters.</span>
     <span class="doccomment">/// If an invalid label is used, the metric will be recorded in the special `OTHER_LABEL` label.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">G</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Glean</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">glean</span>: <span class="ident">G</span>, <span class="ident">label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
-        <span class="comment">// We have 3 scenarios to consider:</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
+        <span class="comment">// We have 2 scenarios to consider:</span>
         <span class="comment">// * Static labels. No database access needed. We just look at what is in memory.</span>
-        <span class="comment">// * Dynamic labels, initialized Glean. We look up in the database all previously stored</span>
-        <span class="comment">//   labels in order to keep a maximum of allowed labels.</span>
-        <span class="comment">// * Dynamic labels, uninitialized Glean. We ignore potentially previously stored labels</span>
-        <span class="comment">//   and just take what the user passed in.</span>
-        <span class="comment">//   This potentially allows creating more than `MAX_LABELS` labels, but only before Glean</span>
-        <span class="comment">//   is initialized.</span>
-        <span class="comment">//   This behavior is not publicly documented and should not be abused/depended upon.</span>
-        <span class="comment">// The last case is buggy behavior, tracked in bug 1588451.</span>
-        <span class="kw">let</span> <span class="ident">glean</span> <span class="op">=</span> <span class="ident">glean</span>.<span class="ident">into</span>();
-        <span class="kw">let</span> <span class="ident">label</span> <span class="op">=</span> <span class="kw">match</span> (<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">labels</span>, <span class="ident">glean</span>) {
-            (<span class="prelude-val">Some</span>(<span class="kw">_</span>), <span class="kw">_</span>) <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">static_label</span>(<span class="ident">label</span>),
-            (<span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(<span class="ident">glean</span>)) <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">dynamic_label</span>(<span class="ident">glean</span>, <span class="ident">label</span>),
-            (<span class="prelude-val">None</span>, <span class="prelude-val">None</span>) <span class="op">=&gt;</span> {
-                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">label</span>) <span class="op">=</span> <span class="ident">validate_label</span>(<span class="ident">label</span>) {
-                    <span class="ident">label</span>
-                } <span class="kw">else</span> {
-                    <span class="comment">// We can&#39;t report any error, as we don&#39;t have a Glean instance.</span>
-                    <span class="ident">OTHER_LABEL</span>
-                }
+        <span class="comment">// * Dynamic labels. We look up in the database all previously stored</span>
+        <span class="comment">//   labels in order to keep a maximum of allowed labels. This is done later</span>
+        <span class="comment">//   when the specific metric is actually recorded, when we are guaranteed to have</span>
+        <span class="comment">//   an initialized Glean object.</span>
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">labels</span> {
+            <span class="prelude-val">Some</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> {
+                <span class="kw">let</span> <span class="ident">label</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">static_label</span>(<span class="ident">label</span>);
+                <span class="self">self</span>.<span class="ident">new_metric_with_name</span>(<span class="ident">combine_base_identifier_and_label</span>(
+                    <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">submetric</span>.<span class="ident">meta</span>().<span class="ident">name</span>,
+                    <span class="kw-2">&amp;</span><span class="ident">label</span>,
+                ))
             }
-        };
-        <span class="kw">let</span> <span class="ident">label</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}/{}&quot;</span>, <span class="self">self</span>.<span class="ident">submetric</span>.<span class="ident">meta</span>().<span class="ident">name</span>, <span class="ident">label</span>);
+            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">new_metric_with_dynamic_label</span>(<span class="ident">label</span>.<span class="ident">to_string</span>()),
+        }
+    }
+}
 
-        <span class="self">self</span>.<span class="ident">new_metric_with_name</span>(<span class="ident">label</span>)
+<span class="doccomment">/// Combines a metric&#39;s base identifier and label</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">combine_base_identifier_and_label</span>(<span class="ident">base_identifer</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+    <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}/{}&quot;</span>, <span class="ident">base_identifer</span>, <span class="ident">label</span>)
+}
+
+<span class="doccomment">/// Strips the label off of a complete identifier</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">strip_label</span>(<span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="comment">// safe unwrap, first field of a split always valid</span>
+    <span class="ident">identifier</span>.<span class="ident">splitn</span>(<span class="number">2</span>, <span class="string">&#39;/&#39;</span>).<span class="ident">next</span>().<span class="ident">unwrap</span>()
+}
+
+<span class="doccomment">/// Validate a dynamic label, changing it to OTHER_LABEL if it&#39;s invalid.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Checks the requested label against limitations, such as the label length and allowed</span>
+<span class="doccomment">/// characters.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ## Arguments</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// * `label` - The requested label</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ## Return value</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Returns the entire identifier for the metric, including the base identifier and the</span>
+<span class="doccomment">/// corrected label.</span>
+<span class="doccomment">/// The errors are logged.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dynamic_label</span>(
+    <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>,
+    <span class="ident">meta</span>: <span class="kw-2">&amp;</span><span class="ident">CommonMetricData</span>,
+    <span class="ident">base_identifier</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+    <span class="ident">label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+) <span class="op">-&gt;</span> <span class="ident">String</span> {
+    <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="ident">combine_base_identifier_and_label</span>(<span class="ident">base_identifier</span>, <span class="ident">label</span>);
+    <span class="kw">for</span> <span class="ident">store</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">meta</span>.<span class="ident">send_in_pings</span> {
+        <span class="kw">if</span> <span class="ident">glean</span>.<span class="ident">storage</span>().<span class="ident">has_metric</span>(<span class="ident">meta</span>.<span class="ident">lifetime</span>, <span class="ident">store</span>, <span class="kw-2">&amp;</span><span class="ident">key</span>) {
+            <span class="kw">return</span> <span class="ident">key</span>;
+        }
+    }
+
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">label_count</span> <span class="op">=</span> <span class="number">0</span>;
+    <span class="kw">let</span> <span class="ident">prefix</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">key</span>[..=<span class="ident">base_identifier</span>.<span class="ident">len</span>()];
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">snapshotter</span> <span class="op">=</span> <span class="op">|</span><span class="kw">_</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="ident">Metric</span><span class="op">|</span> {
+        <span class="ident">label_count</span> <span class="op">+=</span> <span class="number">1</span>;
+    };
+
+    <span class="kw">let</span> <span class="ident">lifetime</span> <span class="op">=</span> <span class="ident">meta</span>.<span class="ident">lifetime</span>;
+    <span class="kw">for</span> <span class="ident">store</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">meta</span>.<span class="ident">send_in_pings</span> {
+        <span class="ident">glean</span>
+            .<span class="ident">storage</span>()
+            .<span class="ident">iter_store_from</span>(<span class="ident">lifetime</span>, <span class="ident">store</span>, <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">prefix</span>), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">snapshotter</span>);
+    }
+
+    <span class="kw">let</span> <span class="ident">error</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">label_count</span> <span class="op">&gt;=</span> <span class="ident">MAX_LABELS</span> {
+        <span class="bool-val">true</span>
+    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">label</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="ident">MAX_LABEL_LENGTH</span> {
+        <span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
+            <span class="string">&quot;label length {} exceeds maximum of {}&quot;</span>,
+            <span class="ident">label</span>.<span class="ident">len</span>(),
+            <span class="ident">MAX_LABEL_LENGTH</span>
+        );
+        <span class="ident">record_error</span>(<span class="ident">glean</span>, <span class="ident">meta</span>, <span class="ident">ErrorType</span>::<span class="ident">InvalidLabel</span>, <span class="ident">msg</span>, <span class="prelude-val">None</span>);
+        <span class="bool-val">true</span>
+    } <span class="kw">else</span> <span class="kw">if</span> <span class="op">!</span><span class="ident">LABEL_REGEX</span>.<span class="ident">is_match</span>(<span class="ident">label</span>) {
+        <span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;label must be snake_case, got &#39;{}&#39;&quot;</span>, <span class="ident">label</span>);
+        <span class="ident">record_error</span>(<span class="ident">glean</span>, <span class="ident">meta</span>, <span class="ident">ErrorType</span>::<span class="ident">InvalidLabel</span>, <span class="ident">msg</span>, <span class="prelude-val">None</span>);
+        <span class="bool-val">true</span>
+    } <span class="kw">else</span> {
+        <span class="bool-val">false</span>
+    };
+
+    <span class="kw">if</span> <span class="ident">error</span> {
+        <span class="ident">combine_base_identifier_and_label</span>(<span class="ident">base_identifier</span>, <span class="ident">OTHER_LABEL</span>)
+    } <span class="kw">else</span> {
+        <span class="ident">key</span>
     }
 }
 </pre></div>
