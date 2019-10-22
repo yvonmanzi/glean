@@ -240,10 +240,10 @@
 
 <span class="doccomment">/// The maximum length of the experiment id, the branch id, and the keys of the</span>
 <span class="doccomment">/// `extra` map. Identifiers longer than this number of characters are truncated.</span>
-<span class="kw">const</span> <span class="ident">MAX_EXPERIMENTS_IDS_LEN</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">30</span>;
+<span class="kw">const</span> <span class="ident">MAX_EXPERIMENTS_IDS_LEN</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">100</span>;
 <span class="doccomment">/// The maximum length of the experiment `extra` values.  Values longer than this</span>
 <span class="doccomment">/// limit will be truncated.</span>
-<span class="kw">const</span> <span class="ident">MAX_EXPERIMENT_VALUE_LEN</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">50</span>;
+<span class="kw">const</span> <span class="ident">MAX_EXPERIMENT_VALUE_LEN</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="ident">MAX_EXPERIMENTS_IDS_LEN</span>;
 <span class="doccomment">/// The maximum number of extras allowed in the `extra` hash map.  Any items added</span>
 <span class="doccomment">/// beyond this limit will be dropped. Note that truncation of a hash map is</span>
 <span class="doccomment">/// nondeterministic in which items are truncated.</span>
