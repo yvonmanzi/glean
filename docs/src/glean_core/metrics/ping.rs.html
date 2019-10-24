@@ -46,7 +46,6 @@
 <span id="46">46</span>
 <span id="47">47</span>
 <span id="48">48</span>
-<span id="49">49</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -88,13 +87,12 @@
     <span class="doccomment">/// ## Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `glean` - the Glean instance to use to send the ping.</span>
-    <span class="doccomment">/// * `log_ping` - whether to log the ping after assembly.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ## Return value</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See [`Glean#send_ping`](../struct.Glean.html#method.send_ping) for details.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">send</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">log_ping</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
-        <span class="ident">glean</span>.<span class="ident">send_ping</span>(<span class="self">self</span>, <span class="ident">log_ping</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">send</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+        <span class="ident">glean</span>.<span class="ident">send_ping</span>(<span class="self">self</span>)
     }
 }
 </pre></div>
