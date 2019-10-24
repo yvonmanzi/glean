@@ -193,6 +193,9 @@
 <span id="193">193</span>
 <span id="194">194</span>
 <span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -223,6 +226,8 @@
     <span class="ident">InvalidValue</span>,
     <span class="doccomment">/// For when the label of a labeled metric does not match the restrictions</span>
     <span class="ident">InvalidLabel</span>,
+    <span class="doccomment">/// For when the metric caught an invalid state while recording</span>
+    <span class="ident">InvalidState</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">ErrorType</span> {
@@ -231,6 +236,7 @@
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="ident">ErrorType</span>::<span class="ident">InvalidValue</span> <span class="op">=&gt;</span> <span class="string">&quot;invalid_value&quot;</span>,
             <span class="ident">ErrorType</span>::<span class="ident">InvalidLabel</span> <span class="op">=&gt;</span> <span class="string">&quot;invalid_label&quot;</span>,
+            <span class="ident">ErrorType</span>::<span class="ident">InvalidState</span> <span class="op">=&gt;</span> <span class="string">&quot;invalid_state&quot;</span>,
         }
     }
 }

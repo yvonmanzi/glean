@@ -224,7 +224,7 @@
             <span class="ident">record_error</span>(
                 <span class="ident">glean</span>,
                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>,
-                <span class="ident">ErrorType</span>::<span class="ident">InvalidValue</span>,
+                <span class="ident">ErrorType</span>::<span class="ident">InvalidState</span>,
                 <span class="string">&quot;Timespan already started&quot;</span>,
                 <span class="prelude-val">None</span>,
             );
@@ -242,7 +242,7 @@
             <span class="ident">record_error</span>(
                 <span class="ident">glean</span>,
                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>,
-                <span class="ident">ErrorType</span>::<span class="ident">InvalidValue</span>,
+                <span class="ident">ErrorType</span>::<span class="ident">InvalidState</span>,
                 <span class="string">&quot;Timespan not running&quot;</span>,
                 <span class="prelude-val">None</span>,
             );
@@ -281,7 +281,7 @@
             <span class="ident">record_error</span>(
                 <span class="ident">glean</span>,
                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>,
-                <span class="ident">ErrorType</span>::<span class="ident">InvalidValue</span>,
+                <span class="ident">ErrorType</span>::<span class="ident">InvalidState</span>,
                 <span class="string">&quot;Timespan already running. Raw value not recorded.&quot;</span>,
                 <span class="prelude-val">None</span>,
             );
@@ -310,7 +310,7 @@
             <span class="ident">record_error</span>(
                 <span class="ident">glean</span>,
                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>,
-                <span class="ident">ErrorType</span>::<span class="ident">InvalidValue</span>,
+                <span class="ident">ErrorType</span>::<span class="ident">InvalidState</span>,
                 <span class="string">&quot;Timespan value already recorded. New value discarded.&quot;</span>,
                 <span class="prelude-val">None</span>,
             );
