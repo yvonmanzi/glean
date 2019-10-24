@@ -152,6 +152,9 @@
 <p>To measure the distribution of single timespans, see <a href="timespan.html">Timespans</a>. To record absolute times, see <a href="datetime.html">Datetimes</a>.</p>
 <p>Timing distributions are recorded in a histogram where the buckets have an exponential distribution, specifically with 8 buckets for every power of 2.
 This makes them suitable for measuring timings on a number of time scales without any configuration.</p>
+<p>Timings always span the full length between <code>start</code> and <code>stopAndAccumulate</code>.
+If the Glean upload is disabled when calling <code>start</code>, the timer is still started.
+If the Glean upload is disabled at the time <code>stopAndAccumulate</code> is called, nothing is recorded.</p>
 <h2><a class="header" href="#configuration" id="configuration">Configuration</a></h2>
 <p>If you wanted to create a timing distribution to measure page load times, first you need to add an entry for it to the <code>metrics.yaml</code> file:</p>
 <pre><code class="language-YAML">pages:
