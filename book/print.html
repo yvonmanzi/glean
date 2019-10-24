@@ -3494,7 +3494,12 @@ Note that this needs three dots (<code>...</code>) between the two tags (two dot
 </ol>
 </li>
 <li>
-<p>Bump <code>libraryVersion</code> in the top-level <a href="https://github.com/mozilla/glean/blob/master/.buildconfig.yml">.buildconfig.yml</a> file. Be sure you're following semver, and if in doubt, ask.</p>
+<p>Bump the versions</p>
+<ul>
+<li>Rust crates: Bump <code>version</code> in <a href="https://github.com/mozilla/glean/blob/master/glean-core/Cargo.toml"><code>glean-core/Cargo.toml</code></a> and <a href="https://github.com/mozilla/glean/blob/master/glean-core/ffi/Cargo.toml"><code>glean-core/Cargo.toml</code></a>.</li>
+<li>Kotlin package: Bump <code>libraryVersion</code> in the top-level <a href="https://github.com/mozilla/glean/blob/master/.buildconfig.yml">.buildconfig.yml</a> file.</li>
+<li>Be sure you're following semver, and if in doubt, ask.</li>
+</ul>
 </li>
 <li>
 <p>Land the commits that perform the steps above. This takes a PR, typically, because of branch protection on master.</p>
@@ -3511,6 +3516,13 @@ Note that this needs three dots (<code>...</code>) between the two tags (two dot
 </ul>
 </li>
 </ol>
+</li>
+<li>
+<p>After the release, bump the versions to the next pre-release:</p>
+<ul>
+<li>Rust crates: Use the next major version and append <code>-alpha.1</code></li>
+<li>Kotlin package: Use the next major version and append <code>-SNAPSHOT</code></li>
+</ul>
 </li>
 </ol>
 <h1><a class="header" href="#contributing-to-the-glean-sdk" id="contributing-to-the-glean-sdk">Contributing to the Glean SDK</a></h1>
