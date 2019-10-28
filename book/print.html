@@ -183,7 +183,17 @@
 <div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <h4><a class="header" href="#setting-up-the-dependency" id="setting-up-the-dependency">Setting up the dependency</a></h4>
-<p>Use Gradle to download the library from <a href="https://maven.mozilla.org/">maven.mozilla.org</a> (<a href="https://github.com/mozilla-mobile/android-components/blob/master/README.md#maven-repository">Setup repository</a>) by adding the following to your Gradle configuration:</p>
+<p>Glean is published on <a href="https://maven.mozilla.org/">maven.mozilla.org</a>.
+To use it, you need to add the following to your project's top-level build file,
+in the <code>allprojects</code> block (see e.g. <a href="https://github.com/mozilla/glean/blob/master/build.gradle">Glean's own <code>build.gradle</code></a>):</p>
+<pre><code class="language-Groovy">repositories {
+    maven {
+       url &quot;https://maven.mozilla.org/maven2&quot;
+    }
+}
+</code></pre>
+<p>Each module that uses Glean needs to specify it in its build file, in the <code>dependencies</code> block.
+Add this to your Gradle configuration:</p>
 <pre><code class="language-Groovy">implementation &quot;org.mozilla.components:service-glean:{latest-version}&quot;
 </code></pre>
 <p>The Glean SDK is released as part of <a href="https://github.com/mozilla-mobile/android-components">android-components</a>.  Therefore, it follows android-components' versions.
