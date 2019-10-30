@@ -163,6 +163,13 @@
     ...
 </code></pre>
 <h2><a class="header" href="#api" id="api">API</a></h2>
+<div class="tabs">
+<div class="tabbar">
+  <button data-lang="Kotlin" class="tablinks" onclick="onClickTab(event)">Kotlin</button>
+  <button data-lang="Swift" class="tablinks" onclick="onClickTab(event)">Swift</button>
+</div>
+<div class="tabcontents">
+<div data-lang="Kotlin" class="tab">
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Search
 
 // Add them one at a time
@@ -182,6 +189,28 @@ assertTrue(Search.engines.testHasValue())
 // IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
 assertEquals(listOf(&quot;Google&quot;, &quot;DuckDuckGo&quot;), Search.engines.testGetValue())
 </code></pre>
+</div>
+<div data-lang="Swift" class="tab">
+<pre><code class="language-Swift">// Add them one at a time
+for engine in engines {
+    Search.engines.add(engine)
+}
+
+// Set them in one go
+Search.engines.set(engines)
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-Kotlin">@testable import Glean
+
+// Was anything recorded?
+XCTAssert(Search.engines.testHasValue())
+// Does it have the expected value?
+// IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
+XCTAssertEqual([&quot;Google&quot;, &quot;DuckDuckGo&quot;], try Search.engines.testGetValue())
+</code></pre>
+</div>
+</div>
+</div>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
 <ul>
 <li>
