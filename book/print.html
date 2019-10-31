@@ -196,30 +196,48 @@ in the <code>allprojects</code> block (see e.g. <a href="https://github.com/mozi
 Add this to your Gradle configuration:</p>
 <pre><code class="language-Groovy">implementation &quot;org.mozilla.components:service-glean:{latest-version}&quot;
 </code></pre>
+<blockquote>
+<p><strong>Important:</strong> the <code>{latest-version}</code> placeholder in the above link should be replaced with the version number of the Glean SDK used by the project.</p>
+</blockquote>
+<p>For example, if version <em>6.0.2</em> is used, then the include directive becomes:</p>
+<pre><code class="language-Groovy">implementation &quot;org.mozilla.components:service-glean:6.0.2&quot;
+</code></pre>
 <p>The Glean SDK is released as part of <a href="https://github.com/mozilla-mobile/android-components">android-components</a>.  Therefore, it follows android-components' versions.
 The <a href="https://github.com/mozilla-mobile/android-components/releases/">android-components release page</a> can be used to determine the latest version.</p>
 <h4><a class="header" href="#integrating-with-the-build-system" id="integrating-with-the-build-system">Integrating with the build system</a></h4>
-<p>In order for the Glean SDK to generate an API for your metrics, a Python environment must be accessible at build time.
-This is done automatically by the <a href="https://github.com/JetBrains/gradle-python-envs/"><code>com.jetbrains.python.envs</code></a> plugin.
-The plugin <strong>must</strong> be manually enabled by adding the following <code>plugins</code> block at the top of the <code>build.gradle</code> file for your app module.</p>
+<p>In order for the Glean SDK to generate an API for your metrics, two Gradle plugins must be included in your build:</p>
+<ul>
+<li>The <a href="https://github.com/mozilla/glean/tree/master/gradle-plugin/">Glean Gradle plugin</a></li>
+<li>JetBrains' <a href="https://github.com/JetBrains/gradle-python-envs/">Python envs plugin</a></li>
+</ul>
+<p>The Glean Gradle plugin is distributed through Mozilla's Maven, so we need to tell your build where to look for it by adding the following to the top of your <code>build.gradle</code>:</p>
+<pre><code>buildscript {
+    repositories {
+        maven {
+            url &quot;https://maven.mozilla.org/maven2&quot;
+        }
+
+        dependencies {
+            classpath &quot;org.mozilla.telemetry:glean-gradle-plugin:{latest-version}&quot;
+        }
+    }
+}
+</code></pre>
+<blockquote>
+<p><strong>Important:</strong> as above, the <code>{latest-version}</code> placeholder in the above link should be replaced with the version number of the Glean SDK used by the project.</p>
+</blockquote>
+<p>The JetBrains Python plugin is distributed in the Gradle plugin repository, so it can be included with:</p>
 <pre><code class="language-Groovy">plugins {
     id &quot;com.jetbrains.python.envs&quot; version &quot;0.0.26&quot;
 }
 </code></pre>
-<p>Right before the end of the same file, the Glean SDK build script must be included.
-This script can be referenced directly from the GitHub repo, as shown below:</p>
-<pre><code class="language-Groovy">apply from: 'https://raw.githubusercontent.com/mozilla-mobile/android-components/v{latest-version}/components/service/glean/scripts/sdk_generator.gradle'
+<p>Right before the end of the same file, we need to apply the Glean Gradle plugin:</p>
+<pre><code class="language-Groovy">apply plugin: &quot;org.mozilla.telemetry.glean-gradle-plugin&quot;
 </code></pre>
+<p>There are <a href="user/android-build-configuration-options.html">additional parameters</a> that can be set to control the behavior of the Glean Gradle plugin, but they are rarely needed for normal use.</p>
 <blockquote>
-<p><strong>Important:</strong> the <code>{latest-version}</code> placeholder in the above link should be replaced with the version number of the Glean SDK used by the project.
-For example, if version <em>6.0.2</em> is used, then the include directive becomes:</p>
+<p><strong>Note:</strong> Earlier versions of Glean used a Gradle script (<code>sdk_generator.gradle</code>) rather than a Gradle plugin. Its use is deprecated and projects should be updated to use the Gradle plugin as described above.</p>
 </blockquote>
-<pre><code class="language-Groovy">apply from: 'https://raw.githubusercontent.com/mozilla-mobile/android-components/v16.0.0/components/service/glean/scripts/sdk_generator.gradle'
-</code></pre>
-<p>If you are using a <code>SNAPSHOT</code> build of <code>android-components</code>, it is best to use the master branch, for example:</p>
-<pre><code class="language-Groovy">apply from: 'https://raw.githubusercontent.com/mozilla-mobile/android-components/master/components/service/glean/scripts/sdk_generator.gradle'
-</code></pre>
-<p>There are <a href="user/android-build-configuration-options.html">additional parameters</a> that can be set to control the behavior of the <code>sdk_generator.gradle</code> script, but they are rarely used in normal use.</p>
 </div>
 <div data-lang="Swift" class="tab">
 <h4><a class="header" href="#setting-up-the-dependency-1" id="setting-up-the-dependency-1">Setting up the dependency</a></h4>
@@ -2735,9 +2753,9 @@ class MyCustomPingSchedulerTest {
 }
 </code></pre>
 <h1><a class="header" href="#android-build-script-configuration-options" id="android-build-script-configuration-options">Android build script configuration options</a></h1>
-<p>This chapter describes build configuration options that control the behavior of Glean's <code>sdk_generator.gradle</code> script.
+<p>This chapter describes build configuration options that control the behavior of Glean's Gradle plugin.
 These options are not usually required for normal use.</p>
-<p>Options can be turned on by setting a variable on the Gradle <a href="https://docs.gradle.org/current/dsl/org.gradle.api.plugins.ExtraPropertiesExtension.html"><code>ext</code></a> object.</p>
+<p>Options can be turned on by setting a variable on the Gradle <a href="https://docs.gradle.org/current/dsl/org.gradle.api.plugins.ExtraPropertiesExtension.html"><code>ext</code></a> object <em>before</em> applying the Glean Gradle plugin.</p>
 <h2><a class="header" href="#allowmetricsfromaar" id="allowmetricsfromaar"><code>allowMetricsFromAAR</code></a></h2>
 <p>Normally, Glean looks for <code>metrics.yaml</code> and <code>pings.yaml</code> files in the root directory of the Glean-using project.
 However, in some cases, these files may need to ship inside the dependencies of the project.

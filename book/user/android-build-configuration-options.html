@@ -148,9 +148,9 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#android-build-script-configuration-options" id="android-build-script-configuration-options">Android build script configuration options</a></h1>
-<p>This chapter describes build configuration options that control the behavior of Glean's <code>sdk_generator.gradle</code> script.
+<p>This chapter describes build configuration options that control the behavior of Glean's Gradle plugin.
 These options are not usually required for normal use.</p>
-<p>Options can be turned on by setting a variable on the Gradle <a href="https://docs.gradle.org/current/dsl/org.gradle.api.plugins.ExtraPropertiesExtension.html"><code>ext</code></a> object.</p>
+<p>Options can be turned on by setting a variable on the Gradle <a href="https://docs.gradle.org/current/dsl/org.gradle.api.plugins.ExtraPropertiesExtension.html"><code>ext</code></a> object <em>before</em> applying the Glean Gradle plugin.</p>
 <h2><a class="header" href="#allowmetricsfromaar" id="allowmetricsfromaar"><code>allowMetricsFromAAR</code></a></h2>
 <p>Normally, Glean looks for <code>metrics.yaml</code> and <code>pings.yaml</code> files in the root directory of the Glean-using project.
 However, in some cases, these files may need to ship inside the dependencies of the project.
