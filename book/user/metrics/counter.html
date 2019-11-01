@@ -178,6 +178,8 @@ Controls.refreshPressed.add(5) // Adds 5 to the counter.
 assertTrue(Controls.refreshPressed.testHasValue())
 // Does the counter have the expected value?
 assertEquals(6, Controls.refreshPressed.testGetValue())
+// Did the counter record an negative value?
+assertEquals(1, Controls.refreshPressed.testGetNumRecordedErrors(ErrorType.InvalidValue))
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
@@ -205,7 +207,7 @@ XCTAssertEqual(6, try Controls.refreshPressed.testGetValue())
 </ul>
 <h2><a class="header" href="#recorded-errors" id="recorded-errors">Recorded errors</a></h2>
 <ul>
-<li>None.</li>
+<li>If the counter is incremented by a non-positive value.</li>
 </ul>
 <h2><a class="header" href="#reference" id="reference">Reference</a></h2>
 <ul>

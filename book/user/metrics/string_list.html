@@ -188,6 +188,8 @@ assertTrue(Search.engines.testHasValue())
 // Does it have the expected value?
 // IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
 assertEquals(listOf(&quot;Google&quot;, &quot;DuckDuckGo&quot;), Search.engines.testGetValue())
+// Were any of the values too long, and thus an error was recorded?
+assertEquals(1, Search.engines.testGetNumRecordedErrors(ErrorType.InvalidValue))
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">

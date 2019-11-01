@@ -188,6 +188,8 @@ assertTrue(SearchDefault.name.testHasValue())
 // Does the string metric have the expected value?
 // IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
 assertEquals(&quot;wikipedia&quot;, SearchDefault.name.testGetValue())
+// Was the string truncated, and an error reported?
+assertEquals(1, SearchDefault.name.testGetNumRecordedErrors(ErrorType.InvalidValue))
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">

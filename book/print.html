@@ -1004,6 +1004,8 @@ Controls.refreshPressed.add(5) // Adds 5 to the counter.
 assertTrue(Controls.refreshPressed.testHasValue())
 // Does the counter have the expected value?
 assertEquals(6, Controls.refreshPressed.testGetValue())
+// Did the counter record an negative value?
+assertEquals(1, Controls.refreshPressed.testGetNumRecordedErrors(ErrorType.InvalidValue))
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
@@ -1031,7 +1033,7 @@ XCTAssertEqual(6, try Controls.refreshPressed.testGetValue())
 </ul>
 <h2><a class="header" href="#recorded-errors-1" id="recorded-errors-1">Recorded errors</a></h2>
 <ul>
-<li>None.</li>
+<li>If the counter is incremented by a non-positive value.</li>
 </ul>
 <h2><a class="header" href="#reference-2" id="reference-2">Reference</a></h2>
 <ul>
@@ -1169,6 +1171,8 @@ assertTrue(SearchDefault.name.testHasValue())
 // Does the string metric have the expected value?
 // IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
 assertEquals(&quot;wikipedia&quot;, SearchDefault.name.testGetValue())
+// Was the string truncated, and an error reported?
+assertEquals(1, SearchDefault.name.testGetNumRecordedErrors(ErrorType.InvalidValue))
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
@@ -1333,6 +1337,8 @@ assertTrue(Search.engines.testHasValue())
 // Does it have the expected value?
 // IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
 assertEquals(listOf(&quot;Google&quot;, &quot;DuckDuckGo&quot;), Search.engines.testGetValue())
+// Were any of the values too long, and thus an error was recorded?
+assertEquals(1, Search.engines.testGetNumRecordedErrors(ErrorType.InvalidValue))
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
@@ -1445,6 +1451,8 @@ fun onLoginCancel() {
 assertTrue(Auth.loginTime.testHasValue())
 // Does the timer have the expected value
 assertTrue(Auth.loginTime.testGetValue() &gt; 0)
+// Was the timing recorded incorrectly?
+assertEquals(1, Auth.loginTime.testGetNumRecordedErrors(ErrorType.InvalidValue))
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
@@ -1591,6 +1599,9 @@ assertEquals(11, snapshot.sum)
 
 // Usually you don't know the exact timing values, but how many should have been recorded.
 assertEquals(2L, snapshot.count)
+
+// Was an error recorded?
+assertEquals(1, pages.pageLoad.testGetNumRecordedErrors(ErrorType.InvalidValue))
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
@@ -1696,6 +1707,9 @@ assertEquals(11, snapshot.sum)
 
 // Usually you don't know the exact memory values, but how many should have been recorded.
 assertEquals(2L, snapshot.count)
+
+// Did this record a negative value?
+assertEquals(1, Memory.heapAllocated.testGetNumRecordedErrors(ErrorType.InvalidValue))
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
@@ -1856,6 +1870,8 @@ assertTrue(Install.firstRun.testHasValue())
 // NOTE: Datetimes always include a timezone offset from UTC, hence the
 // &quot;-05:00&quot; suffix.
 assertEquals(&quot;2019-03-25-05:00&quot;, Install.firstRun.testGetValueAsString())
+// Was the value invalid?
+assertEquals(1, Install.firstRun.testGetNumRecordedErrors(ErrorType.InvalidValue))
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
@@ -1934,6 +1950,8 @@ val snapshot = Views.loginOpened.testGetValue()
 assertEquals(2, snapshot.size)
 val first = snapshot.single()
 assertEquals(&quot;login_opened&quot;, first.name)
+// Check that no errors were recorded
+assertEquals(0, Views.loginOpened.testGetNumRecordedErrors(ErrorType.InvalidValue))
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
@@ -2042,6 +2060,9 @@ assertEquals(11, snapshot.sum)
 
 // Usually you don't know the exact timing values, but how many should have been recorded.
 assertEquals(2L, snapshot.count())
+
+/// Did the metric receive a negative value?
+assertEquals(1, Graphics.checkerboardPeak.testGetNumRecordedErrors(ErrorType.InvalidValue))
 </code></pre>
 <h2><a class="header" href="#limits-13" id="limits-13">Limits</a></h2>
 <ul>
@@ -2090,6 +2111,8 @@ Gfx.displayWidth.set(width)
 assertTrue(Gfx.displayWidth.testHasValue())
 // Does the quantity have the expected value?
 assertEquals(6, Gfx.displayWidth.testGetValue())
+// Did it record an error due to a negative value?
+assertEquals(1, Gfx.displayWidth.testGetNumRecordedErrors(ErrorType.InvalidValue))
 </code></pre>
 <h2><a class="header" href="#limits-14" id="limits-14">Limits</a></h2>
 <ul>

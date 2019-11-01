@@ -186,6 +186,8 @@ val snapshot = Views.loginOpened.testGetValue()
 assertEquals(2, snapshot.size)
 val first = snapshot.single()
 assertEquals(&quot;login_opened&quot;, first.name)
+// Check that no errors were recorded
+assertEquals(0, Views.loginOpened.testGetNumRecordedErrors(ErrorType.InvalidValue))
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
