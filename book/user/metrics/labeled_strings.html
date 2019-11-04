@@ -178,6 +178,9 @@ Login.errorsByStage[&quot;server_auth&quot;].set(&quot;Invalid password&quot;)
 
 // Was anything recorded?
 assertTrue(Login.errorsByStage[&quot;server_auth&quot;].testHasValue())
+
+// Were there any invalid labels?
+assertEquals(1, Login.errorsByStage.testGetNumRecordedErrors(ErrorType.InvalidLabel))
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">

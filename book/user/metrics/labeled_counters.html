@@ -182,6 +182,8 @@ assertTrue(Stability.crashCount[&quot;native_code_crash&quot;].testHasValue())
 // Do the counters have the expected values?
 assertEquals(1, Stability.crashCount[&quot;uncaught_exception&quot;].testGetValue())
 assertEquals(3, Stability.crashCount[&quot;native_code_crash&quot;].testGetValue())
+// Did we record any invalid labels?
+assertEquals(1, Stability.crashCount.testGetNumRecordedErrors(ErrorType.InvalidLabel))
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
