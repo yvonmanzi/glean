@@ -658,13 +658,13 @@
 <span class="doccomment">///     max_events: None,</span>
 <span class="doccomment">/// };</span>
 <span class="doccomment">/// let mut glean = Glean::new(cfg).unwrap();</span>
-<span class="doccomment">/// let ping = PingType::new(&quot;baseline&quot;, true);</span>
+<span class="doccomment">/// let ping = PingType::new(&quot;sample&quot;, true);</span>
 <span class="doccomment">/// glean.register_ping_type(&amp;ping);</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// let call_counter: CounterMetric = CounterMetric::new(CommonMetricData {</span>
 <span class="doccomment">///     name: &quot;calls&quot;.into(),</span>
 <span class="doccomment">///     category: &quot;local&quot;.into(),</span>
-<span class="doccomment">///     send_in_pings: vec![&quot;baseline&quot;.into()],</span>
+<span class="doccomment">///     send_in_pings: vec![&quot;sample&quot;.into()],</span>
 <span class="doccomment">///     ..Default::default()</span>
 <span class="doccomment">/// });</span>
 <span class="doccomment">///</span>
