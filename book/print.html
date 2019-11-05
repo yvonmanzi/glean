@@ -1005,6 +1005,8 @@ Controls.refreshPressed.add(5) // Adds 5 to the counter.
 XCTAssert(Controls.refreshPressed.testHasValue())
 // Does the counter have the expected value?
 XCTAssertEqual(6, try Controls.refreshPressed.testGetValue())
+// Did the counter record a negative value?
+XCTAssertEqual(1, Controls.refreshPressed.testGetNumRecordedErrors(.invalidValue))
 </code></pre>
 </div>
 </div>
@@ -1019,7 +1021,7 @@ XCTAssertEqual(6, try Controls.refreshPressed.testGetValue())
 </ul>
 <h2><a class="header" href="#recorded-errors-1" id="recorded-errors-1">Recorded errors</a></h2>
 <ul>
-<li>If the counter is incremented by a non-positive value.</li>
+<li><code>invalid_value</code>: If the counter is incremented by a non-positive value.</li>
 </ul>
 <h2><a class="header" href="#reference-2" id="reference-2">Reference</a></h2>
 <ul>
@@ -1171,6 +1173,8 @@ XCTAssert(SearchDefault.name.testHasValue())
 // Does the string metric have the expected value?
 // IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
 XCTAssertEqual(&quot;wikipedia&quot;, try SearchDefault.name.testGetValue())
+// Was the string truncated, and an error reported?
+XCTAssertEqual(1, SearchDefault.name.testGetNumRecordedErrors(.invalidValue))
 </code></pre>
 </div>
 </div>
@@ -1330,13 +1334,15 @@ for engine in engines {
 Search.engines.set(engines)
 </code></pre>
 <p>There are test APIs available too:</p>
-<pre><code class="language-Kotlin">@testable import Glean
+<pre><code class="language-Swift">@testable import Glean
 
 // Was anything recorded?
 XCTAssert(Search.engines.testHasValue())
 // Does it have the expected value?
 // IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
 XCTAssertEqual([&quot;Google&quot;, &quot;DuckDuckGo&quot;], try Search.engines.testGetValue())
+// Were any of the values too long, and thus an error was recorded?
+XCTAssertEqual(1, Search.engines.testGetNumRecordedErrors(.invalidValue))
 </code></pre>
 </div>
 </div>
@@ -1455,6 +1461,8 @@ func onLoginCancel() {
 XCTAssert(Auth.loginTime.testHasValue())
 // Does the timer have the expected value
 XCTAssert(try Auth.loginTime.testGetValue() &gt; 0)
+// Was the timing recorded incorrectly?
+XCTAssertEqual(1, Auth.loginTime.testGetNumRecordedErrors(.invalidValue))
 </code></pre>
 </div>
 </div>
@@ -1602,6 +1610,9 @@ XCTAssertEqual(11, snapshot.sum)
 
 // Usually you don't know the exact timing values, but how many should have been recorded.
 XCTAssertEqual(2, snapshot.count)
+
+// Was an error recorded?
+XCTAssertEqual(1, pages.pageLoad.testGetNumRecordedErrors(.invalidValue))
 </code></pre>
 </div>
 </div>
@@ -1700,6 +1711,9 @@ XCTAssertEqual(11, snapshot.sum)
 
 // Usually you don't know the exact memory values, but how many should have been recorded.
 XCTAssertEqual(2, snapshot.count)
+
+// Did this record a negative value?
+XCTAssertEqual(1, Memory.heapAllocated.testGetNumRecordedErrors(.invalidValue))
 </code></pre>
 </div>
 </div>
@@ -1848,9 +1862,11 @@ Install.firstRun.set(dateComponents.date!) // Records a custom datetime
 <pre><code class="language-Swift">@testable import Glean
 
 // Was anything recorded?
-XCTAssert(Controls.refreshPressed.testHasValue())
-// Does the counter have the expected value?
-XCTAssertEqual(6, try Controls.refreshPressed.testGetValue())
+XCTAssert(Install.firstRun.testHasValue())
+// Does the datetime have the expected value?
+XCTAssertEqual(6, try Install.firstRun.testGetValue())
+// Was the value invalid?
+XCTAssertEqual(1, Install.firstRun.getNumRecordedErrors(.invalidValue))
 </code></pre>
 </div>
 </div>
@@ -1865,7 +1881,7 @@ XCTAssertEqual(6, try Controls.refreshPressed.testGetValue())
 </ul>
 <h2><a class="header" href="#recorded-errors-10" id="recorded-errors-10">Recorded errors</a></h2>
 <ul>
-<li>None.</li>
+<li><code>invalid_value</code>: Setting the date time to an invalid value.</li>
 </ul>
 <h2><a class="header" href="#reference-11" id="reference-11">Reference</a></h2>
 <ul>
@@ -1927,6 +1943,8 @@ val snapshot = try! Views.loginOpened.testGetValue()
 XCTAssertEqual(2, snapshot.size)
 val first = snapshot[0]
 XCTAssertEqual(&quot;login_opened&quot;, first.name)
+// Check that no errors were recorded
+XCTAssertEqual(0, Views.loginOpened.testGetNumRecordedErrors(.invalidValue))
 </code></pre>
 </div>
 </div>

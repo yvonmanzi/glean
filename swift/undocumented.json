@@ -8,6 +8,27 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/distiller/project/glean-core/ios/Glean/Testing/ErrorType.swift",
+      "line": 10,
+      "symbol": "ErrorType.invalidValue",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/glean-core/ios/Glean/Testing/ErrorType.swift",
+      "line": 13,
+      "symbol": "ErrorType.invalidLabel",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/glean-core/ios/Glean/Testing/ErrorType.swift",
+      "line": 16,
+      "symbol": "ErrorType.invalidState",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/distiller/project/glean-core/ios/Glean/Utils/Utils.swift",
       "line": 25,
       "symbol": "String.errorDescription",

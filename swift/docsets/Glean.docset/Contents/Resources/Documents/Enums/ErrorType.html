@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>TimeUnit Enumeration Reference</title>
+    <title>ErrorType Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Enum/TimeUnit" class="dashAnchor"></a>
-    <a title="TimeUnit Enumeration Reference"></a>
+    <a name="//apple_ref/swift/Enum/ErrorType" class="dashAnchor"></a>
+    <a title="ErrorType Enumeration Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">Glean Docs</a> (93% documented)</p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">Glean Reference</a>
         <img id="carat" src="../img/carat.png" />
-        TimeUnit Enumeration Reference
+        ErrorType Enumeration Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -135,15 +135,14 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>TimeUnit</h1>
+            <h1>ErrorType</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">TimeUnit</span> <span class="p">:</span> <span class="kt">Int32</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">ErrorType</span> <span class="p">:</span> <span class="kt">Int32</span></code></pre>
 
                 </div>
               </div>
-            <p>Enumeration of different resolutions supported by
-the <code><a href="../Classes/TimespanMetricType.html">TimespanMetricType</a></code> and <code><a href="../Classes/TimingDistributionMetricType.html">TimingDistributionMetricType</a></code>.</p>
+            <p>Enumeration of different metric lifetimes.</p>
 
           </section>
           <section class="section task-group-section">
@@ -152,9 +151,9 @@ the <code><a href="../Classes/TimespanMetricType.html">TimespanMetricType</a></c
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:5Glean8TimeUnitO10nanosecondyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/nanosecond" class="dashAnchor"></a>
-                    <a class="token" href="#/s:5Glean8TimeUnitO10nanosecondyA2CmF">nanosecond</a>
+                    <a name="/s:5Glean9ErrorTypeO12invalidValueyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/invalidValue" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5Glean9ErrorTypeO12invalidValueyA2CmF">invalidValue</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -162,14 +161,14 @@ the <code><a href="../Classes/TimespanMetricType.html">TimespanMetricType</a></c
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Represents a nanosecond precision.</p>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">nanosecond</span> <span class="o">=</span> <span class="mi">0</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">invalidValue</span> <span class="o">=</span> <span class="mi">0</span></code></pre>
 
                         </div>
                       </div>
@@ -179,9 +178,9 @@ the <code><a href="../Classes/TimespanMetricType.html">TimespanMetricType</a></c
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:5Glean8TimeUnitO11microsecondyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/microsecond" class="dashAnchor"></a>
-                    <a class="token" href="#/s:5Glean8TimeUnitO11microsecondyA2CmF">microsecond</a>
+                    <a name="/s:5Glean9ErrorTypeO12invalidLabelyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/invalidLabel" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5Glean9ErrorTypeO12invalidLabelyA2CmF">invalidLabel</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -189,14 +188,14 @@ the <code><a href="../Classes/TimespanMetricType.html">TimespanMetricType</a></c
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Represents a microsecond precision.</p>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">microsecond</span> <span class="o">=</span> <span class="mi">1</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">invalidLabel</span> <span class="o">=</span> <span class="mi">1</span></code></pre>
 
                         </div>
                       </div>
@@ -206,9 +205,9 @@ the <code><a href="../Classes/TimespanMetricType.html">TimespanMetricType</a></c
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:5Glean8TimeUnitO11millisecondyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/millisecond" class="dashAnchor"></a>
-                    <a class="token" href="#/s:5Glean8TimeUnitO11millisecondyA2CmF">millisecond</a>
+                    <a name="/s:5Glean9ErrorTypeO12invalidStateyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/invalidState" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5Glean9ErrorTypeO12invalidStateyA2CmF">invalidState</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -216,122 +215,14 @@ the <code><a href="../Classes/TimespanMetricType.html">TimespanMetricType</a></c
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Represents a millisecond precision.</p>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">millisecond</span> <span class="o">=</span> <span class="mi">2</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:5Glean8TimeUnitO6secondyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/second" class="dashAnchor"></a>
-                    <a class="token" href="#/s:5Glean8TimeUnitO6secondyA2CmF">second</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Represents a second precision.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">second</span> <span class="o">=</span> <span class="mi">3</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:5Glean8TimeUnitO6minuteyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/minute" class="dashAnchor"></a>
-                    <a class="token" href="#/s:5Glean8TimeUnitO6minuteyA2CmF">minute</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Represents a minute precision.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">minute</span> <span class="o">=</span> <span class="mi">4</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:5Glean8TimeUnitO4houryA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/hour" class="dashAnchor"></a>
-                    <a class="token" href="#/s:5Glean8TimeUnitO4houryA2CmF">hour</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Represents a hour precision.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">hour</span> <span class="o">=</span> <span class="mi">5</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:5Glean8TimeUnitO3dayyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/day" class="dashAnchor"></a>
-                    <a class="token" href="#/s:5Glean8TimeUnitO3dayyA2CmF">day</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Represents a day precision.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">day</span> <span class="o">=</span> <span class="mi">6</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">invalidState</span> <span class="o">=</span> <span class="mi">2</span></code></pre>
 
                         </div>
                       </div>

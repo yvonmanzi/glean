@@ -209,9 +209,11 @@ Install.firstRun.set(dateComponents.date!) // Records a custom datetime
 <pre><code class="language-Swift">@testable import Glean
 
 // Was anything recorded?
-XCTAssert(Controls.refreshPressed.testHasValue())
-// Does the counter have the expected value?
-XCTAssertEqual(6, try Controls.refreshPressed.testGetValue())
+XCTAssert(Install.firstRun.testHasValue())
+// Does the datetime have the expected value?
+XCTAssertEqual(6, try Install.firstRun.testGetValue())
+// Was the value invalid?
+XCTAssertEqual(1, Install.firstRun.getNumRecordedErrors(.invalidValue))
 </code></pre>
 </div>
 </div>
@@ -226,7 +228,7 @@ XCTAssertEqual(6, try Controls.refreshPressed.testGetValue())
 </ul>
 <h2><a class="header" href="#recorded-errors" id="recorded-errors">Recorded errors</a></h2>
 <ul>
-<li>None.</li>
+<li><code>invalid_value</code>: Setting the date time to an invalid value.</li>
 </ul>
 <h2><a class="header" href="#reference" id="reference">Reference</a></h2>
 <ul>
