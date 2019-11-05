@@ -3183,11 +3183,11 @@ It makes use of the underlying <a href="dev/python/../core/index.html">Rust comp
 <li><code>rustup update</code></li>
 </ul>
 <h2><a class="header" href="#create-a-virtual-environment" id="create-a-virtual-environment">Create a virtual environment</a></h2>
-<p>It is recommended to do all Python development inside a virtual environment to make sure there are no interactions with other Python libraries installed on your system. </p>
+<p>It is recommended to do all Python development inside a virtual environment to make sure there are no interactions with other Python libraries installed on your system.</p>
 <p>You may want to manage your own virtual environment if, for example, you are developing a library that is using Glean and you want to install Glean into it.  If you are just developing Glean itself, however, Glean's <code>Makefile</code> will handle the creation and use of a virtual environment automatically (though the <code>Makefile</code> unfortunately does not work on Microsoft Windows).</p>
 <p>The instructions below all have both the manual instructions and the <code>Makefile</code> shortcuts.</p>
 <h3><a class="header" href="#manual-method" id="manual-method">Manual method</a></h3>
-<p>The following instructions use the basic <a href="https://docs.python.org/3/library/venv.html">virtual environment functionality that comes in the Python standard library</a>. 
+<p>The following instructions use the basic <a href="https://docs.python.org/3/library/venv.html">virtual environment functionality that comes in the Python standard library</a>.
 Other higher level tools exist to manage virtual environments, such as <a href="https://pipenv.kennethreitz.org/en/latest/">pipenv</a> and <a href="https://docs.conda.io/en/latest/">conda</a>.
 These will work just as well, but are not documented here.
 Using an alternative tool would replace the instructions in this section only, but all other instructions below would remain the same.</p>
@@ -3235,16 +3235,22 @@ pip install -r requirements_dev.txt
 <p>The following will run the Python unit tests using <code>py.test</code>:</p>
 <pre><code class="language-bash">  $ make test-python
 </code></pre>
-<h2><a class="header" href="#linting-and-formatting" id="linting-and-formatting">Linting and formatting</a></h2>
-<p>Linting and formatting is done using the default settings of <a href="http://flake8.pycqa.org/en/latest/">flake8</a> and <a href="https://black.readthedocs.io/en/stable/">black</a>.</p>
+<h2><a class="header" href="#linting-formatting-and-type-checking" id="linting-formatting-and-type-checking">Linting, formatting and type checking</a></h2>
+<p>The Glean Python bindings use the following tools:</p>
+<ul>
+<li>Linting: <a href="http://flake8.pycqa.org/en/latest/">flake8</a></li>
+<li>Formatting: <a href="https://black.readthedocs.io/en/stable/">black</a></li>
+<li>Type-checking: <a href="http://mypy-lang.org/">mypy</a></li>
+</ul>
 <h3><a class="header" href="#manual-method-3" id="manual-method-3">Manual method</a></h3>
 <pre><code class="language-bash">  $ cd glean-core/python
   $ flake8 glean tests
   $ black glean tests
+  $ mypy glean
 </code></pre>
 <h3><a class="header" href="#makefile-method-3" id="makefile-method-3">Makefile method</a></h3>
 <p>To just check the lints:</p>
-<pre><code class="language-bash">  $ make flake8
+<pre><code class="language-bash">  $ make pythonlint
 </code></pre>
 <p>To reformat the Python files in-place:</p>
 <pre><code class="language-bash">  $ make pythonfmt

@@ -29,6 +29,11 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 
+from pathlib import Path
+from typing import Optional
+
+
+from .config import Configuration
 from . import _ffi
 
 
@@ -43,10 +48,12 @@ class Glean:
     &gt;&gt;&gt; Glean.initialize(cfg, data_dir)
     &#34;&#34;&#34;
 
-    _handle = 0
+    _handle: int = 0
+    _configuration: Optional[Configuration] = None
+    _data_dir: Optional[Path] = None
 
     @classmethod
-    def initialize(cls, configuration, data_dir):
+    def initialize(cls, configuration: Configuration, data_dir: Path):
         &#34;&#34;&#34;
         Initialize the Glean SDK.
 
@@ -71,7 +78,7 @@ class Glean:
         cls._handle = _ffi.lib.glean_initialize(cfg)
 
     @classmethod
-    def is_initialized(cls):
+    def is_initialized(cls) -&gt; bool:
         &#34;&#34;&#34;
         Returns True if the Glean SDK has been initialized.
         &#34;&#34;&#34;
@@ -113,10 +120,12 @@ initialized from the application.</p>
     &gt;&gt;&gt; Glean.initialize(cfg, data_dir)
     &#34;&#34;&#34;
 
-    _handle = 0
+    _handle: int = 0
+    _configuration: Optional[Configuration] = None
+    _data_dir: Optional[Path] = None
 
     @classmethod
-    def initialize(cls, configuration, data_dir):
+    def initialize(cls, configuration: Configuration, data_dir: Path):
         &#34;&#34;&#34;
         Initialize the Glean SDK.
 
@@ -141,7 +150,7 @@ initialized from the application.</p>
         cls._handle = _ffi.lib.glean_initialize(cfg)
 
     @classmethod
-    def is_initialized(cls):
+    def is_initialized(cls) -&gt; bool:
         &#34;&#34;&#34;
         Returns True if the Glean SDK has been initialized.
         &#34;&#34;&#34;
@@ -171,7 +180,7 @@ settings.</dd>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def initialize(cls, configuration, data_dir):
+def initialize(cls, configuration: Configuration, data_dir: Path):
     &#34;&#34;&#34;
     Initialize the Glean SDK.
 
@@ -206,7 +215,7 @@ def initialize(cls, configuration, data_dir):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def is_initialized(cls):
+def is_initialized(cls) -&gt; bool:
     &#34;&#34;&#34;
     Returns True if the Glean SDK has been initialized.
     &#34;&#34;&#34;

@@ -59,6 +59,14 @@ __all__ = [&#34;__author__&#34;, &#34;__email__&#34;, &#34;__version__&#34;, &#3
 <dd>
 <section class="desc"></section>
 </dd>
+<dt><code class="name"><a title="glean.metrics" href="metrics/index.html">glean.metrics</a></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt><code class="name"><a title="glean.testing" href="testing/index.html">glean.testing</a></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
 </dl>
 </section>
 <section>
@@ -112,10 +120,12 @@ initialized from the application.</p>
     &gt;&gt;&gt; Glean.initialize(cfg, data_dir)
     &#34;&#34;&#34;
 
-    _handle = 0
+    _handle: int = 0
+    _configuration: Optional[Configuration] = None
+    _data_dir: Optional[Path] = None
 
     @classmethod
-    def initialize(cls, configuration, data_dir):
+    def initialize(cls, configuration: Configuration, data_dir: Path):
         &#34;&#34;&#34;
         Initialize the Glean SDK.
 
@@ -140,7 +150,7 @@ initialized from the application.</p>
         cls._handle = _ffi.lib.glean_initialize(cfg)
 
     @classmethod
-    def is_initialized(cls):
+    def is_initialized(cls) -&gt; bool:
         &#34;&#34;&#34;
         Returns True if the Glean SDK has been initialized.
         &#34;&#34;&#34;
@@ -170,7 +180,7 @@ settings.</dd>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def initialize(cls, configuration, data_dir):
+def initialize(cls, configuration: Configuration, data_dir: Path):
     &#34;&#34;&#34;
     Initialize the Glean SDK.
 
@@ -205,7 +215,7 @@ def initialize(cls, configuration, data_dir):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def is_initialized(cls):
+def is_initialized(cls) -&gt; bool:
     &#34;&#34;&#34;
     Returns True if the Glean SDK has been initialized.
     &#34;&#34;&#34;
@@ -227,6 +237,8 @@ def is_initialized(cls):
 <ul>
 <li><code><a title="glean.config" href="config.html">glean.config</a></code></li>
 <li><code><a title="glean.glean" href="glean.html">glean.glean</a></code></li>
+<li><code><a title="glean.metrics" href="metrics/index.html">glean.metrics</a></code></li>
+<li><code><a title="glean.testing" href="testing/index.html">glean.testing</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>
