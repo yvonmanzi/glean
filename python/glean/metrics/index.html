@@ -120,8 +120,9 @@ enforced.</p></section>
         if self._disabled:
             return
 
-        # TODO: 1594033 Run on the dispatcher
-        _ffi.lib.glean_counter_add(Glean._handle, self._handle, amount)
+        @Dispatcher.launch
+        def add():
+            _ffi.lib.glean_counter_add(Glean._handle, self._handle, amount)
 
     def test_has_value(self, ping_name: Optional[str] = None) -&gt; bool:
         &#34;&#34;&#34;
@@ -215,8 +216,9 @@ counter by.</dd>
     if self._disabled:
         return
 
-    # TODO: 1594033 Run on the dispatcher
-    _ffi.lib.glean_counter_add(Glean._handle, self._handle, amount)</code></pre>
+    @Dispatcher.launch
+    def add():
+        _ffi.lib.glean_counter_add(Glean._handle, self._handle, amount)</code></pre>
 </details>
 </dd>
 <dt id="glean.metrics.CounterMetricType.test_get_num_recorded_errors"><code class="name flex">

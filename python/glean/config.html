@@ -29,12 +29,55 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 
+import dataclasses
+import sys
+from typing import Optional
+
+
+# The default server pings are sent to
+DEFAULT_TELEMETRY_ENDPOINT = &#34;https://incoming.telemetry.mozilla.org&#34;
+
+
+# The default number of events to store before sending
+DEFAULT_MAX_EVENTS = 500
+
+
+@dataclasses.dataclass
 class Configuration:
     &#34;&#34;&#34;
-    Configuration for Glean.
+    Configuration values for Glean.
     &#34;&#34;&#34;
 
-    pass</code></pre>
+    # The server pings are sent to.
+    server_endpoint: str = DEFAULT_TELEMETRY_ENDPOINT
+
+    # The user agent used when sending pings.
+    user_agent: str = Optional[None]
+
+    # The release channel the application is on, if known.
+    channel: Optional[str] = None
+
+    # The number of events to store before force-sending.
+    max_events: int = DEFAULT_MAX_EVENTS
+
+    # Whether to log ping contents to the console.
+    log_pings: bool = False
+
+    # String tag to be applied to headers when uploading pings for debug view.
+    ping_tag: Optional[str] = None
+
+    def __post_init__(self):
+        # It would be preferable to use a field(default_factory=...) for this,
+        # but that breaks our documentation generation due to this bug:
+        #   https://github.com/pdoc3/pdoc/issues/116
+
+        if self.user_agent is None:
+            from glean import __version__
+
+            self.user_agent = f&#34;Glean/{__version__} (Python on {sys.platform})&#34;
+
+
+__all__ = [&#34;Configuration&#34;]</code></pre>
 </details>
 </section>
 <section>
@@ -48,21 +91,102 @@ class Configuration:
 <dl>
 <dt id="glean.config.Configuration"><code class="flex name class">
 <span>class <span class="ident">Configuration</span></span>
-<span>(</span><span>*args, **kwargs)</span>
+<span>(</span><span>server_endpoint='https://incoming.telemetry.mozilla.org', user_agent=builtins.NoneType, channel=None, max_events=500, log_pings=False, ping_tag=None)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Configuration for Glean.</p></section>
+<section class="desc"><p>Configuration values for Glean.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Configuration:
     &#34;&#34;&#34;
-    Configuration for Glean.
+    Configuration values for Glean.
     &#34;&#34;&#34;
 
-    pass</code></pre>
+    # The server pings are sent to.
+    server_endpoint: str = DEFAULT_TELEMETRY_ENDPOINT
+
+    # The user agent used when sending pings.
+    user_agent: str = Optional[None]
+
+    # The release channel the application is on, if known.
+    channel: Optional[str] = None
+
+    # The number of events to store before force-sending.
+    max_events: int = DEFAULT_MAX_EVENTS
+
+    # Whether to log ping contents to the console.
+    log_pings: bool = False
+
+    # String tag to be applied to headers when uploading pings for debug view.
+    ping_tag: Optional[str] = None
+
+    def __post_init__(self):
+        # It would be preferable to use a field(default_factory=...) for this,
+        # but that breaks our documentation generation due to this bug:
+        #   https://github.com/pdoc3/pdoc/issues/116
+
+        if self.user_agent is None:
+            from glean import __version__
+
+            self.user_agent = f&#34;Glean/{__version__} (Python on {sys.platform})&#34;</code></pre>
 </details>
+<h3>Class variables</h3>
+<dl>
+<dt id="glean.config.Configuration.channel"><code class="name">var <span class="ident">channel</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="glean.config.Configuration.log_pings"><code class="name">var <span class="ident">log_pings</span></code></dt>
+<dd>
+<section class="desc"><p>bool(x) -&gt; bool</p>
+<p>Returns True when the argument x is true, False otherwise.
+The builtins True and False are the only two instances of the class bool.
+The class bool is a subclass of the class int, and cannot be subclassed.</p></section>
+</dd>
+<dt id="glean.config.Configuration.max_events"><code class="name">var <span class="ident">max_events</span></code></dt>
+<dd>
+<section class="desc"><p>int([x]) -&gt; integer
+int(x, base=10) -&gt; integer</p>
+<p>Convert a number or string to an integer, or return 0 if no arguments
+are given.
+If x is a number, return x.<strong>int</strong>().
+For floating point
+numbers, this truncates towards zero.</p>
+<p>If x is not a number or if base is given, then x must be a string,
+bytes, or bytearray instance representing an integer literal in the
+given base.
+The literal can be preceded by '+' or '-' and be surrounded
+by whitespace.
+The base defaults to 10.
+Valid bases are 0 and 2-36.
+Base 0 means to interpret the base from the string as an integer literal.</p>
+<pre><code>&gt;&gt;&gt; int('0b100', base=0)
+4
+</code></pre></section>
+</dd>
+<dt id="glean.config.Configuration.ping_tag"><code class="name">var <span class="ident">ping_tag</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="glean.config.Configuration.server_endpoint"><code class="name">var <span class="ident">server_endpoint</span></code></dt>
+<dd>
+<section class="desc"><p>str(object='') -&gt; str
+str(bytes_or_buffer[, encoding[, errors]]) -&gt; str</p>
+<p>Create a new string object from the given object. If encoding or
+errors is specified, then the object must expose a data buffer
+that will be decoded using the given encoding and error handler.
+Otherwise, returns the result of object.<strong>str</strong>() (if defined)
+or repr(object).
+encoding defaults to sys.getdefaultencoding().
+errors defaults to 'strict'.</p></section>
+</dd>
+<dt id="glean.config.Configuration.user_agent"><code class="name">var <span class="ident">user_agent</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
 </dd>
 </dl>
 </section>
@@ -82,6 +206,14 @@ class Configuration:
 <ul>
 <li>
 <h4><code><a title="glean.config.Configuration" href="#glean.config.Configuration">Configuration</a></code></h4>
+<ul class="two-column">
+<li><code><a title="glean.config.Configuration.channel" href="#glean.config.Configuration.channel">channel</a></code></li>
+<li><code><a title="glean.config.Configuration.log_pings" href="#glean.config.Configuration.log_pings">log_pings</a></code></li>
+<li><code><a title="glean.config.Configuration.max_events" href="#glean.config.Configuration.max_events">max_events</a></code></li>
+<li><code><a title="glean.config.Configuration.ping_tag" href="#glean.config.Configuration.ping_tag">ping_tag</a></code></li>
+<li><code><a title="glean.config.Configuration.server_endpoint" href="#glean.config.Configuration.server_endpoint">server_endpoint</a></code></li>
+<li><code><a title="glean.config.Configuration.user_agent" href="#glean.config.Configuration.user_agent">user_agent</a></code></li>
+</ul>
 </li>
 </ul>
 </li>

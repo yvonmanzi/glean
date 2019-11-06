@@ -33,17 +33,21 @@
 
 from pkg_resources import get_distribution, DistributionNotFound
 
+
+from .glean import Glean
+from .config import Configuration
+
+
+__version__: str = &#34;unknown&#34;
 try:
-    __version__ = get_distribution(&#34;glean-sdk&#34;).version
+    __version__ = str(get_distribution(&#34;glean-sdk&#34;).version)
 except DistributionNotFound:
-    # package is not installed
     pass
+
 
 __author__ = &#34;The Glean Team&#34;
 __email__ = &#34;glean-team@mozilla.com&#34;
 
-from .glean import Glean
-from .config import Configuration
 
 __all__ = [&#34;__author__&#34;, &#34;__email__&#34;, &#34;__version__&#34;, &#34;Glean&#34;, &#34;Configuration&#34;]</code></pre>
 </details>
@@ -78,21 +82,102 @@ __all__ = [&#34;__author__&#34;, &#34;__email__&#34;, &#34;__version__&#34;, &#3
 <dl>
 <dt id="glean.Configuration"><code class="flex name class">
 <span>class <span class="ident">Configuration</span></span>
-<span>(</span><span>*args, **kwargs)</span>
+<span>(</span><span>server_endpoint='https://incoming.telemetry.mozilla.org', user_agent=builtins.NoneType, channel=None, max_events=500, log_pings=False, ping_tag=None)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Configuration for Glean.</p></section>
+<section class="desc"><p>Configuration values for Glean.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Configuration:
     &#34;&#34;&#34;
-    Configuration for Glean.
+    Configuration values for Glean.
     &#34;&#34;&#34;
 
-    pass</code></pre>
+    # The server pings are sent to.
+    server_endpoint: str = DEFAULT_TELEMETRY_ENDPOINT
+
+    # The user agent used when sending pings.
+    user_agent: str = Optional[None]
+
+    # The release channel the application is on, if known.
+    channel: Optional[str] = None
+
+    # The number of events to store before force-sending.
+    max_events: int = DEFAULT_MAX_EVENTS
+
+    # Whether to log ping contents to the console.
+    log_pings: bool = False
+
+    # String tag to be applied to headers when uploading pings for debug view.
+    ping_tag: Optional[str] = None
+
+    def __post_init__(self):
+        # It would be preferable to use a field(default_factory=...) for this,
+        # but that breaks our documentation generation due to this bug:
+        #   https://github.com/pdoc3/pdoc/issues/116
+
+        if self.user_agent is None:
+            from glean import __version__
+
+            self.user_agent = f&#34;Glean/{__version__} (Python on {sys.platform})&#34;</code></pre>
 </details>
+<h3>Class variables</h3>
+<dl>
+<dt id="glean.Configuration.channel"><code class="name">var <span class="ident">channel</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="glean.Configuration.log_pings"><code class="name">var <span class="ident">log_pings</span></code></dt>
+<dd>
+<section class="desc"><p>bool(x) -&gt; bool</p>
+<p>Returns True when the argument x is true, False otherwise.
+The builtins True and False are the only two instances of the class bool.
+The class bool is a subclass of the class int, and cannot be subclassed.</p></section>
+</dd>
+<dt id="glean.Configuration.max_events"><code class="name">var <span class="ident">max_events</span></code></dt>
+<dd>
+<section class="desc"><p>int([x]) -&gt; integer
+int(x, base=10) -&gt; integer</p>
+<p>Convert a number or string to an integer, or return 0 if no arguments
+are given.
+If x is a number, return x.<strong>int</strong>().
+For floating point
+numbers, this truncates towards zero.</p>
+<p>If x is not a number or if base is given, then x must be a string,
+bytes, or bytearray instance representing an integer literal in the
+given base.
+The literal can be preceded by '+' or '-' and be surrounded
+by whitespace.
+The base defaults to 10.
+Valid bases are 0 and 2-36.
+Base 0 means to interpret the base from the string as an integer literal.</p>
+<pre><code>&gt;&gt;&gt; int('0b100', base=0)
+4
+</code></pre></section>
+</dd>
+<dt id="glean.Configuration.ping_tag"><code class="name">var <span class="ident">ping_tag</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="glean.Configuration.server_endpoint"><code class="name">var <span class="ident">server_endpoint</span></code></dt>
+<dd>
+<section class="desc"><p>str(object='') -&gt; str
+str(bytes_or_buffer[, encoding[, errors]]) -&gt; str</p>
+<p>Create a new string object from the given object. If encoding or
+errors is specified, then the object must expose a data buffer
+that will be decoded using the given encoding and error handler.
+Otherwise, returns the result of object.<strong>str</strong>() (if defined)
+or repr(object).
+encoding defaults to sys.getdefaultencoding().
+errors defaults to 'strict'.</p></section>
+</dd>
+<dt id="glean.Configuration.user_agent"><code class="name">var <span class="ident">user_agent</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
 </dd>
 <dt id="glean.Glean"><code class="flex name class">
 <span>class <span class="ident">Glean</span></span>
@@ -103,7 +188,7 @@ __all__ = [&#34;__author__&#34;, &#34;__email__&#34;, &#34;__version__&#34;, &#3
 <p>Before any data collection can take place, the Glean SDK <strong>must</strong> be
 initialized from the application.</p>
 <pre><code>&gt;&gt;&gt; Glean.set_upload_enabled(True)
-&gt;&gt;&gt; Glean.initialize(cfg, data_dir)
+&gt;&gt;&gt; Glean.initialize()
 </code></pre></section>
 <details class="source">
 <summary>
@@ -117,15 +202,33 @@ initialized from the application.</p>
     initialized from the application.
 
     &gt;&gt;&gt; Glean.set_upload_enabled(True)
-    &gt;&gt;&gt; Glean.initialize(cfg, data_dir)
+    &gt;&gt;&gt; Glean.initialize()
     &#34;&#34;&#34;
 
+    # The handle to the underlying Rust object
     _handle: int = 0
+
+    # The Configuration that was passed to `initialize`
     _configuration: Optional[Configuration] = None
-    _data_dir: Optional[Path] = None
+
+    # The directory that Glean stores data in
+    _data_dir: Path = Path()
+
+    # Whether Glean &#34;owns&#34; the data directory and should destroy it upon reset.
+    _destroy_data_dir: bool = False
+
+    # Keep track of this setting before Glean is initialized
+    _upload_enabled: bool = True
+
+    # TODO: 1594184 ping_type_queue
 
     @classmethod
-    def initialize(cls, configuration: Configuration, data_dir: Path):
+    def initialize(
+        cls,
+        configuration: Optional[Configuration] = None,
+        application_id: Optional[str] = None,
+        data_dir: Optional[Path] = None,
+    ):
         &#34;&#34;&#34;
         Initialize the Glean SDK.
 
@@ -137,29 +240,186 @@ initialized from the application.</p>
         Args:
             configuration (glean.config.Configuration): An object with global
                 settings.
-            data_dir (pathlib.Path): The path to the Glean data directory.
+            application_id (str): (optional) The application id to use when
+                sending pings. Defaults to &#39;glean-python&#39;.
+            data_dir (pathlib.Path): (optional) The path to the Glean data
+                directory. If not provided, uses a temporary directory.
         &#34;&#34;&#34;
         if cls.is_initialized():
             return
 
+        if configuration is None:
+            configuration = Configuration()
+
+        if application_id is None:
+            application_id = &#34;glean-python&#34;
+
+        if data_dir is None:
+            data_dir = Path(tempfile.TemporaryDirectory().name)
+
         cls._configuration = configuration
         cls._data_dir = data_dir
 
-        cfg = _ffi.make_config(cls._data_dir, &#34;glean&#34;)
+        # TODO: 1594184 cls.register_pings(pings)
+
+        cfg = _ffi.make_config(
+            cls._data_dir,
+            application_id,
+            cls._upload_enabled,
+            configuration.max_events,
+        )
 
         cls._handle = _ffi.lib.glean_initialize(cfg)
+
+        # If initialization of Glean fails, we bail out and don&#39;t initialize
+        # further
+        if cls._handle == 0:
+            return
+
+        # TODO: 1594184 Flush the ping_type_queue
+
+        # Initialize the core metrics
+        cls._initialize_core_metrics()
+
+        # Glean Android sets up the metrics ping scheduler here, but we don&#39;t
+        # have one.
+
+        # Deal with any pending events so we can start recording new ones
+        @Dispatcher.launch_at_front
+        def send_pending_events():
+            if _ffi.lib.glean_on_ready_to_send_pings(cls._handle):
+                # TODO: 1591192
+                # PingUploadWorker.enqueueWorker()
+                pass
+
+        Dispatcher.flush_queued_initial_tasks()
+
+        # Glean Android sets up the lifecycle observer here. We don&#39;t really
+        # have a lifecycle.
+
+    @classmethod
+    def reset(cls):
+        &#34;&#34;&#34;
+        Resets the Glean singleton.
+        &#34;&#34;&#34;
+        # TODO: 1594184 Send the metrics ping
+        if cls._handle != 0:
+            _ffi.lib.glean_destroy_glean(cls._handle)
+        cls._handle = 0
+        if cls._destroy_data_dir and cls._data_dir.exists():
+            shutil.rmtree(cls._data_dir)
 
     @classmethod
     def is_initialized(cls) -&gt; bool:
         &#34;&#34;&#34;
         Returns True if the Glean SDK has been initialized.
         &#34;&#34;&#34;
-        return cls._handle != 0</code></pre>
+        return cls._handle != 0
+
+    @classmethod
+    def register_pings(cls):
+        &#34;&#34;&#34;
+        Register the pings generated from pings.yaml with the Glean SDK.
+        &#34;&#34;&#34;
+        # TODO: 1594184
+        pass
+
+    @classmethod
+    def set_upload_enabled(cls, enabled: bool):
+        &#34;&#34;&#34;
+        Enable or disable Glean collection and upload.
+
+        Metric collection is enabled by default.
+
+        When uploading is disabled, metrics aren&#39;t recorded at all and no data
+        is uploaded.
+
+        When disabling, all pending metrics, events and queued pings are cleared.
+
+        When enabling, the core Glean metrics are recreated.
+
+        Args:
+            enabled (bool): When True, enable metric collection.
+        &#34;&#34;&#34;
+        if cls.is_initialized():
+            original_enabled = cls.get_upload_enabled()
+
+            @Dispatcher.launch
+            def set_upload_enabled():
+                _ffi.lib.glean_set_upload_enabled(cls._handle, enabled)
+
+                if original_enabled is False and cls.get_upload_enabled() is True:
+                    cls._initialize_core_metrics()
+
+        else:
+            cls._upload_enabled = enabled
+
+    @classmethod
+    def get_upload_enabled(cls) -&gt; bool:
+        &#34;&#34;&#34;
+        Get whether or not Glean is allowed to record and upload data.
+        &#34;&#34;&#34;
+        if cls.is_initialized():
+            return bool(_ffi.lib.glean_is_upload_enabled(cls._handle))
+        else:
+            return cls._upload_enabled
+
+    @classmethod
+    def _initialize_core_metrics(cls):
+        &#34;&#34;&#34;
+        Set a few metrics that will be sent as part of every ping.
+        &#34;&#34;&#34;
+        # TODO: 1594184
+        pass
+
+    @classmethod
+    def get_data_dir(cls) -&gt; Path:
+        &#34;&#34;&#34;
+        Get the data directory for Glean.
+        &#34;&#34;&#34;
+        return cls._data_dir</code></pre>
 </details>
 <h3>Static methods</h3>
 <dl>
+<dt id="glean.Glean.get_data_dir"><code class="name flex">
+<span>def <span class="ident">get_data_dir</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Get the data directory for Glean.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def get_data_dir(cls) -&gt; Path:
+    &#34;&#34;&#34;
+    Get the data directory for Glean.
+    &#34;&#34;&#34;
+    return cls._data_dir</code></pre>
+</details>
+</dd>
+<dt id="glean.Glean.get_upload_enabled"><code class="name flex">
+<span>def <span class="ident">get_upload_enabled</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Get whether or not Glean is allowed to record and upload data.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def get_upload_enabled(cls) -&gt; bool:
+    &#34;&#34;&#34;
+    Get whether or not Glean is allowed to record and upload data.
+    &#34;&#34;&#34;
+    if cls.is_initialized():
+        return bool(_ffi.lib.glean_is_upload_enabled(cls._handle))
+    else:
+        return cls._upload_enabled</code></pre>
+</details>
+</dd>
 <dt id="glean.Glean.initialize"><code class="name flex">
-<span>def <span class="ident">initialize</span></span>(<span>configuration, data_dir)</span>
+<span>def <span class="ident">initialize</span></span>(<span>configuration=None, application_id=None, data_dir=None)</span>
 </code></dt>
 <dd>
 <section class="desc"><p>Initialize the Glean SDK.</p>
@@ -172,15 +432,24 @@ once.</p>
 <dt><strong><code>configuration</code></strong> :&ensp;<a title="glean.config.Configuration" href="config.html#glean.config.Configuration"><code>Configuration</code></a></dt>
 <dd>An object with global
 settings.</dd>
+<dt><strong><code>application_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>(optional) The application id to use when
+sending pings. Defaults to 'glean-python'.</dd>
 <dt><strong><code>data_dir</code></strong> :&ensp;<code>pathlib.Path</code></dt>
-<dd>The path to the Glean data directory.</dd>
+<dd>(optional) The path to the Glean data
+directory. If not provided, uses a temporary directory.</dd>
 </dl></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def initialize(cls, configuration: Configuration, data_dir: Path):
+def initialize(
+    cls,
+    configuration: Optional[Configuration] = None,
+    application_id: Optional[str] = None,
+    data_dir: Optional[Path] = None,
+):
     &#34;&#34;&#34;
     Initialize the Glean SDK.
 
@@ -192,17 +461,59 @@ def initialize(cls, configuration: Configuration, data_dir: Path):
     Args:
         configuration (glean.config.Configuration): An object with global
             settings.
-        data_dir (pathlib.Path): The path to the Glean data directory.
+        application_id (str): (optional) The application id to use when
+            sending pings. Defaults to &#39;glean-python&#39;.
+        data_dir (pathlib.Path): (optional) The path to the Glean data
+            directory. If not provided, uses a temporary directory.
     &#34;&#34;&#34;
     if cls.is_initialized():
         return
 
+    if configuration is None:
+        configuration = Configuration()
+
+    if application_id is None:
+        application_id = &#34;glean-python&#34;
+
+    if data_dir is None:
+        data_dir = Path(tempfile.TemporaryDirectory().name)
+
     cls._configuration = configuration
     cls._data_dir = data_dir
 
-    cfg = _ffi.make_config(cls._data_dir, &#34;glean&#34;)
+    # TODO: 1594184 cls.register_pings(pings)
 
-    cls._handle = _ffi.lib.glean_initialize(cfg)</code></pre>
+    cfg = _ffi.make_config(
+        cls._data_dir,
+        application_id,
+        cls._upload_enabled,
+        configuration.max_events,
+    )
+
+    cls._handle = _ffi.lib.glean_initialize(cfg)
+
+    # If initialization of Glean fails, we bail out and don&#39;t initialize
+    # further
+    if cls._handle == 0:
+        return
+
+    # TODO: 1594184 Flush the ping_type_queue
+
+    # Initialize the core metrics
+    cls._initialize_core_metrics()
+
+    # Glean Android sets up the metrics ping scheduler here, but we don&#39;t
+    # have one.
+
+    # Deal with any pending events so we can start recording new ones
+    @Dispatcher.launch_at_front
+    def send_pending_events():
+        if _ffi.lib.glean_on_ready_to_send_pings(cls._handle):
+            # TODO: 1591192
+            # PingUploadWorker.enqueueWorker()
+            pass
+
+    Dispatcher.flush_queued_initial_tasks()</code></pre>
 </details>
 </dd>
 <dt id="glean.Glean.is_initialized"><code class="name flex">
@@ -220,6 +531,96 @@ def is_initialized(cls) -&gt; bool:
     Returns True if the Glean SDK has been initialized.
     &#34;&#34;&#34;
     return cls._handle != 0</code></pre>
+</details>
+</dd>
+<dt id="glean.Glean.register_pings"><code class="name flex">
+<span>def <span class="ident">register_pings</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Register the pings generated from pings.yaml with the Glean SDK.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def register_pings(cls):
+    &#34;&#34;&#34;
+    Register the pings generated from pings.yaml with the Glean SDK.
+    &#34;&#34;&#34;
+    # TODO: 1594184
+    pass</code></pre>
+</details>
+</dd>
+<dt id="glean.Glean.reset"><code class="name flex">
+<span>def <span class="ident">reset</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Resets the Glean singleton.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def reset(cls):
+    &#34;&#34;&#34;
+    Resets the Glean singleton.
+    &#34;&#34;&#34;
+    # TODO: 1594184 Send the metrics ping
+    if cls._handle != 0:
+        _ffi.lib.glean_destroy_glean(cls._handle)
+    cls._handle = 0
+    if cls._destroy_data_dir and cls._data_dir.exists():
+        shutil.rmtree(cls._data_dir)</code></pre>
+</details>
+</dd>
+<dt id="glean.Glean.set_upload_enabled"><code class="name flex">
+<span>def <span class="ident">set_upload_enabled</span></span>(<span>enabled)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Enable or disable Glean collection and upload.</p>
+<p>Metric collection is enabled by default.</p>
+<p>When uploading is disabled, metrics aren't recorded at all and no data
+is uploaded.</p>
+<p>When disabling, all pending metrics, events and queued pings are cleared.</p>
+<p>When enabling, the core Glean metrics are recreated.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>enabled</code></strong> :&ensp;<code>bool</code></dt>
+<dd>When True, enable metric collection.</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def set_upload_enabled(cls, enabled: bool):
+    &#34;&#34;&#34;
+    Enable or disable Glean collection and upload.
+
+    Metric collection is enabled by default.
+
+    When uploading is disabled, metrics aren&#39;t recorded at all and no data
+    is uploaded.
+
+    When disabling, all pending metrics, events and queued pings are cleared.
+
+    When enabling, the core Glean metrics are recreated.
+
+    Args:
+        enabled (bool): When True, enable metric collection.
+    &#34;&#34;&#34;
+    if cls.is_initialized():
+        original_enabled = cls.get_upload_enabled()
+
+        @Dispatcher.launch
+        def set_upload_enabled():
+            _ffi.lib.glean_set_upload_enabled(cls._handle, enabled)
+
+            if original_enabled is False and cls.get_upload_enabled() is True:
+                cls._initialize_core_metrics()
+
+    else:
+        cls._upload_enabled = enabled</code></pre>
 </details>
 </dd>
 </dl>
@@ -245,12 +646,25 @@ def is_initialized(cls) -&gt; bool:
 <ul>
 <li>
 <h4><code><a title="glean.Configuration" href="#glean.Configuration">Configuration</a></code></h4>
+<ul class="two-column">
+<li><code><a title="glean.Configuration.channel" href="#glean.Configuration.channel">channel</a></code></li>
+<li><code><a title="glean.Configuration.log_pings" href="#glean.Configuration.log_pings">log_pings</a></code></li>
+<li><code><a title="glean.Configuration.max_events" href="#glean.Configuration.max_events">max_events</a></code></li>
+<li><code><a title="glean.Configuration.ping_tag" href="#glean.Configuration.ping_tag">ping_tag</a></code></li>
+<li><code><a title="glean.Configuration.server_endpoint" href="#glean.Configuration.server_endpoint">server_endpoint</a></code></li>
+<li><code><a title="glean.Configuration.user_agent" href="#glean.Configuration.user_agent">user_agent</a></code></li>
+</ul>
 </li>
 <li>
 <h4><code><a title="glean.Glean" href="#glean.Glean">Glean</a></code></h4>
-<ul class="">
+<ul class="two-column">
+<li><code><a title="glean.Glean.get_data_dir" href="#glean.Glean.get_data_dir">get_data_dir</a></code></li>
+<li><code><a title="glean.Glean.get_upload_enabled" href="#glean.Glean.get_upload_enabled">get_upload_enabled</a></code></li>
 <li><code><a title="glean.Glean.initialize" href="#glean.Glean.initialize">initialize</a></code></li>
 <li><code><a title="glean.Glean.is_initialized" href="#glean.Glean.is_initialized">is_initialized</a></code></li>
+<li><code><a title="glean.Glean.register_pings" href="#glean.Glean.register_pings">register_pings</a></code></li>
+<li><code><a title="glean.Glean.reset" href="#glean.Glean.reset">reset</a></code></li>
+<li><code><a title="glean.Glean.set_upload_enabled" href="#glean.Glean.set_upload_enabled">set_upload_enabled</a></code></li>
 </ul>
 </li>
 </ul>
