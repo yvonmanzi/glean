@@ -173,6 +173,11 @@ If <code>gleanGenerateMarkdownDocs</code> is disabled, it does nothing.
 Please note that only the <code>metrics.md</code> will be overwritten: any other file available in the target directory will be preserved.</p>
 <pre><code class="language-groovy">ext.gleanDocsDirectory = &quot;$rootDir/docs/user/telemetry&quot;
 </code></pre>
+<h2><a class="header" href="#gleanyamlfiles" id="gleanyamlfiles"><code>gleanYamlFiles</code></a></h2>
+<p>By default, the Glean Gradle plugin will look for <code>metrics.yaml</code> and <code>pings.yaml</code> files in the same directory that the plugin is included from in your application or library.
+To override this, <code>ext.gleanYamlFiles</code> may be set to a list of explicit paths.</p>
+<pre><code class="language-groovy">ext.gleanYamlFiles = [&quot;$rootDir/glean-core/metrics.yaml&quot;, &quot;$rootDir/glean-core/pings.yaml&quot;]
+</code></pre>
 
                     </main>
 
