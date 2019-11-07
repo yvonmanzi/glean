@@ -36,6 +36,7 @@ from pkg_resources import get_distribution, DistributionNotFound
 
 from .glean import Glean
 from .config import Configuration
+from ._loader import load_metrics, load_pings
 
 
 __version__: str = &#34;unknown&#34;
@@ -49,7 +50,15 @@ __author__ = &#34;The Glean Team&#34;
 __email__ = &#34;glean-team@mozilla.com&#34;
 
 
-__all__ = [&#34;__author__&#34;, &#34;__email__&#34;, &#34;__version__&#34;, &#34;Glean&#34;, &#34;Configuration&#34;]</code></pre>
+__all__ = [
+    &#34;__author__&#34;,
+    &#34;__email__&#34;,
+    &#34;__version__&#34;,
+    &#34;Glean&#34;,
+    &#34;Configuration&#34;,
+    &#34;load_metrics&#34;,
+    &#34;load_pings&#34;,
+]</code></pre>
 </details>
 </section>
 <section>
@@ -76,6 +85,135 @@ __all__ = [&#34;__author__&#34;, &#34;__email__&#34;, &#34;__version__&#34;, &#3
 <section>
 </section>
 <section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="glean.load_metrics"><code class="name flex">
+<span>def <span class="ident">load_metrics</span></span>(<span>filepath, config={})</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Load metrics from a <code>metrics.yaml</code> file.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>filepath</code></strong></dt>
+<dd>The path to the file, or a list of paths, to load.</dd>
+<dt><strong><a title="glean.config" href="config.html"><code>glean.config</code></a></strong> :&ensp;<code>dict</code></dt>
+<dd>A dictionary of options that change parsing behavior.
+These are documented in glean_parser:
+<a href="https://mozilla.github.io/glean_parser/glean_parser.html#glean_parser.parser.parse_objects">https://mozilla.github.io/glean_parser/glean_parser.html#glean_parser.parser.parse_objects</a></dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><a title="glean.metrics" href="metrics/index.html"><code>glean.metrics</code></a></strong> :&ensp;<code>object</code></dt>
+<dd>An object containing a tree of metrics, as defined in
+the <code>metrics.yaml</code> file.</dd>
+</dl>
+<h2 id="example">Example</h2>
+<pre><code>&gt;&gt;&gt; metrics = load_metrics("metrics.yaml")
+&gt;&gt;&gt; metrics.category.name.set("value")
+</code></pre></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_metrics(
+    filepath: Union[Union[str, Path], List[Union[str, Path]]], config: dict = {}
+) -&gt; Any:
+    &#34;&#34;&#34;
+    Load metrics from a `metrics.yaml` file.
+
+    Args:
+        filepath: The path to the file, or a list of paths, to load.
+        config (dict): A dictionary of options that change parsing behavior.
+            These are documented in glean_parser:
+            https://mozilla.github.io/glean_parser/glean_parser.html#glean_parser.parser.parse_objects
+    Returns:
+        metrics (object): An object containing a tree of metrics, as defined in
+            the `metrics.yaml` file.
+    Example:
+        &gt;&gt;&gt; metrics = load_metrics(&#34;metrics.yaml&#34;)
+        &gt;&gt;&gt; metrics.category.name.set(&#34;value&#34;)
+    &#34;&#34;&#34;
+    if not isinstance(filepath, list):
+        filepath = [filepath]
+
+    filepath = [Path(x) for x in filepath]
+
+    result = parse_objects(filepath, config)
+
+    errors = list(result)
+    if len(errors):
+        raise ValueError(&#34;\n\n&#34;.join(errors))
+
+    metrics = result.value
+    if len(metrics) == 0:
+        raise ValueError(f&#34;Didn&#39;t find any metrics in &#39;{filepath}&#39;&#34;)
+
+    root = type(&#34;Metrics&#34;, (object,), {})
+
+    for category_name, category in metrics.items():
+        cursor = root
+        for part in category_name.split(&#34;.&#34;):
+            if not hasattr(cursor, part):
+                setattr(cursor, part, type(category_name, (object,), {}))
+            cursor = getattr(cursor, part)
+        for name, metric in category.items():
+            setattr(cursor, name, _get_metric_object(metric))
+
+    return root</code></pre>
+</details>
+</dd>
+<dt id="glean.load_pings"><code class="name flex">
+<span>def <span class="ident">load_pings</span></span>(<span>filepath, config={})</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Load pings from a <code>pings.yaml</code> file.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>filepath</code></strong></dt>
+<dd>The path to the file, or a list of paths, to load.</dd>
+<dt><strong><a title="glean.config" href="config.html"><code>glean.config</code></a></strong> :&ensp;<code>dict</code></dt>
+<dd>A dictionary of options that change parsing behavior.
+These are documented in glean_parser:
+<a href="https://mozilla.github.io/glean_parser/glean_parser.html#glean_parser.parser.parse_objects">https://mozilla.github.io/glean_parser/glean_parser.html#glean_parser.parser.parse_objects</a></dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pings</code></strong> :&ensp;<code>object</code></dt>
+<dd>An object where the attributes are pings, as defined in
+the <code>pings.yaml</code> file.</dd>
+</dl>
+<h2 id="example">Example</h2>
+<pre><code>&gt;&gt;&gt; pings = load_pings("pings.yaml")
+&gt;&gt;&gt; pings.baseline.send()
+</code></pre></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_pings(
+    filepath: Union[Union[str, Path], List[Union[str, Path]]], config: dict = {}
+) -&gt; Any:
+    &#34;&#34;&#34;
+    Load pings from a `pings.yaml` file.
+
+    Args:
+        filepath: The path to the file, or a list of paths, to load.
+        config (dict): A dictionary of options that change parsing behavior.
+            These are documented in glean_parser:
+            https://mozilla.github.io/glean_parser/glean_parser.html#glean_parser.parser.parse_objects
+    Returns:
+        pings (object): An object where the attributes are pings, as defined in
+            the `pings.yaml` file.
+    Example:
+        &gt;&gt;&gt; pings = load_pings(&#34;pings.yaml&#34;)
+        &gt;&gt;&gt; pings.baseline.send()
+    &#34;&#34;&#34;
+    metrics = load_metrics(filepath, config)
+
+    return metrics.pings</code></pre>
+</details>
+</dd>
+</dl>
 </section>
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
@@ -220,7 +358,9 @@ initialized from the application.</p>
     # Keep track of this setting before Glean is initialized
     _upload_enabled: bool = True
 
-    # TODO: 1594184 ping_type_queue
+    # The ping types, so they can be registered prior to Glean initialization,
+    # and saved between test runs.
+    _ping_type_queue: Set[&#34;PingType&#34;] = set()
 
     @classmethod
     def initialize(
@@ -260,7 +400,8 @@ initialized from the application.</p>
         cls._configuration = configuration
         cls._data_dir = data_dir
 
-        # TODO: 1594184 cls.register_pings(pings)
+        for ping in cls._ping_type_queue:
+            cls.register_ping_type(ping)
 
         cfg = _ffi.make_config(
             cls._data_dir,
@@ -317,12 +458,18 @@ initialized from the application.</p>
         return cls._handle != 0
 
     @classmethod
-    def register_pings(cls):
+    def register_ping_type(cls, ping: &#34;PingType&#34;):
         &#34;&#34;&#34;
-        Register the pings generated from pings.yaml with the Glean SDK.
+        Register the ping type in the registry.
         &#34;&#34;&#34;
-        # TODO: 1594184
-        pass
+        if cls.is_initialized():
+            _ffi.lib.glean_register_ping_type(cls._handle, ping._handle)
+
+        # We need to keep track of pings, so they get re-registered after a
+        # reset. This state is kept across Glean resets, which should only ever
+        # happen in test mode. It&#39;s a set and keeping them around forever
+        # should not have much of an impact.
+        cls._ping_type_queue.add(ping)
 
     @classmethod
     def set_upload_enabled(cls, enabled: bool):
@@ -369,8 +516,13 @@ initialized from the application.</p>
         &#34;&#34;&#34;
         Set a few metrics that will be sent as part of every ping.
         &#34;&#34;&#34;
+        from . import _builtins
+
         # TODO: 1594184
-        pass
+        # Just make sure the metrics loaded for testing purposes.
+        # Actual metrics will be filled in once we have the required
+        # metric types implemented.
+        _builtins.metrics.glean
 
     @classmethod
     def get_data_dir(cls) -&gt; Path:
@@ -481,7 +633,8 @@ def initialize(
     cls._configuration = configuration
     cls._data_dir = data_dir
 
-    # TODO: 1594184 cls.register_pings(pings)
+    for ping in cls._ping_type_queue:
+        cls.register_ping_type(ping)
 
     cfg = _ffi.make_config(
         cls._data_dir,
@@ -533,22 +686,28 @@ def is_initialized(cls) -&gt; bool:
     return cls._handle != 0</code></pre>
 </details>
 </dd>
-<dt id="glean.Glean.register_pings"><code class="name flex">
-<span>def <span class="ident">register_pings</span></span>(<span>)</span>
+<dt id="glean.Glean.register_ping_type"><code class="name flex">
+<span>def <span class="ident">register_ping_type</span></span>(<span>ping)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Register the pings generated from pings.yaml with the Glean SDK.</p></section>
+<section class="desc"><p>Register the ping type in the registry.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def register_pings(cls):
+def register_ping_type(cls, ping: &#34;PingType&#34;):
     &#34;&#34;&#34;
-    Register the pings generated from pings.yaml with the Glean SDK.
+    Register the ping type in the registry.
     &#34;&#34;&#34;
-    # TODO: 1594184
-    pass</code></pre>
+    if cls.is_initialized():
+        _ffi.lib.glean_register_ping_type(cls._handle, ping._handle)
+
+    # We need to keep track of pings, so they get re-registered after a
+    # reset. This state is kept across Glean resets, which should only ever
+    # happen in test mode. It&#39;s a set and keeping them around forever
+    # should not have much of an impact.
+    cls._ping_type_queue.add(ping)</code></pre>
 </details>
 </dd>
 <dt id="glean.Glean.reset"><code class="name flex">
@@ -642,6 +801,12 @@ def set_upload_enabled(cls, enabled: bool):
 <li><code><a title="glean.testing" href="testing/index.html">glean.testing</a></code></li>
 </ul>
 </li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="glean.load_metrics" href="#glean.load_metrics">load_metrics</a></code></li>
+<li><code><a title="glean.load_pings" href="#glean.load_pings">load_pings</a></code></li>
+</ul>
+</li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
@@ -662,7 +827,7 @@ def set_upload_enabled(cls, enabled: bool):
 <li><code><a title="glean.Glean.get_upload_enabled" href="#glean.Glean.get_upload_enabled">get_upload_enabled</a></code></li>
 <li><code><a title="glean.Glean.initialize" href="#glean.Glean.initialize">initialize</a></code></li>
 <li><code><a title="glean.Glean.is_initialized" href="#glean.Glean.is_initialized">is_initialized</a></code></li>
-<li><code><a title="glean.Glean.register_pings" href="#glean.Glean.register_pings">register_pings</a></code></li>
+<li><code><a title="glean.Glean.register_ping_type" href="#glean.Glean.register_ping_type">register_ping_type</a></code></li>
 <li><code><a title="glean.Glean.reset" href="#glean.Glean.reset">reset</a></code></li>
 <li><code><a title="glean.Glean.set_upload_enabled" href="#glean.Glean.set_upload_enabled">set_upload_enabled</a></code></li>
 </ul>

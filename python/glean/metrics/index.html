@@ -31,9 +31,10 @@
 
 from .counter import CounterMetricType
 from .lifetime import Lifetime
+from .ping import PingType
 
 
-__all__ = [&#34;CounterMetricType&#34;, &#34;Lifetime&#34;]</code></pre>
+__all__ = [&#34;CounterMetricType&#34;, &#34;Lifetime&#34;, &#34;PingType&#34;]</code></pre>
 </details>
 </section>
 <section>
@@ -44,6 +45,10 @@ __all__ = [&#34;CounterMetricType&#34;, &#34;Lifetime&#34;]</code></pre>
 <section class="desc"></section>
 </dd>
 <dt><code class="name"><a title="glean.metrics.lifetime" href="lifetime.html">glean.metrics.lifetime</a></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt><code class="name"><a title="glean.metrics.ping" href="ping.html">glean.metrics.ping</a></code></dt>
 <dd>
 <section class="desc"></section>
 </dd>
@@ -404,6 +409,66 @@ of the ping to retrieve the metric for.</dd>
 </dd>
 </dl>
 </dd>
+<dt id="glean.metrics.PingType"><code class="flex name class">
+<span>class <span class="ident">PingType</span></span>
+<span>(</span><span>name, include_client_id)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>This implements the developer facing API for custom pings.</p>
+<p>The Ping API only exposes the <a title="glean.metrics.PingType.send" href="#glean.metrics.PingType.send"><code>PingType.send()</code></a> method, which schedules a
+ping for sending.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PingType:
+    def __init__(self, name: str, include_client_id: bool):
+        &#34;&#34;&#34;
+        This implements the developer facing API for custom pings.
+
+        The Ping API only exposes the `PingType.send` method, which schedules a
+        ping for sending.
+        &#34;&#34;&#34;
+        self._handle = _ffi.lib.glean_new_ping_type(
+            _ffi.ffi_string(name), include_client_id
+        )
+        Glean.register_ping_type(self)
+
+    def __del__(self):
+        if self._handle != 0:
+            _ffi.lib.glean_destroy_ping_type(self._handle)
+
+    def send(self):
+        &#34;&#34;&#34;
+        Send the ping.
+
+        If the ping currently contains no content, it will not be sent.
+        &#34;&#34;&#34;
+        Glean.send_pings([self])</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="glean.metrics.PingType.send"><code class="name flex">
+<span>def <span class="ident">send</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Send the ping.</p>
+<p>If the ping currently contains no content, it will not be sent.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def send(self):
+    &#34;&#34;&#34;
+    Send the ping.
+
+    If the ping currently contains no content, it will not be sent.
+    &#34;&#34;&#34;
+    Glean.send_pings([self])</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
 </dl>
 </section>
 </article>
@@ -422,6 +487,7 @@ of the ping to retrieve the metric for.</dd>
 <ul>
 <li><code><a title="glean.metrics.counter" href="counter.html">glean.metrics.counter</a></code></li>
 <li><code><a title="glean.metrics.lifetime" href="lifetime.html">glean.metrics.lifetime</a></code></li>
+<li><code><a title="glean.metrics.ping" href="ping.html">glean.metrics.ping</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>
@@ -441,6 +507,12 @@ of the ping to retrieve the metric for.</dd>
 <li><code><a title="glean.metrics.Lifetime.APPLICATION" href="#glean.metrics.Lifetime.APPLICATION">APPLICATION</a></code></li>
 <li><code><a title="glean.metrics.Lifetime.PING" href="#glean.metrics.Lifetime.PING">PING</a></code></li>
 <li><code><a title="glean.metrics.Lifetime.USER" href="#glean.metrics.Lifetime.USER">USER</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="glean.metrics.PingType" href="#glean.metrics.PingType">PingType</a></code></h4>
+<ul class="">
+<li><code><a title="glean.metrics.PingType.send" href="#glean.metrics.PingType.send">send</a></code></li>
 </ul>
 </li>
 </ul>

@@ -32,12 +32,18 @@
 from pathlib import Path
 import shutil
 import tempfile
-from typing import Optional
+from typing import Optional, Set, TYPE_CHECKING
 
 
 from .config import Configuration
 from ._dispatcher import Dispatcher
 from . import _ffi
+
+
+# To avoid cyclical imports, but still make mypy type-checking work.
+# See https://mypy.readthedocs.io/en/latest/common_issues.html#import-cycles
+if TYPE_CHECKING:
+    from .metrics import PingType
 
 
 class Glean:
@@ -66,7 +72,9 @@ class Glean:
     # Keep track of this setting before Glean is initialized
     _upload_enabled: bool = True
 
-    # TODO: 1594184 ping_type_queue
+    # The ping types, so they can be registered prior to Glean initialization,
+    # and saved between test runs.
+    _ping_type_queue: Set[&#34;PingType&#34;] = set()
 
     @classmethod
     def initialize(
@@ -106,7 +114,8 @@ class Glean:
         cls._configuration = configuration
         cls._data_dir = data_dir
 
-        # TODO: 1594184 cls.register_pings(pings)
+        for ping in cls._ping_type_queue:
+            cls.register_ping_type(ping)
 
         cfg = _ffi.make_config(
             cls._data_dir,
@@ -163,12 +172,18 @@ class Glean:
         return cls._handle != 0
 
     @classmethod
-    def register_pings(cls):
+    def register_ping_type(cls, ping: &#34;PingType&#34;):
         &#34;&#34;&#34;
-        Register the pings generated from pings.yaml with the Glean SDK.
+        Register the ping type in the registry.
         &#34;&#34;&#34;
-        # TODO: 1594184
-        pass
+        if cls.is_initialized():
+            _ffi.lib.glean_register_ping_type(cls._handle, ping._handle)
+
+        # We need to keep track of pings, so they get re-registered after a
+        # reset. This state is kept across Glean resets, which should only ever
+        # happen in test mode. It&#39;s a set and keeping them around forever
+        # should not have much of an impact.
+        cls._ping_type_queue.add(ping)
 
     @classmethod
     def set_upload_enabled(cls, enabled: bool):
@@ -215,15 +230,23 @@ class Glean:
         &#34;&#34;&#34;
         Set a few metrics that will be sent as part of every ping.
         &#34;&#34;&#34;
+        from . import _builtins
+
         # TODO: 1594184
-        pass
+        # Just make sure the metrics loaded for testing purposes.
+        # Actual metrics will be filled in once we have the required
+        # metric types implemented.
+        _builtins.metrics.glean
 
     @classmethod
     def get_data_dir(cls) -&gt; Path:
         &#34;&#34;&#34;
         Get the data directory for Glean.
         &#34;&#34;&#34;
-        return cls._data_dir</code></pre>
+        return cls._data_dir
+
+
+__all__ = [&#34;Glean&#34;]</code></pre>
 </details>
 </section>
 <section>
@@ -276,7 +299,9 @@ initialized from the application.</p>
     # Keep track of this setting before Glean is initialized
     _upload_enabled: bool = True
 
-    # TODO: 1594184 ping_type_queue
+    # The ping types, so they can be registered prior to Glean initialization,
+    # and saved between test runs.
+    _ping_type_queue: Set[&#34;PingType&#34;] = set()
 
     @classmethod
     def initialize(
@@ -316,7 +341,8 @@ initialized from the application.</p>
         cls._configuration = configuration
         cls._data_dir = data_dir
 
-        # TODO: 1594184 cls.register_pings(pings)
+        for ping in cls._ping_type_queue:
+            cls.register_ping_type(ping)
 
         cfg = _ffi.make_config(
             cls._data_dir,
@@ -373,12 +399,18 @@ initialized from the application.</p>
         return cls._handle != 0
 
     @classmethod
-    def register_pings(cls):
+    def register_ping_type(cls, ping: &#34;PingType&#34;):
         &#34;&#34;&#34;
-        Register the pings generated from pings.yaml with the Glean SDK.
+        Register the ping type in the registry.
         &#34;&#34;&#34;
-        # TODO: 1594184
-        pass
+        if cls.is_initialized():
+            _ffi.lib.glean_register_ping_type(cls._handle, ping._handle)
+
+        # We need to keep track of pings, so they get re-registered after a
+        # reset. This state is kept across Glean resets, which should only ever
+        # happen in test mode. It&#39;s a set and keeping them around forever
+        # should not have much of an impact.
+        cls._ping_type_queue.add(ping)
 
     @classmethod
     def set_upload_enabled(cls, enabled: bool):
@@ -425,8 +457,13 @@ initialized from the application.</p>
         &#34;&#34;&#34;
         Set a few metrics that will be sent as part of every ping.
         &#34;&#34;&#34;
+        from . import _builtins
+
         # TODO: 1594184
-        pass
+        # Just make sure the metrics loaded for testing purposes.
+        # Actual metrics will be filled in once we have the required
+        # metric types implemented.
+        _builtins.metrics.glean
 
     @classmethod
     def get_data_dir(cls) -&gt; Path:
@@ -537,7 +574,8 @@ def initialize(
     cls._configuration = configuration
     cls._data_dir = data_dir
 
-    # TODO: 1594184 cls.register_pings(pings)
+    for ping in cls._ping_type_queue:
+        cls.register_ping_type(ping)
 
     cfg = _ffi.make_config(
         cls._data_dir,
@@ -589,22 +627,28 @@ def is_initialized(cls) -&gt; bool:
     return cls._handle != 0</code></pre>
 </details>
 </dd>
-<dt id="glean.glean.Glean.register_pings"><code class="name flex">
-<span>def <span class="ident">register_pings</span></span>(<span>)</span>
+<dt id="glean.glean.Glean.register_ping_type"><code class="name flex">
+<span>def <span class="ident">register_ping_type</span></span>(<span>ping)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Register the pings generated from pings.yaml with the Glean SDK.</p></section>
+<section class="desc"><p>Register the ping type in the registry.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def register_pings(cls):
+def register_ping_type(cls, ping: &#34;PingType&#34;):
     &#34;&#34;&#34;
-    Register the pings generated from pings.yaml with the Glean SDK.
+    Register the ping type in the registry.
     &#34;&#34;&#34;
-    # TODO: 1594184
-    pass</code></pre>
+    if cls.is_initialized():
+        _ffi.lib.glean_register_ping_type(cls._handle, ping._handle)
+
+    # We need to keep track of pings, so they get re-registered after a
+    # reset. This state is kept across Glean resets, which should only ever
+    # happen in test mode. It&#39;s a set and keeping them around forever
+    # should not have much of an impact.
+    cls._ping_type_queue.add(ping)</code></pre>
 </details>
 </dd>
 <dt id="glean.glean.Glean.reset"><code class="name flex">
@@ -704,7 +748,7 @@ def set_upload_enabled(cls, enabled: bool):
 <li><code><a title="glean.glean.Glean.get_upload_enabled" href="#glean.glean.Glean.get_upload_enabled">get_upload_enabled</a></code></li>
 <li><code><a title="glean.glean.Glean.initialize" href="#glean.glean.Glean.initialize">initialize</a></code></li>
 <li><code><a title="glean.glean.Glean.is_initialized" href="#glean.glean.Glean.is_initialized">is_initialized</a></code></li>
-<li><code><a title="glean.glean.Glean.register_pings" href="#glean.glean.Glean.register_pings">register_pings</a></code></li>
+<li><code><a title="glean.glean.Glean.register_ping_type" href="#glean.glean.Glean.register_ping_type">register_ping_type</a></code></li>
 <li><code><a title="glean.glean.Glean.reset" href="#glean.glean.Glean.reset">reset</a></code></li>
 <li><code><a title="glean.glean.Glean.set_upload_enabled" href="#glean.glean.Glean.set_upload_enabled">set_upload_enabled</a></code></li>
 </ul>
