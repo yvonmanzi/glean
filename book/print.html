@@ -1199,6 +1199,27 @@ XCTAssertEqual(&quot;wikipedia&quot;, try SearchDefault.name.testGetValue())
 XCTAssertEqual(1, SearchDefault.name.testGetNumRecordedErrors(.invalidValue))
 </code></pre>
 </div>
+<div data-lang="Python" class="tab">
+<pre><code class="language-Python">from glean import load_metrics
+metrics = load_metrics(&quot;metrics.yaml&quot;)
+
+// Record a value into the metric.
+metrics.search_default.name.set(&quot;duck duck go&quot;)
+// If it changed later, you can record the new value:
+metrics.search_default.name.set(&quot;wikipedia&quot;)
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-Kotlin">// Was anything recorded?
+assert metrics.search_default.name.test_has_value()
+// Does the string metric have the expected value?
+// IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
+assert &quot;wikipedia&quot; == metrics.search_default.name.test_get_value()
+// Was the string truncated, and an error reported?
+assert 1 == metrics.search_default.name.test_get_num_recorded_errors(
+    ErrorType.INVALID_VALUE
+)
+</code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits-4" id="limits-4">Limits</a></h2>
@@ -1222,6 +1243,7 @@ XCTAssertEqual(1, SearchDefault.name.testGetNumRecordedErrors(.invalidValue))
 <ul>
 <li><a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-string-metric-type/index.html">Kotlin API docs</a>.</li>
 <li><a href="user/metrics/../../../swift/Classes/StringMetricType.html">Swift API docs</a></li>
+<li><a href="user/metrics/../../../python/glean/metrics/string.html">Python API docs</a></li>
 </ul>
 <h1><a class="header" href="#labeled-strings" id="labeled-strings">Labeled Strings</a></h1>
 <p>Labeled strings record multiple Unicode string values, each under a different label.</p>
