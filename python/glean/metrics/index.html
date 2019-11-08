@@ -102,9 +102,9 @@ enforced.</p></section>
         self._send_in_pings = send_in_pings
 
         self._handle = _ffi.lib.glean_new_counter_metric(
-            _ffi.ffi_string(category),
-            _ffi.ffi_string(name),
-            _ffi.ffi_vec_string(send_in_pings),
+            _ffi.ffi_encode_string(category),
+            _ffi.ffi_encode_string(name),
+            _ffi.ffi_encode_vec_string(send_in_pings),
             len(send_in_pings),
             lifetime.value,
             disabled,
@@ -146,7 +146,7 @@ enforced.</p></section>
 
         return bool(
             _ffi.lib.glean_counter_test_has_value(
-                Glean._handle, self._handle, _ffi.ffi_string(ping_name)
+                Glean._handle, self._handle, _ffi.ffi_encode_string(ping_name)
             )
         )
 
@@ -168,7 +168,7 @@ enforced.</p></section>
             raise ValueError(&#34;metric has no value&#34;)
 
         return _ffi.lib.glean_counter_test_get_value(
-            Glean._handle, self._handle, _ffi.ffi_string(ping_name)
+            Glean._handle, self._handle, _ffi.ffi_encode_string(ping_name)
         )
 
     def test_get_num_recorded_errors(
@@ -190,7 +190,10 @@ enforced.</p></section>
             ping_name = self._send_in_pings[0]
 
         return _ffi.lib.glean_counter_test_get_num_recorded_errors(
-            Glean._handle, self._handle, error_type.value, _ffi.ffi_string(ping_name)
+            Glean._handle,
+            self._handle,
+            error_type.value,
+            _ffi.ffi_encode_string(ping_name),
         )</code></pre>
 </details>
 <h3>Methods</h3>
@@ -268,7 +271,10 @@ the given error type.</dd>
         ping_name = self._send_in_pings[0]
 
     return _ffi.lib.glean_counter_test_get_num_recorded_errors(
-        Glean._handle, self._handle, error_type.value, _ffi.ffi_string(ping_name)
+        Glean._handle,
+        self._handle,
+        error_type.value,
+        _ffi.ffi_encode_string(ping_name),
     )</code></pre>
 </details>
 </dd>
@@ -310,7 +316,7 @@ of the ping to retrieve the metric for.</dd>
         raise ValueError(&#34;metric has no value&#34;)
 
     return _ffi.lib.glean_counter_test_get_value(
-        Glean._handle, self._handle, _ffi.ffi_string(ping_name)
+        Glean._handle, self._handle, _ffi.ffi_encode_string(ping_name)
     )</code></pre>
 </details>
 </dd>
@@ -352,7 +358,7 @@ of the ping to retrieve the metric for.</dd>
 
     return bool(
         _ffi.lib.glean_counter_test_has_value(
-            Glean._handle, self._handle, _ffi.ffi_string(ping_name)
+            Glean._handle, self._handle, _ffi.ffi_encode_string(ping_name)
         )
     )</code></pre>
 </details>
@@ -429,8 +435,9 @@ ping for sending.</p></section>
         The Ping API only exposes the `PingType.send` method, which schedules a
         ping for sending.
         &#34;&#34;&#34;
+        self._name = name
         self._handle = _ffi.lib.glean_new_ping_type(
-            _ffi.ffi_string(name), include_client_id
+            _ffi.ffi_encode_string(name), include_client_id
         )
         Glean.register_ping_type(self)
 
@@ -438,14 +445,39 @@ ping for sending.</p></section>
         if self._handle != 0:
             _ffi.lib.glean_destroy_ping_type(self._handle)
 
+    @property
+    def name(self):
+        &#34;&#34;&#34;
+        Get the name of the ping.
+        &#34;&#34;&#34;
+        return self._name
+
     def send(self):
         &#34;&#34;&#34;
         Send the ping.
 
         If the ping currently contains no content, it will not be sent.
         &#34;&#34;&#34;
-        Glean.send_pings([self])</code></pre>
+        Glean._send_pings([self])</code></pre>
 </details>
+<h3>Instance variables</h3>
+<dl>
+<dt id="glean.metrics.PingType.name"><code class="name">var <span class="ident">name</span></code></dt>
+<dd>
+<section class="desc"><p>Get the name of the ping.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def name(self):
+    &#34;&#34;&#34;
+    Get the name of the ping.
+    &#34;&#34;&#34;
+    return self._name</code></pre>
+</details>
+</dd>
+</dl>
 <h3>Methods</h3>
 <dl>
 <dt id="glean.metrics.PingType.send"><code class="name flex">
@@ -464,7 +496,7 @@ ping for sending.</p></section>
 
     If the ping currently contains no content, it will not be sent.
     &#34;&#34;&#34;
-    Glean.send_pings([self])</code></pre>
+    Glean._send_pings([self])</code></pre>
 </details>
 </dd>
 </dl>
@@ -512,6 +544,7 @@ ping for sending.</p></section>
 <li>
 <h4><code><a title="glean.metrics.PingType" href="#glean.metrics.PingType">PingType</a></code></h4>
 <ul class="">
+<li><code><a title="glean.metrics.PingType.name" href="#glean.metrics.PingType.name">name</a></code></li>
 <li><code><a title="glean.metrics.PingType.send" href="#glean.metrics.PingType.send">send</a></code></li>
 </ul>
 </li>

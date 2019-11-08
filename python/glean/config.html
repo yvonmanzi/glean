@@ -34,6 +34,9 @@ import sys
 from typing import Optional
 
 
+from . import net
+
+
 # The default server pings are sent to
 DEFAULT_TELEMETRY_ENDPOINT = &#34;https://incoming.telemetry.mozilla.org&#34;
 
@@ -52,7 +55,7 @@ class Configuration:
     server_endpoint: str = DEFAULT_TELEMETRY_ENDPOINT
 
     # The user agent used when sending pings.
-    user_agent: str = Optional[None]
+    user_agent: Optional[str] = None
 
     # The release channel the application is on, if known.
     channel: Optional[str] = None
@@ -66,15 +69,18 @@ class Configuration:
     # String tag to be applied to headers when uploading pings for debug view.
     ping_tag: Optional[str] = None
 
+    # The ping uploader implementation
+    ping_uploader: net.BaseUploader = net.HttpClientUploader()
+
     def __post_init__(self):
         # It would be preferable to use a field(default_factory=...) for this,
         # but that breaks our documentation generation due to this bug:
         #   https://github.com/pdoc3/pdoc/issues/116
 
         if self.user_agent is None:
-            from glean import __version__
+            import glean
 
-            self.user_agent = f&#34;Glean/{__version__} (Python on {sys.platform})&#34;
+            self.user_agent = f&#34;Glean/{glean.__version__} (Python on {sys.platform})&#34;
 
 
 __all__ = [&#34;Configuration&#34;]</code></pre>
@@ -91,7 +97,7 @@ __all__ = [&#34;Configuration&#34;]</code></pre>
 <dl>
 <dt id="glean.config.Configuration"><code class="flex name class">
 <span>class <span class="ident">Configuration</span></span>
-<span>(</span><span>server_endpoint='https://incoming.telemetry.mozilla.org', user_agent=builtins.NoneType, channel=None, max_events=500, log_pings=False, ping_tag=None)</span>
+<span>(</span><span>server_endpoint='https://incoming.telemetry.mozilla.org', user_agent=None, channel=None, max_events=500, log_pings=False, ping_tag=None, ping_uploader=&lt;glean.net.http_client.HttpClientUploader object&gt;)</span>
 </code></dt>
 <dd>
 <section class="desc"><p>Configuration values for Glean.</p></section>
@@ -108,7 +114,7 @@ __all__ = [&#34;Configuration&#34;]</code></pre>
     server_endpoint: str = DEFAULT_TELEMETRY_ENDPOINT
 
     # The user agent used when sending pings.
-    user_agent: str = Optional[None]
+    user_agent: Optional[str] = None
 
     # The release channel the application is on, if known.
     channel: Optional[str] = None
@@ -122,15 +128,18 @@ __all__ = [&#34;Configuration&#34;]</code></pre>
     # String tag to be applied to headers when uploading pings for debug view.
     ping_tag: Optional[str] = None
 
+    # The ping uploader implementation
+    ping_uploader: net.BaseUploader = net.HttpClientUploader()
+
     def __post_init__(self):
         # It would be preferable to use a field(default_factory=...) for this,
         # but that breaks our documentation generation due to this bug:
         #   https://github.com/pdoc3/pdoc/issues/116
 
         if self.user_agent is None:
-            from glean import __version__
+            import glean
 
-            self.user_agent = f&#34;Glean/{__version__} (Python on {sys.platform})&#34;</code></pre>
+            self.user_agent = f&#34;Glean/{glean.__version__} (Python on {sys.platform})&#34;</code></pre>
 </details>
 <h3>Class variables</h3>
 <dl>
@@ -167,6 +176,10 @@ Base 0 means to interpret the base from the string as an integer literal.</p>
 </code></pre></section>
 </dd>
 <dt id="glean.config.Configuration.ping_tag"><code class="name">var <span class="ident">ping_tag</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="glean.config.Configuration.ping_uploader"><code class="name">var <span class="ident">ping_uploader</span></code></dt>
 <dd>
 <section class="desc"></section>
 </dd>
@@ -211,6 +224,7 @@ errors defaults to 'strict'.</p></section>
 <li><code><a title="glean.config.Configuration.log_pings" href="#glean.config.Configuration.log_pings">log_pings</a></code></li>
 <li><code><a title="glean.config.Configuration.max_events" href="#glean.config.Configuration.max_events">max_events</a></code></li>
 <li><code><a title="glean.config.Configuration.ping_tag" href="#glean.config.Configuration.ping_tag">ping_tag</a></code></li>
+<li><code><a title="glean.config.Configuration.ping_uploader" href="#glean.config.Configuration.ping_uploader">ping_uploader</a></code></li>
 <li><code><a title="glean.config.Configuration.server_endpoint" href="#glean.config.Configuration.server_endpoint">server_endpoint</a></code></li>
 <li><code><a title="glean.config.Configuration.user_agent" href="#glean.config.Configuration.user_agent">user_agent</a></code></li>
 </ul>

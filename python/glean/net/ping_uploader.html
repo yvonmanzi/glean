@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.7.1" />
-<title>glean.metrics.ping API documentation</title>
+<title>glean.net.ping_uploader API documentation</title>
 <meta name="description" content="" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
@@ -17,7 +17,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>glean.metrics.ping</code></h1>
+<h1 class="title">Module <code>glean.net.ping_uploader</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
@@ -29,42 +29,32 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 
-from ..glean import Glean
-from .. import _ffi
+import abc
+from typing import List, Tuple
 
 
-class PingType:
-    def __init__(self, name: str, include_client_id: bool):
+class PingUploader(abc.ABC):
+    @abc.abstractmethod
+    def upload(self, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
         &#34;&#34;&#34;
-        This implements the developer facing API for custom pings.
+        Upload a ping to a server.
 
-        The Ping API only exposes the `PingType.send` method, which schedules a
-        ping for sending.
-        &#34;&#34;&#34;
-        self._name = name
-        self._handle = _ffi.lib.glean_new_ping_type(
-            _ffi.ffi_encode_string(name), include_client_id
-        )
-        Glean.register_ping_type(self)
+        Args:
+            url (str): The URL path to upload the data to.
+            data (str): The serialized text data to send.
+            headers (list of (str, str)): List of header entries as tuple
+                pairs, where the first element is the header name and the
+                second is its value.
 
-    def __del__(self):
-        if self._handle != 0:
-            _ffi.lib.glean_destroy_ping_type(self._handle)
+        Returns:
+            sent (bool): True if the ping was correctly dealt with (sent
+                successfully or faced an unrecoverable error). False if there
+                was a recoverable error that callers can deal with.
+        &#34;&#34;&#34;
+        pass
 
-    @property
-    def name(self):
-        &#34;&#34;&#34;
-        Get the name of the ping.
-        &#34;&#34;&#34;
-        return self._name
 
-    def send(self):
-        &#34;&#34;&#34;
-        Send the ping.
-
-        If the ping currently contains no content, it will not be sent.
-        &#34;&#34;&#34;
-        Glean._send_pings([self])</code></pre>
+__all__ = [&#34;PingUploader&#34;]</code></pre>
 </details>
 </section>
 <section>
@@ -76,88 +66,91 @@ class PingType:
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="glean.metrics.ping.PingType"><code class="flex name class">
-<span>class <span class="ident">PingType</span></span>
-<span>(</span><span>name, include_client_id)</span>
+<dt id="glean.net.ping_uploader.PingUploader"><code class="flex name class">
+<span>class <span class="ident">PingUploader</span></span>
+<span>(</span><span>*args, **kwargs)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>This implements the developer facing API for custom pings.</p>
-<p>The Ping API only exposes the <a title="glean.metrics.ping.PingType.send" href="#glean.metrics.ping.PingType.send"><code>PingType.send()</code></a> method, which schedules a
-ping for sending.</p></section>
+<section class="desc"><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class PingType:
-    def __init__(self, name: str, include_client_id: bool):
+<pre><code class="python">class PingUploader(abc.ABC):
+    @abc.abstractmethod
+    def upload(self, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
         &#34;&#34;&#34;
-        This implements the developer facing API for custom pings.
+        Upload a ping to a server.
 
-        The Ping API only exposes the `PingType.send` method, which schedules a
-        ping for sending.
-        &#34;&#34;&#34;
-        self._name = name
-        self._handle = _ffi.lib.glean_new_ping_type(
-            _ffi.ffi_encode_string(name), include_client_id
-        )
-        Glean.register_ping_type(self)
+        Args:
+            url (str): The URL path to upload the data to.
+            data (str): The serialized text data to send.
+            headers (list of (str, str)): List of header entries as tuple
+                pairs, where the first element is the header name and the
+                second is its value.
 
-    def __del__(self):
-        if self._handle != 0:
-            _ffi.lib.glean_destroy_ping_type(self._handle)
-
-    @property
-    def name(self):
+        Returns:
+            sent (bool): True if the ping was correctly dealt with (sent
+                successfully or faced an unrecoverable error). False if there
+                was a recoverable error that callers can deal with.
         &#34;&#34;&#34;
-        Get the name of the ping.
-        &#34;&#34;&#34;
-        return self._name
-
-    def send(self):
-        &#34;&#34;&#34;
-        Send the ping.
-
-        If the ping currently contains no content, it will not be sent.
-        &#34;&#34;&#34;
-        Glean._send_pings([self])</code></pre>
+        pass</code></pre>
 </details>
-<h3>Instance variables</h3>
-<dl>
-<dt id="glean.metrics.ping.PingType.name"><code class="name">var <span class="ident">name</span></code></dt>
-<dd>
-<section class="desc"><p>Get the name of the ping.</p></section>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@property
-def name(self):
-    &#34;&#34;&#34;
-    Get the name of the ping.
-    &#34;&#34;&#34;
-    return self._name</code></pre>
-</details>
-</dd>
-</dl>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="glean.net.base_uploader.BaseUploader" href="base_uploader.html#glean.net.base_uploader.BaseUploader">BaseUploader</a></li>
+</ul>
 <h3>Methods</h3>
 <dl>
-<dt id="glean.metrics.ping.PingType.send"><code class="name flex">
-<span>def <span class="ident">send</span></span>(<span>self)</span>
+<dt id="glean.net.ping_uploader.PingUploader.upload"><code class="name flex">
+<span>def <span class="ident">upload</span></span>(<span>self, url, data, headers)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Send the ping.</p>
-<p>If the ping currently contains no content, it will not be sent.</p></section>
+<section class="desc"><p>Upload a ping to a server.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>The URL path to upload the data to.</dd>
+<dt><strong><code>data</code></strong> :&ensp;<code>str</code></dt>
+<dd>The serialized text data to send.</dd>
+</dl>
+<p>headers (list of (str, str)): List of header entries as tuple
+pairs, where the first element is the header name and the
+second is its value.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>sent</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True if the ping was correctly dealt with (sent
+successfully or faced an unrecoverable error). False if there
+was a recoverable error that callers can deal with.</dd>
+</dl></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def send(self):
+<pre><code class="python">@abc.abstractmethod
+def upload(self, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
     &#34;&#34;&#34;
-    Send the ping.
+    Upload a ping to a server.
 
-    If the ping currently contains no content, it will not be sent.
+    Args:
+        url (str): The URL path to upload the data to.
+        data (str): The serialized text data to send.
+        headers (list of (str, str)): List of header entries as tuple
+            pairs, where the first element is the header name and the
+            second is its value.
+
+    Returns:
+        sent (bool): True if the ping was correctly dealt with (sent
+            successfully or faced an unrecoverable error). False if there
+            was a recoverable error that callers can deal with.
     &#34;&#34;&#34;
-    Glean._send_pings([self])</code></pre>
+    pass</code></pre>
 </details>
 </dd>
 </dl>
@@ -173,16 +166,15 @@ def name(self):
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="glean.metrics" href="index.html">glean.metrics</a></code></li>
+<li><code><a title="glean.net" href="index.html">glean.net</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="glean.metrics.ping.PingType" href="#glean.metrics.ping.PingType">PingType</a></code></h4>
+<h4><code><a title="glean.net.ping_uploader.PingUploader" href="#glean.net.ping_uploader.PingUploader">PingUploader</a></code></h4>
 <ul class="">
-<li><code><a title="glean.metrics.ping.PingType.name" href="#glean.metrics.ping.PingType.name">name</a></code></li>
-<li><code><a title="glean.metrics.ping.PingType.send" href="#glean.metrics.ping.PingType.send">send</a></code></li>
+<li><code><a title="glean.net.ping_uploader.PingUploader.upload" href="#glean.net.ping_uploader.PingUploader.upload">upload</a></code></li>
 </ul>
 </li>
 </ul>
