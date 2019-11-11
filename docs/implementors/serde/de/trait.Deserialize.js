@@ -6,5 +6,4 @@ implementors["glean_core"] = [{text:"impl&lt;'de&gt; <a class=\"trait\" href=\"h
             } else {
                 window.pending_implementors = implementors;
             }
-        
-})()
+        })()

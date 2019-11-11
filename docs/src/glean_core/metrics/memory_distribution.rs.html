@@ -244,7 +244,7 @@
 
 <span class="comment">// Set a maximum recordable value of 1 terabyte so the buckets aren&#39;t</span>
 <span class="comment">// completely unbounded.</span>
-<span class="kw">const</span> <span class="ident">MAX_BYTES</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">40</span>;
+<span class="kw">const</span> <span class="ident">MAX_BYTES</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">40</span>;
 
 <span class="doccomment">/// A memory distribution metric.</span>
 <span class="doccomment">///</span>
@@ -265,7 +265,7 @@
 <span class="doccomment">/// Create a snapshot of the histogram.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The snapshot can be serialized into the payload format.</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">snapshot</span>(<span class="ident">hist</span>: <span class="kw-2">&amp;</span><span class="ident">Histogram</span><span class="op">&lt;</span><span class="ident">Functional</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Snapshot</span> {
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">snapshot</span>(<span class="ident">hist</span>: <span class="kw-2">&amp;</span><span class="ident">Histogram</span><span class="op">&lt;</span><span class="ident">Functional</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Snapshot</span> {
     <span class="ident">Snapshot</span> {
         <span class="comment">// **Caution**: This cannot use `Histogram::snapshot_values` and needs to use the more</span>
         <span class="comment">// specialized snapshot function.</span>
@@ -275,18 +275,18 @@
 }
 
 <span class="kw">impl</span> <span class="ident">MetricType</span> <span class="kw">for</span> <span class="ident">MemoryDistributionMetric</span> {
-    <span class="kw">fn</span> <span class="ident">meta</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">CommonMetricData</span> {
+    <span class="kw">fn</span> <span class="ident">meta</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">CommonMetricData</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">meta_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">CommonMetricData</span> {
+    <span class="kw">fn</span> <span class="ident">meta_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">CommonMetricData</span> {
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">meta</span>
     }
 }
 
 <span class="kw">impl</span> <span class="ident">MemoryDistributionMetric</span> {
     <span class="doccomment">/// Create a new memory distribution metric.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">meta</span>: <span class="ident">CommonMetricData</span>, <span class="ident">memory_unit</span>: <span class="ident">MemoryUnit</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">meta</span>: <span class="ident">CommonMetricData</span>, <span class="ident">memory_unit</span>: <span class="ident">MemoryUnit</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> { <span class="ident">meta</span>, <span class="ident">memory_unit</span> }
     }
 
@@ -317,11 +317,11 @@
         <span class="ident">glean</span>
             .<span class="ident">storage</span>()
             .<span class="ident">record_with</span>(<span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>, <span class="op">|</span><span class="ident">old_value</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">old_value</span> {
-                <span class="prelude-val">Some</span>(<span class="ident">Metric</span>::<span class="ident">MemoryDistribution</span>(<span class="kw-2">mut</span> <span class="ident">hist</span>)) <span class="op">=&gt;</span> {
+                <span class="prelude-val">Some</span>(<span class="ident">Metric</span>::<span class="ident">MemoryDistribution</span>(<span class="kw-2">mut</span> <span class="ident">hist</span>)) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="ident">hist</span>.<span class="ident">accumulate</span>(<span class="ident">sample</span>);
                     <span class="ident">Metric</span>::<span class="ident">MemoryDistribution</span>(<span class="ident">hist</span>)
                 }
-                <span class="kw">_</span> <span class="op">=&gt;</span> {
+                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hist</span> <span class="op">=</span> <span class="ident">Histogram</span>::<span class="ident">functional</span>(<span class="ident">LOG_BASE</span>, <span class="ident">BUCKETS_PER_MAGNITUDE</span>);
                     <span class="ident">hist</span>.<span class="ident">accumulate</span>(<span class="ident">sample</span>);
                     <span class="ident">Metric</span>::<span class="ident">MemoryDistribution</span>(<span class="ident">hist</span>)
@@ -358,18 +358,18 @@
 
         <span class="ident">glean</span>.<span class="ident">storage</span>().<span class="ident">record_with</span>(<span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>, <span class="op">|</span><span class="ident">old_value</span><span class="op">|</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hist</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">old_value</span> {
-                <span class="prelude-val">Some</span>(<span class="ident">Metric</span>::<span class="ident">MemoryDistribution</span>(<span class="ident">hist</span>)) <span class="op">=&gt;</span> <span class="ident">hist</span>,
-                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="ident">Histogram</span>::<span class="ident">functional</span>(<span class="ident">LOG_BASE</span>, <span class="ident">BUCKETS_PER_MAGNITUDE</span>),
+                <span class="prelude-val">Some</span>(<span class="ident">Metric</span>::<span class="ident">MemoryDistribution</span>(<span class="ident">hist</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">hist</span>,
+                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Histogram</span>::<span class="ident">functional</span>(<span class="ident">LOG_BASE</span>, <span class="ident">BUCKETS_PER_MAGNITUDE</span>),
             };
 
             <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">sample</span> <span class="kw">in</span> <span class="ident">samples</span>.<span class="ident">iter</span>() {
                 <span class="kw">if</span> <span class="ident">sample</span> <span class="op">&lt;</span> <span class="number">0</span> {
-                    <span class="ident">num_negative_samples</span> <span class="op">+=</span> <span class="number">1</span>;
+                    <span class="ident">num_negative_samples</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
                 } <span class="kw">else</span> {
                     <span class="kw">let</span> <span class="ident">sample</span> <span class="op">=</span> <span class="ident">sample</span> <span class="kw">as</span> <span class="ident">u64</span>;
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sample</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">memory_unit</span>.<span class="ident">as_bytes</span>(<span class="ident">sample</span>);
                     <span class="kw">if</span> <span class="ident">sample</span> <span class="op">&gt;</span> <span class="ident">MAX_BYTES</span> {
-                        <span class="ident">num_too_log_samples</span> <span class="op">+=</span> <span class="number">1</span>;
+                        <span class="ident">num_too_log_samples</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
                         <span class="ident">sample</span> <span class="op">=</span> <span class="ident">MAX_BYTES</span>;
                     }
 
@@ -414,14 +414,14 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>,
         <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Histogram</span><span class="op">&lt;</span><span class="ident">Functional</span><span class="op">&gt;&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Histogram</span><span class="op">&lt;</span><span class="ident">Functional</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="ident">StorageManager</span>.<span class="ident">snapshot_metric</span>(
             <span class="ident">glean</span>.<span class="ident">storage</span>(),
             <span class="ident">storage_name</span>,
             <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>.<span class="ident">identifier</span>(<span class="ident">glean</span>),
         ) {
-            <span class="prelude-val">Some</span>(<span class="ident">Metric</span>::<span class="ident">MemoryDistribution</span>(<span class="ident">hist</span>)) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">hist</span>),
-            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+            <span class="prelude-val">Some</span>(<span class="ident">Metric</span>::<span class="ident">MemoryDistribution</span>(<span class="ident">hist</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">hist</span>),
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
         }
     }
 
@@ -434,7 +434,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>,
         <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">test_get_value</span>(<span class="ident">glean</span>, <span class="ident">storage_name</span>)
             .<span class="ident">map</span>(<span class="op">|</span><span class="ident">hist</span><span class="op">|</span> <span class="ident">serde_json</span>::<span class="ident">to_string</span>(<span class="kw-2">&amp;</span><span class="ident">snapshot</span>(<span class="kw-2">&amp;</span><span class="ident">hist</span>)).<span class="ident">unwrap</span>())
     }

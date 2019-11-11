@@ -50,7 +50,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">CoreMetrics</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">CoreMetrics</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CoreMetrics</span> {
         <span class="ident">CoreMetrics</span> {
             <span class="ident">client_id</span>: <span class="ident">UuidMetric</span>::<span class="ident">new</span>(<span class="ident">CommonMetricData</span> {
                 <span class="ident">name</span>: <span class="string">&quot;client_id&quot;</span>.<span class="ident">into</span>(),

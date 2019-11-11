@@ -57,15 +57,15 @@
 <span class="kw">crate</span>::<span class="macro">define_infallible_handle_map_deleter</span><span class="macro">!</span>(<span class="ident">PING_TYPES</span>, <span class="ident">glean_destroy_ping_type</span>);
 
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_new_ping_type</span>(<span class="ident">ping_name</span>: <span class="ident">FfiStr</span>, <span class="ident">include_client_id</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> {
-    <span class="ident">PING_TYPES</span>.<span class="ident">insert_with_log</span>(<span class="op">||</span> {
+<span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_new_ping_type</span>(<span class="ident">ping_name</span>: <span class="ident">FfiStr</span>, <span class="ident">include_client_id</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
+    <span class="ident">PING_TYPES</span>.<span class="ident">insert_with_log</span>(<span class="op">|</span><span class="op">|</span> {
         <span class="kw">let</span> <span class="ident">ping_name</span> <span class="op">=</span> <span class="ident">ping_name</span>.<span class="ident">to_string_fallible</span>()<span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="ident">PingType</span>::<span class="ident">new</span>(<span class="ident">ping_name</span>, <span class="ident">include_client_id</span> <span class="op">!=</span> <span class="number">0</span>))
+        <span class="prelude-val">Ok</span>(<span class="ident">PingType</span>::<span class="ident">new</span>(<span class="ident">ping_name</span>, <span class="ident">include_client_id</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>))
     })
 }
 
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_test_has_ping_type</span>(<span class="ident">glean_handle</span>: <span class="ident">u64</span>, <span class="ident">ping_name</span>: <span class="ident">FfiStr</span>) <span class="op">-&gt;</span> <span class="ident">u8</span> {
+<span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_test_has_ping_type</span>(<span class="ident">glean_handle</span>: <span class="ident">u64</span>, <span class="ident">ping_name</span>: <span class="ident">FfiStr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u8</span> {
     <span class="ident">GLEAN</span>.<span class="ident">call_infallible</span>(<span class="ident">glean_handle</span>, <span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
         <span class="ident">glean</span>.<span class="ident">get_ping_by_name</span>(<span class="ident">ping_name</span>.<span class="ident">as_str</span>()).<span class="ident">is_some</span>()
     })

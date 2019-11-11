@@ -407,9 +407,12 @@ initialized from the application.</p>
 
         if data_dir is None:
             data_dir = Path(tempfile.TemporaryDirectory().name)
+            cls._destroy_data_dir = True
+        else:
+            cls._destroy_data_dir = False
+        cls._data_dir = data_dir
 
         cls._configuration = configuration
-        cls._data_dir = data_dir
 
         cfg = _ffi.make_config(
             cls._data_dir,
@@ -701,9 +704,12 @@ def initialize(
 
     if data_dir is None:
         data_dir = Path(tempfile.TemporaryDirectory().name)
+        cls._destroy_data_dir = True
+    else:
+        cls._destroy_data_dir = False
+    cls._data_dir = data_dir
 
     cls._configuration = configuration
-    cls._data_dir = data_dir
 
     cfg = _ffi.make_config(
         cls._data_dir,

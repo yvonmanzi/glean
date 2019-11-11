@@ -7,5 +7,4 @@ implementors["glean_ffi"] = [{text:"impl&lt;'a&gt; Freeze for <a class=\"struct\
             } else {
                 window.pending_implementors = implementors;
             }
-        
-})()
+        })()

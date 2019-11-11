@@ -6,5 +6,4 @@ implementors["glean_core"] = [{text:"impl Fail for <a class=\"struct\" href=\"gl
             } else {
                 window.pending_implementors = implementors;
             }
-        
-})()
+        })()

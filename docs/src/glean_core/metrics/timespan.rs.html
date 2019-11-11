@@ -191,18 +191,18 @@
 }
 
 <span class="kw">impl</span> <span class="ident">MetricType</span> <span class="kw">for</span> <span class="ident">TimespanMetric</span> {
-    <span class="kw">fn</span> <span class="ident">meta</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">CommonMetricData</span> {
+    <span class="kw">fn</span> <span class="ident">meta</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">CommonMetricData</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">meta_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">CommonMetricData</span> {
+    <span class="kw">fn</span> <span class="ident">meta_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">CommonMetricData</span> {
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">meta</span>
     }
 }
 
 <span class="kw">impl</span> <span class="ident">TimespanMetric</span> {
     <span class="doccomment">/// Create a new timespan metric.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">meta</span>: <span class="ident">CommonMetricData</span>, <span class="ident">time_unit</span>: <span class="ident">TimeUnit</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">meta</span>: <span class="ident">CommonMetricData</span>, <span class="ident">time_unit</span>: <span class="ident">TimeUnit</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">meta</span>,
             <span class="ident">time_unit</span>,
@@ -294,14 +294,14 @@
                 <span class="ident">Metric</span>::<span class="ident">Timespan</span>(<span class="ident">elapsed</span>, <span class="self">self</span>.<span class="ident">time_unit</span>)
             } <span class="kw">else</span> {
                 <span class="kw">match</span> <span class="ident">old_value</span> {
-                    <span class="prelude-val">Some</span>(<span class="ident">old</span> @ <span class="ident">Metric</span>::<span class="ident">Timespan</span>(..)) <span class="op">=&gt;</span> {
+                    <span class="prelude-val">Some</span>(<span class="ident">old</span> @ <span class="ident">Metric</span>::<span class="ident">Timespan</span>(..)) <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="comment">// If some value already exists, report an error.</span>
                         <span class="comment">// We do this out of the storage since recording an</span>
                         <span class="comment">// error accesses the storage as well.</span>
                         <span class="ident">report_value_exists</span> <span class="op">=</span> <span class="bool-val">true</span>;
                         <span class="ident">old</span>
                     }
-                    <span class="kw">_</span> <span class="op">=&gt;</span> <span class="ident">Metric</span>::<span class="ident">Timespan</span>(<span class="ident">elapsed</span>, <span class="self">self</span>.<span class="ident">time_unit</span>),
+                    <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Metric</span>::<span class="ident">Timespan</span>(<span class="ident">elapsed</span>, <span class="self">self</span>.<span class="ident">time_unit</span>),
                 }
             }
         });
@@ -322,14 +322,14 @@
     <span class="doccomment">/// Get the currently stored value as an integer.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This doesn&#39;t clear the stored value.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_get_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_get_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="ident">StorageManager</span>.<span class="ident">snapshot_metric</span>(
             <span class="ident">glean</span>.<span class="ident">storage</span>(),
             <span class="ident">storage_name</span>,
             <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>.<span class="ident">identifier</span>(<span class="ident">glean</span>),
         ) {
-            <span class="prelude-val">Some</span>(<span class="ident">Metric</span>::<span class="ident">Timespan</span>(<span class="ident">time</span>, <span class="ident">time_unit</span>)) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">time_unit</span>.<span class="ident">duration_convert</span>(<span class="ident">time</span>)),
-            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+            <span class="prelude-val">Some</span>(<span class="ident">Metric</span>::<span class="ident">Timespan</span>(<span class="ident">time</span>, <span class="ident">time_unit</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">time_unit</span>.<span class="ident">duration_convert</span>(<span class="ident">time</span>)),
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
         }
     }
 }

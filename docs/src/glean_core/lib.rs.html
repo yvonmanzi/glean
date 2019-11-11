@@ -695,7 +695,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This will create the necessary directories and files in `data_path`.</span>
     <span class="doccomment">/// This will also initialize the core metrics.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">cfg</span>: <span class="ident">Configuration</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">cfg</span>: <span class="ident">Configuration</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="ident">log</span>::<span class="macro">info</span><span class="macro">!</span>(<span class="string">&quot;Creating new Glean&quot;</span>);
 
         <span class="kw">let</span> <span class="ident">application_id</span> <span class="op">=</span> <span class="ident">sanitize_application_id</span>(<span class="kw-2">&amp;</span><span class="ident">cfg</span>.<span class="ident">application_id</span>);
@@ -734,7 +734,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_sequence_numbers</span>(
         <span class="ident">cfg</span>: <span class="ident">Configuration</span>,
         <span class="ident">new_sequence_nums</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">i32</span><span class="op">&gt;</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="ident">log</span>::<span class="macro">info</span><span class="macro">!</span>(<span class="string">&quot;Creating new Glean (migrating data)&quot;</span>);
 
         <span class="comment">// Delete the database directory, if it exists. Bail out if there&#39;s</span>
@@ -759,7 +759,7 @@
         <span class="ident">data_path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">application_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">upload_enabled</span>: <span class="ident">bool</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">cfg</span> <span class="op">=</span> <span class="ident">Configuration</span> {
             <span class="ident">data_path</span>: <span class="ident">data_path</span>.<span class="ident">into</span>(),
             <span class="ident">application_id</span>: <span class="ident">application_id</span>.<span class="ident">into</span>(),
@@ -777,8 +777,8 @@
             .<span class="ident">client_id</span>
             .<span class="ident">get_value</span>(<span class="self">self</span>, <span class="string">&quot;glean_client_info&quot;</span>)
         {
-            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-            <span class="prelude-val">Some</span>(<span class="ident">uuid</span>) <span class="op">=&gt;</span> <span class="ident">uuid</span> <span class="op">==</span> <span class="kw-2">*</span><span class="ident">KNOWN_CLIENT_ID</span>,
+            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
+            <span class="prelude-val">Some</span>(<span class="ident">uuid</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">uuid</span> <span class="op">=</span><span class="op">=</span> <span class="kw-2">*</span><span class="ident">KNOWN_CLIENT_ID</span>,
         };
         <span class="kw">if</span> <span class="ident">need_new_client_id</span> {
             <span class="self">self</span>.<span class="ident">core_metrics</span>.<span class="ident">client_id</span>.<span class="ident">generate_and_set</span>(<span class="self">self</span>);
@@ -802,7 +802,7 @@
     <span class="doccomment">/// # Return value</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// `true` if at least one ping was generated, `false` otherwise.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">on_ready_to_send_pings</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">on_ready_to_send_pings</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">event_data_store</span>.<span class="ident">flush_pending_events_on_startup</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
     }
 
@@ -825,9 +825,9 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// * Returns true when the flag was different from the current value, and</span>
     <span class="doccomment">///   actual work was done to clear or reinstate metrics.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_upload_enabled</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">flag</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_upload_enabled</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">flag</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="ident">log</span>::<span class="macro">info</span><span class="macro">!</span>(<span class="string">&quot;Upload enabled: {:?}&quot;</span>, <span class="ident">flag</span>);
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">upload_enabled</span> <span class="op">!=</span> <span class="ident">flag</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">upload_enabled</span> <span class="op">!</span><span class="op">=</span> <span class="ident">flag</span> {
             <span class="self">self</span>.<span class="ident">upload_enabled</span> <span class="op">=</span> <span class="ident">flag</span>;
             <span class="self">self</span>.<span class="ident">on_change_upload_enabled</span>(<span class="ident">flag</span>);
             <span class="bool-val">true</span>
@@ -839,7 +839,7 @@
     <span class="doccomment">/// Determine whether upload is enabled.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// When upload is disabled, no data will be recorded.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_upload_enabled</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_upload_enabled</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">upload_enabled</span>
     }
 
@@ -916,27 +916,27 @@
     }
 
     <span class="doccomment">/// Get the application ID as specified on instantiation.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_application_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_application_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">application_id</span>
     }
 
     <span class="doccomment">/// Get the data path of this instance.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_data_path</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Path</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_data_path</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Path</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">data_path</span>
     }
 
     <span class="doccomment">/// Get a handle to the database.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">storage</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Database</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">storage</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Database</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">data_store</span>
     }
 
     <span class="doccomment">/// Get a handle to the event database.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">event_storage</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">EventDatabase</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">event_storage</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">EventDatabase</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">event_data_store</span>
     }
 
     <span class="doccomment">/// Get the maximum number of events to store before sending a ping.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_max_events</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_max_events</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">max_events</span>
     }
 
@@ -951,13 +951,13 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns the snapshot in a string encoded as JSON.</span>
     <span class="doccomment">/// If the snapshot is empty, it returns an empty string.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">snapshot</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">store_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">clear_store</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">snapshot</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">store_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">clear_store</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
         <span class="ident">StorageManager</span>
             .<span class="ident">snapshot</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">storage</span>(), <span class="ident">store_name</span>, <span class="ident">clear_store</span>)
-            .<span class="ident">unwrap_or_else</span>(<span class="op">||</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;&quot;</span>))
+            .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;&quot;</span>))
     }
 
-    <span class="kw">fn</span> <span class="ident">make_path</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ping_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">doc_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+    <span class="kw">fn</span> <span class="ident">make_path</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ping_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">doc_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
         <span class="macro">format</span><span class="macro">!</span>(
             <span class="string">&quot;/submit/{}/{}/{}/{}&quot;</span>,
             <span class="self">self</span>.<span class="ident">get_application_id</span>(),
@@ -977,19 +977,19 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns true if a ping was assembled and queued, false otherwise.</span>
     <span class="doccomment">/// Returns an error if collecting or writing the ping to disk failed.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">send_ping</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ping</span>: <span class="kw-2">&amp;</span><span class="ident">PingType</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">send_ping</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ping</span>: <span class="kw-2">&amp;</span><span class="ident">PingType</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">ping_maker</span> <span class="op">=</span> <span class="ident">PingMaker</span>::<span class="ident">new</span>();
         <span class="kw">let</span> <span class="ident">doc_id</span> <span class="op">=</span> <span class="ident">Uuid</span>::<span class="ident">new_v4</span>().<span class="ident">to_string</span>();
         <span class="kw">let</span> <span class="ident">url_path</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">make_path</span>(<span class="kw-2">&amp;</span><span class="ident">ping</span>.<span class="ident">name</span>, <span class="kw-2">&amp;</span><span class="ident">doc_id</span>);
         <span class="kw">match</span> <span class="ident">ping_maker</span>.<span class="ident">collect</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">ping</span>) {
-            <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
+            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">log</span>::<span class="macro">info</span><span class="macro">!</span>(
                     <span class="string">&quot;No content for ping &#39;{}&#39;, therefore no ping queued.&quot;</span>,
                     <span class="ident">ping</span>.<span class="ident">name</span>
                 );
                 <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>)
             }
-            <span class="prelude-val">Some</span>(<span class="ident">content</span>) <span class="op">=&gt;</span> {
+            <span class="prelude-val">Some</span>(<span class="ident">content</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span>
                     <span class="ident">ping_maker</span>.<span class="ident">store_ping</span>(<span class="kw-2">&amp;</span><span class="ident">doc_id</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">get_data_path</span>(), <span class="kw-2">&amp;</span><span class="ident">url_path</span>, <span class="kw-2">&amp;</span><span class="ident">content</span>)
                 {
@@ -1011,7 +1011,7 @@
     <span class="doccomment">/// See `send_ping` for detailed information.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns true if at least one ping was assembled and queued, false otherwise.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">send_pings_by_name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ping_names</span>: <span class="kw-2">&amp;</span>[<span class="ident">String</span>]) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">send_pings_by_name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ping_names</span>: <span class="kw-2">&amp;</span>[<span class="ident">String</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="comment">// TODO: 1553813: glean-ac collects and stores pings in parallel and then joins them all before queueing the worker.</span>
         <span class="comment">// This here is writing them out sequentially.</span>
 
@@ -1035,13 +1035,13 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns true if a ping was assembled and queued, false otherwise.</span>
     <span class="doccomment">/// Returns an error if collecting or writing the ping to disk failed.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">send_ping_by_name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ping_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">send_ping_by_name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ping_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">get_ping_by_name</span>(<span class="ident">ping_name</span>) {
-            <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
+            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;Attempted to send unknown ping &#39;{}&#39;&quot;</span>, <span class="ident">ping_name</span>);
                 <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>)
             }
-            <span class="prelude-val">Some</span>(<span class="ident">ping</span>) <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">send_ping</span>(<span class="ident">ping</span>),
+            <span class="prelude-val">Some</span>(<span class="ident">ping</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">send_ping</span>(<span class="ident">ping</span>),
         }
     }
 
@@ -1051,7 +1051,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns the `PingType` if a ping of the given name was registered before.</span>
     <span class="doccomment">/// Returns `None` otherwise.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_ping_by_name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ping_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">PingType</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_ping_by_name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ping_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">PingType</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">ping_registry</span>.<span class="ident">get</span>(<span class="ident">ping_name</span>)
     }
 
@@ -1065,7 +1065,7 @@
     }
 
     <span class="doccomment">/// Get create time of the Glean object.</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">start_time</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">FixedOffset</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">start_time</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">FixedOffset</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">start_time</span>
     }
 
@@ -1082,7 +1082,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">experiment_id</span>: <span class="ident">String</span>,
         <span class="ident">branch</span>: <span class="ident">String</span>,
-        <span class="ident">extra</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;&gt;</span>,
+        <span class="ident">extra</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     ) {
         <span class="kw">let</span> <span class="ident">metric</span> <span class="op">=</span> <span class="ident">metrics</span>::<span class="ident">ExperimentMetric</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">experiment_id</span>);
         <span class="ident">metric</span>.<span class="ident">set_active</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">branch</span>, <span class="ident">extra</span>);
@@ -1109,7 +1109,7 @@
     <span class="doccomment">/// ## Return value</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// True if the experiment is active, false otherwise.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_is_experiment_active</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">experiment_id</span>: <span class="ident">String</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_is_experiment_active</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">experiment_id</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">test_get_experiment_data_as_json</span>(<span class="ident">experiment_id</span>)
             .<span class="ident">is_some</span>()
     }
@@ -1127,7 +1127,7 @@
     <span class="doccomment">/// If the requested experiment is active, a JSON string with the following format:</span>
     <span class="doccomment">/// { &#39;branch&#39;: &#39;the-branch-name&#39;, &#39;extra&#39;: {&#39;key&#39;: &#39;value&#39;, ...}}</span>
     <span class="doccomment">/// Otherwise, None.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_get_experiment_data_as_json</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">experiment_id</span>: <span class="ident">String</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_get_experiment_data_as_json</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">experiment_id</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">metric</span> <span class="op">=</span> <span class="ident">metrics</span>::<span class="ident">ExperimentMetric</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">experiment_id</span>);
         <span class="ident">metric</span>.<span class="ident">test_get_value_as_json_string</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
     }

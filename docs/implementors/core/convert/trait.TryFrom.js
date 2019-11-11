@@ -7,5 +7,4 @@ implementors["glean_ffi"] = [{text:"impl&lt;'_, '_&gt; <a class=\"trait\" href=\
             } else {
                 window.pending_implementors = implementors;
             }
-        
-})()
+        })()

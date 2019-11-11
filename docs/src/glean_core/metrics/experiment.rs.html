@@ -254,7 +254,7 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RecordedExperimentData</span> {
     <span class="kw">pub</span> <span class="ident">branch</span>: <span class="ident">String</span>,
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">skip_serializing_if</span> <span class="op">=</span> <span class="string">&quot;Option::is_none&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">extra</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">extra</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
 <span class="doccomment">/// An experiment metric.</span>
@@ -267,11 +267,11 @@
 }
 
 <span class="kw">impl</span> <span class="ident">MetricType</span> <span class="kw">for</span> <span class="ident">ExperimentMetric</span> {
-    <span class="kw">fn</span> <span class="ident">meta</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">CommonMetricData</span> {
+    <span class="kw">fn</span> <span class="ident">meta</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">CommonMetricData</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">meta_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">CommonMetricData</span> {
+    <span class="kw">fn</span> <span class="ident">meta_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">CommonMetricData</span> {
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">meta</span>
     }
 }
@@ -283,7 +283,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `id` - the id of the experiment. Please note that this will be</span>
     <span class="doccomment">///          truncated to `MAX_EXPERIMENTS_IDS_LEN`, if needed.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">id</span>: <span class="ident">String</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">id</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">error</span> <span class="op">=</span> <span class="prelude-val">None</span>;
 
         <span class="comment">// Make sure that experiment id is within the expected limit.</span>
@@ -337,7 +337,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>,
         <span class="ident">branch</span>: <span class="ident">String</span>,
-        <span class="ident">extra</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;&gt;</span>,
+        <span class="ident">extra</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     ) {
         <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">should_record</span>(<span class="ident">glean</span>) {
             <span class="kw">return</span>;
@@ -424,14 +424,14 @@
     <span class="doccomment">/// the RecordedExperimentData.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This doesn&#39;t clear the stored value.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_get_value_as_json_string</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_get_value_as_json_string</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="ident">StorageManager</span>.<span class="ident">snapshot_metric</span>(
             <span class="ident">glean</span>.<span class="ident">storage</span>(),
             <span class="ident">INTERNAL_STORAGE</span>,
             <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>.<span class="ident">identifier</span>(<span class="ident">glean</span>),
         ) {
-            <span class="prelude-val">Some</span>(<span class="ident">Metric</span>::<span class="ident">Experiment</span>(<span class="ident">e</span>)) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="macro">json</span><span class="macro">!</span>(<span class="ident">e</span>).<span class="ident">to_string</span>()),
-            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+            <span class="prelude-val">Some</span>(<span class="ident">Metric</span>::<span class="ident">Experiment</span>(<span class="ident">e</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="macro">json</span><span class="macro">!</span>(<span class="ident">e</span>).<span class="ident">to_string</span>()),
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
         }
     }
 }
