@@ -7,7 +7,7 @@ records a timestamp, the event's name and a set of custom values.</p>
 <h2 id="arguments" class="section-header"><a href="#arguments">Arguments</a></h2>
 <ul>
 <li><code>glean</code> - The Glean instance this metric belongs to.</li>
-<li><code>timestamp</code> - A monotonically increasing timestamp, in nanoseconds.
+<li><code>timestamp</code> - A monotonically increasing timestamp, in milliseconds.
 This must be provided since the actual recording of the event may
 happen some time later than the moment the event occurred.</li>
 <li><code>extra</code> - A HashMap of (key, value) pairs. The key is an index into
