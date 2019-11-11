@@ -196,6 +196,25 @@ assertEquals(&quot;2019-03-25-05:00&quot;, Install.firstRun.testGetValueAsString
 assertEquals(1, Install.firstRun.testGetNumRecordedErrors(ErrorType.InvalidValue))
 </code></pre>
 </div>
+<div data-lang="Java" class="tab">
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Install
+
+Install.INSTANCE.getFirstRun.set() // Records &quot;now&quot;
+Install.INSTANCE.getFirstRun.set(Calendar(2019, 3, 25)) // Records a custom datetime
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Install
+
+// Was anything recorded?
+assertTrue(Install.INSTANCE.getFirstRun.testHasValue())
+// Was it the expected value?
+// NOTE: Datetimes always include a timezone offset from UTC, hence the
+// &quot;-05:00&quot; suffix.
+assertEquals(&quot;2019-03-25-05:00&quot;, Install.INSTANCE.getFirstRun.testGetValueAsString())
+// Was the value invalid?
+assertEquals(1, Install.INSTANCE.getFirstRun.testGetNumRecordedErrors(ErrorType.InvalidValue))
+</code></pre>
+</div>
 <div data-lang="Swift" class="tab">
 <pre><code class="language-Swift">Install.firstRun.set() // Records &quot;now&quot;
 

@@ -931,6 +931,20 @@ assertTrue(Flags.a11yEnabled.testHasValue())
 assertTrue(Flags.a11yEnabled.testGetValue())
 </code></pre>
 </div>
+<div data-lang="Java" class="tab">
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Flags
+
+Flags.INSTANCE.getA11yEnabled.set(System.isAccesibilityEnabled())
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Flags
+
+// Was anything recorded?
+assertTrue(Flags.INSTANCE.getA11yEnabled.testHasValue())
+// Does it have the expected value?
+assertTrue(Flags.INSTANCE.getA11yEnabled.testGetValue())
+</code></pre>
+</div>
 <div data-lang="Swift" class="tab">
 <pre><code class="language-Swift">Flags.a11yEnabled.set(self.isAccesibilityElement)
 </code></pre>
@@ -993,6 +1007,25 @@ assertEquals(6, Controls.refreshPressed.testGetValue())
 // Did the counter record an negative value?
 assertEquals(
     1, Controls.refreshPressed.testGetNumRecordedErrors(ErrorType.InvalidValue)
+)
+</code></pre>
+</div>
+<div data-lang="Java" class="tab">
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Controls
+
+Controls.INSTANCE.getRefreshPressed.add() // Adds 1 to the counter.
+Controls.INSTANCE.getRefreshPressed.add(5) // Adds 5 to the counter.
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Controls
+
+// Was anything recorded?
+assertTrue(Controls.INSTANCE.getRefreshPressed.testHasValue())
+// Does the counter have the expected value?
+assertEquals(6, Controls.INSTANCE.getRefreshPressed.testGetValue())
+// Did the counter record an negative value?
+assertEquals(
+    1, Controls.INSTANCE.getRefreshPressed.testGetNumRecordedErrors(ErrorType.InvalidValue)
 )
 </code></pre>
 </div>
@@ -1179,6 +1212,31 @@ assertTrue(SearchDefault.name.testHasValue())
 assertEquals(&quot;wikipedia&quot;, SearchDefault.name.testGetValue())
 // Was the string truncated, and an error reported?
 assertEquals(1, SearchDefault.name.testGetNumRecordedErrors(ErrorType.InvalidValue))
+</code></pre>
+</div>
+<div data-lang="Java" class="tab">
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.SearchDefault
+
+// Record a value into the metric.
+SearchDefault.INSTANCE.getName.set(&quot;duck duck go&quot;)
+// If it changed later, you can record the new value:
+SearchDefault.INSTANCE.getName.set(&quot;wikipedia&quot;)
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.SearchDefault
+
+// Was anything recorded?
+assertTrue(SearchDefault.INSTANCE.getName.testHasValue())
+// Does the string metric have the expected value?
+// IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
+assertEquals(&quot;wikipedia&quot;, SearchDefault.INSTANCE.getName.testGetValue())
+// Was the string truncated, and an error reported?
+assertEquals(
+    1, 
+    SearchDefault.INSTANCE.getName.testGetNumRecordedErrors(
+        ErrorType.InvalidValue
+    )
+)
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
@@ -1481,6 +1539,41 @@ assertTrue(Auth.loginTime.testGetValue() &gt; 0)
 assertEquals(1, Auth.loginTime.testGetNumRecordedErrors(ErrorType.InvalidValue))
 </code></pre>
 </div>
+<div data-lang="Java" class="tab">
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Auth
+
+fun onShowLogin() {
+    Auth.INSTANCE.getLoginTime.start()
+    // ...
+}
+
+fun onLogin() {
+    Auth.INSTANCE.getLoginTime.stop()
+    // ...
+}
+
+fun onLoginCancel() {
+    Auth.INSTANCE.getLoginTime.cancel()
+    // ...
+}
+</code></pre>
+<p>The time reported in the telemetry ping will be timespan recorded during the lifetime of the ping.</p>
+<p>There are test APIs available too:</p>
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Auth
+
+// Was anything recorded?
+assertTrue(Auth.INSTANCE.getLoginTime.testHasValue())
+// Does the timer have the expected value
+assertTrue(Auth.INSTANCE.getLoginTime.testGetValue() &gt; 0)
+// Was the timing recorded incorrectly?
+assertEquals(
+    1, 
+    Auth.INSTANCE.getLoginTime.testGetNumRecordedErrors(
+        ErrorType.InvalidValue
+    )
+)
+</code></pre>
+</div>
 <div data-lang="Swift" class="tab">
 <pre><code class="language-Swift">func onShowLogin() {
     Auth.loginTime.start()
@@ -1624,6 +1717,45 @@ assertEquals(2L, snapshot.count)
 
 // Was an error recorded?
 assertEquals(1, pages.pageLoad.testGetNumRecordedErrors(ErrorType.InvalidValue))
+</code></pre>
+</div>
+<div data-lang="Java" class="tab">
+<pre><code class="language-Java">import mozilla.components.service.glean.GleanTimerId
+import org.mozilla.yourApplication.GleanMetrics.Pages
+
+val timerId : GleanTimerId
+
+fun onPageStart(e: Event) {
+    timerId = Pages.INSTANCE.getPageLoad.start()
+}
+
+fun onPageLoaded(e: Event) {
+    Pages.INSTANCE.getPageLoad.stopAndAccumulate(timerId)
+}
+</code></pre>
+<p>There are test APIs available too.  For convenience, properties <code>sum</code> and <code>count</code> are exposed to facilitate validating that data was recorded correctly.</p>
+<p>Continuing the <code>pageLoad</code> example above, at this point the metric should have a <code>sum == 11</code> and a <code>count == 2</code>:</p>
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Pages
+
+// Was anything recorded?
+assertTrue(pages.INSTANCE.getPageLoad.testHasValue())
+
+// Get snapshot.
+val snapshot = pages.INSTANCE.getPageLoad.testGetValue()
+
+// Does the sum have the expected value?
+assertEquals(11, snapshot.getSum)
+
+// Usually you don't know the exact timing values, but how many should have been recorded.
+assertEquals(2L, snapshot.getCount)
+
+// Was an error recorded?
+assertEquals(
+    1, 
+    pages.INSTANCE.getPageLoad.testGetNumRecordedErrors(
+        ErrorType.InvalidValue
+    )
+)
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
@@ -1812,6 +1944,21 @@ assertTrue(User.clientId.testHasValue())
 assertEquals(uuid, User.clientId.testGetValue())
 </code></pre>
 </div>
+<div data-lang="Java" class="tab">
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.User
+
+User.INSTANCE.getClientId.generateAndSet() // Generate a new UUID and record it
+User.INSTANCE.getClientId.set(UUID.randomUUID())  // Set a UUID explicitly
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.User
+
+// Was anything recorded?
+assertTrue(User.INSTANCE.getClientId.testHasValue())
+// Was it the expected value?
+assertEquals(uuid, User.INSTANCE.getClientId.testGetValue())
+</code></pre>
+</div>
 <div data-lang="Swift" class="tab">
 <pre><code class="language-Swift">User.clientId.generateAndSet() // Generate a new UUID and record it
 User.clientId.set(UUID())  // Set a UUID explicitly
@@ -1891,6 +2038,25 @@ assertTrue(Install.firstRun.testHasValue())
 assertEquals(&quot;2019-03-25-05:00&quot;, Install.firstRun.testGetValueAsString())
 // Was the value invalid?
 assertEquals(1, Install.firstRun.testGetNumRecordedErrors(ErrorType.InvalidValue))
+</code></pre>
+</div>
+<div data-lang="Java" class="tab">
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Install
+
+Install.INSTANCE.getFirstRun.set() // Records &quot;now&quot;
+Install.INSTANCE.getFirstRun.set(Calendar(2019, 3, 25)) // Records a custom datetime
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Install
+
+// Was anything recorded?
+assertTrue(Install.INSTANCE.getFirstRun.testHasValue())
+// Was it the expected value?
+// NOTE: Datetimes always include a timezone offset from UTC, hence the
+// &quot;-05:00&quot; suffix.
+assertEquals(&quot;2019-03-25-05:00&quot;, Install.INSTANCE.getFirstRun.testGetValueAsString())
+// Was the value invalid?
+assertEquals(1, Install.INSTANCE.getFirstRun.testGetNumRecordedErrors(ErrorType.InvalidValue))
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
@@ -2251,9 +2417,20 @@ If the application crashes no <code>baseline</code> ping is sent, no additional 
 <h2><a class="header" href="#contents" id="contents">Contents</a></h2>
 <p>The baseline ping includes the following fields:</p>
 <table><thead><tr><th>Field name</th><th>Type</th><th>Description</th></tr></thead><tbody>
-<tr><td><code>duration</code></td><td>Timespan</td><td>The duration, in seconds, of the last foreground session</td></tr>
-<tr><td><code>locale</code></td><td>String</td><td>The locale of the application</td></tr>
+<tr><td><code>duration</code></td><td>Timespan</td><td>The duration, in seconds, of the last foreground session. <sup class="footnote-reference"><a href="#1">1</a></sup></td></tr>
+<tr><td><code>locale</code></td><td>String</td><td>The locale of the application.</td></tr>
 </tbody></table>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>A quick note about the <code>duration</code> metric: it measures specifically the time that the user spent in the last foreground session.
+This is distinct from the <code>start_time</code> and <code>end_time</code> values (on every ping), which measure the ping lifetime.  <code>start_time</code> is always set to be the time the previous ping of the same type was sent, so the span from <code>start_time</code> to <code>end_time</code> is normally longer than the span measured by <code>duration</code>.</p>
+</div>
+<pre><code>  ↑   ↓           ↑          ↓
+      start_time             end_time
+                  ~~~~~~~~~~~duration
+
+  ↑ = foreground
+  ↓ = background
+</code></pre>
 <p>The <code>baseline</code> ping shall also include the common <a href="user/pings/index.html#ping-sections">ping sections</a> found in all pings.</p>
 <h3><a class="header" href="#querying-ping-contents" id="querying-ping-contents">Querying ping contents</a></h3>
 <p>A quick note about querying ping contents (i.e. for <a href="https://sql.telemetry.mozilla.org">sql.telemetry.mozilla.org</a>):  Each metric in the baseline ping is organized by its metric type, and uses a namespace of <code>glean.baseline</code>. For instance, in order to select <code>duration</code> you would use <code>metrics.timespan['glean.baseline.duration']</code>. If you were trying to select a String based metric such as <code>os</code>, then you would use <code>metrics.string['glean.baseline.os']</code></p>
