@@ -2827,7 +2827,9 @@ search:
 </blockquote>
 <h2><a class="header" href="#loading-custom-ping-metadata-into-your-application-or-library" id="loading-custom-ping-metadata-into-your-application-or-library">Loading custom ping metadata into your application or library</a></h2>
 <p>The Glean SDK build generates code from <code>pings.yaml</code> in a <code>Pings</code> object, which must be instantiated so Glean can send pings by name.</p>
-<p>{{#include ../tab_header.md}}</p>
+<div class="tabs">
+<div class="tabbar"></div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <p>In Kotlin, this object must be registered with Glean from your startup code (such as in your application's <code>onCreate</code> method or a function called from that method).</p>
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Pings
@@ -2847,7 +2849,8 @@ override fun onCreate() {
 pings = load_pings(&quot;pings.yaml&quot;)
 </code></pre>
 </div>
-<p>{{#include ../tab_footer.md}}</p>
+</div>
+</div>
 <h2><a class="header" href="#sending-metrics-in-a-custom-ping" id="sending-metrics-in-a-custom-ping">Sending metrics in a custom ping</a></h2>
 <p>To send a metric on a custom ping, you add the custom ping's name to the <code>send_in_pings</code> parameter in the <code>metrics.yaml</code> file.</p>
 <p>For example, to define a new metric to record the default search engine, which is sent in a custom ping called <code>search</code>, put <code>search</code> in the <code>send_in_pings</code> parameter.  Note that it is an error to specify a ping in <code>send_in_pings</code> that does not also have an entry in <code>pings.yaml</code>.</p>
@@ -2867,7 +2870,9 @@ pings = load_pings(&quot;pings.yaml&quot;)
 <h2><a class="header" href="#sending-a-custom-ping" id="sending-a-custom-ping">Sending a custom ping</a></h2>
 <p>To send a custom ping, call the <code>send</code> method on the <code>PingType</code> object that the Glean SDK generated for your ping.</p>
 <p>For example, to send the custom ping defined above:</p>
-<p>{{#include ../tab_header.md}}</p>
+<div class="tabs">
+<div class="tabbar"></div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <pre><code class="language-kotlin">import org.mozilla.yourApplication.GleanMetrics.Pings
 Pings.search.send()
@@ -2877,7 +2882,8 @@ Pings.search.send()
 <pre><code class="language-Python">pings.search.send()
 </code></pre>
 </div>
-<p>{{#include ../tab_footer.md}}</p>
+</div>
+</div>
 <h1><a class="header" href="#unit-testing-glean-custom-pings" id="unit-testing-glean-custom-pings">Unit testing Glean custom pings</a></h1>
 <p>Applications defining <a href="user/pings/custom.html">custom pings</a> can use use the strategy defined in this document to test these pings in unit tests.</p>
 <h2><a class="header" href="#general-testing-strategy" id="general-testing-strategy">General testing strategy</a></h2>
