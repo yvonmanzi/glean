@@ -198,6 +198,28 @@ XCTAssertEqual(1, try Stability.crashCount[&quot;uncaught_exception&quot;].testG
 XCTAssertEqual(3, try Stability.crashCount[&quot;native_code_crash&quot;].testGetValue())
 </code></pre>
 </div>
+<div data-lang="Python" class="tab">
+<pre><code class="language-Python">from glean import load_metrics
+metrics = load_metrics(&quot;metrics.yaml&quot;)
+
+# Adds 1 to the &quot;uncaught_exception&quot; counter.
+metrics.stability.crash_count[&quot;uncaught_exception&quot;].add()
+# Adds 3 to the &quot;native_code_crash&quot; counter.
+metrics.stability.crash_count[&quot;native_code_crash&quot;].add(3)
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-Python"># Was anything recorded?
+assert metrics.stability.crash_count[&quot;uncaught_exception&quot;].test_has_value()
+assert metrics.stability.crash_count[&quot;native_code_crash&quot;].test_has_value()
+# Do the counters have the expected values?
+assert 1 == metrics.stability.crash_count[&quot;uncaught_exception&quot;].test_get_value()
+assert 3 == metrics.stability.crash_count[&quot;native_code_crash&quot;].test_get_value()
+# Did we record any invalid labels?
+assert 1 == metrics.stability.crash_count.test_get_num_recorded_errors(
+    ErrorType.INVALID_LABEL
+)
+</code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
@@ -235,6 +257,7 @@ XCTAssertEqual(3, try Stability.crashCount[&quot;native_code_crash&quot;].testGe
 <ul>
 <li>Kotlin API docs <a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-labeled-metric-type/index.html">LabeledMetricType</a>, <a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-counter-metric-type/index.html">CounterMetricType</a></li>
 <li>Swift API docs: <a href="../../../swift/Classes/LabeledMetricType.html">LabeledMetricType</a>, <a href="../../../swift/Classes/CounterMetricType.html">CounterMetricType</a></li>
+<li><a href="../../../python/glean/metrics/labeled.html">Python API docs</a></li>
 </ul>
 
                     </main>
