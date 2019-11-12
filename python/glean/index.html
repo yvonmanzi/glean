@@ -84,6 +84,10 @@ __all__ = [
 <dd>
 <section class="desc"></section>
 </dd>
+<dt><code class="name"><a title="glean.util" href="util.html">glean.util</a></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
 </dl>
 </section>
 <section>
@@ -373,11 +377,18 @@ initialized from the application.</p>
     # and saved between test runs.
     _ping_type_queue: Set[&#34;PingType&#34;] = set()
 
+    # The application id to send in the ping.
+    _application_id: str = &#34;glean-python&#34;
+
+    # The version of the application sending Glean data.
+    _application_version: str = &#34;unknown&#34;
+
     @classmethod
     def initialize(
         cls,
         configuration: Optional[Configuration] = None,
         application_id: Optional[str] = None,
+        application_version: Optional[str] = None,
         data_dir: Optional[Path] = None,
     ):
         &#34;&#34;&#34;
@@ -393,6 +404,8 @@ initialized from the application.</p>
                 settings.
             application_id (str): (optional) The application id to use when
                 sending pings. Defaults to &#39;glean-python&#39;.
+            application_version (str): (optional) The version of the application
+                sending Glean data.
             data_dir (pathlib.Path): (optional) The path to the Glean data
                 directory. If not provided, uses a temporary directory.
         &#34;&#34;&#34;
@@ -405,6 +418,9 @@ initialized from the application.</p>
         if application_id is None:
             application_id = &#34;glean-python&#34;
 
+        if application_version is None:
+            application_version = &#34;unknown&#34;
+
         if data_dir is None:
             data_dir = Path(tempfile.TemporaryDirectory().name)
             cls._destroy_data_dir = True
@@ -413,6 +429,8 @@ initialized from the application.</p>
         cls._data_dir = data_dir
 
         cls._configuration = configuration
+        cls._application_id = application_id
+        cls._application_version = application_version
 
         cfg = _ffi.make_config(
             cls._data_dir,
@@ -537,12 +555,27 @@ initialized from the application.</p>
         &#34;&#34;&#34;
         Set a few metrics that will be sent as part of every ping.
         &#34;&#34;&#34;
-        from . import _builtins
+        from ._builtins import metrics
 
-        # Just make sure the metrics loaded for testing purposes.
-        # Actual metrics will be filled in once we have the required
-        # metric types implemented.
-        _builtins.metrics.glean
+        metrics.glean.baseline.locale.set(util.get_locale_tag())
+        metrics.glean.internal.metrics.os.set(platform.system())
+        metrics.glean.internal.metrics.os_version.set(platform.release())
+        metrics.glean.internal.metrics.architecture.set(platform.machine())
+
+        # device_model and device_manufacturer exist on desktop platforms,
+        # but aren&#39;t easily obtainable. See bug 1595751
+        metrics.glean.internal.metrics.device_manufacturer.set(&#34;unknown&#34;)
+        metrics.glean.internal.metrics.device_model.set(&#34;unknown&#34;)
+
+        if cls._configuration.channel is not None:
+            metrics.glean.internal.metrics.app_channel.set(cls._configuration.channel)
+
+        metrics.glean.internal.metrics.app_build.set(cls._application_id)
+
+        if cls._application_version is not None:
+            metrics.glean.internal.metrics.app_display_version.set(
+                cls._application_version
+            )
 
     @classmethod
     def get_data_dir(cls) -&gt; Path:
@@ -646,7 +679,7 @@ def get_upload_enabled(cls) -&gt; bool:
 </details>
 </dd>
 <dt id="glean.Glean.initialize"><code class="name flex">
-<span>def <span class="ident">initialize</span></span>(<span>configuration=None, application_id=None, data_dir=None)</span>
+<span>def <span class="ident">initialize</span></span>(<span>configuration=None, application_id=None, application_version=None, data_dir=None)</span>
 </code></dt>
 <dd>
 <section class="desc"><p>Initialize the Glean SDK.</p>
@@ -662,6 +695,9 @@ settings.</dd>
 <dt><strong><code>application_id</code></strong> :&ensp;<code>str</code></dt>
 <dd>(optional) The application id to use when
 sending pings. Defaults to 'glean-python'.</dd>
+<dt><strong><code>application_version</code></strong> :&ensp;<code>str</code></dt>
+<dd>(optional) The version of the application
+sending Glean data.</dd>
 <dt><strong><code>data_dir</code></strong> :&ensp;<code>pathlib.Path</code></dt>
 <dd>(optional) The path to the Glean data
 directory. If not provided, uses a temporary directory.</dd>
@@ -675,6 +711,7 @@ def initialize(
     cls,
     configuration: Optional[Configuration] = None,
     application_id: Optional[str] = None,
+    application_version: Optional[str] = None,
     data_dir: Optional[Path] = None,
 ):
     &#34;&#34;&#34;
@@ -690,6 +727,8 @@ def initialize(
             settings.
         application_id (str): (optional) The application id to use when
             sending pings. Defaults to &#39;glean-python&#39;.
+        application_version (str): (optional) The version of the application
+            sending Glean data.
         data_dir (pathlib.Path): (optional) The path to the Glean data
             directory. If not provided, uses a temporary directory.
     &#34;&#34;&#34;
@@ -702,6 +741,9 @@ def initialize(
     if application_id is None:
         application_id = &#34;glean-python&#34;
 
+    if application_version is None:
+        application_version = &#34;unknown&#34;
+
     if data_dir is None:
         data_dir = Path(tempfile.TemporaryDirectory().name)
         cls._destroy_data_dir = True
@@ -710,6 +752,8 @@ def initialize(
     cls._data_dir = data_dir
 
     cls._configuration = configuration
+    cls._application_id = application_id
+    cls._application_version = application_version
 
     cfg = _ffi.make_config(
         cls._data_dir,
@@ -914,6 +958,7 @@ def test_has_ping_type(cls, ping_name: str):
 <li><code><a title="glean.metrics" href="metrics/index.html">glean.metrics</a></code></li>
 <li><code><a title="glean.net" href="net/index.html">glean.net</a></code></li>
 <li><code><a title="glean.testing" href="testing/index.html">glean.testing</a></code></li>
+<li><code><a title="glean.util" href="util.html">glean.util</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
