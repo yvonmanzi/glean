@@ -149,7 +149,7 @@ to the user-provided delegate.</p></section>
         Args:
             path (str): The URL path to append to the server address.
             data (str): The serialized text data to send.
-            config (glean.Congfiguration): The Glean Configuration object.
+            config (glean.Configuration): The Glean Configuration object.
 
         Returns:
             sent (bool): True if the ping was correctly dealt with (sent
@@ -188,7 +188,7 @@ to the user-provided delegate.</p></section>
 <dd>The URL path to append to the server address.</dd>
 <dt><strong><code>data</code></strong> :&ensp;<code>str</code></dt>
 <dd>The serialized text data to send.</dd>
-<dt><strong><code>config</code></strong> :&ensp;<code>glean.Congfiguration</code></dt>
+<dt><strong><code>config</code></strong> :&ensp;<a title="glean.Configuration" href="../index.html#glean.Configuration"><code>Configuration</code></a></dt>
 <dd>The Glean Configuration object.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
@@ -211,7 +211,7 @@ was a recoverable error that callers can deal with.</dd>
     Args:
         path (str): The URL path to append to the server address.
         data (str): The serialized text data to send.
-        config (glean.Congfiguration): The Glean Configuration object.
+        config (glean.Configuration): The Glean Configuration object.
 
     Returns:
         sent (bool): True if the ping was correctly dealt with (sent
