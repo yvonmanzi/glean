@@ -85,17 +85,17 @@ class Glean:
     _ping_type_queue: Set[&#34;PingType&#34;] = set()
 
     # The application id to send in the ping.
-    _application_id: str = &#34;glean-python&#34;
+    _application_id: str
 
     # The version of the application sending Glean data.
-    _application_version: str = &#34;unknown&#34;
+    _application_version: str
 
     @classmethod
     def initialize(
         cls,
+        application_id: str,
+        application_version: str,
         configuration: Optional[Configuration] = None,
-        application_id: Optional[str] = None,
-        application_version: Optional[str] = None,
         data_dir: Optional[Path] = None,
     ):
         &#34;&#34;&#34;
@@ -107,12 +107,11 @@ class Glean:
         once.
 
         Args:
-            configuration (glean.config.Configuration): An object with global
-                settings.
-            application_id (str): (optional) The application id to use when
-                sending pings. Defaults to &#39;glean-python&#39;.
-            application_version (str): (optional) The version of the application
-                sending Glean data.
+            application_id (str): The application id to use when sending pings.
+            application_version (str): The version of the application sending
+                Glean data.
+            configuration (glean.config.Configuration): (optional) An object with
+                global settings.
             data_dir (pathlib.Path): (optional) The path to the Glean data
                 directory. If not provided, uses a temporary directory.
         &#34;&#34;&#34;
@@ -121,12 +120,6 @@ class Glean:
 
         if configuration is None:
             configuration = Configuration()
-
-        if application_id is None:
-            application_id = &#34;glean-python&#34;
-
-        if application_version is None:
-            application_version = &#34;unknown&#34;
 
         if data_dir is None:
             data_dir = Path(tempfile.TemporaryDirectory().name)
@@ -179,6 +172,7 @@ class Glean:
         Resets the Glean singleton.
         &#34;&#34;&#34;
         # TODO: 1594184 Send the metrics ping
+        Dispatcher.reset()
         if cls._handle != 0:
             _ffi.lib.glean_destroy_glean(cls._handle)
         cls._handle = 0
@@ -408,17 +402,17 @@ initialized from the application.</p>
     _ping_type_queue: Set[&#34;PingType&#34;] = set()
 
     # The application id to send in the ping.
-    _application_id: str = &#34;glean-python&#34;
+    _application_id: str
 
     # The version of the application sending Glean data.
-    _application_version: str = &#34;unknown&#34;
+    _application_version: str
 
     @classmethod
     def initialize(
         cls,
+        application_id: str,
+        application_version: str,
         configuration: Optional[Configuration] = None,
-        application_id: Optional[str] = None,
-        application_version: Optional[str] = None,
         data_dir: Optional[Path] = None,
     ):
         &#34;&#34;&#34;
@@ -430,12 +424,11 @@ initialized from the application.</p>
         once.
 
         Args:
-            configuration (glean.config.Configuration): An object with global
-                settings.
-            application_id (str): (optional) The application id to use when
-                sending pings. Defaults to &#39;glean-python&#39;.
-            application_version (str): (optional) The version of the application
-                sending Glean data.
+            application_id (str): The application id to use when sending pings.
+            application_version (str): The version of the application sending
+                Glean data.
+            configuration (glean.config.Configuration): (optional) An object with
+                global settings.
             data_dir (pathlib.Path): (optional) The path to the Glean data
                 directory. If not provided, uses a temporary directory.
         &#34;&#34;&#34;
@@ -444,12 +437,6 @@ initialized from the application.</p>
 
         if configuration is None:
             configuration = Configuration()
-
-        if application_id is None:
-            application_id = &#34;glean-python&#34;
-
-        if application_version is None:
-            application_version = &#34;unknown&#34;
 
         if data_dir is None:
             data_dir = Path(tempfile.TemporaryDirectory().name)
@@ -502,6 +489,7 @@ initialized from the application.</p>
         Resets the Glean singleton.
         &#34;&#34;&#34;
         # TODO: 1594184 Send the metrics ping
+        Dispatcher.reset()
         if cls._handle != 0:
             _ffi.lib.glean_destroy_glean(cls._handle)
         cls._handle = 0
@@ -709,7 +697,7 @@ def get_upload_enabled(cls) -&gt; bool:
 </details>
 </dd>
 <dt id="glean.glean.Glean.initialize"><code class="name flex">
-<span>def <span class="ident">initialize</span></span>(<span>configuration=None, application_id=None, application_version=None, data_dir=None)</span>
+<span>def <span class="ident">initialize</span></span>(<span>application_id, application_version, configuration=None, data_dir=None)</span>
 </code></dt>
 <dd>
 <section class="desc"><p>Initialize the Glean SDK.</p>
@@ -719,15 +707,14 @@ changes are made to the state if initialize is called a more than
 once.</p>
 <h2 id="args">Args</h2>
 <dl>
-<dt><strong><code>configuration</code></strong> :&ensp;<a title="glean.config.Configuration" href="config.html#glean.config.Configuration"><code>Configuration</code></a></dt>
-<dd>An object with global
-settings.</dd>
 <dt><strong><code>application_id</code></strong> :&ensp;<code>str</code></dt>
-<dd>(optional) The application id to use when
-sending pings. Defaults to 'glean-python'.</dd>
+<dd>The application id to use when sending pings.</dd>
 <dt><strong><code>application_version</code></strong> :&ensp;<code>str</code></dt>
-<dd>(optional) The version of the application
-sending Glean data.</dd>
+<dd>The version of the application sending
+Glean data.</dd>
+<dt><strong><code>configuration</code></strong> :&ensp;<a title="glean.config.Configuration" href="config.html#glean.config.Configuration"><code>Configuration</code></a></dt>
+<dd>(optional) An object with
+global settings.</dd>
 <dt><strong><code>data_dir</code></strong> :&ensp;<code>pathlib.Path</code></dt>
 <dd>(optional) The path to the Glean data
 directory. If not provided, uses a temporary directory.</dd>
@@ -739,9 +726,9 @@ directory. If not provided, uses a temporary directory.</dd>
 <pre><code class="python">@classmethod
 def initialize(
     cls,
+    application_id: str,
+    application_version: str,
     configuration: Optional[Configuration] = None,
-    application_id: Optional[str] = None,
-    application_version: Optional[str] = None,
     data_dir: Optional[Path] = None,
 ):
     &#34;&#34;&#34;
@@ -753,12 +740,11 @@ def initialize(
     once.
 
     Args:
-        configuration (glean.config.Configuration): An object with global
-            settings.
-        application_id (str): (optional) The application id to use when
-            sending pings. Defaults to &#39;glean-python&#39;.
-        application_version (str): (optional) The version of the application
-            sending Glean data.
+        application_id (str): The application id to use when sending pings.
+        application_version (str): The version of the application sending
+            Glean data.
+        configuration (glean.config.Configuration): (optional) An object with
+            global settings.
         data_dir (pathlib.Path): (optional) The path to the Glean data
             directory. If not provided, uses a temporary directory.
     &#34;&#34;&#34;
@@ -767,12 +753,6 @@ def initialize(
 
     if configuration is None:
         configuration = Configuration()
-
-    if application_id is None:
-        application_id = &#34;glean-python&#34;
-
-    if application_version is None:
-        application_version = &#34;unknown&#34;
 
     if data_dir is None:
         data_dir = Path(tempfile.TemporaryDirectory().name)
@@ -873,6 +853,7 @@ def reset(cls):
     Resets the Glean singleton.
     &#34;&#34;&#34;
     # TODO: 1594184 Send the metrics ping
+    Dispatcher.reset()
     if cls._handle != 0:
         _ffi.lib.glean_destroy_glean(cls._handle)
     cls._handle = 0

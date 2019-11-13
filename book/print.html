@@ -3528,6 +3528,9 @@ pip install -r requirements_dev.txt
 <p>The following will run the Python unit tests using <code>py.test</code>:</p>
 <pre><code class="language-bash">  $ make test-python
 </code></pre>
+<p>You can send extra parameters to the <code>py.test</code> command by setting the <code>PYTEST_ARGS</code> variable:</p>
+<pre><code class="language-bash">  $ make test-python PYTEST_ARGS=&quot;-s --pdb&quot;
+</code></pre>
 <h2><a class="header" href="#linting-formatting-and-type-checking" id="linting-formatting-and-type-checking">Linting, formatting and type checking</a></h2>
 <p>The Glean Python bindings use the following tools:</p>
 <ul>
