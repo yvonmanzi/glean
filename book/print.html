@@ -3559,6 +3559,12 @@ pip install -r requirements_dev.txt
 <h3><a class="header" href="#makefile-method-4" id="makefile-method-4">Makefile method</a></h3>
 <pre><code class="language-bash">  $ make python-docs
 </code></pre>
+<h2><a class="header" href="#building-wheels-for-linux" id="building-wheels-for-linux">Building wheels for Linux</a></h2>
+<p>Building on Linux using the above instructions will create Linux binaries that dynamically link against the version of <code>libc</code> installed on your machine. 
+This generally will not be portable to other Linux distributions, and PyPI will not even allow it to be uploaded.
+In order to create wheels that can be installed on the broadest range of Linux distributions, the Python Packaging Authority's <a href="https://github.com/pypa/manylinux">manylinux</a> project maintains a Docker image for building compatible Linux wheels.</p>
+<p>The CircleCI configuration handles making these wheels from tagged releases.
+If you need to reproduce this locally, see the CircleCI job <code>pypi-linux-release</code> for an example of how this Docker image is used in practice.</p>
 <h1><a class="header" href="#rust-component" id="rust-component">Rust component</a></h1>
 <p>The majority of the Glean SDK is implemented as a Rust component, to be usable across all platforms.</p>
 <p>This includes:</p>
