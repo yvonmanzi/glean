@@ -30,6 +30,7 @@
 
 
 from .counter import CounterMetricType
+from .experiment import RecordedExperimentData
 from .labeled import LabeledCounterMetricType
 from .lifetime import Lifetime
 from .ping import PingType
@@ -41,6 +42,7 @@ __all__ = [
     &#34;LabeledCounterMetricType&#34;,
     &#34;Lifetime&#34;,
     &#34;PingType&#34;,
+    &#34;RecordedExperimentData&#34;,
     &#34;StringMetricType&#34;,
 ]</code></pre>
 </details>
@@ -49,6 +51,10 @@ __all__ = [
 <h2 class="section-title" id="header-submodules">Sub-modules</h2>
 <dl>
 <dt><code class="name"><a title="glean.metrics.counter" href="counter.html">glean.metrics.counter</a></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt><code class="name"><a title="glean.metrics.experiment" href="experiment.html">glean.metrics.experiment</a></code></dt>
 <dd>
 <section class="desc"></section>
 </dd>
@@ -550,6 +556,30 @@ def name(self):
 </dd>
 </dl>
 </dd>
+<dt id="glean.metrics.RecordedExperimentData"><code class="flex name class">
+<span>class <span class="ident">RecordedExperimentData</span></span>
+<span>(</span><span>branch, extra)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Deserialized experiment data.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RecordedExperimentData:
+    &#34;&#34;&#34;
+    Deserialized experiment data.
+    &#34;&#34;&#34;
+
+    # The experiment&#39;s branch, as set through
+    # `glean.Glean.set_experiment_active`
+    branch: str
+
+    # Any extra data associated with this experiment through
+    # `glean.Glean.set_experiment_active`
+    extra: Dict[str, str]</code></pre>
+</details>
+</dd>
 <dt id="glean.metrics.StringMetricType"><code class="flex name class">
 <span>class <span class="ident">StringMetricType</span></span>
 <span>(</span><span>disabled, category, lifetime, name, send_in_pings)</span>
@@ -879,6 +909,7 @@ of the ping to retrieve the metric for.</dd>
 <li><h3><a href="#header-submodules">Sub-modules</a></h3>
 <ul>
 <li><code><a title="glean.metrics.counter" href="counter.html">glean.metrics.counter</a></code></li>
+<li><code><a title="glean.metrics.experiment" href="experiment.html">glean.metrics.experiment</a></code></li>
 <li><code><a title="glean.metrics.labeled" href="labeled.html">glean.metrics.labeled</a></code></li>
 <li><code><a title="glean.metrics.lifetime" href="lifetime.html">glean.metrics.lifetime</a></code></li>
 <li><code><a title="glean.metrics.ping" href="ping.html">glean.metrics.ping</a></code></li>
@@ -913,6 +944,9 @@ of the ping to retrieve the metric for.</dd>
 <li><code><a title="glean.metrics.PingType.name" href="#glean.metrics.PingType.name">name</a></code></li>
 <li><code><a title="glean.metrics.PingType.send" href="#glean.metrics.PingType.send">send</a></code></li>
 </ul>
+</li>
+<li>
+<h4><code><a title="glean.metrics.RecordedExperimentData" href="#glean.metrics.RecordedExperimentData">RecordedExperimentData</a></code></h4>
 </li>
 <li>
 <h4><code><a title="glean.metrics.StringMetricType" href="#glean.metrics.StringMetricType">StringMetricType</a></code></h4>

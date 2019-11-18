@@ -533,6 +533,99 @@ initialized from the application.</p>
             return cls._upload_enabled
 
     @classmethod
+    def set_experiment_active(
+        cls, experiment_id: str, branch: str, extra: Optional[Dict[str, str]] = None
+    ):
+        &#34;&#34;&#34;
+        Indicate that an experiment is running. Glean will then add an
+        experiment annotation to the environment which is sent with pings. This
+        information is not persisted between runs.
+
+        Args:
+            experiment_id (str): The id of the active experiment (maximum 100
+                bytes)
+            branch (str): The experiment branch (maximum 100 bytes)
+            extra (dict of str -&gt; str): Optional metadata to output with the
+                ping
+        &#34;&#34;&#34;
+        if not cls.is_initialized():
+            log.error(&#34;Please call Glean.initialize() before using this API.&#34;)
+            return
+
+        if extra is None:
+            keys: List[str] = []
+            values: List[str] = []
+        else:
+            keys, values = zip(*extra.items())  # type: ignore
+
+        _ffi.lib.glean_set_experiment_active(
+            cls._handle,
+            _ffi.ffi_encode_string(experiment_id),
+            _ffi.ffi_encode_string(branch),
+            _ffi.ffi_encode_vec_string(keys),
+            _ffi.ffi_encode_vec_string(values),
+            len(keys),
+        )
+
+    @classmethod
+    def set_experiment_inactive(cls, experiment_id: str):
+        &#34;&#34;&#34;
+        Indicate that the experiment is no longer running.
+
+        Args:
+            experiment_id (str): The id of the experiment to deactivate.
+        &#34;&#34;&#34;
+        if not cls.is_initialized():
+            log.error(&#34;Please call Glean.initialize() before using this API.&#34;)
+            return
+
+        _ffi.lib.glean_set_experiment_inactive(
+            cls._handle, _ffi.ffi_encode_string(experiment_id)
+        )
+
+    @classmethod
+    def test_is_experiment_active(cls, experiment_id: str) -&gt; bool:
+        &#34;&#34;&#34;
+        Tests whether an experiment is active, for testing purposes only.
+
+        Args:
+            experiment_id (str): The id of the experiment to look for.
+
+        Returns:
+            is_active (bool): If the experiement is active and reported in
+                pings.
+        &#34;&#34;&#34;
+        return bool(
+            _ffi.lib.glean_experiment_test_is_active(
+                cls._handle, _ffi.ffi_encode_string(experiment_id)
+            )
+        )
+
+    @classmethod
+    def test_get_experiment_data(cls, experiment_id: str) -&gt; &#34;RecordedExperimentData&#34;:
+        &#34;&#34;&#34;
+        Returns the stored data for the requested active experiment, for testing purposes only.
+
+        Args:
+            experiment_id (str): The id of the experiment to look for.
+
+        Returns:
+            experiment_data (RecordedExperimentData): The data associated with
+                the experiment.
+        &#34;&#34;&#34;
+        from .metrics import RecordedExperimentData
+
+        json_string = _ffi.ffi_decode_string(
+            _ffi.lib.glean_experiment_test_get_data(
+                cls._handle, _ffi.ffi_encode_string(experiment_id)
+            )
+        )
+
+        json_tree = json.loads(json_string)
+
+        return RecordedExperimentData(**json_tree)  # type: ignore
+
+    @classmethod
     def _initialize_core_metrics(cls):
         &#34;&#34;&#34;
         Set a few metrics that will be sent as part of every ping.
@@ -825,6 +918,94 @@ def reset(cls):
         shutil.rmtree(cls._data_dir)</code></pre>
 </details>
 </dd>
+<dt id="glean.Glean.set_experiment_active"><code class="name flex">
+<span>def <span class="ident">set_experiment_active</span></span>(<span>experiment_id, branch, extra=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Indicate that an experiment is running. Glean will then add an
+experiment annotation to the environment which is sent with pings. This
+information is not persisted between runs.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>experiment_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>The id of the active experiment (maximum 100
+bytes)</dd>
+<dt><strong><code>branch</code></strong> :&ensp;<code>str</code></dt>
+<dd>The experiment branch (maximum 100 bytes)</dd>
+</dl>
+<p>extra (dict of str -&gt; str): Optional metadata to output with the
+ping</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def set_experiment_active(
+    cls, experiment_id: str, branch: str, extra: Optional[Dict[str, str]] = None
+):
+    &#34;&#34;&#34;
+    Indicate that an experiment is running. Glean will then add an
+    experiment annotation to the environment which is sent with pings. This
+    information is not persisted between runs.
+
+    Args:
+        experiment_id (str): The id of the active experiment (maximum 100
+            bytes)
+        branch (str): The experiment branch (maximum 100 bytes)
+        extra (dict of str -&gt; str): Optional metadata to output with the
+            ping
+    &#34;&#34;&#34;
+    if not cls.is_initialized():
+        log.error(&#34;Please call Glean.initialize() before using this API.&#34;)
+        return
+
+    if extra is None:
+        keys: List[str] = []
+        values: List[str] = []
+    else:
+        keys, values = zip(*extra.items())  # type: ignore
+
+    _ffi.lib.glean_set_experiment_active(
+        cls._handle,
+        _ffi.ffi_encode_string(experiment_id),
+        _ffi.ffi_encode_string(branch),
+        _ffi.ffi_encode_vec_string(keys),
+        _ffi.ffi_encode_vec_string(values),
+        len(keys),
+    )</code></pre>
+</details>
+</dd>
+<dt id="glean.Glean.set_experiment_inactive"><code class="name flex">
+<span>def <span class="ident">set_experiment_inactive</span></span>(<span>experiment_id)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Indicate that the experiment is no longer running.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>experiment_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>The id of the experiment to deactivate.</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def set_experiment_inactive(cls, experiment_id: str):
+    &#34;&#34;&#34;
+    Indicate that the experiment is no longer running.
+
+    Args:
+        experiment_id (str): The id of the experiment to deactivate.
+    &#34;&#34;&#34;
+    if not cls.is_initialized():
+        log.error(&#34;Please call Glean.initialize() before using this API.&#34;)
+        return
+
+    _ffi.lib.glean_set_experiment_inactive(
+        cls._handle, _ffi.ffi_encode_string(experiment_id)
+    )</code></pre>
+</details>
+</dd>
 <dt id="glean.Glean.set_upload_enabled"><code class="name flex">
 <span>def <span class="ident">set_upload_enabled</span></span>(<span>enabled)</span>
 </code></dt>
@@ -894,6 +1075,51 @@ def test_collect(cls, ping: &#34;PingType&#34;) -&gt; str:
     )</code></pre>
 </details>
 </dd>
+<dt id="glean.Glean.test_get_experiment_data"><code class="name flex">
+<span>def <span class="ident">test_get_experiment_data</span></span>(<span>experiment_id)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Returns the stored data for the requested active experiment, for testing purposes only.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>experiment_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>The id of the experiment to look for.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>experiment_data</code></strong> :&ensp;<code>RecordedExperimentData</code></dt>
+<dd>The data associated with
+the experiment.</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def test_get_experiment_data(cls, experiment_id: str) -&gt; &#34;RecordedExperimentData&#34;:
+    &#34;&#34;&#34;
+    Returns the stored data for the requested active experiment, for testing purposes only.
+
+    Args:
+        experiment_id (str): The id of the experiment to look for.
+
+    Returns:
+        experiment_data (RecordedExperimentData): The data associated with
+            the experiment.
+    &#34;&#34;&#34;
+    from .metrics import RecordedExperimentData
+
+    json_string = _ffi.ffi_decode_string(
+        _ffi.lib.glean_experiment_test_get_data(
+            cls._handle, _ffi.ffi_encode_string(experiment_id)
+        )
+    )
+
+    json_tree = json.loads(json_string)
+
+    return RecordedExperimentData(**json_tree)  # type: ignore</code></pre>
+</details>
+</dd>
 <dt id="glean.Glean.test_has_ping_type"><code class="name flex">
 <span>def <span class="ident">test_has_ping_type</span></span>(<span>ping_name)</span>
 </code></dt>
@@ -911,6 +1137,45 @@ def test_has_ping_type(cls, ping_name: str):
     return bool(
         _ffi.lib.glean_test_has_ping_type(
             cls._handle, _ffi.ffi_encode_string(ping_name)
+        )
+    )</code></pre>
+</details>
+</dd>
+<dt id="glean.Glean.test_is_experiment_active"><code class="name flex">
+<span>def <span class="ident">test_is_experiment_active</span></span>(<span>experiment_id)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Tests whether an experiment is active, for testing purposes only.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>experiment_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>The id of the experiment to look for.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>is_active</code></strong> :&ensp;<code>bool</code></dt>
+<dd>If the experiement is active and reported in
+pings.</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def test_is_experiment_active(cls, experiment_id: str) -&gt; bool:
+    &#34;&#34;&#34;
+    Tests whether an experiment is active, for testing purposes only.
+
+    Args:
+        experiment_id (str): The id of the experiment to look for.
+
+    Returns:
+        is_active (bool): If the experiement is active and reported in
+            pings.
+    &#34;&#34;&#34;
+    return bool(
+        _ffi.lib.glean_experiment_test_is_active(
+            cls._handle, _ffi.ffi_encode_string(experiment_id)
         )
     )</code></pre>
 </details>
@@ -957,16 +1222,20 @@ def test_has_ping_type(cls, ping_name: str):
 </li>
 <li>
 <h4><code><a title="glean.Glean" href="#glean.Glean">Glean</a></code></h4>
-<ul class="two-column">
+<ul class="">
 <li><code><a title="glean.Glean.get_data_dir" href="#glean.Glean.get_data_dir">get_data_dir</a></code></li>
 <li><code><a title="glean.Glean.get_upload_enabled" href="#glean.Glean.get_upload_enabled">get_upload_enabled</a></code></li>
 <li><code><a title="glean.Glean.initialize" href="#glean.Glean.initialize">initialize</a></code></li>
 <li><code><a title="glean.Glean.is_initialized" href="#glean.Glean.is_initialized">is_initialized</a></code></li>
 <li><code><a title="glean.Glean.register_ping_type" href="#glean.Glean.register_ping_type">register_ping_type</a></code></li>
 <li><code><a title="glean.Glean.reset" href="#glean.Glean.reset">reset</a></code></li>
+<li><code><a title="glean.Glean.set_experiment_active" href="#glean.Glean.set_experiment_active">set_experiment_active</a></code></li>
+<li><code><a title="glean.Glean.set_experiment_inactive" href="#glean.Glean.set_experiment_inactive">set_experiment_inactive</a></code></li>
 <li><code><a title="glean.Glean.set_upload_enabled" href="#glean.Glean.set_upload_enabled">set_upload_enabled</a></code></li>
 <li><code><a title="glean.Glean.test_collect" href="#glean.Glean.test_collect">test_collect</a></code></li>
+<li><code><a title="glean.Glean.test_get_experiment_data" href="#glean.Glean.test_get_experiment_data">test_get_experiment_data</a></code></li>
 <li><code><a title="glean.Glean.test_has_ping_type" href="#glean.Glean.test_has_ping_type">test_has_ping_type</a></code></li>
+<li><code><a title="glean.Glean.test_is_experiment_active" href="#glean.Glean.test_is_experiment_active">test_is_experiment_active</a></code></li>
 </ul>
 </li>
 </ul>
