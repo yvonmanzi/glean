@@ -156,6 +156,13 @@
 <span id="156">156</span>
 <span id="157">157</span>
 <span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -219,6 +226,13 @@
 <span class="doccomment">/// The available metrics.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// This is the in-memory and persisted layout of a metric.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ## Note</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The order of metrics in this enum is important, as it is used for serialization.</span>
+<span class="doccomment">/// Do not reorder the variants.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// **Any new metric must be added at the end.**</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Metric</span> {
     <span class="doccomment">/// A boolean metric. See [`BooleanMetric`](struct.BooleanMetric.html) for more information.</span>
