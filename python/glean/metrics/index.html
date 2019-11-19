@@ -571,13 +571,17 @@ def name(self):
     Deserialized experiment data.
     &#34;&#34;&#34;
 
-    # The experiment&#39;s branch, as set through
-    # `glean.Glean.set_experiment_active`
     branch: str
+    &#34;&#34;&#34;
+    The experiment&#39;s branch, as set through
+    `glean.Glean.set_experiment_active`.
+    &#34;&#34;&#34;
 
-    # Any extra data associated with this experiment through
-    # `glean.Glean.set_experiment_active`
-    extra: Dict[str, str]</code></pre>
+    extra: Dict[str, str]
+    &#34;&#34;&#34;
+    And extra data associated with this experiment through
+    `glean.Glean.set_experiment_active`.
+    &#34;&#34;&#34;</code></pre>
 </details>
 </dd>
 <dt id="glean.metrics.StringMetricType"><code class="flex name class">
