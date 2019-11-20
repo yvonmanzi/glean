@@ -151,6 +151,9 @@
 <h2><a class="header" href="#description" id="description">Description</a></h2>
 <p>This ping is intended to provide metrics that are managed by the library itself, and not explicitly set by the application or included in the application's <code>metrics.yaml</code> file.
 If the application crashes no <code>baseline</code> ping is sent, no additional ping is generated with the data from before the crash.</p>
+<blockquote>
+<p><strong>Note:</strong> As the <code>baseline</code> ping was specifically designed for mobile operating systems, it is not sent when using the Glean Python bindings.</p>
+</blockquote>
 <h2><a class="header" href="#scheduling" id="scheduling">Scheduling</a></h2>
 <p>The <code>baseline</code> ping is automatically sent when the application is moved to the <a href="index.html#defining-background-state">background</a>.</p>
 <h2><a class="header" href="#contents" id="contents">Contents</a></h2>

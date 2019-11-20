@@ -217,10 +217,43 @@ This function will return a datatype appropriate to the specific type of the met
 <pre><code class="language-Swift">@testable import Glean
 </code></pre>
 </div>
+<div data-lang="Python" class="tab">
+<p>It is generally a good practice to &quot;reset&quot; Glean prior to every unit test that uses Glean, to prevent side effects of one unit test impacting others.
+Glean contains a helper function <code>glean.testing.reset_glean()</code> for this purpose.
+It has two required arguments: the application ID, and the application version.
+Each reset of Glean will create a new temporary directory for Glean to store its data in.
+This temporary directory is automatically cleaned up the next time Glean is reset or when the testing framework finishes.</p>
+<p>The instructions below assume you are using <a href="https://pypi.org/project/pytest/">pytest</a> as the test runner.
+Other test-running libraries have similar features, but are different in the details.</p>
+<p>Create a file <code>conftest.py</code> at the root of your test directory, and add the following to reset Glean at the start of every test in your suite:</p>
+<pre><code class="language-python">import pytest
+from glean import testing
+
+@pytest.fixture(name=&quot;reset_glean&quot;, scope=&quot;function&quot;, autouse=True)
+def fixture_reset_glean():
+    testing.reset_glean(&quot;my-app-id&quot;, &quot;0.1.0&quot;)
+</code></pre>
+<p>To check if a value exists (i.e. it has been recorded), there is a <code>test_has_value()</code> function on each of the metric instances:</p>
+<pre><code class="language-python">from glean import load_metrics
+metrics = load_metrics(&quot;metrics.yaml&quot;)
+
+# ...
+
+assert metrics.search.search_engine_url.test_has_value()
+</code></pre>
+<p>To check the actual values, there is a <code>test_get_value()</code> function on each of the metric instances.
+It is important to check that the values are recorded as expected, since many of the metric types may truncate or error-correct the value.
+This function will return a datatype appropriate to the specific type of the metric it is being used with:</p>
+<pre><code class="language-python">assert (
+    &quot;https://example.com/search?&quot; ==
+    metrics.search.default_search_engine_url.test_get_value()
+)
+</code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#testing-metrics-for-custom-pings" id="testing-metrics-for-custom-pings">Testing metrics for custom pings</a></h2>
-<p>In order to test metrics where the metric is included in more than one ping, the test functions take an optional <code>pingName</code> argument.
+<p>In order to test metrics where the metric is included in more than one ping, the test functions take an optional <code>pingName</code> argument (<code>ping_name</code> in Python).
 This is the name of the ping that the metric is being sent in, such as <code>&quot;events&quot;</code> for the <a href="pings/events.html"><code>events</code> ping</a>,
 or <code>&quot;metrics&quot;</code> for the <a href="pings/metrics.html"><code>metrics</code> ping</a>.
 This could also be a custom ping name that the metric is being sent in.
@@ -280,6 +313,21 @@ XCTAssertEqual(3, events.count)
 
 // Check extra key/value for first event in the list
 XCTAssertEqual(&quot;Courier&quot;, events[0].extra?[&quot;font&quot;])
+</code></pre>
+</div>
+<div data-lang="Python" class="tab">
+<p>Here is a longer example to better illustrate the intended use of the test API:</p>
+<pre><code class="language-python">from glean import load_metrics
+metrics = load_metrics(&quot;metrics.yaml&quot;)
+
+# Record a metric value with extra to validate against
+metrics.url.visit.add(1)
+
+# Check if we collected any events into the 'click' metric
+assert metrics.url.visit.test_has_value()
+
+# Retrieve a snapshot of the recorded events
+assert 1 == metrics.url.visit.test_get_value()
 </code></pre>
 </div>
 </div>

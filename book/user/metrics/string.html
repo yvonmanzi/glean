@@ -236,18 +236,18 @@ XCTAssertEqual(1, SearchDefault.name.testGetNumRecordedErrors(.invalidValue))
 <pre><code class="language-Python">from glean import load_metrics
 metrics = load_metrics(&quot;metrics.yaml&quot;)
 
-// Record a value into the metric.
+# Record a value into the metric.
 metrics.search_default.name.set(&quot;duck duck go&quot;)
-// If it changed later, you can record the new value:
+# If it changed later, you can record the new value:
 metrics.search_default.name.set(&quot;wikipedia&quot;)
 </code></pre>
 <p>There are test APIs available too:</p>
-<pre><code class="language-Kotlin">// Was anything recorded?
+<pre><code class="language-Python"># Was anything recorded?
 assert metrics.search_default.name.test_has_value()
-// Does the string metric have the expected value?
-// IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
+# Does the string metric have the expected value?
+# IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
 assert &quot;wikipedia&quot; == metrics.search_default.name.test_get_value()
-// Was the string truncated, and an error reported?
+# Was the string truncated, and an error reported?
 assert 1 == metrics.search_default.name.test_get_num_recorded_errors(
     ErrorType.INVALID_VALUE
 )
@@ -257,7 +257,7 @@ assert 1 == metrics.search_default.name.test_get_num_recorded_errors(
 </div>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
 <ul>
-<li>Fixed maximum string length: 50. Longer strings are truncated. For the original Kotlin implementation of the Glean SDK, this is measured in Unicode characters. For the Rust implementation, this is measured in the number of bytes when the string is encoded in UTF-8.</li>
+<li>Fixed maximum string length: 50. Longer strings are truncated. This is measured in the number of bytes when the string is encoded in UTF-8.</li>
 </ul>
 <h2><a class="header" href="#examples" id="examples">Examples</a></h2>
 <ul>

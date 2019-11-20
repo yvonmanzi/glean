@@ -194,9 +194,17 @@ override fun onCreate() {
 </code></pre>
 </div>
 <div data-lang="Python" class="tab">
+<p>For Python, the <code>pings.yaml</code> file must be available and loaded at runtime.</p>
+<p>If your project is a script (i.e. just Python files in a directory), you can load the <code>pings.yaml</code> using:</p>
 <pre><code>from glean import load_pings
 
 pings = load_pings(&quot;pings.yaml&quot;)
+</code></pre>
+<p>If your project is a distributable Python package, you need to include the <code>metrics.yaml</code> file using <a href="https://setuptools.readthedocs.io/en/latest/setuptools.html#including-data-files">one of the myriad ways to include data in a Python package</a> and then use <a href="https://setuptools.readthedocs.io/en/latest/pkg_resources.html#resource-extraction"><code>package_resources.resource_filename()</code></a> to get the filename at runtime.</p>
+<pre><code class="language-Python">from glean import load_pings
+from package_resources import resource_filename
+
+pings = load_pings(resource_filename(__name__, &quot;pings.yaml&quot;))
 </code></pre>
 </div>
 </div>
@@ -229,7 +237,11 @@ Pings.search.send()
 </code></pre>
 </div>
 <div data-lang="Python" class="tab">
-<pre><code class="language-Python">pings.search.send()
+<pre><code class="language-Python">from glean import load_pings
+
+pings = load_pings(&quot;pings.yaml&quot;)
+
+pings.search.send()
 </code></pre>
 </div>
 </div>

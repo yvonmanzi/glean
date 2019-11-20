@@ -152,6 +152,7 @@
 <p>All Glean data is inside a single root directory with the name <code>glean_data</code>.</p>
 <p>On Android, this directory lives inside the <a href="https://developer.android.com/reference/android/content/pm/ApplicationInfo.html#dataDir"><code>ApplicationInfo.dataDir</code></a> directory associated with the application.</p>
 <p>On iOS, this directory lives inside the <a href="https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html"><code>Documents</code></a> directory associated with the application.</p>
+<p>For the Python bindings, if no directory is specified, it is stored in a temporary directory and cleared at exit.</p>
 <p>Within the <code>glean_data</code> directory are the following contents:</p>
 <ul>
 <li>
