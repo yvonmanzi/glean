@@ -192,6 +192,13 @@ genhtml -o report/ --show-details --highlight --ignore-errors source --legend lc
 <h2><a class="header" href="#generating-swift-reports-locally" id="generating-swift-reports-locally">Generating Swift reports locally</a></h2>
 <p>Xcode automatically generates code coverage when running tests.
 You can find the report in the Report Navigator (<code>View -&gt; Navigators -&gt; Show Report Navigator -&gt; Coverage</code>).</p>
+<h2><a class="header" href="#generating-python-reports-locally" id="generating-python-reports-locally">Generating Python reports locally</a></h2>
+<p>Python code coverage is determined using the <a href="https://coverage.readthedocs.io/en/latest/">coverage.py</a> library.</p>
+<p>Run</p>
+<pre><code class="language-bash">make python-coverage
+</code></pre>
+<p>to generate code coverage reports in the Glean virtual environment.</p>
+<p>After running, the report will be in <code>htmlcov</code>.</p>
 
                     </main>
 

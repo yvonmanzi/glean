@@ -37,6 +37,7 @@ from .error_type import ErrorType  # noqa
 
 
 def reset_glean(
+    *,
     application_id: str,
     application_version: str,
     configuration: Optional[Configuration] = None,
@@ -54,7 +55,11 @@ def reset_glean(
     from glean import Glean
 
     Glean.reset()
-    Glean.initialize(application_id, application_version, configuration)
+    Glean.initialize(
+        application_id=application_id,
+        application_version=application_version,
+        configuration=configuration,
+    )
 
 
 __all__ = [&#34;reset_glean&#34;, &#34;ErrorType&#34;]</code></pre>
@@ -75,7 +80,7 @@ __all__ = [&#34;reset_glean&#34;, &#34;ErrorType&#34;]</code></pre>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="glean.testing.reset_glean"><code class="name flex">
-<span>def <span class="ident">reset_glean</span></span>(<span>application_id, application_version, configuration=None)</span>
+<span>def <span class="ident">reset_glean</span></span>(<span>*, application_id, application_version, configuration=None)</span>
 </code></dt>
 <dd>
 <section class="desc"><p>Resets the Glean singleton.</p>
@@ -95,6 +100,7 @@ global settings.</dd>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def reset_glean(
+    *,
     application_id: str,
     application_version: str,
     configuration: Optional[Configuration] = None,
@@ -112,7 +118,11 @@ global settings.</dd>
     from glean import Glean
 
     Glean.reset()
-    Glean.initialize(application_id, application_version, configuration)</code></pre>
+    Glean.initialize(
+        application_id=application_id,
+        application_version=application_version,
+        configuration=configuration,
+    )</code></pre>
 </details>
 </dd>
 </dl>

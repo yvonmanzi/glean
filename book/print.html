@@ -408,8 +408,8 @@ Library code should never call <code>Glean.initialize</code>, since it should be
 Glean.set_upload_enabled(True)
 
 Glean.initialize(
-    &quot;my-app-id&quot;,  # The id of your application
-    &quot;0.1.0&quot;,  # The version of your application
+    application_id=&quot;my-app-id&quot;,
+    application_version=&quot;0.1.0&quot;,
 )
 </code></pre>
 <p>Additonal configuration is available on the <code>glean.Configuration</code> object, which can be passed into <code>Glean.initialize()</code>.</p>
@@ -4370,6 +4370,13 @@ genhtml -o report/ --show-details --highlight --ignore-errors source --legend lc
 <h2><a class="header" href="#generating-swift-reports-locally" id="generating-swift-reports-locally">Generating Swift reports locally</a></h2>
 <p>Xcode automatically generates code coverage when running tests.
 You can find the report in the Report Navigator (<code>View -&gt; Navigators -&gt; Show Report Navigator -&gt; Coverage</code>).</p>
+<h2><a class="header" href="#generating-python-reports-locally" id="generating-python-reports-locally">Generating Python reports locally</a></h2>
+<p>Python code coverage is determined using the <a href="https://coverage.readthedocs.io/en/latest/">coverage.py</a> library.</p>
+<p>Run</p>
+<pre><code class="language-bash">make python-coverage
+</code></pre>
+<p>to generate code coverage reports in the Glean virtual environment.</p>
+<p>After running, the report will be in <code>htmlcov</code>.</p>
 <h1><a class="header" href="#internal-documentation" id="internal-documentation">Internal documentation</a></h1>
 <p>This chapter describes aspects of Glean that are internal implementation details.</p>
 <p>This includes</p>

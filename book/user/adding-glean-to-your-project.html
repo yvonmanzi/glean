@@ -391,8 +391,8 @@ Library code should never call <code>Glean.initialize</code>, since it should be
 Glean.set_upload_enabled(True)
 
 Glean.initialize(
-    &quot;my-app-id&quot;,  # The id of your application
-    &quot;0.1.0&quot;,  # The version of your application
+    application_id=&quot;my-app-id&quot;,
+    application_version=&quot;0.1.0&quot;,
 )
 </code></pre>
 <p>Additonal configuration is available on the <code>glean.Configuration</code> object, which can be passed into <code>Glean.initialize()</code>.</p>
