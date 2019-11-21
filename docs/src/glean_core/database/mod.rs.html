@@ -592,122 +592,6 @@
 <span id="592">592</span>
 <span id="593">593</span>
 <span id="594">594</span>
-<span id="595">595</span>
-<span id="596">596</span>
-<span id="597">597</span>
-<span id="598">598</span>
-<span id="599">599</span>
-<span id="600">600</span>
-<span id="601">601</span>
-<span id="602">602</span>
-<span id="603">603</span>
-<span id="604">604</span>
-<span id="605">605</span>
-<span id="606">606</span>
-<span id="607">607</span>
-<span id="608">608</span>
-<span id="609">609</span>
-<span id="610">610</span>
-<span id="611">611</span>
-<span id="612">612</span>
-<span id="613">613</span>
-<span id="614">614</span>
-<span id="615">615</span>
-<span id="616">616</span>
-<span id="617">617</span>
-<span id="618">618</span>
-<span id="619">619</span>
-<span id="620">620</span>
-<span id="621">621</span>
-<span id="622">622</span>
-<span id="623">623</span>
-<span id="624">624</span>
-<span id="625">625</span>
-<span id="626">626</span>
-<span id="627">627</span>
-<span id="628">628</span>
-<span id="629">629</span>
-<span id="630">630</span>
-<span id="631">631</span>
-<span id="632">632</span>
-<span id="633">633</span>
-<span id="634">634</span>
-<span id="635">635</span>
-<span id="636">636</span>
-<span id="637">637</span>
-<span id="638">638</span>
-<span id="639">639</span>
-<span id="640">640</span>
-<span id="641">641</span>
-<span id="642">642</span>
-<span id="643">643</span>
-<span id="644">644</span>
-<span id="645">645</span>
-<span id="646">646</span>
-<span id="647">647</span>
-<span id="648">648</span>
-<span id="649">649</span>
-<span id="650">650</span>
-<span id="651">651</span>
-<span id="652">652</span>
-<span id="653">653</span>
-<span id="654">654</span>
-<span id="655">655</span>
-<span id="656">656</span>
-<span id="657">657</span>
-<span id="658">658</span>
-<span id="659">659</span>
-<span id="660">660</span>
-<span id="661">661</span>
-<span id="662">662</span>
-<span id="663">663</span>
-<span id="664">664</span>
-<span id="665">665</span>
-<span id="666">666</span>
-<span id="667">667</span>
-<span id="668">668</span>
-<span id="669">669</span>
-<span id="670">670</span>
-<span id="671">671</span>
-<span id="672">672</span>
-<span id="673">673</span>
-<span id="674">674</span>
-<span id="675">675</span>
-<span id="676">676</span>
-<span id="677">677</span>
-<span id="678">678</span>
-<span id="679">679</span>
-<span id="680">680</span>
-<span id="681">681</span>
-<span id="682">682</span>
-<span id="683">683</span>
-<span id="684">684</span>
-<span id="685">685</span>
-<span id="686">686</span>
-<span id="687">687</span>
-<span id="688">688</span>
-<span id="689">689</span>
-<span id="690">690</span>
-<span id="691">691</span>
-<span id="692">692</span>
-<span id="693">693</span>
-<span id="694">694</span>
-<span id="695">695</span>
-<span id="696">696</span>
-<span id="697">697</span>
-<span id="698">698</span>
-<span id="699">699</span>
-<span id="700">700</span>
-<span id="701">701</span>
-<span id="702">702</span>
-<span id="703">703</span>
-<span id="704">704</span>
-<span id="705">705</span>
-<span id="706">706</span>
-<span id="707">707</span>
-<span id="708">708</span>
-<span id="709">709</span>
-<span id="710">710</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -781,9 +665,6 @@
     <span class="doccomment">/// Iterates with the provided transaction function over the requested data</span>
     <span class="doccomment">/// from the given storage.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * If the storage is unavailable, the transaction function is never invoked.</span>
-    <span class="doccomment">/// * If the read data cannot be deserialized it will be silently skipped.</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// ## Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `lifetime`: The metric lifetime to iterate over.</span>
@@ -796,10 +677,6 @@
     <span class="doccomment">///   will be iterated over.</span>
     <span class="doccomment">/// * `transaction_fn`: Called for each entry being iterated over. It is</span>
     <span class="doccomment">///   passed two arguments: `(metric_name: &amp;[u8], metric: &amp;Metric)`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Panics</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This function will **not** panic on database errors.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter_store_from</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">lifetime</span>: <span class="ident">Lifetime</span>,
@@ -814,10 +691,7 @@
 
         <span class="comment">// Lifetime::Application data is not persisted to disk</span>
         <span class="kw">if</span> <span class="ident">lifetime</span> <span class="op">=</span><span class="op">=</span> <span class="ident">Lifetime</span>::<span class="ident">Application</span> {
-            <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="self">self</span>
-                .<span class="ident">app_lifetime_data</span>
-                .<span class="ident">read</span>()
-                .<span class="ident">expect</span>(<span class="string">&quot;Can&#39;t read app lifetime data&quot;</span>);
+            <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">app_lifetime_data</span>.<span class="ident">read</span>().<span class="ident">unwrap</span>();
             <span class="kw">for</span> (<span class="ident">key</span>, <span class="ident">value</span>) <span class="kw">in</span> <span class="ident">data</span>.<span class="ident">iter</span>() {
                 <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">starts_with</span>(<span class="kw-2">&amp;</span><span class="ident">iter_start</span>) {
                     <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">key</span>[<span class="ident">len</span>..];
@@ -828,14 +702,12 @@
             <span class="kw">return</span>;
         }
 
-        <span class="kw">let</span> <span class="ident">store</span>: <span class="ident">SingleStore</span> <span class="op">=</span> <span class="macro">unwrap_or</span><span class="macro">!</span>(
-            <span class="self">self</span>.<span class="ident">rkv</span>
-                .<span class="ident">open_single</span>(<span class="ident">lifetime</span>.<span class="ident">as_str</span>(), <span class="ident">StoreOptions</span>::<span class="ident">create</span>()),
-            <span class="kw">return</span>
-        );
-
-        <span class="kw">let</span> <span class="ident">reader</span> <span class="op">=</span> <span class="macro">unwrap_or</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">rkv</span>.<span class="ident">read</span>(), <span class="kw">return</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="macro">unwrap_or</span><span class="macro">!</span>(<span class="ident">store</span>.<span class="ident">iter_from</span>(<span class="kw-2">&amp;</span><span class="ident">reader</span>, <span class="kw-2">&amp;</span><span class="ident">iter_start</span>), <span class="kw">return</span>);
+        <span class="kw">let</span> <span class="ident">store</span>: <span class="ident">SingleStore</span> <span class="op">=</span> <span class="self">self</span>
+            .<span class="ident">rkv</span>
+            .<span class="ident">open_single</span>(<span class="ident">lifetime</span>.<span class="ident">as_str</span>(), <span class="ident">StoreOptions</span>::<span class="ident">create</span>())
+            .<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">reader</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">rkv</span>.<span class="ident">read</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">store</span>.<span class="ident">iter_from</span>(<span class="kw-2">&amp;</span><span class="ident">reader</span>, <span class="kw-2">&amp;</span><span class="ident">iter_start</span>).<span class="ident">unwrap</span>();
 
         <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>((<span class="ident">metric_name</span>, <span class="ident">value</span>))) <span class="op">=</span> <span class="ident">iter</span>.<span class="ident">next</span>() {
             <span class="kw">if</span> <span class="op">!</span><span class="ident">metric_name</span>.<span class="ident">starts_with</span>(<span class="ident">iter_start</span>.<span class="ident">as_bytes</span>()) {
@@ -843,8 +715,8 @@
             }
 
             <span class="kw">let</span> <span class="ident">metric_name</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">metric_name</span>[<span class="ident">len</span>..];
-            <span class="kw">let</span> <span class="ident">metric</span>: <span class="ident">Metric</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">value</span>.<span class="ident">expect</span>(<span class="string">&quot;Value missing in iteration&quot;</span>) {
-                <span class="ident">rkv</span>::<span class="ident">Value</span>::<span class="ident">Blob</span>(<span class="ident">blob</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unwrap_or</span><span class="macro">!</span>(<span class="ident">bincode</span>::<span class="ident">deserialize</span>(<span class="ident">blob</span>), <span class="kw">continue</span>),
+            <span class="kw">let</span> <span class="ident">metric</span>: <span class="ident">Metric</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">value</span>.<span class="ident">unwrap</span>() {
+                <span class="ident">rkv</span>::<span class="ident">Value</span>::<span class="ident">Blob</span>(<span class="ident">blob</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">bincode</span>::<span class="ident">deserialize</span>(<span class="ident">blob</span>).<span class="ident">unwrap</span>(),
                 <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">continue</span>,
             };
             <span class="ident">transaction_fn</span>(<span class="ident">metric_name</span>, <span class="kw-2">&amp;</span><span class="ident">metric</span>);
@@ -853,17 +725,11 @@
 
     <span class="doccomment">/// Determine if the storage has the given metric.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// If data cannot be read it is assumed that the storage does not have the metric.</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// ## Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `lifetime`: The lifetime of the metric.</span>
     <span class="doccomment">/// * `storage_name`: The storage name to look in.</span>
     <span class="doccomment">/// * `metric_identifier`: The metric identifier.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Panics</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This function will **not** panic on database errors.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_metric</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">lifetime</span>: <span class="ident">Lifetime</span>,
@@ -874,33 +740,21 @@
 
         <span class="comment">// Lifetime::Application data is not persisted to disk</span>
         <span class="kw">if</span> <span class="ident">lifetime</span> <span class="op">=</span><span class="op">=</span> <span class="ident">Lifetime</span>::<span class="ident">Application</span> {
-            <span class="kw">return</span> <span class="self">self</span>
-                .<span class="ident">app_lifetime_data</span>
-                .<span class="ident">read</span>()
-                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">data</span><span class="op">|</span> <span class="ident">data</span>.<span class="ident">contains_key</span>(<span class="kw-2">&amp;</span><span class="ident">key</span>))
-                .<span class="ident">unwrap_or</span>(<span class="bool-val">false</span>);
+            <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">app_lifetime_data</span>.<span class="ident">read</span>().<span class="ident">unwrap</span>();
+            <span class="kw">return</span> <span class="ident">data</span>.<span class="ident">contains_key</span>(<span class="kw-2">&amp;</span><span class="ident">key</span>);
         }
 
-        <span class="kw">let</span> <span class="ident">store</span>: <span class="ident">SingleStore</span> <span class="op">=</span> <span class="macro">unwrap_or</span><span class="macro">!</span>(
-            <span class="self">self</span>.<span class="ident">rkv</span>
-                .<span class="ident">open_single</span>(<span class="ident">lifetime</span>.<span class="ident">as_str</span>(), <span class="ident">StoreOptions</span>::<span class="ident">create</span>()),
-            <span class="kw">return</span> <span class="bool-val">false</span>
-        );
-        <span class="kw">let</span> <span class="ident">reader</span> <span class="op">=</span> <span class="macro">unwrap_or</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">rkv</span>.<span class="ident">read</span>(), <span class="kw">return</span> <span class="bool-val">false</span>);
+        <span class="kw">let</span> <span class="ident">store</span>: <span class="ident">SingleStore</span> <span class="op">=</span> <span class="self">self</span>
+            .<span class="ident">rkv</span>
+            .<span class="ident">open_single</span>(<span class="ident">lifetime</span>.<span class="ident">as_str</span>(), <span class="ident">StoreOptions</span>::<span class="ident">create</span>())
+            .<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">reader</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">rkv</span>.<span class="ident">read</span>().<span class="ident">unwrap</span>();
         <span class="ident">store</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">reader</span>, <span class="kw-2">&amp;</span><span class="ident">key</span>).<span class="ident">unwrap_or</span>(<span class="prelude-val">None</span>).<span class="ident">is_some</span>()
     }
 
-    <span class="doccomment">/// Write to the specified storage with the provided transaction function.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If the storage is unavailable, it will return an error.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Panics</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * This function will panic for `Lifetime::Application`.</span>
-    <span class="doccomment">/// * This function will **not** panic on database errors.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write_with_store</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">store_name</span>: <span class="ident">Lifetime</span>, <span class="kw-2">mut</span> <span class="ident">transaction_fn</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write_with_store</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">store_name</span>: <span class="ident">Lifetime</span>, <span class="kw-2">mut</span> <span class="ident">transaction_fn</span>: <span class="ident">F</span>)
     <span class="kw">where</span>
-        <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">rkv</span>::<span class="ident">Writer</span>, <span class="ident">SingleStore</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>,
+        <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">rkv</span>::<span class="ident">Writer</span>, <span class="ident">SingleStore</span>),
     {
         <span class="kw">if</span> <span class="ident">store_name</span> <span class="op">=</span><span class="op">=</span> <span class="ident">Lifetime</span>::<span class="ident">Application</span> {
             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Can&#39;t write with store for application-lifetime data&quot;</span>);
@@ -908,10 +762,10 @@
 
         <span class="kw">let</span> <span class="ident">store</span>: <span class="ident">SingleStore</span> <span class="op">=</span> <span class="self">self</span>
             .<span class="ident">rkv</span>
-            .<span class="ident">open_single</span>(<span class="ident">store_name</span>.<span class="ident">as_str</span>(), <span class="ident">StoreOptions</span>::<span class="ident">create</span>())<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">writer</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">rkv</span>.<span class="ident">write</span>()<span class="question-mark">?</span>;
-        <span class="ident">transaction_fn</span>(<span class="ident">writer</span>, <span class="ident">store</span>)<span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(())
+            .<span class="ident">open_single</span>(<span class="ident">store_name</span>.<span class="ident">as_str</span>(), <span class="ident">StoreOptions</span>::<span class="ident">create</span>())
+            .<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">writer</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">rkv</span>.<span class="ident">write</span>().<span class="ident">unwrap</span>();
+        <span class="ident">transaction_fn</span>(<span class="ident">writer</span>, <span class="ident">store</span>);
     }
 
     <span class="doccomment">/// Records a metric in the underlying storage system.</span>
@@ -919,51 +773,39 @@
         <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">identifier</span>(<span class="ident">glean</span>);
 
         <span class="kw">for</span> <span class="ident">ping_name</span> <span class="kw">in</span> <span class="ident">data</span>.<span class="ident">storage_names</span>() {
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">record_per_lifetime</span>(<span class="ident">data</span>.<span class="ident">lifetime</span>, <span class="ident">ping_name</span>, <span class="kw-2">&amp;</span><span class="ident">name</span>, <span class="ident">value</span>) {
-                <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;Failed to record metric into {}: {:?}&quot;</span>, <span class="ident">ping_name</span>, <span class="ident">e</span>);
-            }
+            <span class="self">self</span>.<span class="ident">record_per_lifetime</span>(<span class="ident">data</span>.<span class="ident">lifetime</span>, <span class="ident">ping_name</span>, <span class="kw-2">&amp;</span><span class="ident">name</span>, <span class="ident">value</span>);
         }
     }
 
-    <span class="doccomment">/// Records a metric in the underlying storage system, for a single lifetime.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Return value</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If the storage is unavailable or the write fails, no data will be stored and an error will be returned.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Otherwise `Ok(())` is returned.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Panics</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * This function will **not** panic on database errors.</span>
+    <span class="doccomment">/// Records a metric in the underlying storage system, for</span>
+    <span class="doccomment">/// a single lifetime.</span>
     <span class="kw">fn</span> <span class="ident">record_per_lifetime</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">lifetime</span>: <span class="ident">Lifetime</span>,
         <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">metric</span>: <span class="kw-2">&amp;</span><span class="ident">Metric</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    ) {
         <span class="kw">let</span> <span class="ident">final_key</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">get_storage_key</span>(<span class="ident">storage_name</span>, <span class="prelude-val">Some</span>(<span class="ident">key</span>));
 
         <span class="kw">if</span> <span class="ident">lifetime</span> <span class="op">=</span><span class="op">=</span> <span class="ident">Lifetime</span>::<span class="ident">Application</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">data</span> <span class="op">=</span> <span class="self">self</span>
-                .<span class="ident">app_lifetime_data</span>
-                .<span class="ident">write</span>()
-                .<span class="ident">expect</span>(<span class="string">&quot;Can&#39;t read app lifetime data&quot;</span>);
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">data</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">app_lifetime_data</span>.<span class="ident">write</span>().<span class="ident">unwrap</span>();
             <span class="ident">data</span>.<span class="ident">insert</span>(<span class="ident">final_key</span>, <span class="ident">metric</span>.<span class="ident">clone</span>());
-            <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
+            <span class="kw">return</span>;
         }
 
-        <span class="kw">let</span> <span class="ident">encoded</span> <span class="op">=</span> <span class="ident">bincode</span>::<span class="ident">serialize</span>(<span class="kw-2">&amp;</span><span class="ident">metric</span>).<span class="ident">expect</span>(<span class="string">&quot;IMPOSSIBLE: Serializing metric failed&quot;</span>);
+        <span class="kw">let</span> <span class="ident">encoded</span> <span class="op">=</span> <span class="ident">bincode</span>::<span class="ident">serialize</span>(<span class="kw-2">&amp;</span><span class="ident">metric</span>).<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">rkv</span>::<span class="ident">Value</span>::<span class="ident">Blob</span>(<span class="kw-2">&amp;</span><span class="ident">encoded</span>);
 
         <span class="kw">let</span> <span class="ident">store_name</span> <span class="op">=</span> <span class="ident">lifetime</span>.<span class="ident">as_str</span>();
-        <span class="kw">let</span> <span class="ident">store</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">rkv</span>.<span class="ident">open_single</span>(<span class="ident">store_name</span>, <span class="ident">StoreOptions</span>::<span class="ident">create</span>())<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">store</span> <span class="op">=</span> <span class="self">self</span>
+            .<span class="ident">rkv</span>
+            .<span class="ident">open_single</span>(<span class="ident">store_name</span>, <span class="ident">StoreOptions</span>::<span class="ident">create</span>())
+            .<span class="ident">unwrap</span>();
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">writer</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">rkv</span>.<span class="ident">write</span>()<span class="question-mark">?</span>;
-        <span class="ident">store</span>.<span class="ident">put</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">writer</span>, <span class="ident">final_key</span>, <span class="kw-2">&amp;</span><span class="ident">value</span>)<span class="question-mark">?</span>;
-        <span class="ident">writer</span>.<span class="ident">commit</span>()<span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(())
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">writer</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">rkv</span>.<span class="ident">write</span>().<span class="ident">unwrap</span>();
+        <span class="ident">store</span>.<span class="ident">put</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">writer</span>, <span class="ident">final_key</span>, <span class="kw-2">&amp;</span><span class="ident">value</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">commit</span>();
     }
 
     <span class="doccomment">/// Records the provided value, with the given lifetime, after</span>
@@ -974,43 +816,25 @@
     {
         <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">identifier</span>(<span class="ident">glean</span>);
         <span class="kw">for</span> <span class="ident">ping_name</span> <span class="kw">in</span> <span class="ident">data</span>.<span class="ident">storage_names</span>() {
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span>
-                <span class="self">self</span>.<span class="ident">record_per_lifetime_with</span>(<span class="ident">data</span>.<span class="ident">lifetime</span>, <span class="ident">ping_name</span>, <span class="kw-2">&amp;</span><span class="ident">name</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">transform</span>)
-            {
-                <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;Failed to record metric into {}: {:?}&quot;</span>, <span class="ident">ping_name</span>, <span class="ident">e</span>);
-            }
+            <span class="self">self</span>.<span class="ident">record_per_lifetime_with</span>(<span class="ident">data</span>.<span class="ident">lifetime</span>, <span class="ident">ping_name</span>, <span class="kw-2">&amp;</span><span class="ident">name</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">transform</span>);
         }
     }
 
     <span class="doccomment">/// Records a metric in the underlying storage system, after applying the</span>
     <span class="doccomment">/// given transformation function, for a single lifetime.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Return value</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If the storage is unavailable or the write fails, no data will be stored and an error will be returned.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Otherwise `Ok(())` is returned.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Panics</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * This function will **not** panic on database errors.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">record_per_lifetime_with</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">lifetime</span>: <span class="ident">Lifetime</span>,
         <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="kw-2">mut</span> <span class="ident">transform</span>: <span class="ident">F</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
-    <span class="kw">where</span>
+    ) <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Metric</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Metric</span>,
     {
         <span class="kw">let</span> <span class="ident">final_key</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">get_storage_key</span>(<span class="ident">storage_name</span>, <span class="prelude-val">Some</span>(<span class="ident">key</span>));
 
         <span class="kw">if</span> <span class="ident">lifetime</span> <span class="op">=</span><span class="op">=</span> <span class="ident">Lifetime</span>::<span class="ident">Application</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">data</span> <span class="op">=</span> <span class="self">self</span>
-                .<span class="ident">app_lifetime_data</span>
-                .<span class="ident">write</span>()
-                .<span class="ident">expect</span>(<span class="string">&quot;Can&#39;t access app lifetime data as writable&quot;</span>);
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">data</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">app_lifetime_data</span>.<span class="ident">write</span>().<span class="ident">unwrap</span>();
             <span class="kw">let</span> <span class="ident">entry</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">entry</span>(<span class="ident">final_key</span>);
             <span class="kw">match</span> <span class="ident">entry</span> {
                 <span class="ident">Entry</span>::<span class="ident">Vacant</span>(<span class="ident">entry</span>) <span class="op">=</span><span class="op">&gt;</span> {
@@ -1021,15 +845,18 @@
                     <span class="ident">entry</span>.<span class="ident">insert</span>(<span class="ident">transform</span>(<span class="prelude-val">Some</span>(<span class="ident">old_value</span>)));
                 }
             }
-            <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
+            <span class="kw">return</span>;
         }
 
         <span class="kw">let</span> <span class="ident">store_name</span> <span class="op">=</span> <span class="ident">lifetime</span>.<span class="ident">as_str</span>();
-        <span class="kw">let</span> <span class="ident">store</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">rkv</span>.<span class="ident">open_single</span>(<span class="ident">store_name</span>, <span class="ident">StoreOptions</span>::<span class="ident">create</span>())<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">store</span> <span class="op">=</span> <span class="self">self</span>
+            .<span class="ident">rkv</span>
+            .<span class="ident">open_single</span>(<span class="ident">store_name</span>, <span class="ident">StoreOptions</span>::<span class="ident">create</span>())
+            .<span class="ident">unwrap</span>();
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">writer</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">rkv</span>.<span class="ident">write</span>()<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">writer</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">rkv</span>.<span class="ident">write</span>().<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">new_value</span>: <span class="ident">Metric</span> <span class="op">=</span> {
-            <span class="kw">let</span> <span class="ident">old_value</span> <span class="op">=</span> <span class="ident">store</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">writer</span>, <span class="kw-2">&amp;</span><span class="ident">final_key</span>)<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="ident">old_value</span> <span class="op">=</span> <span class="ident">store</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">writer</span>, <span class="kw-2">&amp;</span><span class="ident">final_key</span>).<span class="ident">unwrap</span>();
 
             <span class="kw">match</span> <span class="ident">old_value</span> {
                 <span class="prelude-val">Some</span>(<span class="ident">rkv</span>::<span class="ident">Value</span>::<span class="ident">Blob</span>(<span class="ident">blob</span>)) <span class="op">=</span><span class="op">&gt;</span> {
@@ -1040,32 +867,18 @@
             }
         };
 
-        <span class="kw">let</span> <span class="ident">encoded</span> <span class="op">=</span>
-            <span class="ident">bincode</span>::<span class="ident">serialize</span>(<span class="kw-2">&amp;</span><span class="ident">new_value</span>).<span class="ident">expect</span>(<span class="string">&quot;IMPOSSIBLE: Serializing metric failed&quot;</span>);
+        <span class="kw">let</span> <span class="ident">encoded</span> <span class="op">=</span> <span class="ident">bincode</span>::<span class="ident">serialize</span>(<span class="kw-2">&amp;</span><span class="ident">new_value</span>).<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">rkv</span>::<span class="ident">Value</span>::<span class="ident">Blob</span>(<span class="kw-2">&amp;</span><span class="ident">encoded</span>);
-        <span class="ident">store</span>.<span class="ident">put</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">writer</span>, <span class="ident">final_key</span>, <span class="kw-2">&amp;</span><span class="ident">value</span>)<span class="question-mark">?</span>;
-        <span class="ident">writer</span>.<span class="ident">commit</span>()<span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(())
+        <span class="ident">store</span>.<span class="ident">put</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">writer</span>, <span class="ident">final_key</span>, <span class="kw-2">&amp;</span><span class="ident">value</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">commit</span>();
     }
 
     <span class="doccomment">/// Clears a storage (only Ping Lifetime).</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Return value</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * If the storage is unavailable an error is returned.</span>
-    <span class="doccomment">/// * If any individual delete fails, an error is returned, but other deletions might have</span>
-    <span class="doccomment">///   happened.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Otherwise `Ok(())` is returned.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Panics</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * This function will **not** panic on database errors.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clear_ping_lifetime_storage</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clear_ping_lifetime_storage</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
         <span class="self">self</span>.<span class="ident">write_with_store</span>(<span class="ident">Lifetime</span>::<span class="ident">Ping</span>, <span class="op">|</span><span class="kw-2">mut</span> <span class="ident">writer</span>, <span class="ident">store</span><span class="op">|</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">metrics</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
             {
-                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">store</span>.<span class="ident">iter_from</span>(<span class="kw-2">&amp;</span><span class="ident">writer</span>, <span class="kw-2">&amp;</span><span class="ident">storage_name</span>)<span class="question-mark">?</span>;
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">store</span>.<span class="ident">iter_from</span>(<span class="kw-2">&amp;</span><span class="ident">writer</span>, <span class="kw-2">&amp;</span><span class="ident">storage_name</span>).<span class="ident">unwrap</span>();
                 <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>((<span class="ident">metric_name</span>, <span class="kw">_</span>))) <span class="op">=</span> <span class="ident">iter</span>.<span class="ident">next</span>() {
                     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">metric_name</span>) <span class="op">=</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">metric_name</span>) {
                         <span class="kw">if</span> <span class="op">!</span><span class="ident">metric_name</span>.<span class="ident">starts_with</span>(<span class="kw-2">&amp;</span><span class="ident">storage_name</span>) {
@@ -1076,17 +889,12 @@
                 }
             }
 
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="prelude-val">Ok</span>(());
             <span class="kw">for</span> <span class="ident">to_delete</span> <span class="kw">in</span> <span class="ident">metrics</span> {
-                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span> <span class="ident">store</span>.<span class="ident">delete</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">writer</span>, <span class="ident">to_delete</span>) {
-                    <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;Can&#39;t delete from store: {:?}&quot;</span>, <span class="ident">e</span>);
-                    <span class="ident">res</span> <span class="op">=</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>);
-                }
+                <span class="ident">store</span>.<span class="ident">delete</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">writer</span>, <span class="ident">to_delete</span>).<span class="ident">unwrap</span>();
             }
 
-            <span class="ident">writer</span>.<span class="ident">commit</span>()<span class="question-mark">?</span>;
-            <span class="prelude-val">Ok</span>(<span class="ident">res</span><span class="question-mark">?</span>)
-        })
+            <span class="ident">writer</span>.<span class="ident">commit</span>().<span class="ident">unwrap</span>();
+        });
     }
 
     <span class="doccomment">/// Removes a single metric from the storage.</span>
@@ -1096,64 +904,32 @@
     <span class="doccomment">/// * `lifetime` - the lifetime of the storage in which to look for the metric.</span>
     <span class="doccomment">/// * `storage_name` - the name of the storage to store/fetch data from.</span>
     <span class="doccomment">/// * `metric_key` - the metric key/name.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Return value</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * If the storage is unavailable an error is returned.</span>
-    <span class="doccomment">/// * If the metric could not be deleted, an error is returned.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Otherwise `Ok(())` is returned.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Panics</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * This function will **not** panic on database errors.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remove_single_metric</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">lifetime</span>: <span class="ident">Lifetime</span>,
-        <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">metric_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remove_single_metric</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">lifetime</span>: <span class="ident">Lifetime</span>, <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">metric_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
         <span class="kw">let</span> <span class="ident">final_key</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">get_storage_key</span>(<span class="ident">storage_name</span>, <span class="prelude-val">Some</span>(<span class="ident">metric_name</span>));
 
         <span class="kw">if</span> <span class="ident">lifetime</span> <span class="op">=</span><span class="op">=</span> <span class="ident">Lifetime</span>::<span class="ident">Application</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">data</span> <span class="op">=</span> <span class="self">self</span>
-                .<span class="ident">app_lifetime_data</span>
-                .<span class="ident">write</span>()
-                .<span class="ident">expect</span>(<span class="string">&quot;Can&#39;t access app lifetime data as writable&quot;</span>);
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">data</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">app_lifetime_data</span>.<span class="ident">write</span>().<span class="ident">unwrap</span>();
             <span class="ident">data</span>.<span class="ident">remove</span>(<span class="kw-2">&amp;</span><span class="ident">final_key</span>);
-            <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
+            <span class="kw">return</span>;
         }
 
         <span class="self">self</span>.<span class="ident">write_with_store</span>(<span class="ident">lifetime</span>, <span class="op">|</span><span class="kw-2">mut</span> <span class="ident">writer</span>, <span class="ident">store</span><span class="op">|</span> {
-            <span class="ident">store</span>.<span class="ident">delete</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">writer</span>, <span class="ident">final_key</span>.<span class="ident">clone</span>())<span class="question-mark">?</span>;
-            <span class="ident">writer</span>.<span class="ident">commit</span>()<span class="question-mark">?</span>;
-            <span class="prelude-val">Ok</span>(())
-        })
+            <span class="ident">store</span>.<span class="ident">delete</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">writer</span>, <span class="ident">final_key</span>.<span class="ident">clone</span>()).<span class="ident">unwrap</span>();
+
+            <span class="ident">writer</span>.<span class="ident">commit</span>().<span class="ident">unwrap</span>();
+        });
     }
 
     <span class="doccomment">/// Clears all metrics in the database.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Errors are logged.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Panics</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * This function will **not** panic on database errors.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clear_all</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">for</span> <span class="ident">lifetime</span> <span class="kw">in</span> [<span class="ident">Lifetime</span>::<span class="ident">User</span>, <span class="ident">Lifetime</span>::<span class="ident">Ping</span>].<span class="ident">iter</span>() {
-            <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">write_with_store</span>(<span class="kw-2">*</span><span class="ident">lifetime</span>, <span class="op">|</span><span class="kw-2">mut</span> <span class="ident">writer</span>, <span class="ident">store</span><span class="op">|</span> {
-                <span class="ident">store</span>.<span class="ident">clear</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">writer</span>)<span class="question-mark">?</span>;
-                <span class="ident">writer</span>.<span class="ident">commit</span>()<span class="question-mark">?</span>;
-                <span class="prelude-val">Ok</span>(())
+            <span class="self">self</span>.<span class="ident">write_with_store</span>(<span class="kw-2">*</span><span class="ident">lifetime</span>, <span class="op">|</span><span class="kw-2">mut</span> <span class="ident">writer</span>, <span class="ident">store</span><span class="op">|</span> {
+                <span class="ident">store</span>.<span class="ident">clear</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">writer</span>).<span class="ident">unwrap</span>();
+                <span class="ident">writer</span>.<span class="ident">commit</span>().<span class="ident">unwrap</span>();
             });
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span> <span class="ident">res</span> {
-                <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;Could not clear store for lifetime {:?}: {:?}&quot;</span>, <span class="ident">lifetime</span>, <span class="ident">e</span>);
-            }
         }
 
-        <span class="self">self</span>.<span class="ident">app_lifetime_data</span>
-            .<span class="ident">write</span>()
-            .<span class="ident">expect</span>(<span class="string">&quot;Can&#39;t access app lifetime data as writable&quot;</span>)
-            .<span class="ident">clear</span>();
+        <span class="self">self</span>.<span class="ident">app_lifetime_data</span>.<span class="ident">write</span>().<span class="ident">unwrap</span>().<span class="ident">clear</span>();
     }
 }
 
@@ -1194,8 +970,7 @@
             <span class="ident">test_storage</span>,
             <span class="ident">test_metric_id</span>,
             <span class="kw-2">&amp;</span><span class="ident">Metric</span>::<span class="ident">String</span>(<span class="ident">test_value</span>.<span class="ident">to_string</span>()),
-        )
-        .<span class="ident">unwrap</span>();
+        );
 
         <span class="comment">// Verify that the data is correctly recorded.</span>
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">found_metrics</span> <span class="op">=</span> <span class="number">0</span>;
@@ -1229,8 +1004,7 @@
             <span class="ident">test_storage</span>,
             <span class="ident">test_metric_id</span>,
             <span class="kw-2">&amp;</span><span class="ident">Metric</span>::<span class="ident">String</span>(<span class="ident">test_value</span>.<span class="ident">to_string</span>()),
-        )
-        .<span class="ident">unwrap</span>();
+        );
 
         <span class="comment">// Verify that the data is correctly recorded.</span>
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">found_metrics</span> <span class="op">=</span> <span class="number">0</span>;
@@ -1267,8 +1041,7 @@
             <span class="ident">test_storage</span>,
             <span class="ident">test_metric_id</span>,
             <span class="kw-2">&amp;</span><span class="ident">Metric</span>::<span class="ident">String</span>(<span class="ident">test_value</span>.<span class="ident">to_string</span>()),
-        )
-        .<span class="ident">unwrap</span>();
+        );
 
         <span class="comment">// Verify that the data is correctly recorded.</span>
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">found_metrics</span> <span class="op">=</span> <span class="number">0</span>;
@@ -1300,22 +1073,19 @@
             <span class="ident">test_storage</span>,
             <span class="string">&quot;telemetry_test.test_name_user&quot;</span>,
             <span class="kw-2">&amp;</span><span class="ident">Metric</span>::<span class="ident">String</span>(<span class="string">&quot;test-value-user&quot;</span>.<span class="ident">to_string</span>()),
-        )
-        .<span class="ident">unwrap</span>();
+        );
         <span class="ident">db</span>.<span class="ident">record_per_lifetime</span>(
             <span class="ident">Lifetime</span>::<span class="ident">Ping</span>,
             <span class="ident">test_storage</span>,
             <span class="string">&quot;telemetry_test.test_name_ping&quot;</span>,
             <span class="kw-2">&amp;</span><span class="ident">Metric</span>::<span class="ident">String</span>(<span class="string">&quot;test-value-ping&quot;</span>.<span class="ident">to_string</span>()),
-        )
-        .<span class="ident">unwrap</span>();
+        );
         <span class="ident">db</span>.<span class="ident">record_per_lifetime</span>(
             <span class="ident">Lifetime</span>::<span class="ident">Application</span>,
             <span class="ident">test_storage</span>,
             <span class="string">&quot;telemetry_test.test_name_application&quot;</span>,
             <span class="kw-2">&amp;</span><span class="ident">Metric</span>::<span class="ident">String</span>(<span class="string">&quot;test-value-application&quot;</span>.<span class="ident">to_string</span>()),
-        )
-        .<span class="ident">unwrap</span>();
+        );
 
         <span class="comment">// Take a snapshot for the data, all the lifetimes.</span>
         {
@@ -1339,7 +1109,7 @@
         }
 
         <span class="comment">// Clear the Ping lifetime.</span>
-        <span class="ident">db</span>.<span class="ident">clear_ping_lifetime_storage</span>(<span class="ident">test_storage</span>).<span class="ident">unwrap</span>();
+        <span class="ident">db</span>.<span class="ident">clear_ping_lifetime_storage</span>(<span class="ident">test_storage</span>);
 
         <span class="comment">// Take a snapshot again and check that we&#39;re only clearing the Ping lifetime.</span>
         {
@@ -1382,8 +1152,7 @@
                     <span class="ident">test_storage</span>,
                     <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}_{}&quot;</span>, <span class="ident">metric_id_pattern</span>, <span class="ident">value</span>),
                     <span class="kw-2">&amp;</span><span class="ident">Metric</span>::<span class="ident">String</span>(<span class="ident">value</span>.<span class="ident">to_string</span>()),
-                )
-                .<span class="ident">unwrap</span>();
+                );
             }
         }
 
@@ -1393,8 +1162,7 @@
                 <span class="kw-2">*</span><span class="ident">lifetime</span>,
                 <span class="ident">test_storage</span>,
                 <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}_delete&quot;</span>, <span class="ident">metric_id_pattern</span>),
-            )
-            .<span class="ident">unwrap</span>();
+            );
         }
 
         <span class="comment">// Verify that &quot;telemetry_test.single_metric_retain&quot; is still around for all lifetimes.</span>

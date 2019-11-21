@@ -158,9 +158,6 @@
 <span id="158">158</span>
 <span id="159">159</span>
 <span id="160">160</span>
-<span id="161">161</span>
-<span id="162">162</span>
-<span id="163">163</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -251,19 +248,16 @@
         <span class="kw">for</span> <span class="ident">key</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">values</span>.<span class="ident">keys</span>() {
             <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">key</span>;
 
-            <span class="comment">// safe unwrap, we checked it&#39;s not none</span>
             <span class="kw">if</span> <span class="ident">min_key</span>.<span class="ident">is_none</span>() <span class="op">|</span><span class="op">|</span> <span class="ident">key</span> <span class="op">&lt;</span> <span class="ident">min_key</span>.<span class="ident">unwrap</span>() {
                 <span class="ident">min_key</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">key</span>);
             }
 
-            <span class="comment">// safe unwrap, we checked it&#39;s not none</span>
             <span class="kw">if</span> <span class="ident">max_key</span>.<span class="ident">is_none</span>() <span class="op">|</span><span class="op">|</span> <span class="ident">key</span> <span class="op">&gt;</span> <span class="ident">max_key</span>.<span class="ident">unwrap</span>() {
                 <span class="ident">max_key</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">key</span>);
             }
         }
 
         <span class="comment">// Non-empty values, therefore minimum/maximum exists.</span>
-        <span class="comment">// safe unwraps, we set it at least once.</span>
         <span class="kw">let</span> <span class="ident">min_bucket</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">bucketing</span>.<span class="ident">sample_to_bucket_index</span>(<span class="ident">min_key</span>.<span class="ident">unwrap</span>());
         <span class="kw">let</span> <span class="ident">max_bucket</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">bucketing</span>.<span class="ident">sample_to_bucket_index</span>(<span class="ident">max_key</span>.<span class="ident">unwrap</span>()) <span class="op">+</span> <span class="number">1</span>;
 

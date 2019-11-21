@@ -269,22 +269,24 @@ class Glean:
             extra (dict of str -&gt; str): Optional metadata to output with the
                 ping
         &#34;&#34;&#34;
+        if not cls.is_initialized():
+            log.error(&#34;Please call Glean.initialize() before using this API.&#34;)
+            return
+
         if extra is None:
             keys: List[str] = []
             values: List[str] = []
         else:
             keys, values = zip(*extra.items())  # type: ignore
 
-        @Dispatcher.launch
-        def set_experiment_active():
-            _ffi.lib.glean_set_experiment_active(
-                cls._handle,
-                _ffi.ffi_encode_string(experiment_id),
-                _ffi.ffi_encode_string(branch),
-                _ffi.ffi_encode_vec_string(keys),
-                _ffi.ffi_encode_vec_string(values),
-                len(keys),
-            )
+        _ffi.lib.glean_set_experiment_active(
+            cls._handle,
+            _ffi.ffi_encode_string(experiment_id),
+            _ffi.ffi_encode_string(branch),
+            _ffi.ffi_encode_vec_string(keys),
+            _ffi.ffi_encode_vec_string(values),
+            len(keys),
+        )
 
     @classmethod
     def set_experiment_inactive(cls, experiment_id: str):
@@ -294,12 +296,13 @@ class Glean:
         Args:
             experiment_id (str): The id of the experiment to deactivate.
         &#34;&#34;&#34;
+        if not cls.is_initialized():
+            log.error(&#34;Please call Glean.initialize() before using this API.&#34;)
+            return
 
-        @Dispatcher.launch
-        def set_experiment_inactive():
-            _ffi.lib.glean_set_experiment_inactive(
-                cls._handle, _ffi.ffi_encode_string(experiment_id)
-            )
+        _ffi.lib.glean_set_experiment_inactive(
+            cls._handle, _ffi.ffi_encode_string(experiment_id)
+        )
 
     @classmethod
     def test_is_experiment_active(cls, experiment_id: str) -&gt; bool:
@@ -677,22 +680,24 @@ initialized from the application.</p>
             extra (dict of str -&gt; str): Optional metadata to output with the
                 ping
         &#34;&#34;&#34;
+        if not cls.is_initialized():
+            log.error(&#34;Please call Glean.initialize() before using this API.&#34;)
+            return
+
         if extra is None:
             keys: List[str] = []
             values: List[str] = []
         else:
             keys, values = zip(*extra.items())  # type: ignore
 
-        @Dispatcher.launch
-        def set_experiment_active():
-            _ffi.lib.glean_set_experiment_active(
-                cls._handle,
-                _ffi.ffi_encode_string(experiment_id),
-                _ffi.ffi_encode_string(branch),
-                _ffi.ffi_encode_vec_string(keys),
-                _ffi.ffi_encode_vec_string(values),
-                len(keys),
-            )
+        _ffi.lib.glean_set_experiment_active(
+            cls._handle,
+            _ffi.ffi_encode_string(experiment_id),
+            _ffi.ffi_encode_string(branch),
+            _ffi.ffi_encode_vec_string(keys),
+            _ffi.ffi_encode_vec_string(values),
+            len(keys),
+        )
 
     @classmethod
     def set_experiment_inactive(cls, experiment_id: str):
@@ -702,12 +707,13 @@ initialized from the application.</p>
         Args:
             experiment_id (str): The id of the experiment to deactivate.
         &#34;&#34;&#34;
+        if not cls.is_initialized():
+            log.error(&#34;Please call Glean.initialize() before using this API.&#34;)
+            return
 
-        @Dispatcher.launch
-        def set_experiment_inactive():
-            _ffi.lib.glean_set_experiment_inactive(
-                cls._handle, _ffi.ffi_encode_string(experiment_id)
-            )
+        _ffi.lib.glean_set_experiment_inactive(
+            cls._handle, _ffi.ffi_encode_string(experiment_id)
+        )
 
     @classmethod
     def test_is_experiment_active(cls, experiment_id: str) -&gt; bool:
@@ -1082,22 +1088,24 @@ def set_experiment_active(
         extra (dict of str -&gt; str): Optional metadata to output with the
             ping
     &#34;&#34;&#34;
+    if not cls.is_initialized():
+        log.error(&#34;Please call Glean.initialize() before using this API.&#34;)
+        return
+
     if extra is None:
         keys: List[str] = []
         values: List[str] = []
     else:
         keys, values = zip(*extra.items())  # type: ignore
 
-    @Dispatcher.launch
-    def set_experiment_active():
-        _ffi.lib.glean_set_experiment_active(
-            cls._handle,
-            _ffi.ffi_encode_string(experiment_id),
-            _ffi.ffi_encode_string(branch),
-            _ffi.ffi_encode_vec_string(keys),
-            _ffi.ffi_encode_vec_string(values),
-            len(keys),
-        )</code></pre>
+    _ffi.lib.glean_set_experiment_active(
+        cls._handle,
+        _ffi.ffi_encode_string(experiment_id),
+        _ffi.ffi_encode_string(branch),
+        _ffi.ffi_encode_vec_string(keys),
+        _ffi.ffi_encode_vec_string(values),
+        len(keys),
+    )</code></pre>
 </details>
 </dd>
 <dt id="glean.glean.Glean.set_experiment_inactive"><code class="name flex">
@@ -1122,12 +1130,13 @@ def set_experiment_inactive(cls, experiment_id: str):
     Args:
         experiment_id (str): The id of the experiment to deactivate.
     &#34;&#34;&#34;
+    if not cls.is_initialized():
+        log.error(&#34;Please call Glean.initialize() before using this API.&#34;)
+        return
 
-    @Dispatcher.launch
-    def set_experiment_inactive():
-        _ffi.lib.glean_set_experiment_inactive(
-            cls._handle, _ffi.ffi_encode_string(experiment_id)
-        )</code></pre>
+    _ffi.lib.glean_set_experiment_inactive(
+        cls._handle, _ffi.ffi_encode_string(experiment_id)
+    )</code></pre>
 </details>
 </dd>
 <dt id="glean.glean.Glean.set_upload_enabled"><code class="name flex">

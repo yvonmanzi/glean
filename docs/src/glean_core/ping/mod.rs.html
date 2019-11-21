@@ -339,7 +339,6 @@
 <span id="339">339</span>
 <span id="340">340</span>
 <span id="341">341</span>
-<span id="342">342</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -488,7 +487,7 @@
             <span class="ident">StorageManager</span>.<span class="ident">snapshot_experiments_as_json</span>(<span class="ident">glean</span>.<span class="ident">storage</span>(), <span class="ident">INTERNAL_STORAGE</span>)
         {
             <span class="ident">map</span>.<span class="ident">as_object_mut</span>()
-                .<span class="ident">unwrap</span>() <span class="comment">// safe unwrap, we created the object above</span>
+                .<span class="ident">unwrap</span>()
                 .<span class="ident">insert</span>(<span class="string">&quot;experiments&quot;</span>.<span class="ident">to_string</span>(), <span class="ident">experiment_data</span>);
         };
 
@@ -506,7 +505,7 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">client_info</span>) <span class="op">=</span>
             <span class="ident">StorageManager</span>.<span class="ident">snapshot_as_json</span>(<span class="ident">glean</span>.<span class="ident">storage</span>(), <span class="string">&quot;glean_client_info&quot;</span>, <span class="bool-val">true</span>)
         {
-            <span class="kw">let</span> <span class="ident">client_info_obj</span> <span class="op">=</span> <span class="ident">client_info</span>.<span class="ident">as_object</span>().<span class="ident">unwrap</span>(); <span class="comment">// safe unwrap, snapshot always returns an object.</span>
+            <span class="kw">let</span> <span class="ident">client_info_obj</span> <span class="op">=</span> <span class="ident">client_info</span>.<span class="ident">as_object</span>().<span class="ident">unwrap</span>(); <span class="comment">// safe, snapshot always returns an object.</span>
             <span class="kw">for</span> (<span class="ident">_key</span>, <span class="ident">value</span>) <span class="kw">in</span> <span class="ident">client_info_obj</span> {
                 <span class="ident">merge</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="ident">value</span>);
             }
@@ -515,7 +514,6 @@
         }
 
         <span class="kw">if</span> <span class="op">!</span><span class="ident">include_client_id</span> {
-            <span class="comment">// safe unwrap, we created the object above</span>
             <span class="ident">map</span>.<span class="ident">as_object_mut</span>().<span class="ident">unwrap</span>().<span class="ident">remove</span>(<span class="string">&quot;client_id&quot;</span>);
         }
 
