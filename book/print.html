@@ -4187,71 +4187,89 @@ For test code, this can be a useful performance/simplicity tradeoff to make.</p>
 </li>
 </ol>
 <h1><a class="header" href="#glean-release-process" id="glean-release-process">Glean Release Process</a></h1>
-<blockquote>
-<p><strong>Important:</strong> The Glean SDK does not yet have a fully streamlined release process. All information here is preliminary.
-At this point the release process only produces release artifacts for the Kotlin library.
-The Rust crate is not released on its own. No artifacts for iOS are generated.</p>
-</blockquote>
 <p>These are the steps needed to cut a new release from latest master.</p>
 <ol>
-<li>
-<p>Update the changelog.</p>
+<li>Update the changelog.
 <ol>
-<li>
-<p>In <code>CHANGELOG.md</code>:</p>
-<ol>
-<li>Replace <code># Unreleased Changes</code> with <code># v&lt;new-version-number&gt; (_&lt;current date&gt;_)</code>.</li>
-<li>Replace <code>master</code> in the Full Changelog link to be <code>v&lt;new-version-number&gt;</code>. E.g. if you are releasing 0.1.0, the link should be
-<pre><code>[Full Changelog](https://github.com/mozilla/glean/compare/v0.0.1...v0.1.0)
-</code></pre>
-Note that this needs three dots (<code>...</code>) between the two tags (two dots is different). Yes, the second tag doesn't exist yet, you'll make it later.</li>
-<li>Optionally, go over the commits between the past release and this one and see if anything is worth including.</li>
-<li>Make sure the changelog follows the format of the other changelog entries.
-<ul>
-<li>Note that we try to provide PR or issue numbers (and links) for each change. Please add these if they are missing.</li>
-</ul>
-</li>
+<li>Add any missing important changes under the <code>Unreleased changes</code> headline</li>
 </ol>
 </li>
-<li>
-<p>Add a new <code># Unreleased Changes</code> on top</p>
-</li>
+<li>Run <code>bin/prepare-release.sh &lt;new version&gt;</code>
+<ol>
+<li>The new version should be the next patch, minor or major version of what is currently released.</li>
+<li>Let it create a commit for you.</li>
 </ol>
 </li>
-<li>
-<p>Bump the versions</p>
-<ul>
-<li>Rust crates: Bump <code>version</code> in <a href="https://github.com/mozilla/glean/blob/master/glean-core/Cargo.toml"><code>glean-core/Cargo.toml</code></a> and <a href="https://github.com/mozilla/glean/blob/master/glean-core/ffi/Cargo.toml"><code>glean-core/ffi/Cargo.toml</code></a>.  <strong>NOTE:</strong> There are two versions to update in <code>glean-core/ffi/Cargo.toml</code>.</li>
-<li>Kotlin package: Bump <code>libraryVersion</code> in the top-level <a href="https://github.com/mozilla/glean/blob/master/.buildconfig.yml">.buildconfig.yml</a> file.</li>
-<li>Gradle plugin: Bump <code>project.ext.gleanVersion</code> in <a href="https://github.com/mozilla/glean/blob/master/gradle-plugin/src/main/groovy/mozilla/telemetry/glean-gradle-plugin/GleanGradlePlugin.groovy"><code>GleanGradlePlugin.groovy</code></a>.</li>
-<li>Be sure you're following semver, and if in doubt, ask.</li>
-<li>Run <code>make build</code> to make sure the <code>Cargo.lock</code> file is updated.</li>
-</ul>
-</li>
-<li>
-<p>Land the commits that perform the steps above. This takes a PR, typically, because of branch protection on master.</p>
-</li>
-<li>
-<p>Cut the actual release.</p>
+<li>Land the new commit that performs the steps above. This takes a PR, typically, because of branch protection on master.</li>
+<li>Cut the actual release.
 <ol>
-<li>Click &quot;Releases&quot;, and then &quot;Draft a New Release&quot; in the github UI.</li>
-<li>Enter <code>v&lt;myversion&gt;</code> as the tag. In the example above it would be <code>v0.1.0</code>. It's important this is the same as the tags you put in the links in the changelog.</li>
-<li>Under the description, paste the contents of the release notes from <code>CHANGELOG.md</code>.</li>
-<li>Note that the release is not available until the CI build completes for that tag.
+<li>
+<p>Click &quot;Releases&quot;, and then &quot;Draft a New Release&quot; in the github UI.</p>
+</li>
+<li>
+<p>Enter <code>v&lt;myversion&gt;</code> as the tag. It's important this is the same as the tags you put in the links in the changelog.</p>
+</li>
+<li>
+<p>Under the description, paste the contents of the release notes from <code>CHANGELOG.md</code>.</p>
+</li>
+<li>
+<p>Note that the release is not available until the CI build completes for that tag.</p>
 <ul>
 <li>You can check <a href="https://circleci.com/gh/mozilla/glean">on CircleCI for the running build</a>.</li>
 </ul>
 </li>
+<li>
+<p>Release the Rust crates:</p>
+<pre><code>cd glean-core
+cargo publish --verbose
+cd ffi
+cargo publish --verbose
+</code></pre>
+</li>
 </ol>
 </li>
-<li>
-<p>After the release, bump the versions to the next pre-release:</p>
+</ol>
+<h3><a class="header" href="#published-artifacts" id="published-artifacts">Published artifacts</a></h3>
 <ul>
-<li>Rust crates: Use the next major version and append <code>-alpha.1</code></li>
-<li>Kotlin package: Use the next major version and append <code>-SNAPSHOT</code></li>
+<li>The Kotlin libaries are published: <a href="https://github.com/mozilla/glean/releases">GitHub Releases</a>, <a href="https://maven.mozilla.org/?prefix=maven2/org/mozilla/telemetry/">Mozilla Maven</a>.</li>
+<li>Python bindings are published on PyPi: <a href="https://pypi.org/project/glean-sdk/">glean-sdk</a>.</li>
+<li>Artifacts for iOS wil be <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1598276">generated on release soon</a>.</li>
+<li>Rust crates are published on crates.io: <a href="https://crates.io/crates/glean-core">glean-core</a>, <a href="https://crates.io/crates/glean-ffi">glean-ffi</a>.</li>
+</ul>
+<h2><a class="header" href="#new-point-releases" id="new-point-releases">New point-releases</a></h2>
+<p>If the new release is based on the current master, just follow the above release process.</p>
+<p>Otherwise follow these steps to release a point-release on top an older release that is behind latest master:</p>
+<ol>
+<li>
+<p>Ensure your fixes are landed on master first (if required).</p>
+</li>
+<li>
+<p>Create a new branch named <code>release-vX.Y</code> which will be used for all point-releases on the <code>vX.Y</code> series. Example:</p>
+<pre><code>git checkout -b release-v19.1 v19.0.0
+git push -u origin release-v19.1
+</code></pre>
+</li>
+<li>
+<p>Make a new branch with any fixes to be included in the release, <em>remembering not to make any breaking API changes.</em>.
+This may involve cherry-picking fixes from master, or developing a new fix directly against the branch.
+Example:</p>
+<pre><code>git checkout -b fixes-for-v1.19.1 release-v19.1
+git cherry-pick 37d35304a4d1d285c8f6f3ce3df3c412fcd2d6c6
+git push -u origin fixes-for-v1.19.1
+</code></pre>
+</li>
+<li>
+<p>Follow the above steps for cutting a new release, except that:</p>
+<ul>
+<li>When opening a PR to land the commits, target the <code>release-vX.Y</code> branch rather than master.</li>
+<li>When cutting the new release via github's UI, target the <code>release-vX.Y</code> branch rather than master.</li>
 </ul>
 </li>
 </ol>
+<blockquote>
+<p><strong>Note:</strong> Point-releases for older versions should be rarely required.
+We support the last released version and fixes should go there whenever possible.</p>
+</blockquote>
 <h1><a class="header" href="#contributing-to-the-glean-sdk" id="contributing-to-the-glean-sdk">Contributing to the Glean SDK</a></h1>
 <p>Anyone is welcome to help with the Glean SDK project. Feel free to get in touch with other community members on IRC
 or through issues on GitHub or Bugzilla.</p>
