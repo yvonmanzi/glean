@@ -169,6 +169,9 @@
 <span id="169">169</span>
 <span id="170">170</span>
 <span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -243,6 +246,9 @@
     <span class="doccomment">/// This will record an error if no `start` was called.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_stop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">stop_time</span>: <span class="ident">u64</span>) {
         <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">should_record</span>(<span class="ident">glean</span>) {
+            <span class="comment">// Reset timer when disabled, so that we don&#39;t record timespans across</span>
+            <span class="comment">// disabled/enabled toggling.</span>
+            <span class="self">self</span>.<span class="ident">start_time</span> <span class="op">=</span> <span class="prelude-val">None</span>;
             <span class="kw">return</span>;
         }
 
