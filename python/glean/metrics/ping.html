@@ -34,7 +34,7 @@ from .. import _ffi
 
 
 class PingType:
-    def __init__(self, name: str, include_client_id: bool):
+    def __init__(self, name: str, include_client_id: bool, send_if_empty: bool):
         &#34;&#34;&#34;
         This implements the developer facing API for custom pings.
 
@@ -43,7 +43,7 @@ class PingType:
         &#34;&#34;&#34;
         self._name = name
         self._handle = _ffi.lib.glean_new_ping_type(
-            _ffi.ffi_encode_string(name), include_client_id
+            _ffi.ffi_encode_string(name), include_client_id, send_if_empty
         )
         Glean.register_ping_type(self)
 
@@ -78,7 +78,7 @@ class PingType:
 <dl>
 <dt id="glean.metrics.ping.PingType"><code class="flex name class">
 <span>class <span class="ident">PingType</span></span>
-<span>(</span><span>name, include_client_id)</span>
+<span>(</span><span>name, include_client_id, send_if_empty)</span>
 </code></dt>
 <dd>
 <section class="desc"><p>This implements the developer facing API for custom pings.</p>
@@ -89,7 +89,7 @@ ping for sending.</p></section>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class PingType:
-    def __init__(self, name: str, include_client_id: bool):
+    def __init__(self, name: str, include_client_id: bool, send_if_empty: bool):
         &#34;&#34;&#34;
         This implements the developer facing API for custom pings.
 
@@ -98,7 +98,7 @@ ping for sending.</p></section>
         &#34;&#34;&#34;
         self._name = name
         self._handle = _ffi.lib.glean_new_ping_type(
-            _ffi.ffi_encode_string(name), include_client_id
+            _ffi.ffi_encode_string(name), include_client_id, send_if_empty
         )
         Glean.register_ping_type(self)
 

@@ -37,6 +37,14 @@
 <span id="37">37</span>
 <span id="38">38</span>
 <span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -57,10 +65,18 @@
 <span class="kw">crate</span>::<span class="macro">define_infallible_handle_map_deleter</span><span class="macro">!</span>(<span class="ident">PING_TYPES</span>, <span class="ident">glean_destroy_ping_type</span>);
 
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_new_ping_type</span>(<span class="ident">ping_name</span>: <span class="ident">FfiStr</span>, <span class="ident">include_client_id</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
+<span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_new_ping_type</span>(
+    <span class="ident">ping_name</span>: <span class="ident">FfiStr</span>,
+    <span class="ident">include_client_id</span>: <span class="ident">u8</span>,
+    <span class="ident">send_if_empty</span>: <span class="ident">u8</span>,
+) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
     <span class="ident">PING_TYPES</span>.<span class="ident">insert_with_log</span>(<span class="op">|</span><span class="op">|</span> {
         <span class="kw">let</span> <span class="ident">ping_name</span> <span class="op">=</span> <span class="ident">ping_name</span>.<span class="ident">to_string_fallible</span>()<span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="ident">PingType</span>::<span class="ident">new</span>(<span class="ident">ping_name</span>, <span class="ident">include_client_id</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>))
+        <span class="prelude-val">Ok</span>(<span class="ident">PingType</span>::<span class="ident">new</span>(
+            <span class="ident">ping_name</span>,
+            <span class="ident">include_client_id</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>,
+            <span class="ident">send_if_empty</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>,
+        ))
     })
 }
 
