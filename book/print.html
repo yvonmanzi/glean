@@ -4644,6 +4644,9 @@ See the individual metric types for details on the value payload:</p>
 <p><code>pending_pings</code>: Pings are written here before they are picked up by the ping uploader to send to the submission endpoint.</p>
 </li>
 <li>
+<p><code>deletion_request</code>: The <code>deletion_request</code> ping is written here before it is picked up by the ping uploader. This directory is separate from the <code>pending_pings</code> directory above, in or for an uploader to pick up only <code>deletion_request</code> pings and send them after general upload is disabled.</p>
+</li>
+<li>
 <p><code>tmp</code>: Pings are written here and then moved to the <code>pending_pings</code> directory when finished to make sure that partially-written pings to not get queued for sending.<br />
 (The standard system temporary directory is not used for this because it is not guaranteed to be on the same volume as the <code>glean_data</code> directory on Android).</p>
 </li>

@@ -2,8 +2,8 @@
   "warnings": [
     {
       "file": "/Users/distiller/project/glean-core/ios/Glean/Net/HttpPingUploader.swift",
-      "line": 23,
-      "symbol": "HttpPingUploader.init(configuration:)",
+      "line": 24,
+      "symbol": "HttpPingUploader.init(configuration:pingDirectory:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
