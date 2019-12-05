@@ -492,6 +492,10 @@ initialized from the application.</p>
                 if original_enabled is False and cls.get_upload_enabled() is True:
                     cls._initialize_core_metrics()
 
+                if original_enabled is True and cls.get_upload_enabled() is False:
+                    # If uploading is disabled, we need to send the deletion_request ping
+                    DeletionPingUploadWorker.process()
+
         else:
             cls._upload_enabled = enabled
 
@@ -1019,6 +1023,10 @@ def set_upload_enabled(cls, enabled: bool):
 
             if original_enabled is False and cls.get_upload_enabled() is True:
                 cls._initialize_core_metrics()
+
+            if original_enabled is True and cls.get_upload_enabled() is False:
+                # If uploading is disabled, we need to send the deletion_request ping
+                DeletionPingUploadWorker.process()
 
     else:
         cls._upload_enabled = enabled</code></pre>
