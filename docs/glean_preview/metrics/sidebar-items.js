@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["PingType","Stores information about a ping."]]});
