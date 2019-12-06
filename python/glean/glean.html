@@ -169,6 +169,12 @@ class Glean:
         # Glean Android sets up the lifecycle observer here. We don&#39;t really
         # have a lifecycle.
 
+        if cls._upload_enabled is False:
+
+            @Dispatcher.launch
+            def check_pending_deletion_request():
+                DeletionPingUploadWorker.process()
+
     @classmethod
     def reset(cls):
         &#34;&#34;&#34;
@@ -581,6 +587,12 @@ initialized from the application.</p>
         # Glean Android sets up the lifecycle observer here. We don&#39;t really
         # have a lifecycle.
 
+        if cls._upload_enabled is False:
+
+            @Dispatcher.launch
+            def check_pending_deletion_request():
+                DeletionPingUploadWorker.process()
+
     @classmethod
     def reset(cls):
         &#34;&#34;&#34;
@@ -987,7 +999,16 @@ def initialize(
         if _ffi.lib.glean_on_ready_to_send_pings(cls._handle):
             PingUploadWorker.process()
 
-    Dispatcher.flush_queued_initial_tasks()</code></pre>
+    Dispatcher.flush_queued_initial_tasks()
+
+    # Glean Android sets up the lifecycle observer here. We don&#39;t really
+    # have a lifecycle.
+
+    if cls._upload_enabled is False:
+
+        @Dispatcher.launch
+        def check_pending_deletion_request():
+            DeletionPingUploadWorker.process()</code></pre>
 </details>
 </dd>
 <dt id="glean.glean.Glean.is_initialized"><code class="name flex">
