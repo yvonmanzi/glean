@@ -155,6 +155,7 @@
 <ul>
 <li><code>include_client_id</code> (required): A boolean indicating whether to include the
 <code>client_id</code> in the <a href="index.html#The-client_info-section"><code>client_info</code> section</a>).</li>
+<li><code>send_if_empty</code> (optional, default: false): A boolean indicating if the ping is sent if it contains no metric data.</li>
 </ul>
 <p>In addition to these parameters, pings also support the parameters related to data review and expiration defined in <a href="../adding-new-metrics.html#common-metric-parameters">common metric parameters</a>: <code>description</code>, <code>notification_emails</code>, <code>bugs</code>, and <code>data_reviews</code>.</p>
 <p>For example, to define a custom ping called <code>search</code> specifically for search information:</p>
@@ -246,6 +247,7 @@ pings.search.send()
 </div>
 </div>
 </div>
+<p>If none of the metrics for the ping contain data the ping is not sent (unless <code>send_if_empty</code> is set to true in the definition file)</p>
 
                     </main>
 
