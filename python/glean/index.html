@@ -165,7 +165,8 @@ the <code>metrics.yaml</code> file.</dd>
                 setattr(cursor, part, type(category_name, (object,), {}))
             cursor = getattr(cursor, part)
         for name, metric in category.items():
-            setattr(cursor, name, _get_metric_object(metric))
+            for actual_name, glean_metric in _get_metric_objects(name, metric):
+                setattr(cursor, actual_name, glean_metric)
 
     return root</code></pre>
 </details>
