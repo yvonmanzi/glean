@@ -14,7 +14,7 @@
     <a title="Glean Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Glean Docs</a> (93% documented)</p>
+        <p><a href="../index.html">Glean Docs</a> (94% documented)</p>
         <p class="header-right"><a href="https://github.com/mozilla/glean"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -39,6 +39,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/DatetimeMetricType.html">DatetimeMetricType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DistributionData.html">DistributionData</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/EventMetricType.html">EventMetricType</a>
@@ -119,6 +122,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Structs/Configuration.html">Configuration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:5Glean17RecordedEventDataV">RecordedEventData</a>
               </li>
             </ul>
           </li>
@@ -354,6 +360,127 @@ is uploaded.</p>
                                 <div>
                                   <p>The <code>Pings</code> object generated for your library or application
      by the Glean SDK.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:5GleanAAC15testHasPingTypeySbSSF"></a>
+                    <a name="//apple_ref/swift/Method/testHasPingType(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5GleanAAC15testHasPingTypeySbSSF">testHasPingType(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>PUBLIC TEST ONLY FUNCTION.</p>
+
+<p>Returns true if a ping by this name is in the ping registry.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">testHasPingType</span><span class="p">(</span><span class="n">_</span> <span class="nv">pingName</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:5GleanAAC17enableTestingModeyyF"></a>
+                    <a name="//apple_ref/swift/Method/enableTestingMode()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5GleanAAC17enableTestingModeyyF">enableTestingMode()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>PUBLIC TEST ONLY FUNCTION.</p>
+
+<p>Enable test mode.</p>
+
+<p>This makes all asynchronous work synchronous so we can test the results of the
+API synchronously.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">enableTestingMode</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:5GleanAAC05resetA013configuration11clearStoresyAA13ConfigurationV_SbtF"></a>
+                    <a name="//apple_ref/swift/Method/resetGlean(configuration:clearStores:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5GleanAAC05resetA013configuration11clearStoresyAA13ConfigurationV_SbtF">resetGlean(configuration:clearStores:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>PUBLIC TEST ONLY FUNCTION.</p>
+
+<p>Resets the Glean state and trigger init again.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">resetGlean</span><span class="p">(</span><span class="nv">configuration</span><span class="p">:</span> <span class="kt"><a href="../Structs/Configuration.html">Configuration</a></span> <span class="o">=</span> <span class="kt"><a href="../Structs/Configuration.html">Configuration</a></span><span class="p">(),</span> <span class="nv">clearStores</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>configuration</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the <code><a href="../Structs/Configuration.html">Configuration</a></code> to init Glean with</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>clearStores</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>if true, clear the contents of all stores</p>
                                 </div>
                               </td>
                             </tr>
