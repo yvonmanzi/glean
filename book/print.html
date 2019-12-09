@@ -2327,10 +2327,10 @@ XCTAssertEqual(0, Views.loginOpened.testGetNumRecordedErrors(.invalidValue))
 <p>When 500 events are queued on the client an events ping is immediately sent.</p>
 </li>
 <li>
-<p>The keys in the <code>extra_keys</code> list must be in dotted snake case, with a maximum length of 40.  For the original Kotlin implementation of the Glean SDK, this is measured in Unicode characters. For the Rust implementation, this is measured in the number of bytes when the string is encoded in UTF-8.</p>
+<p>The keys in the <code>extra_keys</code> list must be in dotted snake case, with a maximum length of 40 bytes in UTF-8.</p>
 </li>
 <li>
-<p>The values in the <code>extras</code> object have a maximum length of 50. For the original Kotlin implementation of the Glean SDK, this is measured in Unicode characters. For the Rust implementation, this is measured in the number of bytes when the string is encoded in UTF-8.</p>
+<p>The values in the <code>extras</code> object have a maximum length of 50 in UTF-8.</p>
 </li>
 </ul>
 <h2><a class="header" href="#examples-11" id="examples-11">Examples</a></h2>
