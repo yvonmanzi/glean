@@ -72,6 +72,11 @@ __all__ = [
 <dd>
 <section class="desc"></section>
 </dd>
+<dt><code class="name"><a title="glean.hardware" href="hardware.html">glean.hardware</a></code></dt>
+<dd>
+<section class="desc"><p>This module provides a cross-platform abstraction to get system model and
+manufacturer information.</p></section>
+</dd>
 <dt><code class="name"><a title="glean.metrics" href="metrics/index.html">glean.metrics</a></code></dt>
 <dd>
 <section class="desc"></section>
@@ -620,8 +625,9 @@ initialized from the application.</p>
 
         # device_model and device_manufacturer exist on desktop platforms,
         # but aren&#39;t easily obtainable. See bug 1595751
-        metrics.glean.internal.metrics.device_manufacturer.set(&#34;unknown&#34;)
-        metrics.glean.internal.metrics.device_model.set(&#34;unknown&#34;)
+        sysinfo = hardware.get_system_information()
+        metrics.glean.internal.metrics.device_manufacturer.set(sysinfo.manufacturer)
+        metrics.glean.internal.metrics.device_model.set(sysinfo.model)
 
         if cls._configuration.channel is not None:
             metrics.glean.internal.metrics.app_channel.set(cls._configuration.channel)
@@ -1187,6 +1193,7 @@ def test_is_experiment_active(cls, experiment_id: str) -&gt; bool:
 <ul>
 <li><code><a title="glean.config" href="config.html">glean.config</a></code></li>
 <li><code><a title="glean.glean" href="glean.html">glean.glean</a></code></li>
+<li><code><a title="glean.hardware" href="hardware.html">glean.hardware</a></code></li>
 <li><code><a title="glean.metrics" href="metrics/index.html">glean.metrics</a></code></li>
 <li><code><a title="glean.net" href="net/index.html">glean.net</a></code></li>
 <li><code><a title="glean.testing" href="testing/index.html">glean.testing</a></code></li>
