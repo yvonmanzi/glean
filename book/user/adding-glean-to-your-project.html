@@ -222,13 +222,40 @@ The <a href="https://github.com/mozilla-mobile/android-components/releases/">and
 <div data-lang="Swift" class="tab">
 <h4><a class="header" href="#setting-up-the-dependency-1" id="setting-up-the-dependency-1">Setting up the dependency</a></h4>
 <p>Glean can be consumed through <a href="https://github.com/Carthage/Carthage">Carthage</a>, a dependency manager for macOS and iOS.
-For consuming the latest version of Glean, add the following line to your <code>Cartfile</code>::</p>
-<pre><code>github &quot;mozilla/glean&quot; &quot;master&quot;
+For consuming the latest version of Glean, add the following line to your <code>Cartfile</code>:</p>
+<pre><code>github &quot;mozilla/glean&quot; &quot;{latest-version}&quot;
+</code></pre>
+<blockquote>
+<p><strong>Important:</strong> the <code>{latest-version}</code> placeholder should be replaced with the version number of the latest Glean SDK release.
+You can find the version number on the <a href="https://github.com/mozilla/glean/releases/latest">release page</a>.</p>
+</blockquote>
+<p>Then check out and build the new dependency:</p>
+<pre><code>carthage update --platform iOS
 </code></pre>
 <h4><a class="header" href="#integrating-with-the-build-system-1" id="integrating-with-the-build-system-1">Integrating with the build system</a></h4>
-<blockquote>
-<p><strong>Note:</strong> This is not yet documented, as the exact mechanism is not finalized. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1589383">Bug 1589383</a> for more information.</p>
-</blockquote>
+<p>For integration with the build system you can follow the <a href="https://github.com/Carthage/Carthage#quick-start">Carthage Quick Start steps</a>.</p>
+<ol>
+<li>
+<p>After building the dependency one drag the built <code>.framework</code> binaries from <code>Carthage/Build/iOS</code> into your application's Xcode project.</p>
+</li>
+<li>
+<p>On your application targets' Build Phases settings tab, click the <code>+</code> icon and choose <code>New Run Script Phase</code>.
+If you already use Carthage for other dependencies, extend the existing step.
+Create a Run Script in which you specify your shell (ex: <code>/bin/sh</code>), add the following contents to the script area below the shell:</p>
+<pre><code>/usr/local/bin/carthage copy-frameworks
+</code></pre>
+</li>
+<li>
+<p>Add the path to the Glean framework under &quot;Input Files&quot;:</p>
+<pre><code>$(SRCROOT)/Carthage/Build/iOS/Glean.framework
+</code></pre>
+</li>
+<li>
+<p>Add the paths to the copied framework to the &quot;Output Files&quot;:</p>
+<pre><code>$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Glean.framework
+</code></pre>
+</li>
+</ol>
 </div>
 <div data-lang="Python" class="tab">
 <p>It is recommended that you use a virtual environment for your work to isolate the dependencies for your project. There are many popular abstractions on top of virtual environments in the Python ecosystem which can help manage your project dependencies.</p>
@@ -252,7 +279,48 @@ This is also required for any new metric automatically collected by the Glean SD
 <div class="tabbar"></div>
 <div class="tabcontents">
 <div data-lang="Swift" class="tab">
-<p>On iOS, add this file to your project and define it as an input file for the <code>sdk_generator.sh</code> script in the <code>Run Script</code> step defined before.</p>
+<p>For Swift, the <code>metrics.yaml</code> file is parsed at build time and Swift code is generated.
+Add a new <code>metrics.yaml</code> file to your Xcode project.</p>
+<p>Follow these steps to automatically run the parser at build time:</p>
+<ol>
+<li>
+<p>Download the <code>sdk_generator.sh</code> script from the Glean repository:</p>
+<pre><code>https://raw.githubusercontent.com/mozilla/glean/{latest-release}/glean-core/ios/sdk_generator.sh
+</code></pre>
+<blockquote>
+<p><strong>Important:</strong> as above, the <code>{latest-version}</code> placeholder should be replaced with the version number of Glean SDK release used in this project.</p>
+</blockquote>
+</li>
+<li>
+<p>Add the <code>sdk_generator.sh</code> file to your Xcode project.</p>
+</li>
+<li>
+<p>On your application targets' Build Phases settings tab, click the <code>+</code> icon and choose <code>New Run Script Phase</code>.
+Create a Run Script in which you specify your shell (ex: <code>/bin/sh</code>), add the following contents to the script area below the shell:</p>
+<pre><code>bash $PWD/sdk_generator.sh
+</code></pre>
+</li>
+<li>
+<p>Add the path to your <code>metrics.yaml</code> and (optionally) <code>pings.yaml</code> under &quot;Input files&quot;:</p>
+<pre><code>$(SRCROOT)/{project-name}/metrics.yaml
+$(SRCROOT)/{project-name}/pings.yaml
+</code></pre>
+</li>
+<li>
+<p>Add the paths to the generated code files to the &quot;Output Files&quot;:</p>
+<pre><code>$(SRCROOT)/{project-name}/Generated/{YourCategory}.swift
+</code></pre>
+<blockquote>
+<p><strong>Important</strong>: The parser generates one file per category.
+If you are unsure which files those are, skip this step and add the files after they are generated for the first time.</p>
+</blockquote>
+</li>
+<li>
+<p>If you are using Git, add the following line to your <code>.gitignore</code> file:</p>
+<pre><code>{project-name}/Generated
+</code></pre>
+</li>
+</ol>
 </div>
 <div data-lang="Python" class="tab">
 <blockquote>
@@ -401,7 +469,7 @@ Glean.initialize(
 )
 </code></pre>
 <p>Additonal configuration is available on the <code>glean.Configuration</code> object, which can be passed into <code>Glean.initialize()</code>.</p>
-<p>Unlike Android and Swift, the Python bindings do not automatically send any pings. 
+<p>Unlike Android and Swift, the Python bindings do not automatically send any pings.
 See the <a href="pings/custom.html">custom pings documentation</a> about adding custom pings and sending them.</p>
 <h3><a class="header" href="#enabling-and-disabling-metrics-2" id="enabling-and-disabling-metrics-2">Enabling and disabling metrics</a></h3>
 <p><code>Glean.set_upload_enabled()</code> should be called in response to the user enabling or disabling telemetry.
