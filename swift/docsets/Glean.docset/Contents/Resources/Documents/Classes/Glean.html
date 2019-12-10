@@ -372,6 +372,82 @@ is uploaded.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:5GleanAAC15handleCustomUrl3urly10Foundation3URLV_tF"></a>
+                    <a name="//apple_ref/swift/Method/handleCustomUrl(url:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5GleanAAC15handleCustomUrl3urly10Foundation3URLV_tF">handleCustomUrl(url:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>When applications are launched using the custom URL scheme, this helper function will process
+the URL and parse the debug commands</p>
+
+<p>There are 3 available commands that you can use with the Glean SDK debug tools</p>
+
+<ul>
+<li><code>logPings</code>: If &ldquo;true&rdquo;, will cause pings that are submitted to also be echoed to the device&rsquo;s log</li>
+<li><code>tagPings</code>:  This command expects a string to tag the pings with and redirects them to the Glean Debug View</li>
+<li><code>sendPing</code>: This command expects a string name of a ping to force immediate collection and submission of.</li>
+</ul>
+
+<p>The structure of the custom URL uses the following format:</p>
+
+<p><code>&lt;protocol&gt;://glean?&lt;command 1&gt;=&lt;paramter 1&gt;&amp;&lt;command 2&gt;=&lt;parameter 2&gt; ...</code></p>
+
+<p>Where:</p>
+
+<ul>
+<li><code>&lt;protocol&gt;://</code> is the &ldquo;Url Scheme&rdquo; that has been added for the app and doesn&rsquo;t matter to Glean.</li>
+<li><code>glean</code> is required for the Glean SDK to recognize the command is meant for it to process.</li>
+<li><code>?</code> indicating the beginning of the query.</li>
+<li><code>&lt;command&gt;=&lt;parameter&gt;</code> are instances of the commands listed above  separated by <code>&amp;</code>.</li>
+</ul>
+
+<p>There are a few things to consider when creating the custom URL:</p>
+
+<ul>
+<li>Invalid commands will trigger an error and be ignored.</li>
+<li>Not all commands are requred to be encoded in the URL, you can mix and match the commands that you need.</li>
+<li>Special characters should be properly URL encoded and escaped since this needs to represent a valid URL.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">handleCustomUrl</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>url</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A <code>URL</code> object containing the Glean debug commands as query parameters</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:5GleanAAC15testHasPingTypeySbSSF"></a>
                     <a name="//apple_ref/swift/Method/testHasPingType(_:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:5GleanAAC15testHasPingTypeySbSSF">testHasPingType(_:)</a>
