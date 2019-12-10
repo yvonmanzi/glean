@@ -62,7 +62,7 @@ class SystemInformation:
     &#34;&#34;&#34;
 
 
-if sys.platform.startswith(&#34;linux&#34;):
+if sys.platform.startswith(&#34;linux&#34;):  # pragma: no cover
 
     def get_system_information():
         def get_value(path):
@@ -80,7 +80,7 @@ if sys.platform.startswith(&#34;linux&#34;):
         return SystemInformation(model=model, manufacturer=manufacturer)
 
 
-elif sys.platform == &#34;darwin&#34;:
+elif sys.platform == &#34;darwin&#34;:  # pragma: no cover
 
     def get_system_information():
         def get_value(name):
@@ -103,7 +103,7 @@ elif sys.platform == &#34;darwin&#34;:
         return SystemInformation(model=model, manufacturer=manufacturer)
 
 
-elif sys.platform.startswith(&#34;win&#34;):
+elif sys.platform.startswith(&#34;win&#34;):  # pragma: no cover
 
     def get_system_information():
         def get_value(name):

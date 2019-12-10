@@ -42,7 +42,7 @@ from ._loader import load_metrics, load_pings
 __version__: str = &#34;unknown&#34;
 try:
     __version__ = str(get_distribution(&#34;glean-sdk&#34;).version)
-except DistributionNotFound:
+except DistributionNotFound:  # pragma: no cover
     pass
 
 

@@ -62,6 +62,10 @@ class RecordedEventData:
     extra: Optional[Dict[str, str]] = None
     &#34;&#34;&#34;Any extra data recorded for the event.&#34;&#34;&#34;
 
+    def __post_init__(self):
+        if self.extra is None:
+            self.extra = {}
+
     @property
     def identifier(self):
         if self.category == &#34;&#34;:
@@ -625,6 +629,10 @@ of the ping to retrieve the metric for.</dd>
 
     extra: Optional[Dict[str, str]] = None
     &#34;&#34;&#34;Any extra data recorded for the event.&#34;&#34;&#34;
+
+    def __post_init__(self):
+        if self.extra is None:
+            self.extra = {}
 
     @property
     def identifier(self):

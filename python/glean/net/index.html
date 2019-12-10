@@ -558,8 +558,13 @@ def upload(cls, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
         try:
             with open(path, &#34;r&#34;, encoding=&#34;utf-8&#34;) as fd:
                 lines = iter(fd)
-                url_path = next(lines).strip()
-                serialized_ping = next(lines)
+                try:
+                    url_path = next(lines).strip()
+                    serialized_ping = next(lines)
+                except StopIteration:
+                    path.unlink()
+                    log.error(f&#34;Invalid ping content in {path.resolve()}&#34;)
+                    return False
         except FileNotFoundError:
             log.error(f&#34;Could not find ping file {path.resolve()}&#34;)
             return False
