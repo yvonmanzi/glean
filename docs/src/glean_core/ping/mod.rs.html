@@ -599,9 +599,9 @@
     <span class="doccomment">/// The directory will be created inside the `data_path`.</span>
     <span class="doccomment">/// The `pings` directory (and its parents) is created if it does not exist.</span>
     <span class="kw">fn</span> <span class="ident">get_pings_dir</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">data_path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>, <span class="ident">ping_type</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PathBuf</span><span class="op">&gt;</span> {
-        <span class="comment">// Use a special directory for deletion_request pings</span>
+        <span class="comment">// Use a special directory for deletion-request pings</span>
         <span class="kw">let</span> <span class="ident">pings_dir</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">ping_type</span> {
-            <span class="prelude-val">Some</span>(<span class="ident">ping_type</span>) <span class="kw">if</span> <span class="ident">ping_type</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;deletion_request&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="prelude-val">Some</span>(<span class="ident">ping_type</span>) <span class="kw">if</span> <span class="ident">ping_type</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;deletion-request&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">data_path</span>.<span class="ident">join</span>(<span class="string">&quot;deletion_request&quot;</span>)
             }
             <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">data_path</span>.<span class="ident">join</span>(<span class="string">&quot;pending_pings&quot;</span>),

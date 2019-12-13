@@ -2672,7 +2672,7 @@ assertEquals(1, Gfx.displayWidth.testGetNumRecordedErrors(ErrorType.InvalidValue
 <p>If data collection is enabled, the Glean SDK provides a set of built-in pings that are assembled out of the box without any developer intervention.  The following is a list of these built-in pings:</p>
 <ul>
 <li><a href="user/pings/baseline.html"><code>baseline</code> ping</a></li>
-<li><a href="user/pings/deletion_request.html"><code>deletion_request</code> ping</a></li>
+<li><a href="user/pings/deletion_request.html"><code>deletion-request</code> ping</a></li>
 <li><a href="user/pings/metrics.html"><code>metrics</code> ping</a></li>
 <li><a href="user/pings/events.html"><code>events</code> ping</a></li>
 </ul>
@@ -2823,21 +2823,21 @@ This is distinct from the <code>start_time</code> and <code>end_time</code> valu
   }
 }
 </code></pre>
-<h1><a class="header" href="#the-deletion_request-ping" id="the-deletion_request-ping">The <code>deletion_request</code> ping</a></h1>
+<h1><a class="header" href="#the-deletion-request-ping" id="the-deletion-request-ping">The <code>deletion-request</code> ping</a></h1>
 <h2><a class="header" href="#description-1" id="description-1">Description</a></h2>
 <p>This ping is submitted when a user opts out of sending technical and interaction data.</p>
 <p>This ping contains the client id.</p>
 <p>This ping is intended to communicate to the Data Pipeline that the user wishes to have their reported Telemetry data deleted.
 As such it attempts to send itself at the moment the user opts out of data collection, and continues to try and send itself.</p>
 <h2><a class="header" href="#scheduling-1" id="scheduling-1">Scheduling</a></h2>
-<p>The <code>deletion_request</code> ping is automatically sent when uploda is disabled in Glean.
+<p>The <code>deletion-request</code> ping is automatically sent when uploda is disabled in Glean.
 If upload fails, it is retried after Glean is initialized.</p>
 <h2><a class="header" href="#contents-2" id="contents-2">Contents</a></h2>
-<p>The <code>deletion_request</code> does not contain additional metrics.</p>
-<h2><a class="header" href="#example-deletion_request-ping" id="example-deletion_request-ping">Example <code>deletion_request</code> ping</a></h2>
+<p>The <code>deletion-request</code> does not contain additional metrics.</p>
+<h2><a class="header" href="#example-deletion-request-ping" id="example-deletion-request-ping">Example <code>deletion-request</code> ping</a></h2>
 <pre><code class="language-json">{
   &quot;ping_info&quot;: {
-    &quot;ping_type&quot;: &quot;deletion_request&quot;,
+    &quot;ping_type&quot;: &quot;deletion-request&quot;,
     &quot;seq&quot;: 0,
     &quot;start_time&quot;: &quot;2019-12-06T09:50-04:00&quot;,
     &quot;end_time&quot;: &quot;2019-12-06T09:53-04:00&quot;
@@ -3214,7 +3214,7 @@ search:
     - http://example.com/path/to/data-review
 </code></pre>
 <blockquote>
-<p>Note: the names <code>baseline</code>, <code>metrics</code>, <code>events</code> and <code>all_pings</code> are reserved and may not be used as the name of a custom ping.</p>
+<p>Note: the names <code>baseline</code>, <code>metrics</code>, <code>events</code> and <code>all-pings</code> are reserved and may not be used as the name of a custom ping.</p>
 </blockquote>
 <h2><a class="header" href="#loading-custom-ping-metadata-into-your-application-or-library" id="loading-custom-ping-metadata-into-your-application-or-library">Loading custom ping metadata into your application or library</a></h2>
 <p>The Glean SDK build generates code from <code>pings.yaml</code> in a <code>Pings</code> object, which must be instantiated so Glean can send pings by name.</p>
@@ -3571,16 +3571,15 @@ added to the <code>probe_scraper</code>.  The instructions for accomplishing thi
 <h1><a class="header" href="#metrics-1" id="metrics-1">Metrics</a></h1>
 <p>This document enumerates the metrics collected by this project.
 This project may depend on other projects which also collect metrics.
-This means you might have to go searching through the dependency tree to get a full picture of everything collected by this project.
-Sorry about that.</p>
+This means you might have to go searching through the dependency tree to get a full picture of everything collected by this project.</p>
 <h1><a class="header" href="#pings" id="pings">Pings</a></h1>
 <ul>
-<li><a href="user/collected-metrics/#all_pings">all_pings</a></li>
+<li><a href="user/collected-metrics/#all-pings">all-pings</a></li>
 <li><a href="user/collected-metrics/#baseline">baseline</a></li>
-<li><a href="user/collected-metrics/#deletion_request">deletion_request</a></li>
+<li><a href="user/collected-metrics/#deletion-request">deletion-request</a></li>
 <li><a href="user/collected-metrics/#metrics">metrics</a></li>
 </ul>
-<h2><a class="header" href="#all_pings" id="all_pings">all_pings</a></h2>
+<h2><a class="header" href="#all-pings" id="all-pings">all-pings</a></h2>
 <p>These metrics are sent in every ping.
 The following metrics are added to the ping:</p>
 <table><thead><tr><th>Name</th><th>Type</th><th>Description</th><th>Data reviews</th><th>Extras</th><th>Expiration</th></tr></thead><tbody>
@@ -3596,10 +3595,9 @@ The following metrics are added to the ping:</p>
 <tr><td>glean.baseline.duration</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/timespan.html">timespan</a></td><td>The duration of the last foreground session.</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1512938#c3">1</a></td><td></td><td>never</td></tr>
 <tr><td>glean.baseline.locale</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/string.html">string</a></td><td>The locale of the application (e.g. &quot;es-ES&quot;).</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1512938#c3">1</a></td><td></td><td>never</td></tr>
 </tbody></table>
-<h2><a class="header" href="#deletion_request" id="deletion_request">deletion_request</a></h2>
-<p>This is a built-in ping that is assembled out of the box by the Glean SDK.
-See the Glean SDK documentation for the <a href="https://mozilla.github.io/glean/book/user/pings/deletion_request.html"><code>deletion_request</code> ping</a>.
-This ping is sent if empty.
+<h2><a class="header" href="#deletion-request" id="deletion-request">deletion-request</a></h2>
+<p>This ping is submitted when a user opts out of sending technical and interaction data to Mozilla. This ping is intended to communicate to the Data Pipeline that the user wishes to have their reported Telemetry data deleted. As such it attempts to send itself at the moment the user opts out of data collection.</p>
+<p>This ping is sent if empty.
 This ping contains no metrics.</p>
 <h2><a class="header" href="#metrics-2" id="metrics-2">metrics</a></h2>
 <p>This is a built-in ping that is assembled out of the box by the Glean SDK.
@@ -4643,7 +4641,7 @@ You can find the report in the Report Navigator (<code>View -&gt; Navigators -&g
 <li><code>glean_client_info</code></li>
 <li><code>glean_internal_info</code></li>
 </ul>
-<p>Additionally, only Glean may specify <code>all_pings</code>.  This special value has no effect in the client, but indicates to the backend infrastructure that a metric may appear in any ping.</p>
+<p>Additionally, only Glean may specify <code>all-pings</code>.  This special value has no effect in the client, but indicates to the backend infrastructure that a metric may appear in any ping.</p>
 <h1><a class="header" href="#clearing-metrics-when-disablingenabling-glean" id="clearing-metrics-when-disablingenabling-glean">Clearing metrics when disabling/enabling Glean</a></h1>
 <p>When disabling upload (<code>Glean.setUploadEnabled(false)</code>), metrics are also cleared to prevent their storage on the local device, and lessen the likelihood
 of accidentally sending them.
@@ -4869,7 +4867,7 @@ See the individual metric types for details on the value payload:</p>
 <p><code>pending_pings</code>: Pings are written here before they are picked up by the ping uploader to send to the submission endpoint.</p>
 </li>
 <li>
-<p><code>deletion_request</code>: The <code>deletion_request</code> ping is written here before it is picked up by the ping uploader. This directory is separate from the <code>pending_pings</code> directory above, in or for an uploader to pick up only <code>deletion_request</code> pings and send them after general upload is disabled.</p>
+<p><code>deletion_request</code>: The <code>deletion-request</code> ping is written here before it is picked up by the ping uploader. This directory is separate from the <code>pending_pings</code> directory above, in or for an uploader to pick up only <code>deletion-request</code> pings and send them after general upload is disabled.</p>
 </li>
 <li>
 <p><code>tmp</code>: Pings are written here and then moved to the <code>pending_pings</code> directory when finished to make sure that partially-written pings to not get queued for sending.<br />

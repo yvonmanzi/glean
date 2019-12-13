@@ -147,21 +147,21 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#the-deletion_request-ping" id="the-deletion_request-ping">The <code>deletion_request</code> ping</a></h1>
+                        <h1><a class="header" href="#the-deletion-request-ping" id="the-deletion-request-ping">The <code>deletion-request</code> ping</a></h1>
 <h2><a class="header" href="#description" id="description">Description</a></h2>
 <p>This ping is submitted when a user opts out of sending technical and interaction data.</p>
 <p>This ping contains the client id.</p>
 <p>This ping is intended to communicate to the Data Pipeline that the user wishes to have their reported Telemetry data deleted.
 As such it attempts to send itself at the moment the user opts out of data collection, and continues to try and send itself.</p>
 <h2><a class="header" href="#scheduling" id="scheduling">Scheduling</a></h2>
-<p>The <code>deletion_request</code> ping is automatically sent when uploda is disabled in Glean.
+<p>The <code>deletion-request</code> ping is automatically sent when uploda is disabled in Glean.
 If upload fails, it is retried after Glean is initialized.</p>
 <h2><a class="header" href="#contents" id="contents">Contents</a></h2>
-<p>The <code>deletion_request</code> does not contain additional metrics.</p>
-<h2><a class="header" href="#example-deletion_request-ping" id="example-deletion_request-ping">Example <code>deletion_request</code> ping</a></h2>
+<p>The <code>deletion-request</code> does not contain additional metrics.</p>
+<h2><a class="header" href="#example-deletion-request-ping" id="example-deletion-request-ping">Example <code>deletion-request</code> ping</a></h2>
 <pre><code class="language-json">{
   &quot;ping_info&quot;: {
-    &quot;ping_type&quot;: &quot;deletion_request&quot;,
+    &quot;ping_type&quot;: &quot;deletion-request&quot;,
     &quot;seq&quot;: 0,
     &quot;start_time&quot;: &quot;2019-12-06T09:50-04:00&quot;,
     &quot;end_time&quot;: &quot;2019-12-06T09:53-04:00&quot;
