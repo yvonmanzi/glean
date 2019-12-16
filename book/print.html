@@ -862,7 +862,7 @@ assert 1 == metrics.url.visit.test_get_value()
 <p>There are a couple different ways in which to send pings using the Glean SDK debug tools.</p>
 <ol>
 <li>You can tag pings using the debug tools and trigger them manually using the UI.  This should always produce a ping with all required fields.</li>
-<li>You can tag <em>and</em> send pings using the debug tools.  This has the side effect of potentially sending a ping which does not include all fields because <code>sendPings</code> triggers pings to be sent before certain application behaviors can occur which would record that information.  For example, <code>duration</code> is not calculated or included in a baseline ping sent with <code>sendPing</code> because it forces the ping to be sent before the <code>duration</code> metric has been recorded.  Keep in mind that there may be nothing to send, in which case no ping is generated.</li>
+<li>You can tag <em>and</em> send pings using the debug tools.  This has the side effect of potentially sending a ping which does not include all fields because <code>sendPing</code> triggers pings to be sent before certain application behaviors can occur which would record that information.  For example, <code>duration</code> is not calculated or included in a baseline ping sent with <code>sendPing</code> because it forces the ping to be sent before the <code>duration</code> metric has been recorded.  Keep in mind that there may be nothing to send, in which case no ping is generated.</li>
 <li>You can trigger a command while the instrumented application is still running.  This is useful for toggling commands or for triggering pings that have schedules that are difficult to trigger manually.  This is especially useful if you need to trigger a ping submission after some activity within the application, such as with the metrics ping.</li>
 </ol>
 </li>
@@ -2830,7 +2830,7 @@ This is distinct from the <code>start_time</code> and <code>end_time</code> valu
 <p>This ping is intended to communicate to the Data Pipeline that the user wishes to have their reported Telemetry data deleted.
 As such it attempts to send itself at the moment the user opts out of data collection, and continues to try and send itself.</p>
 <h2><a class="header" href="#scheduling-1" id="scheduling-1">Scheduling</a></h2>
-<p>The <code>deletion-request</code> ping is automatically sent when uploda is disabled in Glean.
+<p>The <code>deletion-request</code> ping is automatically submitted when upload is disabled in Glean.
 If upload fails, it is retried after Glean is initialized.</p>
 <h2><a class="header" href="#contents-2" id="contents-2">Contents</a></h2>
 <p>The <code>deletion-request</code> does not contain additional metrics.</p>
@@ -3102,10 +3102,10 @@ For instance, in order to select a String field called <code>test</code> you wou
 <p>The events ping's purpose is to transport all of the event metric information.
 If the application crashes, an <code>events</code> ping is generated next time the application starts with events that were not sent before the crash.</p>
 <h2><a class="header" href="#scheduling-3" id="scheduling-3">Scheduling</a></h2>
-<p>The <code>events</code> ping is sent under the following circumstances:</p>
+<p>The <code>events</code> ping is collected under the following circumstances:</p>
 <ol>
 <li>
-<p>Normally, it is sent when the application goes into the <a href="user/pings/index.html#defining-background-state">background</a>, if there are any recorded events to send.</p>
+<p>Normally, it is collected when the application goes into the <a href="user/pings/index.html#defining-background-state">background</a>, if there are any recorded events to send.</p>
 </li>
 <li>
 <p>When the queue of events exceeds <code>Glean.configuration.maxEvents</code> (default 500).</p>
@@ -3266,15 +3266,15 @@ pings = load_pings(resource_filename(__name__, &quot;pings.yaml&quot;))
       - search
       - default
 </code></pre>
-<h2><a class="header" href="#sending-a-custom-ping" id="sending-a-custom-ping">Sending a custom ping</a></h2>
-<p>To send a custom ping, call the <code>send</code> method on the <code>PingType</code> object that the Glean SDK generated for your ping.</p>
-<p>For example, to send the custom ping defined above:</p>
+<h2><a class="header" href="#submitting-a-custom-ping" id="submitting-a-custom-ping">Submitting a custom ping</a></h2>
+<p>To collect and queue a custom ping for eventual uploading, call the <code>submit</code> method on the <code>PingType</code> object that the Glean SDK generated for your ping.</p>
+<p>For example, to submit the custom ping defined above:</p>
 <div class="tabs">
 <div class="tabbar"></div>
 <div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <pre><code class="language-kotlin">import org.mozilla.yourApplication.GleanMetrics.Pings
-Pings.search.send()
+Pings.search.submit()
 </code></pre>
 </div>
 <div data-lang="Python" class="tab">
@@ -3282,7 +3282,7 @@ Pings.search.send()
 
 pings = load_pings(&quot;pings.yaml&quot;)
 
-pings.search.send()
+pings.search.submit()
 </code></pre>
 </div>
 </div>
@@ -3352,7 +3352,7 @@ class MyCustomPingScheduler {
    */
   fun schedulePing() {
     // ... some scheduling logic that will end up calling the function below.
-    sendPing()
+    submitPing()
   }
 
   /**
@@ -3360,8 +3360,8 @@ class MyCustomPingScheduler {
    * calls the Glean SDK API to send custom pings.
    */
   @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-  internal fun sendPing() {
-    Pings.MyCustomPing.send()
+  internal fun submitPing() {
+    Pings.MyCustomPing.submit()
   }
 }
 </code></pre>
@@ -3551,12 +3551,12 @@ something like this:</p>
             Crash.exceptionKeys.message to exception.message!!
         )
     )
-    Pings.crash.send()
+    Pings.crash.submit()
 }
 </code></pre>
 <p>This records data to the <code>Crash.exception</code> metric from the <code>metrics.yaml</code>.  The category of the metric is <code>crash</code> and the name
 is <code>exception</code> so it is accessed it by calling <code>record()</code> on the <code>Crash.exception</code> object.  The extra information for the
-<code>cause</code> and the <code>message</code> is set as well.  Finally, calling <code>Pings.crash.send()</code> forces the <code>crash</code> ping to be scheduled to be
+<code>cause</code> and the <code>message</code> is set as well.  Finally, calling <code>Pings.crash.submit()</code> forces the <code>crash</code> ping to be scheduled to be
 sent.</p>
 <p>The final step is to register the custom <code>Application</code> as the default uncaught exception handler by adding the following to the
 <code>onCreate()</code> function after <code>Glean.initialize(this)</code>:</p>

@@ -263,12 +263,12 @@ something like this:</p>
             Crash.exceptionKeys.message to exception.message!!
         )
     )
-    Pings.crash.send()
+    Pings.crash.submit()
 }
 </code></pre>
 <p>This records data to the <code>Crash.exception</code> metric from the <code>metrics.yaml</code>.  The category of the metric is <code>crash</code> and the name
 is <code>exception</code> so it is accessed it by calling <code>record()</code> on the <code>Crash.exception</code> object.  The extra information for the
-<code>cause</code> and the <code>message</code> is set as well.  Finally, calling <code>Pings.crash.send()</code> forces the <code>crash</code> ping to be scheduled to be
+<code>cause</code> and the <code>message</code> is set as well.  Finally, calling <code>Pings.crash.submit()</code> forces the <code>crash</code> ping to be scheduled to be
 sent.</p>
 <p>The final step is to register the custom <code>Application</code> as the default uncaught exception handler by adding the following to the
 <code>onCreate()</code> function after <code>Glean.initialize(this)</code>:</p>

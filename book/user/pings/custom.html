@@ -226,15 +226,15 @@ pings = load_pings(resource_filename(__name__, &quot;pings.yaml&quot;))
       - search
       - default
 </code></pre>
-<h2><a class="header" href="#sending-a-custom-ping" id="sending-a-custom-ping">Sending a custom ping</a></h2>
-<p>To send a custom ping, call the <code>send</code> method on the <code>PingType</code> object that the Glean SDK generated for your ping.</p>
-<p>For example, to send the custom ping defined above:</p>
+<h2><a class="header" href="#submitting-a-custom-ping" id="submitting-a-custom-ping">Submitting a custom ping</a></h2>
+<p>To collect and queue a custom ping for eventual uploading, call the <code>submit</code> method on the <code>PingType</code> object that the Glean SDK generated for your ping.</p>
+<p>For example, to submit the custom ping defined above:</p>
 <div class="tabs">
 <div class="tabbar"></div>
 <div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <pre><code class="language-kotlin">import org.mozilla.yourApplication.GleanMetrics.Pings
-Pings.search.send()
+Pings.search.submit()
 </code></pre>
 </div>
 <div data-lang="Python" class="tab">
@@ -242,7 +242,7 @@ Pings.search.send()
 
 pings = load_pings(&quot;pings.yaml&quot;)
 
-pings.search.send()
+pings.search.submit()
 </code></pre>
 </div>
 </div>

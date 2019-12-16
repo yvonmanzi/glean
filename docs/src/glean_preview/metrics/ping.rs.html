@@ -68,13 +68,13 @@
         <span class="self">Self</span> { <span class="ident">name</span>, <span class="ident">ping_type</span> }
     }
 
-    <span class="doccomment">/// Send the ping.</span>
+    <span class="doccomment">/// Submit the ping.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ## Return value</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns true if a ping was assembled and queued, false otherwise.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">send</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">crate</span>::<span class="ident">send_ping</span>(<span class="self">self</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">submit</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">crate</span>::<span class="ident">submit_ping</span>(<span class="self">self</span>)
     }
 }
 </pre></div>

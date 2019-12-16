@@ -9,8 +9,11 @@
 <br/>
 <h1>send</h1>
 <a name="mozilla.telemetry.glean.private.PingType$send()"></a>
-<code><span class="keyword">fun </span><span class="identifier">send</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
-<p>Send the ping.</p>
+<code><span class="keyword">fun </span><s><span class="identifier">send</span></s><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
+<strong>Deprecated:</strong> Renamed to submit()<br/>
+<br/>
+<p>Collect and submit the ping for eventual upload.</p>
+<p><strong>THIS METHOD IS DEPRECATED.</strong>  Use <code>submit()</code> instead.</p>
 <p>While the collection of metrics into pings happens synchronously, the
 ping queuing and ping uploading happens asyncronously.
 There are no guarantees that this will happen immediately.</p>
