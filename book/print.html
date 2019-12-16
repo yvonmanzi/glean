@@ -1023,8 +1023,10 @@ Error metrics are included in the same pings as the metric that caused the error
 Additionally, error metrics are always sent in the <a href="user/pings/metrics.html"><code>metrics</code> ping</a> ping.</p>
 <p>The following categories of errors are recorded:</p>
 <ul>
-<li><code>invalid_value</code>: The metric value was invalid or out-of-range.</li>
+<li><code>invalid_value</code>: The metric value was invalid.</li>
 <li><code>invalid_label</code>: The label on a labeled metric was invalid.</li>
+<li><code>invalid_state</code>: The metric caught an invalid state while recording.</li>
+<li><code>invalid_overflow</code>: The metric value to be recorded overflows the metric-specific upper range.</li>
 </ul>
 <p>For example, if you had a string metric and passed it a string that was too long:</p>
 <pre><code class="language-Kotlin">MyMetrics.stringMetric.set(&quot;this_string_is_longer_than_the_limit_for_string_metrics&quot;)
@@ -2131,7 +2133,7 @@ On Android, the <a href="https://developer.android.com/reference/android/os/Syst
 <ul>
 <li><code>invalid_value</code>: If recording a negative timespan.</li>
 <li><code>invalid_value</code>: If a non-existing/stopped timer is stopped again.</li>
-<li><code>invalid_value</code>: If recording a time longer than 10 minutes.</li>
+<li><code>invalid_overflow</code>: If recording a time longer than 10 minutes.</li>
 </ul>
 <h2><a class="header" href="#reference-8" id="reference-8">Reference</a></h2>
 <ul>
@@ -3584,6 +3586,7 @@ This means you might have to go searching through the dependency tree to get a f
 The following metrics are added to the ping:</p>
 <table><thead><tr><th>Name</th><th>Type</th><th>Description</th><th>Data reviews</th><th>Extras</th><th>Expiration</th></tr></thead><tbody>
 <tr><td>glean.error.invalid_label</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/labeled_counters.html">labeled_counter</a></td><td>Counts the number of times a metric was set with an invalid label. The labels are the <code>category.name</code> identifier of the metric.</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1499761#c5">1</a></td><td></td><td>never</td></tr>
+<tr><td>glean.error.invalid_overflow</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/labeled_counters.html">labeled_counter</a></td><td>Counts the number of times a metric was set a value that overflew. The labels are the <code>category.name</code> identifier of the metric.</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1591912#c3">1</a></td><td></td><td>never</td></tr>
 <tr><td>glean.error.invalid_state</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/labeled_counters.html">labeled_counter</a></td><td>Counts the number of times a timing metric was used incorrectly. The labels are the <code>category.name</code> identifier of the metric.</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1499761#c5">1</a></td><td></td><td>never</td></tr>
 <tr><td>glean.error.invalid_value</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/labeled_counters.html">labeled_counter</a></td><td>Counts the number of times a metric was set to an invalid value. The labels are the <code>category.name</code> identifier of the metric.</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1499761#c5">1</a></td><td></td><td>never</td></tr>
 </tbody></table>

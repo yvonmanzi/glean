@@ -36,6 +36,13 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/distiller/project/glean-core/ios/Glean/Testing/ErrorType.swift",
+      "line": 19,
+      "symbol": "ErrorType.invalidOverflow",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/distiller/project/glean-core/ios/Glean/Utils/Utils.swift",
       "line": 25,
       "symbol": "String.errorDescription",

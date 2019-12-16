@@ -154,8 +154,10 @@ Error metrics are included in the same pings as the metric that caused the error
 Additionally, error metrics are always sent in the <a href="pings/metrics.html"><code>metrics</code> ping</a> ping.</p>
 <p>The following categories of errors are recorded:</p>
 <ul>
-<li><code>invalid_value</code>: The metric value was invalid or out-of-range.</li>
+<li><code>invalid_value</code>: The metric value was invalid.</li>
 <li><code>invalid_label</code>: The label on a labeled metric was invalid.</li>
+<li><code>invalid_state</code>: The metric caught an invalid state while recording.</li>
+<li><code>invalid_overflow</code>: The metric value to be recorded overflows the metric-specific upper range.</li>
 </ul>
 <p>For example, if you had a string metric and passed it a string that was too long:</p>
 <pre><code class="language-Kotlin">MyMetrics.stringMetric.set(&quot;this_string_is_longer_than_the_limit_for_string_metrics&quot;)
