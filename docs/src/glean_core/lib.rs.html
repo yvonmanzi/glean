@@ -602,6 +602,15 @@
 <span id="602">602</span>
 <span id="603">603</span>
 <span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
+<span id="609">609</span>
+<span id="610">610</span>
+<span id="611">611</span>
+<span id="612">612</span>
+<span id="613">613</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -1154,6 +1163,15 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_experiment_inactive</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">experiment_id</span>: <span class="ident">String</span>) {
         <span class="kw">let</span> <span class="ident">metric</span> <span class="op">=</span> <span class="ident">metrics</span>::<span class="ident">ExperimentMetric</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">experiment_id</span>);
         <span class="ident">metric</span>.<span class="ident">set_inactive</span>(<span class="kw-2">&amp;</span><span class="self">self</span>);
+    }
+
+    <span class="doccomment">/// Persist Lifetime::Ping data that might be in memory</span>
+    <span class="doccomment">/// in case `delay_ping_lifetime_io` is set or was set</span>
+    <span class="doccomment">/// at a previous time.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If there is no data to persist, this function does nothing.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">persist_ping_lifetime_data</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">data_store</span>.<span class="ident">persist_ping_lifetime_data</span>()
     }
 
     <span class="doccomment">/// **Test-only API (exported for FFI purposes).**</span>
