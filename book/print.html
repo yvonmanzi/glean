@@ -375,8 +375,8 @@ This is also required for any new metric automatically collected by the Glean SD
 <h3><a class="header" href="#testing-metrics" id="testing-metrics">Testing metrics</a></h3>
 <p>In order to make testing metrics easier 'out of the box', all metrics include a set of test API functions in order to facilitate unit testing.  These include functions to test whether a value has been stored, and functions to retrieve the stored value for validation.  For more information, please refer to <a href="user/testing-metrics.html">Unit testing Glean metrics</a>.</p>
 <h3><a class="header" href="#adding-metadata-about-your-project-to-the-pipeline" id="adding-metadata-about-your-project-to-the-pipeline">Adding metadata about your project to the pipeline</a></h3>
-<p>In order for data to be collected from your project, metadata must be added to <code>probe_scraper</code>.</p>
-<p>These specific steps are described in <a href="https://github.com/mozilla/probe-scraper#adding-a-new-glean-repository">the <code>probe_scraper</code> documentation</a>.</p>
+<p>In order for data to be collected from your project, its application id must be registered in the pipeline.</p>
+<p><a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&amp;component=General&amp;short_desc=Glean:%20Enable%20application%20id%20org.mozilla.myProduct">File a data engineering bug</a> to enable your product's application id.</p>
 <h2><a class="header" href="#application-specific-steps" id="application-specific-steps">Application-specific steps</a></h2>
 <p>The following steps are required for applications using the Glean SDK, but not libraries.</p>
 <blockquote>
