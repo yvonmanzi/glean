@@ -151,6 +151,8 @@
 <p>Applications can define metrics that are sent in custom pings. Unlike the built-in pings, custom pings are sent explicitly by the application.</p>
 <h2><a class="header" href="#defining-a-custom-ping" id="defining-a-custom-ping">Defining a custom ping</a></h2>
 <p>Custom pings must be defined in a <code>pings.yaml</code> file, which is in the same directory alongside your app's <code>metrics.yaml</code> file.</p>
+<p>Ping names are limited to lowercase letters from the <a href="https://en.wikipedia.org/wiki/ISO_basic_Latin_alphabet">ISO basic Latin alphabet</a>
+and hyphens and a maximum of 30 characters.</p>
 <p>Each ping has the following parameters:</p>
 <ul>
 <li><code>include_client_id</code> (required): A boolean indicating whether to include the
@@ -174,7 +176,7 @@ search:
     - http://example.com/path/to/data-review
 </code></pre>
 <blockquote>
-<p>Note: the names <code>baseline</code>, <code>metrics</code>, <code>events</code> and <code>all-pings</code> are reserved and may not be used as the name of a custom ping.</p>
+<p>Note: the names <code>baseline</code>, <code>metrics</code>, <code>events</code>, <code>deletion-request</code> and <code>all-pings</code> are reserved and may not be used as the name of a custom ping.</p>
 </blockquote>
 <h2><a class="header" href="#loading-custom-ping-metadata-into-your-application-or-library" id="loading-custom-ping-metadata-into-your-application-or-library">Loading custom ping metadata into your application or library</a></h2>
 <p>The Glean SDK build generates code from <code>pings.yaml</code> in a <code>Pings</code> object, which must be instantiated so Glean can send pings by name.</p>
@@ -191,6 +193,21 @@ override fun onCreate() {
     ...
     Glean.registerPings(Pings)
     ...
+}
+</code></pre>
+</div>
+<div data-lang="Swift" class="tab">
+<p>In Swift, this object must be registered with Glean from your startup code
+(such as in your application's <code>UIApplicationDelegate</code> <a href="https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622921-application"><code>application(_:didFinishLaunchingWithOptions:)</code></a> method or a function called from that method).</p>
+<pre><code class="language-swift">import Glean
+
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
+func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -&gt; Bool {
+    // ...
+    Glean.shared.registerPings(GleanMetrics.Pings)
+    // ...
+}
 }
 </code></pre>
 </div>
@@ -235,6 +252,12 @@ pings = load_pings(resource_filename(__name__, &quot;pings.yaml&quot;))
 <div data-lang="Kotlin" class="tab">
 <pre><code class="language-kotlin">import org.mozilla.yourApplication.GleanMetrics.Pings
 Pings.search.submit()
+</code></pre>
+</div>
+<div data-lang="Swift" class="tab">
+<pre><code class="language-swift">import Glean
+
+GleanMetrics.Pings.shared.search.submit()
 </code></pre>
 </div>
 <div data-lang="Python" class="tab">

@@ -3228,6 +3228,8 @@ If the application crashes, an <code>events</code> ping is generated next time t
 <p>Applications can define metrics that are sent in custom pings. Unlike the built-in pings, custom pings are sent explicitly by the application.</p>
 <h2><a class="header" href="#defining-a-custom-ping" id="defining-a-custom-ping">Defining a custom ping</a></h2>
 <p>Custom pings must be defined in a <code>pings.yaml</code> file, which is in the same directory alongside your app's <code>metrics.yaml</code> file.</p>
+<p>Ping names are limited to lowercase letters from the <a href="https://en.wikipedia.org/wiki/ISO_basic_Latin_alphabet">ISO basic Latin alphabet</a>
+and hyphens and a maximum of 30 characters.</p>
 <p>Each ping has the following parameters:</p>
 <ul>
 <li><code>include_client_id</code> (required): A boolean indicating whether to include the
@@ -3251,7 +3253,7 @@ search:
     - http://example.com/path/to/data-review
 </code></pre>
 <blockquote>
-<p>Note: the names <code>baseline</code>, <code>metrics</code>, <code>events</code> and <code>all-pings</code> are reserved and may not be used as the name of a custom ping.</p>
+<p>Note: the names <code>baseline</code>, <code>metrics</code>, <code>events</code>, <code>deletion-request</code> and <code>all-pings</code> are reserved and may not be used as the name of a custom ping.</p>
 </blockquote>
 <h2><a class="header" href="#loading-custom-ping-metadata-into-your-application-or-library" id="loading-custom-ping-metadata-into-your-application-or-library">Loading custom ping metadata into your application or library</a></h2>
 <p>The Glean SDK build generates code from <code>pings.yaml</code> in a <code>Pings</code> object, which must be instantiated so Glean can send pings by name.</p>
@@ -3268,6 +3270,21 @@ override fun onCreate() {
     ...
     Glean.registerPings(Pings)
     ...
+}
+</code></pre>
+</div>
+<div data-lang="Swift" class="tab">
+<p>In Swift, this object must be registered with Glean from your startup code
+(such as in your application's <code>UIApplicationDelegate</code> <a href="https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622921-application"><code>application(_:didFinishLaunchingWithOptions:)</code></a> method or a function called from that method).</p>
+<pre><code class="language-swift">import Glean
+
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
+func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -&gt; Bool {
+    // ...
+    Glean.shared.registerPings(GleanMetrics.Pings)
+    // ...
+}
 }
 </code></pre>
 </div>
@@ -3314,6 +3331,12 @@ pings = load_pings(resource_filename(__name__, &quot;pings.yaml&quot;))
 Pings.search.submit()
 </code></pre>
 </div>
+<div data-lang="Swift" class="tab">
+<pre><code class="language-swift">import Glean
+
+GleanMetrics.Pings.shared.search.submit()
+</code></pre>
+</div>
 <div data-lang="Python" class="tab">
 <pre><code class="language-Python">from glean import load_pings
 
@@ -3334,7 +3357,7 @@ pings.search.submit()
 <p>Let us start by defining a custom ping with a sample metric in it. Here is the <code>pings.yaml</code> file:</p>
 <pre><code class="language-yaml">$schema: moz://mozilla.org/schemas/glean/pings/1-0-0
 
-my_custom_ping:
+my-custom-ping:
   description: &gt;
     This ping is intended to showcase the recommended testing strategy for
     custom pings.
@@ -3357,7 +3380,7 @@ custom_ping_data:
     description: &gt;
       A sample string metric for demonstrating unit tests for custom pings.
     send_in_pings:
-      - my_custom_ping
+      - my-custom-ping
     bugs:
       - 1556985
     data_reviews:
@@ -3367,6 +3390,10 @@ custom_ping_data:
     expires: &quot;2019-10-01&quot;
 </code></pre>
 <p>A potential usage of the Glean SDK generated API could be the following:</p>
+<div class="tabs">
+<div class="tabbar"></div>
+<div class="tabcontents">
+<div data-lang="Kotlin" class="tab">
 <pre><code class="language-kotlin">import my.component.GleanMetrics.Pings
 import my.component.GleanMetrics.CustomPingData
 
@@ -3437,6 +3464,19 @@ class MyCustomPingSchedulerTest {
     }
 }
 </code></pre>
+</div>
+<div data-lang="Swift" class="tab">
+<blockquote>
+<p><strong>Note:</strong> Missing Swift example code (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1605055">Bug 1605055</a>).</p>
+</blockquote>
+</div>
+<div data-lang="Python" class="tab">
+<blockquote>
+<p><strong>Note:</strong> Missing Python example code (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1605055">Bug 1605055</a>).</p>
+</blockquote>
+</div>
+</div>
+</div>
 <h1><a class="header" href="#android-build-script-configuration-options" id="android-build-script-configuration-options">Android build script configuration options</a></h1>
 <p>This chapter describes build configuration options that control the behavior of Glean's Gradle plugin.
 These options are not usually required for normal use.</p>
