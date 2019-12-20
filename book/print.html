@@ -497,7 +497,9 @@ See the <a href="user/pings/custom.html">custom pings documentation</a> about ad
 <h2><a class="header" href="#behavior-when-uninitialized" id="behavior-when-uninitialized">Behavior when uninitialized</a></h2>
 <p>Metric recording that happens before Glean is initialized is queued and applied when Glean is initialized.
 To avoid unbounded memory growth the queue is bounded (currently to a maximum of 100 tasks). Further recordings are dropped.</p>
-<p>Ping collection and upload as well as the built-in pings are only available after initialization.</p>
+<p>Custom ping submission will not fail before initialization.
+Collection and upload of the custom ping is delayed until Glean is initialized.
+Built-in pings are only available after initialization.</p>
 <h2><a class="header" href="#enabling-and-disabling-metrics" id="enabling-and-disabling-metrics">Enabling and disabling metrics</a></h2>
 <div class="tabs">
 <div class="tabbar"></div>
