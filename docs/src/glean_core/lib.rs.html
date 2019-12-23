@@ -611,6 +611,25 @@
 <span id="611">611</span>
 <span id="612">612</span>
 <span id="613">613</span>
+<span id="614">614</span>
+<span id="615">615</span>
+<span id="616">616</span>
+<span id="617">617</span>
+<span id="618">618</span>
+<span id="619">619</span>
+<span id="620">620</span>
+<span id="621">621</span>
+<span id="622">622</span>
+<span id="623">623</span>
+<span id="624">624</span>
+<span id="625">625</span>
+<span id="626">626</span>
+<span id="627">627</span>
+<span id="628">628</span>
+<span id="629">629</span>
+<span id="630">630</span>
+<span id="631">631</span>
+<span id="632">632</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -736,6 +755,7 @@
     <span class="ident">ping_registry</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">PingType</span><span class="op">&gt;</span>,
     <span class="ident">start_time</span>: <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">FixedOffset</span><span class="op">&gt;</span>,
     <span class="ident">max_events</span>: <span class="ident">usize</span>,
+    <span class="ident">is_first_run</span>: <span class="ident">bool</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Glean</span> {
@@ -764,6 +784,7 @@
             <span class="ident">ping_registry</span>: <span class="ident">HashMap</span>::<span class="ident">new</span>(),
             <span class="ident">start_time</span>: <span class="ident">local_now_with_offset</span>(),
             <span class="ident">max_events</span>: <span class="ident">cfg</span>.<span class="ident">max_events</span>.<span class="ident">unwrap_or</span>(<span class="ident">DEFAULT_MAX_EVENTS</span>),
+            <span class="ident">is_first_run</span>: <span class="bool-val">false</span>,
         };
         <span class="ident">glean</span>.<span class="ident">on_change_upload_enabled</span>(<span class="ident">cfg</span>.<span class="ident">upload_enabled</span>);
         <span class="prelude-val">Ok</span>(<span class="ident">glean</span>)
@@ -841,6 +862,10 @@
             .<span class="ident">is_none</span>()
         {
             <span class="self">self</span>.<span class="ident">core_metrics</span>.<span class="ident">first_run_date</span>.<span class="ident">set</span>(<span class="self">self</span>, <span class="prelude-val">None</span>);
+            <span class="comment">// The `first_run_date` field is generated on the very first run</span>
+            <span class="comment">// and persisted across upload toggling. We can assume that, the only</span>
+            <span class="comment">// time it is set, that&#39;s indeed our &quot;first run&quot;.</span>
+            <span class="self">self</span>.<span class="ident">is_first_run</span> <span class="op">=</span> <span class="bool-val">true</span>;
         }
     }
 
@@ -1172,6 +1197,19 @@
     <span class="doccomment">/// If there is no data to persist, this function does nothing.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">persist_ping_lifetime_data</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">data_store</span>.<span class="ident">persist_ping_lifetime_data</span>()
+    }
+
+    <span class="doccomment">/// ** This is not meant to be used directly.**</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Clear all the metrics that have `Lifetime::Application`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clear_application_lifetime_metrics</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="ident">log</span>::<span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;Clearing Lifetime::Application metrics&quot;</span>);
+        <span class="self">self</span>.<span class="ident">data_store</span>.<span class="ident">clear_lifetime</span>(<span class="ident">Lifetime</span>::<span class="ident">Application</span>);
+    }
+
+    <span class="doccomment">/// Return whether or not this is the first run on this profile.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_first_run</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">is_first_run</span>
     }
 
     <span class="doccomment">/// **Test-only API (exported for FFI purposes).**</span>
