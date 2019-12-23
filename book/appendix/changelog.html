@@ -161,6 +161,8 @@
 change, without requiring them to be deleted.</li>
 <li>parseISOTimeString has been made 4x faster. This had an impact on Glean
 migration and initialization.</li>
+<li>Metrics with <code>lifetime: application</code> are now cleared when the application is started,
+after startup Glean SDK pings are generated.</li>
 </ul>
 </li>
 <li>All platforms:
