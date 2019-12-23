@@ -355,9 +355,9 @@ metrics = load_metrics(&quot;metrics.yaml&quot;)
 # Use a metric on the returned object
 metrics.your_category.your_metric.set(&quot;value&quot;)
 </code></pre>
-<p>If your project is a distributable Python package, you need to include the <code>metrics.yaml</code> file using <a href="https://setuptools.readthedocs.io/en/latest/setuptools.html#including-data-files">one of the myriad ways to include data in a Python package</a> and then use <a href="https://setuptools.readthedocs.io/en/latest/pkg_resources.html#resource-extraction"><code>package_resources.resource_filename()</code></a> to get the filename at runtime.</p>
+<p>If your project is a distributable Python package, you need to include the <code>metrics.yaml</code> file using <a href="https://setuptools.readthedocs.io/en/latest/setuptools.html#including-data-files">one of the myriad ways to include data in a Python package</a> and then use <a href="https://setuptools.readthedocs.io/en/latest/pkg_resources.html#resource-extraction"><code>pkg_resources.resource_filename()</code></a> to get the filename at runtime.</p>
 <pre><code class="language-Python">from glean import load_metrics
-from package_resources import resource_filename
+from pkg_resources import resource_filename
 
 metrics = load_metrics(resource_filename(__name__, &quot;metrics.yaml&quot;))
 
@@ -3301,9 +3301,9 @@ func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplicati
 
 pings = load_pings(&quot;pings.yaml&quot;)
 </code></pre>
-<p>If your project is a distributable Python package, you need to include the <code>metrics.yaml</code> file using <a href="https://setuptools.readthedocs.io/en/latest/setuptools.html#including-data-files">one of the myriad ways to include data in a Python package</a> and then use <a href="https://setuptools.readthedocs.io/en/latest/pkg_resources.html#resource-extraction"><code>package_resources.resource_filename()</code></a> to get the filename at runtime.</p>
+<p>If your project is a distributable Python package, you need to include the <code>metrics.yaml</code> file using <a href="https://setuptools.readthedocs.io/en/latest/setuptools.html#including-data-files">one of the myriad ways to include data in a Python package</a> and then use <a href="https://setuptools.readthedocs.io/en/latest/pkg_resources.html#resource-extraction"><code>pkg_resources.resource_filename()</code></a> to get the filename at runtime.</p>
 <pre><code class="language-Python">from glean import load_pings
-from package_resources import resource_filename
+from pkg_resources import resource_filename
 
 pings = load_pings(resource_filename(__name__, &quot;pings.yaml&quot;))
 </code></pre>
