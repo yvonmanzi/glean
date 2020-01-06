@@ -207,6 +207,24 @@ XCTAssert(User.clientId.testHasValue())
 XCTAssertEqual(uuid, try User.clientId.testGetValue())
 </code></pre>
 </div>
+<div data-lang="Python" class="tab">
+<pre><code class="language-Python">import uuid
+
+from glean import load_metrics
+metrics = load_metrics(&quot;metrics.yaml&quot;)
+
+# Generate a new UUID and record it
+metrics.user.client_id.generate_and_set()
+# Set a UUID explicitly
+metrics.user.client_id.set(uuid.uuid4())
+</code></pre>
+<p>There are test APIs available too.</p>
+<pre><code class="language-Python"># Was anything recorded?
+assert metrics.user.client_id.test_has_value()
+# Was it the expected value?
+assert uuid == metrics.user.client_id.test_get_value()
+</code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
@@ -225,6 +243,7 @@ XCTAssertEqual(uuid, try User.clientId.testGetValue())
 <ul>
 <li><a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-uuid-metric-type/index.html">Kotlin API docs</a>.</li>
 <li><a href="../../../swift/Classes/UuidMetricType.html">Swift API docs</a></li>
+<li><a href="../../../python/glean/metrics/uuid.html">Python API docs</a></li>
 </ul>
 
                     </main>
