@@ -150,7 +150,7 @@
                         <h1><a class="header" href="#custom-pings" id="custom-pings">Custom pings</a></h1>
 <p>Applications can define metrics that are sent in custom pings. Unlike the built-in pings, custom pings are sent explicitly by the application.</p>
 <h2><a class="header" href="#defining-a-custom-ping" id="defining-a-custom-ping">Defining a custom ping</a></h2>
-<p>Custom pings must be defined in a <code>pings.yaml</code> file, which is in the same directory alongside your app's <code>metrics.yaml</code> file.</p>
+<p>Custom pings must be defined in a <a href="https://mozilla.github.io/glean_parser/pings-yaml.html"><code>pings.yaml</code> file</a>, which is in the same directory alongside your app's <code>metrics.yaml</code> file.</p>
 <p>Ping names are limited to lowercase letters from the <a href="https://en.wikipedia.org/wiki/ISO_basic_Latin_alphabet">ISO basic Latin alphabet</a>
 and hyphens and a maximum of 30 characters.</p>
 <p>Each ping has the following parameters:</p>
@@ -171,7 +171,7 @@ search:
   notification_emails:
     - CHANGE-ME@example.com
   bugs:
-    - 123456789
+    - http://bugzilla.mozilla.org/123456789/
   data_reviews:
     - http://example.com/path/to/data-review
 </code></pre>
@@ -245,6 +245,7 @@ pings = load_pings(resource_filename(__name__, &quot;pings.yaml&quot;))
 </code></pre>
 <h2><a class="header" href="#submitting-a-custom-ping" id="submitting-a-custom-ping">Submitting a custom ping</a></h2>
 <p>To collect and queue a custom ping for eventual uploading, call the <code>submit</code> method on the <code>PingType</code> object that the Glean SDK generated for your ping.</p>
+<p>By default, if the ping doesn't currently have any events or metrics set, <code>submit</code> will do nothing.  However, if the <code>send_if_empty</code> flag is set to true in the ping definition, it will always be submitted.</p>
 <p>For example, to submit the custom ping defined above:</p>
 <div class="tabs">
 <div class="tabbar"></div>
