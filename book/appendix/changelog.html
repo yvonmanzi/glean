@@ -165,9 +165,6 @@ change, without requiring them to be deleted.</li>
 migration and initialization.</li>
 <li>Metrics with <code>lifetime: application</code> are now cleared when the application is started,
 after startup Glean SDK pings are generated.</li>
-<li>The metrics ping scheduler will now only send metrics pings while the
-application is running. The application will no longer &quot;wake up&quot; at 4am
-using the Work Manager.</li>
 </ul>
 </li>
 <li>All platforms:
