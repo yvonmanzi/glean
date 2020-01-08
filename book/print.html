@@ -5374,6 +5374,15 @@ Additionally, while the <code>$N</code> we have used in our running example has 
 <p>The following sections contain other material related to Glean.</p>
 <h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v23.0.1...master">Full changelog</a></p>
+<ul>
+<li>Android:
+<ul>
+<li>The metrics ping scheduler will now only send metrics pings while the
+application is running. The application will no longer &quot;wake up&quot; at 4am
+using the Work Manager.</li>
+</ul>
+</li>
+</ul>
 <h1><a class="header" href="#v2301-2020-01-08" id="v2301-2020-01-08">v23.0.1 (2020-01-08)</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v23.0.0...v23.0.1">Full changelog</a></p>
 <ul>
