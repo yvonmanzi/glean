@@ -934,6 +934,9 @@ These are the currently supported keys:</p>
 <tr><td><code>sendPing</code></td><td>string (<code>--es</code>)</td><td>Sends the ping with the given name immediately</td></tr>
 <tr><td><code>tagPings</code></td><td>string (<code>--es</code>)</td><td>Tags all outgoing pings as debug pings to make them available for real-time validation, on the <a href="https://docs.telemetry.mozilla.org/concepts/glean/debug_ping_view.html">Glean Debug View</a>. The value must match the pattern <code>[a-zA-Z0-9-]{1,20}</code></td></tr>
 </tbody></table>
+<blockquote>
+<p><strong>Note:</strong> Due to limitations on Android logcat message size, pings larger than 4KB are broken into multiple log messages when using <code>logPings</code>.</p>
+</blockquote>
 <p>For example, to direct a release build of the Glean sample application to (1) dump pings to logcat, (2) tag the ping with the <code>test-metrics-ping</code> tag, and (3) send the &quot;metrics&quot; ping immediately, the following command can be used:</p>
 <pre><code class="language-shell">adb shell am start -n org.mozilla.samples.glean/mozilla.telemetry.glean.debug.GleanDebugActivity \
   --ez logPings true \
