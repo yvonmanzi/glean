@@ -3455,7 +3455,8 @@ class MyCustomPingScheduler {
   }
 }
 </code></pre>
-<p>Finally, here is a simple unit test that intercepts the <code>MyCustomPingScheduler.schedulePing()</code> call in order to perform the validation on the data. This specific example uses Mockito, but any other framework would work.</p>
+<p>The following unit test intercepts the <code>MyCustomPingScheduler.submitPing()</code> call in order to perform the validation on the data.
+This specific example uses Mockito, but any other framework would work.</p>
 <pre><code class="language-kotlin">// Metrics and pings definitions.
 import my.component.GleanMetrics.Pings
 import my.component.GleanMetrics.CustomPingData
@@ -3492,9 +3493,80 @@ class MyCustomPingSchedulerTest {
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
-<blockquote>
-<p><strong>Note:</strong> Missing Swift example code (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1605055">Bug 1605055</a>).</p>
-</blockquote>
+<pre><code class="language-swift">import Foundation
+import Glean
+
+// Use typealiases to simplify usage.
+// This can be placed anywhere in your code to be available in all files.
+typealias CustomPingData = GleanMetrics.CustomPingData
+typealias Pings = GleanMetrics.Pings
+
+class MyCustomPingScheduler {
+    /**
+     * HERE ONLY TO KEEP THE EXAMPLE SIMPLE.
+     *
+     * A function that consumes the Glean SDK generated metrics API to
+     * record some data. It doesn't really need to be in a function, nor
+     * in this class. The Glean SDK API can be called when the data is
+     * generated.
+     */
+    func addSomeData() {
+       // Record some sample data.
+       CustomPingData.sampleString.set(&quot;test-data&quot;)
+    }
+
+    /**
+     * Called to implement the ping scheduling logic for 'my_custom_ping'.
+     */
+    func schedulePing() {
+        // ... some scheduling logic that will end up calling the function below.
+        submitPing()
+    }
+
+    /**
+     * Internal function to only be overridden in tests. This
+     * calls the Glean SDK API to send custom pings.
+     */
+    internal func submitPing() {
+        Pings.shared.myCustomPing.submit()
+    }
+}
+</code></pre>
+<p>The following unit test intercepts the <code>MyCustomPingScheduler.submitPing()</code> call in order to perform the validation on the data.
+This example uses a manual mock implementation, but you could use a framework for that.</p>
+<pre><code class="language-swift">@testable import YourApplication
+import Glean
+import XCTest
+
+class MyCustomPingSchedulerMock: MyCustomPingScheduler {
+    var submitWasCalled = false
+
+    deinit {
+        XCTAssertTrue(submitWasCalled, &quot;submitPing should have been called once&quot;)
+    }
+
+    override func submitPing() {
+        submitWasCalled = true
+
+        XCTAssertTrue(CustomPingData.os.testHasValue())
+        XCTAssertEqual(&quot;test-data&quot;, try! CustomPingData.os.testGetValue())
+
+        super.submitPing()
+    }
+}
+
+class MyCustomPingSchedulerTests: XCTestCase {
+    override func setUp() {
+        Glean.shared.resetGlean(clearStores: true)
+    }
+
+    func testCustomPingMetrics() {
+        let scheduler = MyCustomPingSchedulerMock()
+        scheduler.addSomeData()
+        scheduler.schedulePing()
+    }
+}
+</code></pre>
 </div>
 <div data-lang="Python" class="tab">
 <pre><code class="language-python">import glean
@@ -3529,7 +3601,7 @@ class MyCustomPingScheduler:
         &quot;&quot;&quot;
         pings.my_custom_ping.submit()
 </code></pre>
-<p>Finally, here is a simple unit test that intercepts the <code>MyCustomPingScheduler.schedule_ping()</code> call in order to perform the validation on the data.</p>
+<p>The following unit test intercepts the <code>MyCustomPingScheduler._submit_ping()</code> call in order to perform the validation on the data.</p>
 <pre><code class="language-python">from unittest.mock import MagicMock
 
 from glean import testing
