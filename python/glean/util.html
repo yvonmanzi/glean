@@ -30,6 +30,7 @@
 
 
 import locale
+import sys
 import time
 
 
@@ -51,11 +52,26 @@ def get_locale_tag() -&gt; str:
     return value
 
 
-def time_ms() -&gt; int:
-    &#34;&#34;&#34;
-    Get time from a monotonic timer in milliseconds.
-    &#34;&#34;&#34;
-    return int(time.time_ns() / 1000)</code></pre>
+if sys.version_info &gt;= (3, 7):
+
+    def time_ms() -&gt; int:
+        &#34;&#34;&#34;
+        Get time from a monotonic timer in milliseconds.
+
+        On Python prior to 3.7, this may have less than millisecond resolution.
+        &#34;&#34;&#34;
+        return int(time.time_ns() / 1000)
+
+
+else:
+
+    def time_ms() -&gt; int:
+        &#34;&#34;&#34;
+        Get time from a monotonic timer in milliseconds.
+
+        On Python prior to 3.7, this may have less than millisecond resolution.
+        &#34;&#34;&#34;
+        return int(time.time() * 1000.0)</code></pre>
 </details>
 </section>
 <section>
@@ -102,7 +118,8 @@ for the currently set locale.</p>
 <span>def <span class="ident">time_ms</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Get time from a monotonic timer in milliseconds.</p></section>
+<section class="desc"><p>Get time from a monotonic timer in milliseconds.</p>
+<p>On Python prior to 3.7, this may have less than millisecond resolution.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -110,6 +127,8 @@ for the currently set locale.</p>
 <pre><code class="python">def time_ms() -&gt; int:
     &#34;&#34;&#34;
     Get time from a monotonic timer in milliseconds.
+
+    On Python prior to 3.7, this may have less than millisecond resolution.
     &#34;&#34;&#34;
     return int(time.time_ns() / 1000)</code></pre>
 </details>

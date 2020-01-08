@@ -107,11 +107,11 @@ to the user-provided delegate.</p></section>
         try:
             parsed_json = json.loads(data)
         except json.decoder.JSONDecodeError as e:
-            log.debug(f&#34;Exception parsing ping as JSON: {e}&#34;)
+            log.debug(&#34;Exception parsing ping as JSON: &#34; + str(e))
         else:
             indented = json.dumps(parsed_json, indent=2)
 
-            log.debug(f&#34;Glean ping to URL: {path}\n{indented}&#34;)
+            log.debug(&#34;Glean ping to URL: {}\n{}&#34;.format(path, indented))
 
     @staticmethod
     def _create_date_header_value():
@@ -340,14 +340,14 @@ to the user-provided delegate.</p></section>
                 timeout=cls._DEFAULT_TIMEOUT,
             )
         else:
-            raise ValueError(f&#34;Unknown URL scheme {parsed_url.scheme}&#34;)
+            raise ValueError(&#34;Unknown URL scheme {}&#34;.format(parsed_url.scheme))
 
         conn.request(
             &#34;POST&#34;, parsed_url.path, body=data.encode(&#34;utf-8&#34;), headers=dict(headers),
         )
         response = conn.getresponse()
 
-        log.debug(f&#34;Ping upload: {response.status}&#34;)
+        log.debug(&#34;Ping upload: {}&#34;.format(response.status))
 
         status_class = response.status // 100
 
@@ -356,7 +356,7 @@ to the user-provided delegate.</p></section>
         if status_class == 2:  # 2xx status
             # Known success
             # 200 - OK.  Request accepted into the pipeline
-            log.debug(f&#34;Ping successfully sent ({response.status})&#34;)
+            log.debug(&#34;Ping successfully sent ({})&#34;.format(response.status))
             return True
         elif status_class == 4:  # 4xx status
             # Known client (4xx) errors:
@@ -371,14 +371,14 @@ to the user-provided delegate.</p></section>
             # Something our client did is not correct. It&#39;s unlikely that the
             # client is going to recover from this by re-trying again, so we
             # just log and error and report a successful upload to the service.
-            log.error(f&#34;Server returned client error code: {response.status}&#34;)
+            log.error(&#34;Server returned client error code: {}&#34;.format(response.status))
             return True
         else:
             # Known other errors:
             # 500 - internal error
 
             # For all other errors, we log a warning and try again at a later time.
-            log.error(f&#34;Server returned response code: {response.status}&#34;)
+            log.error(&#34;Server returned response code: {}&#34;.format(response.status))
             return False</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -430,14 +430,14 @@ def upload(cls, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
             timeout=cls._DEFAULT_TIMEOUT,
         )
     else:
-        raise ValueError(f&#34;Unknown URL scheme {parsed_url.scheme}&#34;)
+        raise ValueError(&#34;Unknown URL scheme {}&#34;.format(parsed_url.scheme))
 
     conn.request(
         &#34;POST&#34;, parsed_url.path, body=data.encode(&#34;utf-8&#34;), headers=dict(headers),
     )
     response = conn.getresponse()
 
-    log.debug(f&#34;Ping upload: {response.status}&#34;)
+    log.debug(&#34;Ping upload: {}&#34;.format(response.status))
 
     status_class = response.status // 100
 
@@ -446,7 +446,7 @@ def upload(cls, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
     if status_class == 2:  # 2xx status
         # Known success
         # 200 - OK.  Request accepted into the pipeline
-        log.debug(f&#34;Ping successfully sent ({response.status})&#34;)
+        log.debug(&#34;Ping successfully sent ({})&#34;.format(response.status))
         return True
     elif status_class == 4:  # 4xx status
         # Known client (4xx) errors:
@@ -461,14 +461,14 @@ def upload(cls, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
         # Something our client did is not correct. It&#39;s unlikely that the
         # client is going to recover from this by re-trying again, so we
         # just log and error and report a successful upload to the service.
-        log.error(f&#34;Server returned client error code: {response.status}&#34;)
+        log.error(&#34;Server returned client error code: {}&#34;.format(response.status))
         return True
     else:
         # Known other errors:
         # 500 - internal error
 
         # For all other errors, we log a warning and try again at a later time.
-        log.error(f&#34;Server returned response code: {response.status}&#34;)
+        log.error(&#34;Server returned response code: {}&#34;.format(response.status))
         return False</code></pre>
 </details>
 </dd>
@@ -527,21 +527,23 @@ def upload(cls, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
 
         storage_dir = cls.storage_directory()
 
-        log.debug(f&#34;Processing persisted pings at {storage_dir.resolve()}&#34;)
+        log.debug(&#34;Processing persisted pings at {}&#34;.format(storage_dir.resolve()))
 
         try:
             for path in storage_dir.iterdir():
                 if path.is_file():
                     if cls._FILE_PATTERN.match(path.name):
-                        log.debug(f&#34;Processing ping: {path.name}&#34;)
+                        log.debug(&#34;Processing ping: {}&#34;.format(path.name))
                         if not cls._process_file(path):
-                            log.error(f&#34;Error processing ping file: {path.name}&#34;)
+                            log.error(
+                                &#34;Error processing ping file: {}&#34;.format(path.name)
+                            )
                             success = False
                     else:
-                        log.debug(f&#34;Pattern mismatch. Deleting {path.name}&#34;)
+                        log.debug(&#34;Pattern mismatch. Deleting {}&#34;.format(path.name))
                         path.unlink()
         except FileNotFoundError:
-            log.debug(f&#34;File not found: {storage_dir.resolve()}&#34;)
+            log.debug(&#34;File not found: {}&#34;.format(storage_dir.resolve()))
             success = False
 
         return success
@@ -556,20 +558,20 @@ def upload(cls, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
         processed = False
 
         try:
-            with open(path, &#34;r&#34;, encoding=&#34;utf-8&#34;) as fd:
+            with path.open(&#34;r&#34;, encoding=&#34;utf-8&#34;) as fd:
                 lines = iter(fd)
                 try:
                     url_path = next(lines).strip()
                     serialized_ping = next(lines)
                 except StopIteration:
                     path.unlink()
-                    log.error(f&#34;Invalid ping content in {path.resolve()}&#34;)
+                    log.error(&#34;Invalid ping content in {}&#34;.format(path.resolve()))
                     return False
         except FileNotFoundError:
-            log.error(f&#34;Could not find ping file {path.resolve()}&#34;)
+            log.error(&#34;Could not find ping file {}&#34;.format(path.resolve()))
             return False
         except IOError as e:
-            log.error(f&#34;IOError when reading {path.resolve()}: {e}&#34;)
+            log.error(&#34;IOError when reading {}: {}&#34;.format(path.resolve(), e))
             return False
 
         processed = Glean._configuration.ping_uploader.do_upload(
@@ -578,7 +580,7 @@ def upload(cls, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
 
         if processed:
             path.unlink()
-            log.debug(f&#34;{path.name} was deleted&#34;)
+            log.debug(&#34;{} was deleted&#34;.format(path.name))
 
         return processed</code></pre>
 </details>
@@ -621,21 +623,23 @@ def process(cls) -&gt; bool:
 
     storage_dir = cls.storage_directory()
 
-    log.debug(f&#34;Processing persisted pings at {storage_dir.resolve()}&#34;)
+    log.debug(&#34;Processing persisted pings at {}&#34;.format(storage_dir.resolve()))
 
     try:
         for path in storage_dir.iterdir():
             if path.is_file():
                 if cls._FILE_PATTERN.match(path.name):
-                    log.debug(f&#34;Processing ping: {path.name}&#34;)
+                    log.debug(&#34;Processing ping: {}&#34;.format(path.name))
                     if not cls._process_file(path):
-                        log.error(f&#34;Error processing ping file: {path.name}&#34;)
+                        log.error(
+                            &#34;Error processing ping file: {}&#34;.format(path.name)
+                        )
                         success = False
                 else:
-                    log.debug(f&#34;Pattern mismatch. Deleting {path.name}&#34;)
+                    log.debug(&#34;Pattern mismatch. Deleting {}&#34;.format(path.name))
                     path.unlink()
     except FileNotFoundError:
-        log.debug(f&#34;File not found: {storage_dir.resolve()}&#34;)
+        log.debug(&#34;File not found: {}&#34;.format(storage_dir.resolve()))
         success = False
 
     return success</code></pre>

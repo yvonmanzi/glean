@@ -29,7 +29,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 
-import dataclasses
 import json
 from typing import Dict, List, Optional
 
@@ -44,34 +43,59 @@ from .. import util
 from .lifetime import Lifetime
 
 
-@dataclasses.dataclass
 class RecordedEventData:
     &#34;&#34;&#34;
     Deserialized event data.
     &#34;&#34;&#34;
 
-    category: str
-    &#34;&#34;&#34;The event&#39;s category, part of the full identifier.&#34;&#34;&#34;
+    def __init__(
+        self,
+        category: str,
+        name: str,
+        timestamp: int,
+        extra: Optional[Dict[str, str]] = None,
+    ):
+        &#34;&#34;&#34;
+        Args:
+            category (str): The event&#39;s category, part of the full identifier.
+            name (str): The event&#39;s name, part of the full identifier.
+            timestamp (int): The event&#39;s timestamp, in milliseconds.
+            extra (dict of str-&gt;str): Optional. Any extra data recorded for
+                the event.
+        &#34;&#34;&#34;
+        self._category = category
+        self._name = name
+        self._timestamp = timestamp
+        if extra is None:
+            extra = {}
+        self._extra = extra
 
-    name: str
-    &#34;&#34;&#34;The event&#39;s name, part of the full identifier.&#34;&#34;&#34;
+    @property
+    def category(self):
+        &#34;&#34;&#34;The event&#39;s category, part of the full identifier.&#34;&#34;&#34;
+        return self._category
 
-    timestamp: int
-    &#34;&#34;&#34;The event&#39;s timestamp.&#34;&#34;&#34;
+    @property
+    def name(self):
+        &#34;&#34;&#34;The event&#39;s name, part of the full identifier.&#34;&#34;&#34;
+        return self._name
 
-    extra: Optional[Dict[str, str]] = None
-    &#34;&#34;&#34;Any extra data recorded for the event.&#34;&#34;&#34;
+    @property
+    def timestamp(self):
+        &#34;&#34;&#34;The event&#39;s timestamp.&#34;&#34;&#34;
+        return self._timestamp
 
-    def __post_init__(self):
-        if self.extra is None:
-            self.extra = {}
+    @property
+    def extra(self):
+        &#34;&#34;&#34;Any extra data recorded for the event.&#34;&#34;&#34;
+        return self._extra
 
     @property
     def identifier(self):
         if self.category == &#34;&#34;:
             return self.name
         else:
-            return f&#34;{self.category}.{self.name}&#34;
+            return &#34;.&#34;.join([self.category, self.name])
 
 
 class EventMetricType:
@@ -608,7 +632,18 @@ of the ping to retrieve the metric for.</dd>
 <span>(</span><span>category, name, timestamp, extra=None)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Deserialized event data.</p></section>
+<section class="desc"><p>Deserialized event data.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>category</code></strong> :&ensp;<code>str</code></dt>
+<dd>The event's category, part of the full identifier.</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The event's name, part of the full identifier.</dd>
+<dt><strong><code>timestamp</code></strong> :&ensp;<code>int</code></dt>
+<dd>The event's timestamp, in milliseconds.</dd>
+</dl>
+<p>extra (dict of str-&gt;str): Optional. Any extra data recorded for
+the event.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -618,38 +653,83 @@ of the ping to retrieve the metric for.</dd>
     Deserialized event data.
     &#34;&#34;&#34;
 
-    category: str
-    &#34;&#34;&#34;The event&#39;s category, part of the full identifier.&#34;&#34;&#34;
+    def __init__(
+        self,
+        category: str,
+        name: str,
+        timestamp: int,
+        extra: Optional[Dict[str, str]] = None,
+    ):
+        &#34;&#34;&#34;
+        Args:
+            category (str): The event&#39;s category, part of the full identifier.
+            name (str): The event&#39;s name, part of the full identifier.
+            timestamp (int): The event&#39;s timestamp, in milliseconds.
+            extra (dict of str-&gt;str): Optional. Any extra data recorded for
+                the event.
+        &#34;&#34;&#34;
+        self._category = category
+        self._name = name
+        self._timestamp = timestamp
+        if extra is None:
+            extra = {}
+        self._extra = extra
 
-    name: str
-    &#34;&#34;&#34;The event&#39;s name, part of the full identifier.&#34;&#34;&#34;
+    @property
+    def category(self):
+        &#34;&#34;&#34;The event&#39;s category, part of the full identifier.&#34;&#34;&#34;
+        return self._category
 
-    timestamp: int
-    &#34;&#34;&#34;The event&#39;s timestamp.&#34;&#34;&#34;
+    @property
+    def name(self):
+        &#34;&#34;&#34;The event&#39;s name, part of the full identifier.&#34;&#34;&#34;
+        return self._name
 
-    extra: Optional[Dict[str, str]] = None
-    &#34;&#34;&#34;Any extra data recorded for the event.&#34;&#34;&#34;
+    @property
+    def timestamp(self):
+        &#34;&#34;&#34;The event&#39;s timestamp.&#34;&#34;&#34;
+        return self._timestamp
 
-    def __post_init__(self):
-        if self.extra is None:
-            self.extra = {}
+    @property
+    def extra(self):
+        &#34;&#34;&#34;Any extra data recorded for the event.&#34;&#34;&#34;
+        return self._extra
 
     @property
     def identifier(self):
         if self.category == &#34;&#34;:
             return self.name
         else:
-            return f&#34;{self.category}.{self.name}&#34;</code></pre>
+            return &#34;.&#34;.join([self.category, self.name])</code></pre>
 </details>
-<h3>Class variables</h3>
+<h3>Instance variables</h3>
 <dl>
+<dt id="glean.metrics.event.RecordedEventData.category"><code class="name">var <span class="ident">category</span></code></dt>
+<dd>
+<section class="desc"><p>The event's category, part of the full identifier.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def category(self):
+    &#34;&#34;&#34;The event&#39;s category, part of the full identifier.&#34;&#34;&#34;
+    return self._category</code></pre>
+</details>
+</dd>
 <dt id="glean.metrics.event.RecordedEventData.extra"><code class="name">var <span class="ident">extra</span></code></dt>
 <dd>
 <section class="desc"><p>Any extra data recorded for the event.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def extra(self):
+    &#34;&#34;&#34;Any extra data recorded for the event.&#34;&#34;&#34;
+    return self._extra</code></pre>
+</details>
 </dd>
-</dl>
-<h3>Instance variables</h3>
-<dl>
 <dt id="glean.metrics.event.RecordedEventData.identifier"><code class="name">var <span class="ident">identifier</span></code></dt>
 <dd>
 <section class="desc"></section>
@@ -662,7 +742,33 @@ def identifier(self):
     if self.category == &#34;&#34;:
         return self.name
     else:
-        return f&#34;{self.category}.{self.name}&#34;</code></pre>
+        return &#34;.&#34;.join([self.category, self.name])</code></pre>
+</details>
+</dd>
+<dt id="glean.metrics.event.RecordedEventData.name"><code class="name">var <span class="ident">name</span></code></dt>
+<dd>
+<section class="desc"><p>The event's name, part of the full identifier.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def name(self):
+    &#34;&#34;&#34;The event&#39;s name, part of the full identifier.&#34;&#34;&#34;
+    return self._name</code></pre>
+</details>
+</dd>
+<dt id="glean.metrics.event.RecordedEventData.timestamp"><code class="name">var <span class="ident">timestamp</span></code></dt>
+<dd>
+<section class="desc"><p>The event's timestamp.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def timestamp(self):
+    &#34;&#34;&#34;The event&#39;s timestamp.&#34;&#34;&#34;
+    return self._timestamp</code></pre>
 </details>
 </dd>
 </dl>
@@ -695,8 +801,11 @@ def identifier(self):
 <li>
 <h4><code><a title="glean.metrics.event.RecordedEventData" href="#glean.metrics.event.RecordedEventData">RecordedEventData</a></code></h4>
 <ul class="">
+<li><code><a title="glean.metrics.event.RecordedEventData.category" href="#glean.metrics.event.RecordedEventData.category">category</a></code></li>
 <li><code><a title="glean.metrics.event.RecordedEventData.extra" href="#glean.metrics.event.RecordedEventData.extra">extra</a></code></li>
 <li><code><a title="glean.metrics.event.RecordedEventData.identifier" href="#glean.metrics.event.RecordedEventData.identifier">identifier</a></code></li>
+<li><code><a title="glean.metrics.event.RecordedEventData.name" href="#glean.metrics.event.RecordedEventData.name">name</a></code></li>
+<li><code><a title="glean.metrics.event.RecordedEventData.timestamp" href="#glean.metrics.event.RecordedEventData.timestamp">timestamp</a></code></li>
 </ul>
 </li>
 </ul>

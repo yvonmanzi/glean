@@ -316,42 +316,6 @@
 <span id="316">316</span>
 <span id="317">317</span>
 <span id="318">318</span>
-<span id="319">319</span>
-<span id="320">320</span>
-<span id="321">321</span>
-<span id="322">322</span>
-<span id="323">323</span>
-<span id="324">324</span>
-<span id="325">325</span>
-<span id="326">326</span>
-<span id="327">327</span>
-<span id="328">328</span>
-<span id="329">329</span>
-<span id="330">330</span>
-<span id="331">331</span>
-<span id="332">332</span>
-<span id="333">333</span>
-<span id="334">334</span>
-<span id="335">335</span>
-<span id="336">336</span>
-<span id="337">337</span>
-<span id="338">338</span>
-<span id="339">339</span>
-<span id="340">340</span>
-<span id="341">341</span>
-<span id="342">342</span>
-<span id="343">343</span>
-<span id="344">344</span>
-<span id="345">345</span>
-<span id="346">346</span>
-<span id="347">347</span>
-<span id="348">348</span>
-<span id="349">349</span>
-<span id="350">350</span>
-<span id="351">351</span>
-<span id="352">352</span>
-<span id="353">353</span>
-<span id="354">354</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -401,29 +365,6 @@
     <span class="doccomment">/// Create a new PingMaker.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>
-    }
-
-    <span class="doccomment">/// Set the next ping sequence number to the provided one.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This function stores the next sequence number (the one that</span>
-    <span class="doccomment">/// will be returned next time `get_ping_seq` is called) in the</span>
-    <span class="doccomment">/// glean-core store. The main purpose of this function is to allow</span>
-    <span class="doccomment">/// overriding sequence numbers with migration data coming from</span>
-    <span class="doccomment">/// glean-ac.</span>
-    <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn</span> <span class="ident">set_ping_seq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">next_seq</span>: <span class="ident">i32</span>) {
-        <span class="comment">// Sequence numbers are stored as a counter under a name that includes the storage name</span>
-        <span class="kw">let</span> <span class="ident">seq</span> <span class="op">=</span> <span class="ident">CounterMetric</span>::<span class="ident">new</span>(<span class="ident">CommonMetricData</span> {
-            <span class="ident">name</span>: <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}#sequence&quot;</span>, <span class="ident">storage_name</span>),
-            <span class="comment">// We don&#39;t need a category, the name is already unique</span>
-            <span class="ident">category</span>: <span class="string">&quot;&quot;</span>.<span class="ident">into</span>(),
-            <span class="ident">send_in_pings</span>: <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">INTERNAL_STORAGE</span>.<span class="ident">into</span>()],
-            <span class="ident">lifetime</span>: <span class="ident">Lifetime</span>::<span class="ident">User</span>,
-            ..<span class="ident">Default</span>::<span class="ident">default</span>()
-        });
-
-        <span class="comment">// It&#39;s safe to add `next_seq` because the glean-ac migration code</span>
-        <span class="comment">// clears the glean-core database before the migration starts.</span>
-        <span class="ident">seq</span>.<span class="ident">add</span>(<span class="ident">glean</span>, <span class="ident">next_seq</span>);
     }
 
     <span class="doccomment">/// Get, and then increment, the sequence number for a given ping.</span>
@@ -692,19 +633,6 @@
         <span class="ident">glean</span>.<span class="ident">set_upload_enabled</span>(<span class="bool-val">true</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">0</span>, <span class="ident">ping_maker</span>.<span class="ident">get_ping_seq</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="string">&quot;custom&quot;</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">1</span>, <span class="ident">ping_maker</span>.<span class="ident">get_ping_seq</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="string">&quot;custom&quot;</span>));
-    }
-
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">set_ping_seq_must_correctly_set_sequence_numbers</span>() {
-        <span class="kw">let</span> (<span class="ident">glean</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">new_glean</span>();
-        <span class="kw">let</span> <span class="ident">ping_maker</span> <span class="op">=</span> <span class="ident">PingMaker</span>::<span class="ident">new</span>();
-
-        <span class="ident">ping_maker</span>.<span class="ident">set_ping_seq</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="string">&quot;custom&quot;</span>, <span class="number">3</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">3</span>, <span class="ident">ping_maker</span>.<span class="ident">get_ping_seq</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="string">&quot;custom&quot;</span>));
-
-        <span class="ident">ping_maker</span>.<span class="ident">set_ping_seq</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="string">&quot;other&quot;</span>, <span class="number">7</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">7</span>, <span class="ident">ping_maker</span>.<span class="ident">get_ping_seq</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="string">&quot;other&quot;</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">8</span>, <span class="ident">ping_maker</span>.<span class="ident">get_ping_seq</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="string">&quot;other&quot;</span>));
     }
 }
 </pre></div>

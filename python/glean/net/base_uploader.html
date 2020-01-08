@@ -70,11 +70,11 @@ class BaseUploader(ping_uploader.PingUploader):
         try:
             parsed_json = json.loads(data)
         except json.decoder.JSONDecodeError as e:
-            log.debug(f&#34;Exception parsing ping as JSON: {e}&#34;)
+            log.debug(&#34;Exception parsing ping as JSON: &#34; + str(e))
         else:
             indented = json.dumps(parsed_json, indent=2)
 
-            log.debug(f&#34;Glean ping to URL: {path}\n{indented}&#34;)
+            log.debug(&#34;Glean ping to URL: {}\n{}&#34;.format(path, indented))
 
     @staticmethod
     def _create_date_header_value():
@@ -181,11 +181,11 @@ to the user-provided delegate.</p></section>
         try:
             parsed_json = json.loads(data)
         except json.decoder.JSONDecodeError as e:
-            log.debug(f&#34;Exception parsing ping as JSON: {e}&#34;)
+            log.debug(&#34;Exception parsing ping as JSON: &#34; + str(e))
         else:
             indented = json.dumps(parsed_json, indent=2)
 
-            log.debug(f&#34;Glean ping to URL: {path}\n{indented}&#34;)
+            log.debug(&#34;Glean ping to URL: {}\n{}&#34;.format(path, indented))
 
     @staticmethod
     def _create_date_header_value():

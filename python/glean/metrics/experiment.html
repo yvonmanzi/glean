@@ -29,27 +29,35 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 
-import dataclasses
 from typing import Dict
 
 
-@dataclasses.dataclass
 class RecordedExperimentData:
     &#34;&#34;&#34;
     Deserialized experiment data.
     &#34;&#34;&#34;
 
-    branch: str
-    &#34;&#34;&#34;
-    The experiment&#39;s branch, as set through
-    `glean.Glean.set_experiment_active`.
-    &#34;&#34;&#34;
+    def __init__(self, branch: str, extra: Dict[str, str] = None):
+        &#34;&#34;&#34;
+        Args:
+            branch (str): The experiment&#39;s branch.
+            extra (dict of str-&gt;str): Any extra data associated with this
+                experiment.
+        &#34;&#34;&#34;
+        self._branch = branch
+        if extra is None:
+            extra = {}
+        self._extra = extra
 
-    extra: Dict[str, str]
-    &#34;&#34;&#34;
-    And extra data associated with this experiment through
-    `glean.Glean.set_experiment_active`.
-    &#34;&#34;&#34;
+    @property
+    def branch(self):
+        &#34;&#34;&#34;The experiment&#39;s branch.&#34;&#34;&#34;
+        return self._branch
+
+    @property
+    def extra(self):
+        &#34;&#34;&#34;Any extra data associated with this experiment.&#34;&#34;&#34;
+        return self._extra
 
 
 __all__ = [&#34;RecordedExperimentData&#34;]</code></pre>
@@ -66,10 +74,17 @@ __all__ = [&#34;RecordedExperimentData&#34;]</code></pre>
 <dl>
 <dt id="glean.metrics.experiment.RecordedExperimentData"><code class="flex name class">
 <span>class <span class="ident">RecordedExperimentData</span></span>
-<span>(</span><span>branch, extra)</span>
+<span>(</span><span>branch, extra=None)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Deserialized experiment data.</p></section>
+<section class="desc"><p>Deserialized experiment data.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>branch</code></strong> :&ensp;<code>str</code></dt>
+<dd>The experiment's branch.</dd>
+</dl>
+<p>extra (dict of str-&gt;str): Any extra data associated with this
+experiment.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -79,18 +94,57 @@ __all__ = [&#34;RecordedExperimentData&#34;]</code></pre>
     Deserialized experiment data.
     &#34;&#34;&#34;
 
-    branch: str
-    &#34;&#34;&#34;
-    The experiment&#39;s branch, as set through
-    `glean.Glean.set_experiment_active`.
-    &#34;&#34;&#34;
+    def __init__(self, branch: str, extra: Dict[str, str] = None):
+        &#34;&#34;&#34;
+        Args:
+            branch (str): The experiment&#39;s branch.
+            extra (dict of str-&gt;str): Any extra data associated with this
+                experiment.
+        &#34;&#34;&#34;
+        self._branch = branch
+        if extra is None:
+            extra = {}
+        self._extra = extra
 
-    extra: Dict[str, str]
-    &#34;&#34;&#34;
-    And extra data associated with this experiment through
-    `glean.Glean.set_experiment_active`.
-    &#34;&#34;&#34;</code></pre>
+    @property
+    def branch(self):
+        &#34;&#34;&#34;The experiment&#39;s branch.&#34;&#34;&#34;
+        return self._branch
+
+    @property
+    def extra(self):
+        &#34;&#34;&#34;Any extra data associated with this experiment.&#34;&#34;&#34;
+        return self._extra</code></pre>
 </details>
+<h3>Instance variables</h3>
+<dl>
+<dt id="glean.metrics.experiment.RecordedExperimentData.branch"><code class="name">var <span class="ident">branch</span></code></dt>
+<dd>
+<section class="desc"><p>The experiment's branch.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def branch(self):
+    &#34;&#34;&#34;The experiment&#39;s branch.&#34;&#34;&#34;
+    return self._branch</code></pre>
+</details>
+</dd>
+<dt id="glean.metrics.experiment.RecordedExperimentData.extra"><code class="name">var <span class="ident">extra</span></code></dt>
+<dd>
+<section class="desc"><p>Any extra data associated with this experiment.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def extra(self):
+    &#34;&#34;&#34;Any extra data associated with this experiment.&#34;&#34;&#34;
+    return self._extra</code></pre>
+</details>
+</dd>
+</dl>
 </dd>
 </dl>
 </section>
@@ -110,6 +164,10 @@ __all__ = [&#34;RecordedExperimentData&#34;]</code></pre>
 <ul>
 <li>
 <h4><code><a title="glean.metrics.experiment.RecordedExperimentData" href="#glean.metrics.experiment.RecordedExperimentData">RecordedExperimentData</a></code></h4>
+<ul class="">
+<li><code><a title="glean.metrics.experiment.RecordedExperimentData.branch" href="#glean.metrics.experiment.RecordedExperimentData.branch">branch</a></code></li>
+<li><code><a title="glean.metrics.experiment.RecordedExperimentData.extra" href="#glean.metrics.experiment.RecordedExperimentData.extra">extra</a></code></li>
+</ul>
 </li>
 </ul>
 </li>

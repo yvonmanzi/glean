@@ -254,39 +254,6 @@
 <span id="254">254</span>
 <span id="255">255</span>
 <span id="256">256</span>
-<span id="257">257</span>
-<span id="258">258</span>
-<span id="259">259</span>
-<span id="260">260</span>
-<span id="261">261</span>
-<span id="262">262</span>
-<span id="263">263</span>
-<span id="264">264</span>
-<span id="265">265</span>
-<span id="266">266</span>
-<span id="267">267</span>
-<span id="268">268</span>
-<span id="269">269</span>
-<span id="270">270</span>
-<span id="271">271</span>
-<span id="272">272</span>
-<span id="273">273</span>
-<span id="274">274</span>
-<span id="275">275</span>
-<span id="276">276</span>
-<span id="277">277</span>
-<span id="278">278</span>
-<span id="279">279</span>
-<span id="280">280</span>
-<span id="281">281</span>
-<span id="282">282</span>
-<span id="283">283</span>
-<span id="284">284</span>
-<span id="285">285</span>
-<span id="286">286</span>
-<span id="287">287</span>
-<span id="288">288</span>
-<span id="289">289</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -429,39 +396,6 @@
         <span class="comment">//    and we copy out all data when needed.</span>
         <span class="kw">let</span> <span class="ident">glean_cfg</span> <span class="op">=</span> <span class="ident">glean_core</span>::<span class="ident">Configuration</span>::<span class="ident">try_from</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">cfg</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">glean</span> <span class="op">=</span> <span class="ident">Glean</span>::<span class="ident">new</span>(<span class="ident">glean_cfg</span>)<span class="question-mark">?</span>;
-        <span class="ident">log</span>::<span class="macro">info</span><span class="macro">!</span>(<span class="string">&quot;Glean initialized&quot;</span>);
-        <span class="prelude-val">Ok</span>(<span class="ident">glean</span>)
-    })
-}
-
-<span class="doccomment">/// # Safety</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// A valid and non-null configuration object is required for this function.</span>
-<span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_initialize_migration</span>(
-    <span class="ident">cfg</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">FfiConfiguration</span>,
-    <span class="ident">seq_num_keys</span>: <span class="ident">RawStringArray</span>,
-    <span class="ident">seq_num_values</span>: <span class="ident">RawIntArray</span>,
-    <span class="ident">seq_num_len</span>: <span class="ident">i32</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
-    <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">cfg</span>.<span class="ident">is_null</span>());
-
-    <span class="ident">GLEAN</span>.<span class="ident">insert_with_log</span>(<span class="op">|</span><span class="op">|</span> {
-        <span class="comment">// We can create a reference to the FfiConfiguration struct:</span>
-        <span class="comment">// 1. We did a null check</span>
-        <span class="comment">// 2. We&#39;re not holding on to it beyond this function</span>
-        <span class="comment">//    and we copy out all data when needed.</span>
-        <span class="kw">let</span> <span class="ident">glean_cfg</span> <span class="op">=</span> <span class="ident">glean_core</span>::<span class="ident">Configuration</span>::<span class="ident">try_from</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">cfg</span>)<span class="question-mark">?</span>;
-
-        <span class="kw">let</span> <span class="ident">seq_nums</span> <span class="op">=</span>
-            <span class="ident">from_raw_string_array_and_int_array</span>(<span class="ident">seq_num_keys</span>, <span class="ident">seq_num_values</span>, <span class="ident">seq_num_len</span>);
-
-        <span class="kw">let</span> <span class="ident">glean</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">seq_nums</span>)) <span class="op">=</span> <span class="ident">seq_nums</span> {
-            <span class="ident">Glean</span>::<span class="ident">with_sequence_numbers</span>(<span class="ident">glean_cfg</span>, <span class="ident">seq_nums</span>)
-        } <span class="kw">else</span> {
-            <span class="ident">Glean</span>::<span class="ident">new</span>(<span class="ident">glean_cfg</span>)
-        }<span class="question-mark">?</span>;
-
         <span class="ident">log</span>::<span class="macro">info</span><span class="macro">!</span>(<span class="string">&quot;Glean initialized&quot;</span>);
         <span class="prelude-val">Ok</span>(<span class="ident">glean</span>)
     })

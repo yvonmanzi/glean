@@ -39,7 +39,7 @@ from .config import Configuration
 from ._loader import load_metrics, load_pings
 
 
-__version__: str = &#34;unknown&#34;
+__version__ = &#34;unknown&#34;  # type: str
 try:
     __version__ = str(get_distribution(&#34;glean-sdk&#34;).version)
 except DistributionNotFound:  # pragma: no cover
@@ -159,7 +159,7 @@ the <code>metrics.yaml</code> file.</dd>
 
     metrics = result.value
     if len(metrics) == 0:
-        raise ValueError(f&#34;Didn&#39;t find any metrics in &#39;{filepath}&#39;&#34;)
+        raise ValueError(&#34;Didn&#39;t find any metrics in &#39;{}&#39;&#34;.format(filepath))
 
     root = type(&#34;Metrics&#34;, (object,), {})
 
@@ -234,10 +234,34 @@ the <code>pings.yaml</code> file.</dd>
 <dl>
 <dt id="glean.Configuration"><code class="flex name class">
 <span>class <span class="ident">Configuration</span></span>
-<span>(</span><span>server_endpoint='https://incoming.telemetry.mozilla.org', user_agent=&lt;factory&gt;, channel=None, max_events=500, log_pings=False, ping_tag=None, ping_uploader=&lt;glean.net.http_client.HttpClientUploader object&gt;)</span>
+<span>(</span><span>server_endpoint='https://incoming.telemetry.mozilla.org', user_agent=None, channel=None, max_events=500, log_pings=False, ping_tag=None, ping_uploader=None)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Configuration values for Glean.</p></section>
+<section class="desc"><p>Configuration values for Glean.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>server_endpoint</code></strong> :&ensp;<code>str</code></dt>
+<dd>Optional. The server pings are sent to.
+Defaults to <code>DEFAULT_TELEMETRY_ENDPOINT</code>.</dd>
+<dt><strong><code>user_agent</code></strong> :&ensp;<code>str</code></dt>
+<dd>Optional. The user agent used when sending pings.
+Defaults to <code>Glean/x.x.x (Python on {sys.platform})</code>.</dd>
+<dt><strong><code>channel</code></strong> :&ensp;<code>str</code></dt>
+<dd>Optional. The release channel the application is on,
+if known.</dd>
+<dt><strong><code>max_events</code></strong> :&ensp;<code>int</code></dt>
+<dd>Optional.The number of events to store before
+force-sending. Defaults to <code>DEFAULT_MAX_EVENTS</code>.</dd>
+<dt><strong><code>log_pings</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Optional. Whether to log ping contents to the
+console. Defaults to <code>False</code>.</dd>
+<dt><strong><code>ping_tag</code></strong> :&ensp;<code>str</code></dt>
+<dd>Optional. String tag to be applied to headers when
+uploading pings for debug view.</dd>
+<dt><strong><code>ping_uploader</code></strong> :&ensp;<a title="glean.net.BaseUploader" href="net/index.html#glean.net.BaseUploader"><code>BaseUploader</code></a></dt>
+<dd>Optional. The ping uploader
+implementation. Defaults to <a title="glean.net.HttpClientUploader" href="net/index.html#glean.net.HttpClientUploader"><code>HttpClientUploader</code></a>.</dd>
+</dl></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -247,54 +271,200 @@ the <code>pings.yaml</code> file.</dd>
     Configuration values for Glean.
     &#34;&#34;&#34;
 
-    server_endpoint: str = DEFAULT_TELEMETRY_ENDPOINT
-    &#34;&#34;&#34;The server pings are sent to.&#34;&#34;&#34;
+    def __init__(
+        self,
+        server_endpoint: str = DEFAULT_TELEMETRY_ENDPOINT,
+        user_agent: Optional[str] = None,
+        channel: Optional[str] = None,
+        max_events: int = DEFAULT_MAX_EVENTS,
+        log_pings: bool = False,
+        ping_tag: Optional[str] = None,
+        ping_uploader: Optional[net.BaseUploader] = None,
+    ):
+        &#34;&#34;&#34;
+        Args:
+            server_endpoint (str): Optional. The server pings are sent to.
+                Defaults to `DEFAULT_TELEMETRY_ENDPOINT`.
+            user_agent (str): Optional. The user agent used when sending pings.
+                Defaults to `Glean/x.x.x (Python on {sys.platform})`.
+            channel (str): Optional. The release channel the application is on,
+                if known.
+            max_events (int): Optional.The number of events to store before
+                force-sending. Defaults to `DEFAULT_MAX_EVENTS`.
+            log_pings (bool): Optional. Whether to log ping contents to the
+                console. Defaults to `False`.
+            ping_tag (str): Optional. String tag to be applied to headers when
+                uploading pings for debug view.
+            ping_uploader (glean.net.BaseUploader): Optional. The ping uploader
+                implementation. Defaults to `glean.net.HttpClientUploader`.
+        &#34;&#34;&#34;
+        self._server_endpoint = server_endpoint
+        if user_agent is None:
+            user_agent = _get_default_user_agent()
+        self._user_agent = user_agent
+        self._channel = channel
+        self._max_events = max_events
+        self._log_pings = log_pings
+        self._ping_tag = ping_tag
+        if ping_uploader is None:
+            ping_uploader = net.HttpClientUploader()
+        self._ping_uploader = ping_uploader
 
-    user_agent: Optional[str] = dataclasses.field(
-        default_factory=_get_default_user_agent
-    )
-    &#34;&#34;&#34;The user agent used when sending pings.&#34;&#34;&#34;
+    @property
+    def server_endpoint(self) -&gt; str:
+        &#34;&#34;&#34;The server pings are sent to.&#34;&#34;&#34;
+        return self._server_endpoint
 
-    channel: Optional[str] = None
-    &#34;&#34;&#34;The release channel the application is on, if known.&#34;&#34;&#34;
+    @server_endpoint.setter
+    def server_endpoint(self, value: str):
+        self._server_endpoint = value
 
-    max_events: int = DEFAULT_MAX_EVENTS
-    &#34;&#34;&#34;The number of events to store before force-sending.&#34;&#34;&#34;
+    @property
+    def user_agent(self) -&gt; Optional[str]:
+        &#34;&#34;&#34;The user agent used when sending pings.&#34;&#34;&#34;
+        return self._user_agent
 
-    log_pings: bool = False
-    &#34;&#34;&#34;Whether to log ping contents to the console.&#34;&#34;&#34;
+    @user_agent.setter
+    def user_agent(self, value: str):
+        self._user_agent = value
 
-    ping_tag: Optional[str] = None
-    &#34;&#34;&#34;String tag to be applied to headers when uploading pings for debug view.&#34;&#34;&#34;
+    @property
+    def channel(self) -&gt; Optional[str]:
+        &#34;&#34;&#34;The release channel the application is on, if known.&#34;&#34;&#34;
+        return self._channel
 
-    ping_uploader: net.BaseUploader = net.HttpClientUploader()
-    &#34;&#34;&#34;The ping uploader implementation.&#34;&#34;&#34;</code></pre>
+    @channel.setter
+    def channel(self, value: str):
+        self._channel = value
+
+    @property
+    def max_events(self) -&gt; int:
+        &#34;&#34;&#34;The number of events to store before force-sending.&#34;&#34;&#34;
+        return self._max_events
+
+    @max_events.setter
+    def max_events(self, value: int):
+        self._max_events = value
+
+    @property
+    def log_pings(self) -&gt; bool:
+        &#34;&#34;&#34;Whether to log ping contents to the console.&#34;&#34;&#34;
+        return self._log_pings
+
+    @log_pings.setter
+    def log_pings(self, value: bool):
+        self._log_pings = value
+
+    @property
+    def ping_tag(self) -&gt; Optional[str]:
+        &#34;&#34;&#34;String tag to be applied to headers when uploading pings for debug view.&#34;&#34;&#34;
+        return self._ping_tag
+
+    @ping_tag.setter
+    def ping_tag(self, value: str):
+        self._ping_tag = value
+
+    @property
+    def ping_uploader(self) -&gt; net.BaseUploader:
+        &#34;&#34;&#34;The ping uploader implementation.&#34;&#34;&#34;
+        return self._ping_uploader
+
+    @ping_uploader.setter
+    def ping_uploader(self, value: net.BaseUploader):
+        self._ping_uploader = value</code></pre>
 </details>
-<h3>Class variables</h3>
+<h3>Instance variables</h3>
 <dl>
 <dt id="glean.Configuration.channel"><code class="name">var <span class="ident">channel</span></code></dt>
 <dd>
 <section class="desc"><p>The release channel the application is on, if known.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def channel(self) -&gt; Optional[str]:
+    &#34;&#34;&#34;The release channel the application is on, if known.&#34;&#34;&#34;
+    return self._channel</code></pre>
+</details>
 </dd>
 <dt id="glean.Configuration.log_pings"><code class="name">var <span class="ident">log_pings</span></code></dt>
 <dd>
 <section class="desc"><p>Whether to log ping contents to the console.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def log_pings(self) -&gt; bool:
+    &#34;&#34;&#34;Whether to log ping contents to the console.&#34;&#34;&#34;
+    return self._log_pings</code></pre>
+</details>
 </dd>
 <dt id="glean.Configuration.max_events"><code class="name">var <span class="ident">max_events</span></code></dt>
 <dd>
 <section class="desc"><p>The number of events to store before force-sending.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def max_events(self) -&gt; int:
+    &#34;&#34;&#34;The number of events to store before force-sending.&#34;&#34;&#34;
+    return self._max_events</code></pre>
+</details>
 </dd>
 <dt id="glean.Configuration.ping_tag"><code class="name">var <span class="ident">ping_tag</span></code></dt>
 <dd>
 <section class="desc"><p>String tag to be applied to headers when uploading pings for debug view.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def ping_tag(self) -&gt; Optional[str]:
+    &#34;&#34;&#34;String tag to be applied to headers when uploading pings for debug view.&#34;&#34;&#34;
+    return self._ping_tag</code></pre>
+</details>
 </dd>
 <dt id="glean.Configuration.ping_uploader"><code class="name">var <span class="ident">ping_uploader</span></code></dt>
 <dd>
 <section class="desc"><p>The ping uploader implementation.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def ping_uploader(self) -&gt; net.BaseUploader:
+    &#34;&#34;&#34;The ping uploader implementation.&#34;&#34;&#34;
+    return self._ping_uploader</code></pre>
+</details>
 </dd>
 <dt id="glean.Configuration.server_endpoint"><code class="name">var <span class="ident">server_endpoint</span></code></dt>
 <dd>
 <section class="desc"><p>The server pings are sent to.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def server_endpoint(self) -&gt; str:
+    &#34;&#34;&#34;The server pings are sent to.&#34;&#34;&#34;
+    return self._server_endpoint</code></pre>
+</details>
+</dd>
+<dt id="glean.Configuration.user_agent"><code class="name">var <span class="ident">user_agent</span></code></dt>
+<dd>
+<section class="desc"><p>The user agent used when sending pings.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def user_agent(self) -&gt; Optional[str]:
+    &#34;&#34;&#34;The user agent used when sending pings.&#34;&#34;&#34;
+    return self._user_agent</code></pre>
+</details>
 </dd>
 </dl>
 </dd>
@@ -325,34 +495,33 @@ initialized from the application.</p>
     &#34;&#34;&#34;
 
     # The handle to the underlying Rust object
-    _handle: int = 0
+    _handle = 0  # type: int
 
     # The Configuration that was passed to `initialize`
-    _configuration: Configuration
+    _configuration = None  # type: Configuration
 
     # The directory that Glean stores data in
-    _data_dir: Path = Path()
+    _data_dir = Path()  # type: Path
 
     # Whether Glean &#34;owns&#34; the data directory and should destroy it upon reset.
-    _destroy_data_dir: bool = False
+    _destroy_data_dir = False  # type: bool
 
     # Keep track of this setting before Glean is initialized
-    _upload_enabled: bool = True
+    _upload_enabled = True  # type: bool
 
     # The ping types, so they can be registered prior to Glean initialization,
     # and saved between test runs.
-    _ping_type_queue: Set[&#34;PingType&#34;] = set()
+    _ping_type_queue = set()  # type: Set[PingType]
 
     # The application id to send in the ping.
-    _application_id: str
+    _application_id = None  # type: str
 
     # The version of the application sending Glean data.
-    _application_version: str
+    _application_version = None  # type: str
 
     @classmethod
     def initialize(
         cls,
-        *,
         application_id: str,
         application_version: str,
         configuration: Optional[Configuration] = None,
@@ -443,7 +612,7 @@ initialized from the application.</p>
             _ffi.lib.glean_destroy_glean(cls._handle)
         cls._handle = 0
         if cls._destroy_data_dir and cls._data_dir.exists():
-            shutil.rmtree(cls._data_dir)
+            shutil.rmtree(str(cls._data_dir))
 
     @classmethod
     def is_initialized(cls) -&gt; bool:
@@ -538,8 +707,8 @@ initialized from the application.</p>
                 ping
         &#34;&#34;&#34;
         if extra is None:
-            keys: List[str] = []
-            values: List[str] = []
+            keys = []  # type: List[str]
+            values = []  # type: List[str]
         else:
             keys, values = zip(*extra.items())  # type: ignore
 
@@ -739,7 +908,7 @@ def get_upload_enabled(cls) -&gt; bool:
 </details>
 </dd>
 <dt id="glean.Glean.initialize"><code class="name flex">
-<span>def <span class="ident">initialize</span></span>(<span>*, application_id, application_version, configuration=None, data_dir=None)</span>
+<span>def <span class="ident">initialize</span></span>(<span>application_id, application_version, configuration=None, data_dir=None)</span>
 </code></dt>
 <dd>
 <section class="desc"><p>Initialize the Glean SDK.</p>
@@ -768,7 +937,6 @@ directory. If not provided, uses a temporary directory.</dd>
 <pre><code class="python">@classmethod
 def initialize(
     cls,
-    *,
     application_id: str,
     application_version: str,
     configuration: Optional[Configuration] = None,
@@ -910,7 +1078,7 @@ def reset(cls):
         _ffi.lib.glean_destroy_glean(cls._handle)
     cls._handle = 0
     if cls._destroy_data_dir and cls._data_dir.exists():
-        shutil.rmtree(cls._data_dir)</code></pre>
+        shutil.rmtree(str(cls._data_dir))</code></pre>
 </details>
 </dd>
 <dt id="glean.Glean.set_experiment_active"><code class="name flex">
@@ -951,8 +1119,8 @@ def set_experiment_active(
             ping
     &#34;&#34;&#34;
     if extra is None:
-        keys: List[str] = []
-        values: List[str] = []
+        keys = []  # type: List[str]
+        values = []  # type: List[str]
     else:
         keys, values = zip(*extra.items())  # type: ignore
 
@@ -1215,6 +1383,7 @@ def test_is_experiment_active(cls, experiment_id: str) -&gt; bool:
 <li><code><a title="glean.Configuration.ping_tag" href="#glean.Configuration.ping_tag">ping_tag</a></code></li>
 <li><code><a title="glean.Configuration.ping_uploader" href="#glean.Configuration.ping_uploader">ping_uploader</a></code></li>
 <li><code><a title="glean.Configuration.server_endpoint" href="#glean.Configuration.server_endpoint">server_endpoint</a></code></li>
+<li><code><a title="glean.Configuration.user_agent" href="#glean.Configuration.user_agent">user_agent</a></code></li>
 </ul>
 </li>
 <li>

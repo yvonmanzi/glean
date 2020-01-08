@@ -77,14 +77,14 @@ class HttpClientUploader(base_uploader.BaseUploader):
                 timeout=cls._DEFAULT_TIMEOUT,
             )
         else:
-            raise ValueError(f&#34;Unknown URL scheme {parsed_url.scheme}&#34;)
+            raise ValueError(&#34;Unknown URL scheme {}&#34;.format(parsed_url.scheme))
 
         conn.request(
             &#34;POST&#34;, parsed_url.path, body=data.encode(&#34;utf-8&#34;), headers=dict(headers),
         )
         response = conn.getresponse()
 
-        log.debug(f&#34;Ping upload: {response.status}&#34;)
+        log.debug(&#34;Ping upload: {}&#34;.format(response.status))
 
         status_class = response.status // 100
 
@@ -93,7 +93,7 @@ class HttpClientUploader(base_uploader.BaseUploader):
         if status_class == 2:  # 2xx status
             # Known success
             # 200 - OK.  Request accepted into the pipeline
-            log.debug(f&#34;Ping successfully sent ({response.status})&#34;)
+            log.debug(&#34;Ping successfully sent ({})&#34;.format(response.status))
             return True
         elif status_class == 4:  # 4xx status
             # Known client (4xx) errors:
@@ -108,14 +108,14 @@ class HttpClientUploader(base_uploader.BaseUploader):
             # Something our client did is not correct. It&#39;s unlikely that the
             # client is going to recover from this by re-trying again, so we
             # just log and error and report a successful upload to the service.
-            log.error(f&#34;Server returned client error code: {response.status}&#34;)
+            log.error(&#34;Server returned client error code: {}&#34;.format(response.status))
             return True
         else:
             # Known other errors:
             # 500 - internal error
 
             # For all other errors, we log a warning and try again at a later time.
-            log.error(f&#34;Server returned response code: {response.status}&#34;)
+            log.error(&#34;Server returned response code: {}&#34;.format(response.status))
             return False
 
 
@@ -170,14 +170,14 @@ to the user-provided delegate.</p></section>
                 timeout=cls._DEFAULT_TIMEOUT,
             )
         else:
-            raise ValueError(f&#34;Unknown URL scheme {parsed_url.scheme}&#34;)
+            raise ValueError(&#34;Unknown URL scheme {}&#34;.format(parsed_url.scheme))
 
         conn.request(
             &#34;POST&#34;, parsed_url.path, body=data.encode(&#34;utf-8&#34;), headers=dict(headers),
         )
         response = conn.getresponse()
 
-        log.debug(f&#34;Ping upload: {response.status}&#34;)
+        log.debug(&#34;Ping upload: {}&#34;.format(response.status))
 
         status_class = response.status // 100
 
@@ -186,7 +186,7 @@ to the user-provided delegate.</p></section>
         if status_class == 2:  # 2xx status
             # Known success
             # 200 - OK.  Request accepted into the pipeline
-            log.debug(f&#34;Ping successfully sent ({response.status})&#34;)
+            log.debug(&#34;Ping successfully sent ({})&#34;.format(response.status))
             return True
         elif status_class == 4:  # 4xx status
             # Known client (4xx) errors:
@@ -201,14 +201,14 @@ to the user-provided delegate.</p></section>
             # Something our client did is not correct. It&#39;s unlikely that the
             # client is going to recover from this by re-trying again, so we
             # just log and error and report a successful upload to the service.
-            log.error(f&#34;Server returned client error code: {response.status}&#34;)
+            log.error(&#34;Server returned client error code: {}&#34;.format(response.status))
             return True
         else:
             # Known other errors:
             # 500 - internal error
 
             # For all other errors, we log a warning and try again at a later time.
-            log.error(f&#34;Server returned response code: {response.status}&#34;)
+            log.error(&#34;Server returned response code: {}&#34;.format(response.status))
             return False</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -260,14 +260,14 @@ def upload(cls, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
             timeout=cls._DEFAULT_TIMEOUT,
         )
     else:
-        raise ValueError(f&#34;Unknown URL scheme {parsed_url.scheme}&#34;)
+        raise ValueError(&#34;Unknown URL scheme {}&#34;.format(parsed_url.scheme))
 
     conn.request(
         &#34;POST&#34;, parsed_url.path, body=data.encode(&#34;utf-8&#34;), headers=dict(headers),
     )
     response = conn.getresponse()
 
-    log.debug(f&#34;Ping upload: {response.status}&#34;)
+    log.debug(&#34;Ping upload: {}&#34;.format(response.status))
 
     status_class = response.status // 100
 
@@ -276,7 +276,7 @@ def upload(cls, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
     if status_class == 2:  # 2xx status
         # Known success
         # 200 - OK.  Request accepted into the pipeline
-        log.debug(f&#34;Ping successfully sent ({response.status})&#34;)
+        log.debug(&#34;Ping successfully sent ({})&#34;.format(response.status))
         return True
     elif status_class == 4:  # 4xx status
         # Known client (4xx) errors:
@@ -291,14 +291,14 @@ def upload(cls, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
         # Something our client did is not correct. It&#39;s unlikely that the
         # client is going to recover from this by re-trying again, so we
         # just log and error and report a successful upload to the service.
-        log.error(f&#34;Server returned client error code: {response.status}&#34;)
+        log.error(&#34;Server returned client error code: {}&#34;.format(response.status))
         return True
     else:
         # Known other errors:
         # 500 - internal error
 
         # For all other errors, we log a warning and try again at a later time.
-        log.error(f&#34;Server returned response code: {response.status}&#34;)
+        log.error(&#34;Server returned response code: {}&#34;.format(response.status))
         return False</code></pre>
 </details>
 </dd>
