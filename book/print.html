@@ -418,13 +418,8 @@ class SampleApplication : Application() {
         // applications not using custom pings.
         Glean.registerPings(Pings)
 
-        // Call setUploadEnabled first, since Glean.initialize
-        // might send pings if there are any metrics queued up
-        // from a previous run.
-        Glean.setUploadEnabled(Settings.isTelemetryEnabled)
-
         // Initialize the Glean library.
-        Glean.initialize(applicationContext)
+        Glean.initialize(applicationContext, uploadEnabled = true)
     }
 }
 </code></pre>
@@ -453,13 +448,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // applications not using custom pings.
         Glean.shared.registerPings(GleanMetrics.Pings)
 
-        // Call setUploadEnabled first, since Glean.initialize
-        // might send pings if there are any metrics queued up
-        // from a previous run.
-        Glean.shared.setUploadEnabled(Settings.isTelemetryEnabled)
-
         // Initialize the Glean library.
-        Glean.shared.initialize()
+        Glean.shared.initialize(uploadEnabled = Settings.isTelemetryEnabled)
     }
 }
 </code></pre>
@@ -479,13 +469,10 @@ then it can provide the Glean SDK with this information by setting it as part of
 Library code should never call <code>Glean.initialize</code>, since it should be called exactly once per application.</p>
 <pre><code class="language-python">from glean import Glean
 
-# Call Glean.set_upload_enabled first, since Glean.initialize might send pings
-# if there are any metrics queued up from a previous run.
-Glean.set_upload_enabled(True)
-
 Glean.initialize(
     application_id=&quot;my-app-id&quot;,
     application_version=&quot;0.1.0&quot;,
+    upload_enabled=True,
 )
 </code></pre>
 <p>Additional configuration is available on the <code>glean.Configuration</code> object, which can be passed into <code>Glean.initialize()</code>.</p>
@@ -505,22 +492,19 @@ Built-in pings are only available after initialization.</p>
 <div class="tabbar"></div>
 <div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
-<p><code>Glean.setUploadEnabled()</code> should be called in response to the user enabling or disabling telemetry.
-This method should also be called at least once prior to calling <code>Glean.initialize()</code>.</p>
+<p><code>Glean.setUploadEnabled()</code> should be called in response to the user enabling or disabling telemetry.</p>
 <p>The application should provide some form of user interface to call this method.</p>
 <p>When going from enabled to disabled, all pending events, metrics and pings are cleared, except for <a href="user/pings/index.html#the-client_info-section"><code>first_run_date</code></a>.
 When re-enabling, core Glean metrics will be recomputed at that time.</p>
 </div>
 <div data-lang="Swift" class="tab">
-<p><code>Glean.shared.setUploadEnabled()</code> should be called in response to the user enabling or disabling telemetry.
-This method should also be called at least once prior to calling <code>Glean.shared.initialize()</code>.</p>
+<p><code>Glean.shared.setUploadEnabled()</code> should be called in response to the user enabling or disabling telemetry.</p>
 <p>The application should provide some form of user interface to call this method.</p>
 <p>When going from enabled to disabled, all pending events, metrics and pings are cleared, except for <a href="user/pings/index.html#the-client_info-section"><code>first_run_date</code></a>.
 When re-enabling, core Glean metrics will be recomputed at that time.</p>
 </div>
 <div data-lang="Python" class="tab">
-<p><code>Glean.set_upload_enabled()</code> should be called in response to the user enabling or disabling telemetry.
-This method should also be called at least once prior to calling <code>Glean.initialize()</code>.</p>
+<p><code>Glean.set_upload_enabled()</code> should be called in response to the user enabling or disabling telemetry.</p>
 <p>The application should provide some form of user interface to call this method.</p>
 <p>When going from enabled to disabled, all pending events, metrics and pings are cleared, except for <a href="user/pings/index.html#the-client_info-section"><code>first_run_date</code></a>.
 When re-enabling, core Glean metrics will be recomputed at that time.</p>
@@ -5377,6 +5361,13 @@ Additionally, while the <code>$N</code> we have used in our running example has 
 <h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v23.0.1...master">Full changelog</a></p>
 <ul>
+<li>General:
+<ul>
+<li><strong>Breaking Change</strong> An <code>enableUpload</code> parameter has been added to the <code>initialize()</code>
+function. This removes the requirement to call <code>setUploadEnabled()</code> prior to calling
+the <code>initialize()</code> function.</li>
+</ul>
+</li>
 <li>Android:
 <ul>
 <li>The metrics ping scheduler will now only send metrics pings while the

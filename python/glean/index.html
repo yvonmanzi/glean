@@ -476,8 +476,7 @@ def user_agent(self) -&gt; Optional[str]:
 <section class="desc"><p>The main Glean API.</p>
 <p>Before any data collection can take place, the Glean SDK <strong>must</strong> be
 initialized from the application.</p>
-<pre><code>&gt;&gt;&gt; Glean.set_upload_enabled(True)
-&gt;&gt;&gt; Glean.initialize(application_id="my-app-id", application_version="0.0.0")
+<pre><code>&gt;&gt;&gt; Glean.initialize(application_id="my-app", application_version="0.0.0", upload_enabled=True)
 </code></pre></section>
 <details class="source">
 <summary>
@@ -490,8 +489,7 @@ initialized from the application.</p>
     Before any data collection can take place, the Glean SDK **must** be
     initialized from the application.
 
-    &gt;&gt;&gt; Glean.set_upload_enabled(True)
-    &gt;&gt;&gt; Glean.initialize(application_id=&#34;my-app-id&#34;, application_version=&#34;0.0.0&#34;)
+    &gt;&gt;&gt; Glean.initialize(application_id=&#34;my-app&#34;, application_version=&#34;0.0.0&#34;, upload_enabled=True)
     &#34;&#34;&#34;
 
     # The handle to the underlying Rust object
@@ -524,6 +522,7 @@ initialized from the application.</p>
         cls,
         application_id: str,
         application_version: str,
+        upload_enabled: bool,
         configuration: Optional[Configuration] = None,
         data_dir: Optional[Path] = None,
     ):
@@ -539,6 +538,8 @@ initialized from the application.</p>
             application_id (str): The application id to use when sending pings.
             application_version (str): The version of the application sending
                 Glean data.
+            upload_enabled (bool): Controls the state of the uploaer during
+                Glean initialization.
             configuration (glean.config.Configuration): (optional) An object with
                 global settings.
             data_dir (pathlib.Path): (optional) The path to the Glean data
@@ -560,6 +561,8 @@ initialized from the application.</p>
         cls._configuration = configuration
         cls._application_id = application_id
         cls._application_version = application_version
+
+        cls._upload_enabled = upload_enabled
 
         cfg = _ffi.make_config(
             cls._data_dir,
@@ -908,7 +911,7 @@ def get_upload_enabled(cls) -&gt; bool:
 </details>
 </dd>
 <dt id="glean.Glean.initialize"><code class="name flex">
-<span>def <span class="ident">initialize</span></span>(<span>application_id, application_version, configuration=None, data_dir=None)</span>
+<span>def <span class="ident">initialize</span></span>(<span>application_id, application_version, upload_enabled, configuration=None, data_dir=None)</span>
 </code></dt>
 <dd>
 <section class="desc"><p>Initialize the Glean SDK.</p>
@@ -923,6 +926,9 @@ once.</p>
 <dt><strong><code>application_version</code></strong> :&ensp;<code>str</code></dt>
 <dd>The version of the application sending
 Glean data.</dd>
+<dt><strong><code>upload_enabled</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Controls the state of the uploaer during
+Glean initialization.</dd>
 <dt><strong><code>configuration</code></strong> :&ensp;<a title="glean.config.Configuration" href="config.html#glean.config.Configuration"><code>Configuration</code></a></dt>
 <dd>(optional) An object with
 global settings.</dd>
@@ -939,6 +945,7 @@ def initialize(
     cls,
     application_id: str,
     application_version: str,
+    upload_enabled: bool,
     configuration: Optional[Configuration] = None,
     data_dir: Optional[Path] = None,
 ):
@@ -954,6 +961,8 @@ def initialize(
         application_id (str): The application id to use when sending pings.
         application_version (str): The version of the application sending
             Glean data.
+        upload_enabled (bool): Controls the state of the uploaer during
+            Glean initialization.
         configuration (glean.config.Configuration): (optional) An object with
             global settings.
         data_dir (pathlib.Path): (optional) The path to the Glean data
@@ -975,6 +984,8 @@ def initialize(
     cls._configuration = configuration
     cls._application_id = application_id
     cls._application_version = application_version
+
+    cls._upload_enabled = upload_enabled
 
     cfg = _ffi.make_config(
         cls._data_dir,

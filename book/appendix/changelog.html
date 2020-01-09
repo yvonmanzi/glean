@@ -150,6 +150,13 @@
                         <h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v23.0.1...master">Full changelog</a></p>
 <ul>
+<li>General:
+<ul>
+<li><strong>Breaking Change</strong> An <code>enableUpload</code> parameter has been added to the <code>initialize()</code>
+function. This removes the requirement to call <code>setUploadEnabled()</code> prior to calling
+the <code>initialize()</code> function.</li>
+</ul>
+</li>
 <li>Android:
 <ul>
 <li>The metrics ping scheduler will now only send metrics pings while the
