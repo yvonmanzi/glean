@@ -5577,6 +5577,9 @@ the <code>initialize()</code> function.</li>
 application is running. The application will no longer &quot;wake up&quot; at 4am
 using the Work Manager.</li>
 <li>The code for migrating data from Glean SDK before version 19 was removed.</li>
+<li>When using the <code>GleanTestLocalServer</code> rule in instrumented tests, pings are
+immediately flushed by the <code>WorkManager</code> and will reach the test endpoint as
+soon as possible.</li>
 </ul>
 </li>
 <li>Python:
