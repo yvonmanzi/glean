@@ -215,9 +215,6 @@ XCTAssertEqual(1, Search.engines.testGetNumRecordedErrors(.invalidValue))
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
 <ul>
 <li>
-<p>Empty string lists are not accepted by the <code>set()</code> method. Attempting to record an empty string list will result in an <code>invalid_value</code> error and nothing being recorded.</p>
-</li>
-<li>
 <p>Fixed maximum string length: 50. Longer strings are truncated. This is measured in the number of bytes when the string is encoded in UTF-8.</p>
 </li>
 <li>
@@ -230,9 +227,6 @@ XCTAssertEqual(1, Search.engines.testGetNumRecordedErrors(.invalidValue))
 </ul>
 <h2><a class="header" href="#recorded-errors" id="recorded-errors">Recorded errors</a></h2>
 <ul>
-<li>
-<p><code>invalid_value</code>: if an empty list is passed to <code>set()</code></p>
-</li>
 <li>
 <p><code>invalid_value</code>: if the string is too long</p>
 </li>
