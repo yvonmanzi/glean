@@ -2911,16 +2911,16 @@ If upload fails, it is retried after Glean is initialized.</p>
 </code></pre>
 <h1><a class="header" href="#the-metrics-ping" id="the-metrics-ping">The <code>metrics</code> ping</a></h1>
 <h2><a class="header" href="#description-2" id="description-2">Description</a></h2>
-<p>The <code>metrics</code> ping is intended for all of the metrics that are explicitly set by the application or are included in the application's <code>metrics.yaml</code> file (except events). 
-The reported data is tied to the ping's <em>measurement window</em>, which is the time between the collection of two <code>metrics</code> ping. 
-Ideally, this window is expected to be about 24 hours, given that the collection is scheduled daily at 4AM. 
+<p>The <code>metrics</code> ping is intended for all of the metrics that are explicitly set by the application or are included in the application's <code>metrics.yaml</code> file (except events).
+The reported data is tied to the ping's <em>measurement window</em>, which is the time between the collection of two <code>metrics</code> ping.
+Ideally, this window is expected to be about 24 hours, given that the collection is scheduled daily at 4AM.
 Data in the <a href="user/pings/index.html#the-ping_info-section"><code>ping_info</code></a> section of the ping can be used to infer the length of this window.
 If the application crashes, unsent recorded metrics are sent along with the next <code>metrics</code> ping.</p>
 <blockquote>
 <p><strong>Note:</strong> As the <code>metrics</code> ping was specifically designed for mobile operating systems, it is not sent when using the Glean Python bindings.</p>
 </blockquote>
 <h2><a class="header" href="#scheduling-2" id="scheduling-2">Scheduling</a></h2>
-<p>The desired behavior is to collect the ping at the first available opportunity after 4AM local time on a new calendar day. 
+<p>The desired behavior is to collect the ping at the first available opportunity after 4AM local time on a new calendar day.
 This breaks down into three scenarios:</p>
 <ol>
 <li>the application was just installed;</li>
@@ -2928,17 +2928,17 @@ This breaks down into three scenarios:</p>
 <li>the application was open and the 4AM due time was hit.</li>
 </ol>
 <p>In the first case, since the application was just installed, if the due time for the current calendar day has passed, a <code>metrics</code> ping is immediately generated and scheduled for sending. Otherwise, if the due time for the current calendar day has not passed, a ping collection is scheduled for that time.</p>
-<p>In the second case, if the <code>metrics</code> ping was already collected on the current calendar day, a new collection will be scheduled for the next calendar day, at 4AM. 
+<p>In the second case, if the <code>metrics</code> ping was already collected on the current calendar day, a new collection will be scheduled for the next calendar day, at 4AM.
 If no collection happened yet, and the due time for the current calendar day has passed, a <code>metrics</code> ping is immediately generated and scheduled for sending.</p>
 <p>In the third case, similarly to the previous case, if the <code>metrics</code> ping was already collected on the current calendar day when we hit 4AM, then a new collection is scheduled for the next calendar day.
 Otherwise, the <code>metrics</code> is immediately collected and scheduled for sending.</p>
-<p>More <a href="user/pings/#Scheduling-examples">scheduling examples</a> are included below.</p>
+<p>More <a href="user/pings/#scheduling-examples">scheduling examples</a> are included below.</p>
 <h2><a class="header" href="#contents-2" id="contents-2">Contents</a></h2>
 <p>The <code>metrics</code> ping contains all of the metrics defined in <code>metrics.yaml</code> (except events) that don't specify a ping or where <code>default</code> is specified in their <a href="https://mozilla.github.io/glean_parser/metrics-yaml.html#send-in-pings"><code>send in pings</code></a> property.</p>
 <p>Additionally, error metrics in the <code>glean.error</code> category are included in the <code>metrics</code> ping.</p>
 <p>The <code>metrics</code> ping shall also include the common <a href="user/pings/index.html#the-ping_info-section"><code>ping_info</code></a> and <a href="user/pings/index.html#the-client_info-section">'client_info'</a> sections.</p>
 <h3><a class="header" href="#querying-ping-contents-1" id="querying-ping-contents-1">Querying ping contents</a></h3>
-<p>A quick note about querying ping contents (i.e. for <a href="https://sql.telemetry.mozilla.org">sql.telemetry.mozilla.org</a>):  Each metric in the metrics ping is organized by its metric type, and uses a namespace of 'glean.metrics'. 
+<p>A quick note about querying ping contents (i.e. for <a href="https://sql.telemetry.mozilla.org">sql.telemetry.mozilla.org</a>):  Each metric in the metrics ping is organized by its metric type, and uses a namespace of 'glean.metrics'.
 For instance, in order to select a String field called <code>test</code> you would use <code>metrics.string['glean.metrics.test']</code>.</p>
 <h3><a class="header" href="#example-metrics-ping" id="example-metrics-ping">Example metrics ping</a></h3>
 <pre><code class="language-json">{
