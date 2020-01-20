@@ -149,6 +149,16 @@
                     <main>
                         <h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v24.1.0...master">Full changelog</a></p>
+<ul>
+<li>General:
+<ul>
+<li>Add <code>locale</code> to <code>client_info</code> section.</li>
+<li><strong>Deprecation Warning</strong> Since <code>locale</code> is now in the <code>client_info</code> section, the one
+in the baseline ping (<a href="https://github.com/mozilla/glean/blob/c261205d6e84d2ab39c50003a8ffc3bd2b763768/glean-core/metrics.yaml#L28-L42"><code>glean.baseline.locale</code></a>)
+is redundant and will be removed by the end of the quarter.</li>
+</ul>
+</li>
+</ul>
 <h1><a class="header" href="#v2410-2020-01-16" id="v2410-2020-01-16">v24.1.0 (2020-01-16)</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v24.0.0...v24.1.0">Full changelog</a></p>
 <ul>
