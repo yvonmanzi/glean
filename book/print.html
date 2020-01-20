@@ -2157,7 +2157,7 @@ On Android, the <a href="https://developer.android.com/reference/android/os/Syst
 <h2><a class="header" href="#recorded-errors-7" id="recorded-errors-7">Recorded errors</a></h2>
 <ul>
 <li><code>invalid_value</code>: If recording a negative timespan.</li>
-<li><code>invalid_value</code>: If a non-existing/stopped timer is stopped again.</li>
+<li><code>invalid_state</code>: If a non-existing/stopped timer is stopped again.</li>
 <li><code>invalid_overflow</code>: If recording a time longer than 10 minutes.</li>
 </ul>
 <h2><a class="header" href="#reference-8" id="reference-8">Reference</a></h2>
@@ -5572,6 +5572,12 @@ is redundant and will be removed by the end of the quarter.</li>
 <h1><a class="header" href="#v2410-2020-01-16" id="v2410-2020-01-16">v24.1.0 (2020-01-16)</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v24.0.0...v24.1.0">Full changelog</a></p>
 <ul>
+<li>General:
+<ul>
+<li>Stopping a non started measurement in a timing distribution will now be reported
+as an <code>invalid_state</code> error.</li>
+</ul>
+</li>
 <li>Android:
 <ul>
 <li>A new metric <code>glean.error.preinit_tasks_overflow</code> was added to report when
