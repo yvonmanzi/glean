@@ -168,6 +168,9 @@ the main thread during initialization.</li>
 <ul>
 <li>Collections performed before initialization (preinit tasks) are now dispatched off
 the main thread and not awaited during initialization.</li>
+<li>Added recording of <code>glean.error.preinit_tasks_overflow</code> to report when
+the preinit task queue overruns, leading to data loss. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1609734">bug
+1609734</a></li>
 </ul>
 </li>
 </ul>
