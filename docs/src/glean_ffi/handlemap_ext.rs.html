@@ -137,6 +137,17 @@
 <span id="137">137</span>
 <span id="138">138</span>
 <span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -158,6 +169,17 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">panic</span>::<span class="ident">UnwindSafe</span>;
 
 <span class="kw">use</span> <span class="ident">ffi_support</span>::{<span class="ident">ConcurrentHandleMap</span>, <span class="ident">ExternError</span>, <span class="ident">IntoFfi</span>};
+
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_result</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">callback</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>::<span class="ident">Value</span>
+<span class="kw">where</span>
+    <span class="ident">F</span>: <span class="ident">UnwindSafe</span> <span class="op">+</span> <span class="ident">FnOnce</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">glean_core</span>::<span class="ident">Error</span><span class="op">&gt;</span>,
+    <span class="ident">R</span>: <span class="ident">IntoFfi</span>,
+{
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">error</span> <span class="op">=</span> <span class="ident">ffi_support</span>::<span class="ident">ExternError</span>::<span class="ident">success</span>();
+    <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">ffi_support</span>::<span class="ident">abort_on_panic</span>::<span class="ident">call_with_result</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">error</span>, <span class="ident">callback</span>);
+    <span class="ident">log_if_error</span>(<span class="ident">error</span>);
+    <span class="ident">res</span>
+}
 
 <span class="doccomment">/// Helper for the case where we aren&#39;t exposing this back over the FFI and</span>
 <span class="doccomment">/// we just want to warn if an error occurred and then release the allocated</span>

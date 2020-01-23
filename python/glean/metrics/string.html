@@ -32,7 +32,6 @@
 from typing import List, Optional
 
 
-from ..glean import Glean
 from .. import _ffi
 from .._dispatcher import Dispatcher
 from ..testing import ErrorType
@@ -91,9 +90,7 @@ class StringMetricType:
 
         @Dispatcher.launch
         def set():
-            _ffi.lib.glean_string_set(
-                Glean._handle, self._handle, _ffi.ffi_encode_string(value)
-            )
+            _ffi.lib.glean_string_set(self._handle, _ffi.ffi_encode_string(value))
 
     def test_has_value(self, ping_name: Optional[str] = None) -&gt; bool:
         &#34;&#34;&#34;
@@ -112,7 +109,7 @@ class StringMetricType:
 
         return bool(
             _ffi.lib.glean_string_test_has_value(
-                Glean._handle, self._handle, _ffi.ffi_encode_string(ping_name)
+                self._handle, _ffi.ffi_encode_string(ping_name)
             )
         )
 
@@ -135,7 +132,7 @@ class StringMetricType:
 
         return _ffi.ffi_decode_string(
             _ffi.lib.glean_string_test_get_value(
-                Glean._handle, self._handle, _ffi.ffi_encode_string(ping_name)
+                self._handle, _ffi.ffi_encode_string(ping_name)
             )
         )
 
@@ -158,10 +155,7 @@ class StringMetricType:
             ping_name = self._send_in_pings[0]
 
         return _ffi.lib.glean_string_test_get_num_recorded_errors(
-            Glean._handle,
-            self._handle,
-            error_type.value,
-            _ffi.ffi_encode_string(ping_name),
+            self._handle, error_type.value, _ffi.ffi_encode_string(ping_name),
         )
 
 
@@ -243,9 +237,7 @@ enforced.</p></section>
 
         @Dispatcher.launch
         def set():
-            _ffi.lib.glean_string_set(
-                Glean._handle, self._handle, _ffi.ffi_encode_string(value)
-            )
+            _ffi.lib.glean_string_set(self._handle, _ffi.ffi_encode_string(value))
 
     def test_has_value(self, ping_name: Optional[str] = None) -&gt; bool:
         &#34;&#34;&#34;
@@ -264,7 +256,7 @@ enforced.</p></section>
 
         return bool(
             _ffi.lib.glean_string_test_has_value(
-                Glean._handle, self._handle, _ffi.ffi_encode_string(ping_name)
+                self._handle, _ffi.ffi_encode_string(ping_name)
             )
         )
 
@@ -287,7 +279,7 @@ enforced.</p></section>
 
         return _ffi.ffi_decode_string(
             _ffi.lib.glean_string_test_get_value(
-                Glean._handle, self._handle, _ffi.ffi_encode_string(ping_name)
+                self._handle, _ffi.ffi_encode_string(ping_name)
             )
         )
 
@@ -310,10 +302,7 @@ enforced.</p></section>
             ping_name = self._send_in_pings[0]
 
         return _ffi.lib.glean_string_test_get_num_recorded_errors(
-            Glean._handle,
-            self._handle,
-            error_type.value,
-            _ffi.ffi_encode_string(ping_name),
+            self._handle, error_type.value, _ffi.ffi_encode_string(ping_name),
         )</code></pre>
 </details>
 <h3>Methods</h3>
@@ -346,9 +335,7 @@ the string exceeds the maximum length, it will be truncated.</dd>
 
     @Dispatcher.launch
     def set():
-        _ffi.lib.glean_string_set(
-            Glean._handle, self._handle, _ffi.ffi_encode_string(value)
-        )</code></pre>
+        _ffi.lib.glean_string_set(self._handle, _ffi.ffi_encode_string(value))</code></pre>
 </details>
 </dd>
 <dt id="glean.metrics.string.StringMetricType.test_get_num_recorded_errors"><code class="name flex">
@@ -393,10 +380,7 @@ the given error type.</dd>
         ping_name = self._send_in_pings[0]
 
     return _ffi.lib.glean_string_test_get_num_recorded_errors(
-        Glean._handle,
-        self._handle,
-        error_type.value,
-        _ffi.ffi_encode_string(ping_name),
+        self._handle, error_type.value, _ffi.ffi_encode_string(ping_name),
     )</code></pre>
 </details>
 </dd>
@@ -439,7 +423,7 @@ of the ping to retrieve the metric for.</dd>
 
     return _ffi.ffi_decode_string(
         _ffi.lib.glean_string_test_get_value(
-            Glean._handle, self._handle, _ffi.ffi_encode_string(ping_name)
+            self._handle, _ffi.ffi_encode_string(ping_name)
         )
     )</code></pre>
 </details>
@@ -482,7 +466,7 @@ of the ping to retrieve the metric for.</dd>
 
     return bool(
         _ffi.lib.glean_string_test_has_value(
-            Glean._handle, self._handle, _ffi.ffi_encode_string(ping_name)
+            self._handle, _ffi.ffi_encode_string(ping_name)
         )
     )</code></pre>
 </details>

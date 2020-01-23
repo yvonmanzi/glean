@@ -77,12 +77,6 @@
 <span id="77">77</span>
 <span id="78">78</span>
 <span id="79">79</span>
-<span id="80">80</span>
-<span id="81">81</span>
-<span id="82">82</span>
-<span id="83">83</span>
-<span id="84">84</span>
-<span id="85">85</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -92,7 +86,7 @@
 
 <span class="kw">use</span> <span class="ident">ffi_support</span>::<span class="ident">FfiStr</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">define_metric</span>, <span class="ident">handlemap_ext</span>::<span class="ident">HandleMapExtension</span>, <span class="ident">GLEAN</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">define_metric</span>, <span class="ident">handlemap_ext</span>::<span class="ident">HandleMapExtension</span>, <span class="ident">with_glean_value</span>};
 
 <span class="macro">define_metric</span><span class="macro">!</span>(<span class="ident">DatetimeMetric</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">DATETIME_METRICS</span> {
     <span class="ident">new</span>           <span class="op">-</span><span class="op">&gt;</span> <span class="ident">glean_new_datetime_metric</span>(<span class="ident">time_unit</span>: <span class="ident">i32</span>),
@@ -102,7 +96,6 @@
 
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
 <span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_datetime_set</span>(
-    <span class="ident">glean_handle</span>: <span class="ident">u64</span>,
     <span class="ident">metric_id</span>: <span class="ident">u64</span>,
     <span class="ident">year</span>: <span class="ident">i32</span>,
     <span class="ident">month</span>: <span class="ident">u32</span>,
@@ -123,7 +116,7 @@
 
     <span class="comment">// We are within the u32 boundaries for nano, we should be ok converting.</span>
     <span class="kw">let</span> <span class="ident">converted_nanos</span> <span class="op">=</span> <span class="ident">nano</span> <span class="kw">as</span> <span class="ident">u32</span>;
-    <span class="ident">GLEAN</span>.<span class="ident">call_infallible</span>(<span class="ident">glean_handle</span>, <span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
+    <span class="ident">with_glean_value</span>(<span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
         <span class="ident">DATETIME_METRICS</span>.<span class="ident">call_infallible</span>(<span class="ident">metric_id</span>, <span class="op">|</span><span class="ident">metric</span><span class="op">|</span> {
             <span class="ident">metric</span>.<span class="ident">set_with_details</span>(
                 <span class="ident">glean</span>,
@@ -141,12 +134,8 @@
 }
 
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_datetime_test_has_value</span>(
-    <span class="ident">glean_handle</span>: <span class="ident">u64</span>,
-    <span class="ident">metric_id</span>: <span class="ident">u64</span>,
-    <span class="ident">storage_name</span>: <span class="ident">FfiStr</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u8</span> {
-    <span class="ident">GLEAN</span>.<span class="ident">call_infallible</span>(<span class="ident">glean_handle</span>, <span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
+<span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_datetime_test_has_value</span>(<span class="ident">metric_id</span>: <span class="ident">u64</span>, <span class="ident">storage_name</span>: <span class="ident">FfiStr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u8</span> {
+    <span class="ident">with_glean_value</span>(<span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
         <span class="ident">DATETIME_METRICS</span>.<span class="ident">call_infallible</span>(<span class="ident">metric_id</span>, <span class="op">|</span><span class="ident">metric</span><span class="op">|</span> {
             <span class="ident">metric</span>
                 .<span class="ident">test_get_value_as_string</span>(<span class="ident">glean</span>, <span class="ident">storage_name</span>.<span class="ident">as_str</span>())
@@ -157,11 +146,10 @@
 
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
 <span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_datetime_test_get_value_as_string</span>(
-    <span class="ident">glean_handle</span>: <span class="ident">u64</span>,
     <span class="ident">metric_id</span>: <span class="ident">u64</span>,
     <span class="ident">storage_name</span>: <span class="ident">FfiStr</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_char</span> {
-    <span class="ident">GLEAN</span>.<span class="ident">call_infallible</span>(<span class="ident">glean_handle</span>, <span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
+    <span class="ident">with_glean_value</span>(<span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
         <span class="ident">DATETIME_METRICS</span>.<span class="ident">call_infallible</span>(<span class="ident">metric_id</span>, <span class="op">|</span><span class="ident">metric</span><span class="op">|</span> {
             <span class="ident">metric</span>
                 .<span class="ident">test_get_value_as_string</span>(<span class="ident">glean</span>, <span class="ident">storage_name</span>.<span class="ident">as_str</span>())

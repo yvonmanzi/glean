@@ -64,8 +64,6 @@
 <span id="64">64</span>
 <span id="65">65</span>
 <span id="66">66</span>
-<span id="67">67</span>
-<span id="68">68</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -76,7 +74,8 @@
 <span class="kw">use</span> <span class="ident">ffi_support</span>::<span class="ident">FfiStr</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">define_metric</span>, <span class="ident">from_raw_int64_array</span>, <span class="ident">handlemap_ext</span>::<span class="ident">HandleMapExtension</span>, <span class="ident">RawInt64Array</span>, <span class="ident">GLEAN</span>,
+    <span class="ident">define_metric</span>, <span class="ident">from_raw_int64_array</span>, <span class="ident">handlemap_ext</span>::<span class="ident">HandleMapExtension</span>, <span class="ident">with_glean_value</span>,
+    <span class="ident">RawInt64Array</span>,
 };
 
 <span class="macro">define_metric</span><span class="macro">!</span>(<span class="ident">MemoryDistributionMetric</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">MEMORY_DISTRIBUTION_METRICS</span> {
@@ -88,12 +87,11 @@
 
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
 <span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_memory_distribution_accumulate_samples</span>(
-    <span class="ident">glean_handle</span>: <span class="ident">u64</span>,
     <span class="ident">metric_id</span>: <span class="ident">u64</span>,
     <span class="ident">raw_samples</span>: <span class="ident">RawInt64Array</span>,
     <span class="ident">num_samples</span>: <span class="ident">i32</span>,
 ) {
-    <span class="ident">GLEAN</span>.<span class="ident">call_infallible</span>(<span class="ident">glean_handle</span>, <span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
+    <span class="ident">with_glean_value</span>(<span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
         <span class="ident">MEMORY_DISTRIBUTION_METRICS</span>.<span class="ident">call_infallible_mut</span>(<span class="ident">metric_id</span>, <span class="op">|</span><span class="ident">metric</span><span class="op">|</span> {
             <span class="comment">// The Kotlin code is sending Long(s), which are 64 bits, as there&#39;s</span>
             <span class="comment">// currently no stable UInt type. The positive part of [Int] would not</span>
@@ -108,11 +106,10 @@
 
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
 <span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_memory_distribution_test_has_value</span>(
-    <span class="ident">glean_handle</span>: <span class="ident">u64</span>,
     <span class="ident">metric_id</span>: <span class="ident">u64</span>,
     <span class="ident">storage_name</span>: <span class="ident">FfiStr</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u8</span> {
-    <span class="ident">GLEAN</span>.<span class="ident">call_infallible</span>(<span class="ident">glean_handle</span>, <span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
+    <span class="ident">with_glean_value</span>(<span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
         <span class="ident">MEMORY_DISTRIBUTION_METRICS</span>.<span class="ident">call_infallible</span>(<span class="ident">metric_id</span>, <span class="op">|</span><span class="ident">metric</span><span class="op">|</span> {
             <span class="ident">metric</span>
                 .<span class="ident">test_get_value</span>(<span class="ident">glean</span>, <span class="ident">storage_name</span>.<span class="ident">as_str</span>())
@@ -123,11 +120,10 @@
 
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
 <span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_memory_distribution_test_get_value_as_json_string</span>(
-    <span class="ident">glean_handle</span>: <span class="ident">u64</span>,
     <span class="ident">metric_id</span>: <span class="ident">u64</span>,
     <span class="ident">storage_name</span>: <span class="ident">FfiStr</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_char</span> {
-    <span class="ident">GLEAN</span>.<span class="ident">call_infallible</span>(<span class="ident">glean_handle</span>, <span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
+    <span class="ident">with_glean_value</span>(<span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
         <span class="ident">MEMORY_DISTRIBUTION_METRICS</span>.<span class="ident">call_infallible</span>(<span class="ident">metric_id</span>, <span class="op">|</span><span class="ident">metric</span><span class="op">|</span> {
             <span class="ident">metric</span>
                 .<span class="ident">test_get_value_as_json_string</span>(<span class="ident">glean</span>, <span class="ident">storage_name</span>.<span class="ident">as_str</span>())

@@ -32,7 +32,6 @@
 from typing import List, Optional
 
 
-from ..glean import Glean
 from .. import _ffi
 from .._dispatcher import Dispatcher
 from ..testing import ErrorType
@@ -91,7 +90,7 @@ class CounterMetricType:
 
         @Dispatcher.launch
         def add():
-            _ffi.lib.glean_counter_add(Glean._handle, self._handle, amount)
+            _ffi.lib.glean_counter_add(self._handle, amount)
 
     def test_has_value(self, ping_name: Optional[str] = None) -&gt; bool:
         &#34;&#34;&#34;
@@ -110,7 +109,7 @@ class CounterMetricType:
 
         return bool(
             _ffi.lib.glean_counter_test_has_value(
-                Glean._handle, self._handle, _ffi.ffi_encode_string(ping_name)
+                self._handle, _ffi.ffi_encode_string(ping_name)
             )
         )
 
@@ -132,7 +131,7 @@ class CounterMetricType:
             raise ValueError(&#34;metric has no value&#34;)
 
         return _ffi.lib.glean_counter_test_get_value(
-            Glean._handle, self._handle, _ffi.ffi_encode_string(ping_name)
+            self._handle, _ffi.ffi_encode_string(ping_name)
         )
 
     def test_get_num_recorded_errors(
@@ -154,10 +153,7 @@ class CounterMetricType:
             ping_name = self._send_in_pings[0]
 
         return _ffi.lib.glean_counter_test_get_num_recorded_errors(
-            Glean._handle,
-            self._handle,
-            error_type.value,
-            _ffi.ffi_encode_string(ping_name),
+            self._handle, error_type.value, _ffi.ffi_encode_string(ping_name),
         )
 
 
@@ -239,7 +235,7 @@ enforced.</p></section>
 
         @Dispatcher.launch
         def add():
-            _ffi.lib.glean_counter_add(Glean._handle, self._handle, amount)
+            _ffi.lib.glean_counter_add(self._handle, amount)
 
     def test_has_value(self, ping_name: Optional[str] = None) -&gt; bool:
         &#34;&#34;&#34;
@@ -258,7 +254,7 @@ enforced.</p></section>
 
         return bool(
             _ffi.lib.glean_counter_test_has_value(
-                Glean._handle, self._handle, _ffi.ffi_encode_string(ping_name)
+                self._handle, _ffi.ffi_encode_string(ping_name)
             )
         )
 
@@ -280,7 +276,7 @@ enforced.</p></section>
             raise ValueError(&#34;metric has no value&#34;)
 
         return _ffi.lib.glean_counter_test_get_value(
-            Glean._handle, self._handle, _ffi.ffi_encode_string(ping_name)
+            self._handle, _ffi.ffi_encode_string(ping_name)
         )
 
     def test_get_num_recorded_errors(
@@ -302,10 +298,7 @@ enforced.</p></section>
             ping_name = self._send_in_pings[0]
 
         return _ffi.lib.glean_counter_test_get_num_recorded_errors(
-            Glean._handle,
-            self._handle,
-            error_type.value,
-            _ffi.ffi_encode_string(ping_name),
+            self._handle, error_type.value, _ffi.ffi_encode_string(ping_name),
         )</code></pre>
 </details>
 <h3>Methods</h3>
@@ -338,7 +331,7 @@ counter by.</dd>
 
     @Dispatcher.launch
     def add():
-        _ffi.lib.glean_counter_add(Glean._handle, self._handle, amount)</code></pre>
+        _ffi.lib.glean_counter_add(self._handle, amount)</code></pre>
 </details>
 </dd>
 <dt id="glean.metrics.counter.CounterMetricType.test_get_num_recorded_errors"><code class="name flex">
@@ -383,10 +376,7 @@ the given error type.</dd>
         ping_name = self._send_in_pings[0]
 
     return _ffi.lib.glean_counter_test_get_num_recorded_errors(
-        Glean._handle,
-        self._handle,
-        error_type.value,
-        _ffi.ffi_encode_string(ping_name),
+        self._handle, error_type.value, _ffi.ffi_encode_string(ping_name),
     )</code></pre>
 </details>
 </dd>
@@ -428,7 +418,7 @@ of the ping to retrieve the metric for.</dd>
         raise ValueError(&#34;metric has no value&#34;)
 
     return _ffi.lib.glean_counter_test_get_value(
-        Glean._handle, self._handle, _ffi.ffi_encode_string(ping_name)
+        self._handle, _ffi.ffi_encode_string(ping_name)
     )</code></pre>
 </details>
 </dd>
@@ -470,7 +460,7 @@ of the ping to retrieve the metric for.</dd>
 
     return bool(
         _ffi.lib.glean_counter_test_has_value(
-            Glean._handle, self._handle, _ffi.ffi_encode_string(ping_name)
+            self._handle, _ffi.ffi_encode_string(ping_name)
         )
     )</code></pre>
 </details>
