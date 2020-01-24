@@ -14,7 +14,7 @@
     <a title="Glean Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Glean Docs</a> (94% documented)</p>
+        <p><a href="../index.html">Glean Docs</a> (93% documented)</p>
         <p class="header-right"><a href="https://github.com/mozilla/glean"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -125,6 +125,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs.html#/s:5Glean17RecordedEventDataV">RecordedEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:5Glean22RecordedExperimentDataV">RecordedExperimentData</a>
               </li>
             </ul>
           </li>
@@ -329,6 +332,202 @@ is uploaded.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getUploadEnabled</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:5GleanAAC19setExperimentActive12experimentId6branch5extraySS_SSSDyS2SGSgtF"></a>
+                    <a name="//apple_ref/swift/Method/setExperimentActive(experimentId:branch:extra:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5GleanAAC19setExperimentActive12experimentId6branch5extraySS_SSSDyS2SGSgtF">setExperimentActive(experimentId:branch:extra:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Used to indicate that an experiment is running.</p>
+
+<p>Glean will add an experiment annotation that is sent with pings.  This information is <em>not</em>
+persisted between runs.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setExperimentActive</span><span class="p">(</span><span class="nv">experimentId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">branch</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">extra</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">String</span><span class="p">]?)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>experimentId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The id of the active experiment (maximum 100 bytes).</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>branch</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The branch of the experiment (maximum 100 bytes).</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>extra</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Optional metadata to output with the ping.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:5GleanAAC21setExperimentInactive12experimentIdySS_tF"></a>
+                    <a name="//apple_ref/swift/Method/setExperimentInactive(experimentId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5GleanAAC21setExperimentInactive12experimentIdySS_tF">setExperimentInactive(experimentId:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Used to indicate that an experiment is no longer running.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setExperimentInactive</span><span class="p">(</span><span class="nv">experimentId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>experimentsId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The id of the experiment to deactivate.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:5GleanAAC22testIsExperimentActive12experimentIdSbSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/testIsExperimentActive(experimentId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5GleanAAC22testIsExperimentActive12experimentIdSbSS_tF">testIsExperimentActive(experimentId:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Tests wheter an experiment is active, for testing purposes only.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">testIsExperimentActive</span><span class="p">(</span><span class="nv">experimentId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>experimentId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The id of the experiment to look for.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>true</code> if the experiment is active and reported in pings.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:5GleanAAC21testGetExperimentData12experimentIdAA08RecordeddE0VSgSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/testGetExperimentData(experimentId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5GleanAAC21testGetExperimentData12experimentIdAA08RecordeddE0VSgSS_tF">testGetExperimentData(experimentId:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">testGetExperimentData</span><span class="p">(</span><span class="nv">experimentId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs.html#/s:5Glean22RecordedExperimentDataV">RecordedExperimentData</a></span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>

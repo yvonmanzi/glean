@@ -184,9 +184,29 @@ assertEquals(
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
+<pre><code class="language-Swift">// Annotate Glean pings with experiments data.
+Glean.shared.setExperimentActive(
+  experimentId: &quot;blue-button-effective&quot;,
+  branch: &quot;branch-with-blue-button&quot;,
+  extra: [&quot;buttonLabel&quot;: &quot;test&quot;]
+)
+// After the experiment terminates, the annotation
+// can be removed.
+Glean.shared.setExperimentInactive(experimentId: &quot;blue-button-effective&quot;)
+</code></pre>
 <blockquote>
-<p><strong>Note</strong>: Experiments are currently not supported by Glean for iOS.</p>
+<p><strong>Important</strong>: Experiment IDs and branch don't need to be pre-defined in the Glean SDK registry files.
+Please also note that the <code>extra</code> is a non-nested <code>Dictionary</code> of type <code>[String: String]</code>.</p>
 </blockquote>
+<p>There are test APIs available too:</p>
+<pre><code class="language-Swift">// Was the experiment annotated in Glean pings?
+XCTAssertTrue(Glean.shared.testIsExperimentActive(experimentId: &quot;blue-button-effective&quot;))
+// Was the correct branch reported?
+XCTAssertEqual(
+  &quot;branch-with-blue-button&quot;,
+  Glean.testGetExperimentData(experimentId: &quot;blue-button-effective&quot;)?.branch
+)
+</code></pre>
 </div>
 <div data-lang="Python" class="tab">
 <pre><code class="language-Python">from glean import Glean
