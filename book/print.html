@@ -419,11 +419,17 @@ class SampleApplication : Application() {
         Glean.registerPings(Pings)
 
         // Initialize the Glean library.
-        Glean.initialize(applicationContext, uploadEnabled = true)
+        Glean.initialize(
+            applicationContext, 
+            // Here, `settings()` is a method to get user preferences, specific to
+            // your application and not part of the Glean SDK API.
+            uploadEnabled = settings().isTelemetryEnabled
+        )
     }
 }
 </code></pre>
-<p>Once initialized, if collection is enabled, the Glean SDK will automatically start collecting <a href="user/pings/metrics.html">baseline metrics</a> and sending its <a href="user/pings/index.html">pings</a>.</p>
+<p>Once initialized, if <code>uploadEnabled</code> is true, the Glean SDK will automatically start collecting <a href="user/pings/metrics.html">baseline metrics</a> and sending its <a href="user/pings/index.html">pings</a>, according to their respective schedules.<br />
+If <code>uploadEnabled</code> is false, any persisted metrics, events and pings (other than <code>first_run_date</code>) are cleared, and subsequent calls to record metrics will be no-ops.</p>
 <p>The Glean SDK should be initialized as soon as possible, and importantly, before any other libraries in the application start using Glean.
 Library code should never call <code>Glean.initialize</code>, since it should be called exactly once per application.</p>
 <blockquote>
@@ -449,11 +455,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Glean.shared.registerPings(GleanMetrics.Pings)
 
         // Initialize the Glean library.
-        Glean.shared.initialize(uploadEnabled = Settings.isTelemetryEnabled)
+        Glean.shared.initialize(
+            // Here, `Settings` is a method to get user preferences specific to
+            // your application, and not part of the Glean SDK API.
+            uploadEnabled = Settings.isTelemetryEnabled
+        )
     }
 }
 </code></pre>
-<p>Once initialized, if collection is enabled, the Glean SDK will automatically start collecting <a href="user/pings/metrics.html">baseline metrics</a> and sending its <a href="user/pings/index.html">pings</a>.</p>
+<p>Once initialized, if <code>uploadEnabled</code> is true, the Glean SDK will automatically start collecting <a href="user/pings/metrics.html">baseline metrics</a> and sending its <a href="user/pings/index.html">pings</a>, according to their respective schedules.<br />
+If <code>uploadEnabled</code> is false, any persisted metrics, events and pings (other than <code>first_run_date</code>) are cleared, and subsequent calls to record metrics will be no-ops.</p>
 <p>The Glean SDK should be initialized as soon as possible, and importantly, before any other libraries in the application start using Glean.
 Library code should never call <code>Glean.shared.initialize</code>, since it should be called exactly once per application.</p>
 <blockquote>
@@ -475,6 +486,8 @@ Glean.initialize(
     upload_enabled=True,
 )
 </code></pre>
+<p>Once initialized, if <code>upload_enabled</code> is true, the Glean SDK will automatically start collecting <a href="user/pings/metrics.html">baseline metrics</a> and sending its <a href="user/pings/index.html">pings</a>, according to their respective schedules.<br />
+If <code>upload_enabled</code> is false, any persisted metrics, events and pings (other than <code>first_run_date</code>) are cleared, and subsequent calls to record metrics will be no-ops.</p>
 <p>Additional configuration is available on the <code>glean.Configuration</code> object, which can be passed into <code>Glean.initialize()</code>.</p>
 <p>Unlike Android and Swift, the Python bindings do not automatically send any pings.
 See the <a href="user/pings/custom.html">custom pings documentation</a> about adding custom pings and sending them.</p>
@@ -493,24 +506,18 @@ Built-in pings are only available after initialization.</p>
 <div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <p><code>Glean.setUploadEnabled()</code> should be called in response to the user enabling or disabling telemetry.</p>
-<p>The application should provide some form of user interface to call this method.</p>
-<p>When going from enabled to disabled, all pending events, metrics and pings are cleared, except for <a href="user/pings/index.html#the-client_info-section"><code>first_run_date</code></a>.
-When re-enabling, core Glean metrics will be recomputed at that time.</p>
 </div>
 <div data-lang="Swift" class="tab">
 <p><code>Glean.shared.setUploadEnabled()</code> should be called in response to the user enabling or disabling telemetry.</p>
-<p>The application should provide some form of user interface to call this method.</p>
-<p>When going from enabled to disabled, all pending events, metrics and pings are cleared, except for <a href="user/pings/index.html#the-client_info-section"><code>first_run_date</code></a>.
-When re-enabling, core Glean metrics will be recomputed at that time.</p>
 </div>
 <div data-lang="Python" class="tab">
 <p><code>Glean.set_upload_enabled()</code> should be called in response to the user enabling or disabling telemetry.</p>
+</div>
+</div>
+</div>
 <p>The application should provide some form of user interface to call this method.</p>
 <p>When going from enabled to disabled, all pending events, metrics and pings are cleared, except for <a href="user/pings/index.html#the-client_info-section"><code>first_run_date</code></a>.
 When re-enabling, core Glean metrics will be recomputed at that time.</p>
-</div>
-</div>
-</div>
 <h1><a class="header" href="#adding-new-metrics-1" id="adding-new-metrics-1">Adding new metrics</a></h1>
 <p>All metrics that your project collects must be defined in a <code>metrics.yaml</code> file.
 This file should be at the root of the application or library module.
@@ -4876,6 +4883,7 @@ For some developer workflows, <code>upstream</code> can be the same as <code>ori
 <li><a href="dev/#standard-release">Standard release</a></li>
 <li><a href="dev/#hotfix-release-for-latest-version">Hotfix release for latest version</a></li>
 <li><a href="dev/#hotfix-release-for-previous-version">Hotfix release for previous version</a></li>
+<li><a href="dev/#upgrading-android-components-to-a-new-version-of-glean">Upgrading android-components to a new version of Glean</a></li>
 </ul>
 <h2><a class="header" href="#published-artifacts" id="published-artifacts">Published artifacts</a></h2>
 <ul>
@@ -5102,6 +5110,32 @@ cargo publish --verbose
 </ul>
 </li>
 <li>Once the above pull request lands, delete the support branch.</li>
+</ol>
+<h2><a class="header" href="#upgrading-android-components-to-a-new-version-of-glean" id="upgrading-android-components-to-a-new-version-of-glean">Upgrading android-components to a new version of Glean</a></h2>
+<p>On Android, Mozilla products consume the Glean SDK through its wrapper in <a href="https://github.com/mozilla-mobile/android-components"><code>android-components</code></a>.
+Therefore, when a new Glean SDK release is made, <code>android-components</code> must also be updated.</p>
+<p>After following one of the above instructions to make a Glean SDK release:</p>
+<ol>
+<li>
+<p>Ensure that CI has completed and the artifacts have published to <a href="https://github.com/mozilla/glean/releases/">the Glean GitHub releases page</a>.</p>
+</li>
+<li>
+<p>Publish Glean to <a href="https://maven.mozilla.org/">Mozilla's Maven repository</a>. 
+This is currently a manual step that can only performed by individuals with the necessary credentials.
+Ask in <code>#releaseduty-mobile</code> on Mozilla's internal Slack for assistance.</p>
+</li>
+<li>
+<p>Create a pull request against <code>android-components</code> to update the Glean version with the following changes:</p>
+<ul>
+<li>
+<p>The Glean version is updated in the <code>mozilla_glean</code> variable in the <a href="https://github.com/mozilla-mobile/android-components/blob/69546999739ab19d21425e9a98e107e438a3f905/buildSrc/src/main/java/Dependencies.kt#L32"><code>buildSrc/src/main/java/Dependencies.kt</code></a> file.</p>
+</li>
+<li>
+<p>The relevant parts of the Glean changelog copied into the top part of the <a href="https://github.com/mozilla-mobile/android-components/blob/master/docs/changelog.md"><code>android-components</code> changelog</a>.
+This involves copying the Android-specific changes and the general changes to Glean, but can omit other platform-specific changes.</p>
+</li>
+</ul>
+</li>
 </ol>
 <h1><a class="header" href="#internal-documentation" id="internal-documentation">Internal documentation</a></h1>
 <p>This chapter describes aspects of Glean that are internal implementation details.</p>

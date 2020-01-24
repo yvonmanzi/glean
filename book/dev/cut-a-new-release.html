@@ -164,6 +164,7 @@ For some developer workflows, <code>upstream</code> can be the same as <code>ori
 <li><a href="#standard-release">Standard release</a></li>
 <li><a href="#hotfix-release-for-latest-version">Hotfix release for latest version</a></li>
 <li><a href="#hotfix-release-for-previous-version">Hotfix release for previous version</a></li>
+<li><a href="#upgrading-android-components-to-a-new-version-of-glean">Upgrading android-components to a new version of Glean</a></li>
 </ul>
 <h2><a class="header" href="#published-artifacts" id="published-artifacts">Published artifacts</a></h2>
 <ul>
@@ -390,6 +391,32 @@ cargo publish --verbose
 </ul>
 </li>
 <li>Once the above pull request lands, delete the support branch.</li>
+</ol>
+<h2><a class="header" href="#upgrading-android-components-to-a-new-version-of-glean" id="upgrading-android-components-to-a-new-version-of-glean">Upgrading android-components to a new version of Glean</a></h2>
+<p>On Android, Mozilla products consume the Glean SDK through its wrapper in <a href="https://github.com/mozilla-mobile/android-components"><code>android-components</code></a>.
+Therefore, when a new Glean SDK release is made, <code>android-components</code> must also be updated.</p>
+<p>After following one of the above instructions to make a Glean SDK release:</p>
+<ol>
+<li>
+<p>Ensure that CI has completed and the artifacts have published to <a href="https://github.com/mozilla/glean/releases/">the Glean GitHub releases page</a>.</p>
+</li>
+<li>
+<p>Publish Glean to <a href="https://maven.mozilla.org/">Mozilla's Maven repository</a>. 
+This is currently a manual step that can only performed by individuals with the necessary credentials.
+Ask in <code>#releaseduty-mobile</code> on Mozilla's internal Slack for assistance.</p>
+</li>
+<li>
+<p>Create a pull request against <code>android-components</code> to update the Glean version with the following changes:</p>
+<ul>
+<li>
+<p>The Glean version is updated in the <code>mozilla_glean</code> variable in the <a href="https://github.com/mozilla-mobile/android-components/blob/69546999739ab19d21425e9a98e107e438a3f905/buildSrc/src/main/java/Dependencies.kt#L32"><code>buildSrc/src/main/java/Dependencies.kt</code></a> file.</p>
+</li>
+<li>
+<p>The relevant parts of the Glean changelog copied into the top part of the <a href="https://github.com/mozilla-mobile/android-components/blob/master/docs/changelog.md"><code>android-components</code> changelog</a>.
+This involves copying the Android-specific changes and the general changes to Glean, but can omit other platform-specific changes.</p>
+</li>
+</ul>
+</li>
 </ol>
 
                     </main>
