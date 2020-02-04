@@ -199,6 +199,10 @@
 <span id="199">199</span>
 <span id="200">200</span>
 <span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -220,7 +224,7 @@
         .<span class="ident">filter_map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">x</span> {
             <span class="string">&#39;A&#39;</span>..<span class="op">=</span><span class="string">&#39;Z&#39;</span> <span class="op">|</span> <span class="string">&#39;a&#39;</span>..<span class="op">=</span><span class="string">&#39;z&#39;</span> <span class="op">|</span> <span class="string">&#39;0&#39;</span>..<span class="op">=</span><span class="string">&#39;9&#39;</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">last_dash</span> <span class="op">=</span> <span class="bool-val">false</span>;
-                <span class="prelude-val">Some</span>(<span class="ident">x</span>)
+                <span class="prelude-val">Some</span>(<span class="ident">x</span>.<span class="ident">to_ascii_lowercase</span>())
             }
             <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">last_dash</span> { <span class="prelude-val">None</span> } <span class="kw">else</span> { <span class="prelude-val">Some</span>(<span class="string">&#39;-&#39;</span>) };
@@ -331,6 +335,10 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="string">&quot;org-mozilla-test-app&quot;</span>,
             <span class="ident">sanitize_application_id</span>(<span class="string">&quot;org-mozilla-test-app&quot;</span>)
+        );
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            <span class="string">&quot;org-mozilla-test-app&quot;</span>,
+            <span class="ident">sanitize_application_id</span>(<span class="string">&quot;org.mozilla.Test.App&quot;</span>)
         );
     }
 
