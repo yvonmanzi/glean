@@ -274,13 +274,28 @@
 <span id="274">274</span>
 <span id="275">275</span>
 <span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
 <span class="comment">// file, You can obtain one at https://mozilla.org/MPL/2.0/.</span>
 
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
-<span class="kw">use</span> <span class="ident">serde_json</span>::<span class="ident">json</span>;
+<span class="kw">use</span> <span class="ident">serde_json</span>::{<span class="ident">json</span>, <span class="ident">Map</span> <span class="kw">as</span> <span class="ident">JsonMap</span>, <span class="ident">Value</span> <span class="kw">as</span> <span class="ident">JsonValue</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error_recording</span>::{<span class="ident">record_error</span>, <span class="ident">ErrorType</span>};
@@ -312,6 +327,21 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RecordedExperimentData</span> {
     <span class="kw">pub</span> <span class="ident">branch</span>: <span class="ident">String</span>,
     <span class="kw">pub</span> <span class="ident">extra</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+}
+
+<span class="kw">impl</span> <span class="ident">RecordedExperimentData</span> {
+    <span class="comment">// For JSON, we don&#39;t want to include {&quot;extra&quot;: null} -- we just want to skip</span>
+    <span class="comment">// extra entirely. Unfortunately, we can&#39;t use a serde field annotation for this,</span>
+    <span class="comment">// since that would break bincode serialization, which doesn&#39;t support skipping</span>
+    <span class="comment">// fields. Therefore, we use a custom serialization function just for JSON here.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_json</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">JsonValue</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">JsonMap</span>::<span class="ident">new</span>();
+        <span class="ident">value</span>.<span class="ident">insert</span>(<span class="string">&quot;branch&quot;</span>.<span class="ident">to_string</span>(), <span class="macro">json</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">branch</span>));
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">extra</span>.<span class="ident">is_some</span>() {
+            <span class="ident">value</span>.<span class="ident">insert</span>(<span class="string">&quot;extra&quot;</span>.<span class="ident">to_string</span>(), <span class="macro">json</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">extra</span>));
+        }
+        <span class="ident">JsonValue</span>::<span class="ident">Object</span>(<span class="ident">value</span>)
+    }
 }
 
 <span class="doccomment">/// An experiment metric.</span>
