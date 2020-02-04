@@ -180,7 +180,7 @@
 <span class="doccomment">/// i = ⌊n log&lt;sub&gt;base&lt;/sub&gt;(𝑥)⌋</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// In other words, there are n buckets for each power of `base` magnitude.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Functional</span> {
     <span class="ident">exponent</span>: <span class="ident">f64</span>,
 }
