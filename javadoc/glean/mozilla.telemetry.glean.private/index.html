@@ -134,11 +134,30 @@ that an <a href="-event-metric-type/index.html">EventMetricType</a> can accept.<
 </tr>
 <tr>
 <td>
+<p><a href="-no-reason-codes.html">NoReasonCodes</a></p>
+</td>
+<td>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">NoReasonCodes</span></code>
+<p>An enum with no values for convenient use as the default set of reason codes.</p>
+</td>
+</tr>
+<tr>
+<td>
 <p><a href="-ping-type/index.html">PingType</a></p>
 </td>
 <td>
-<code><span class="keyword">class </span><span class="identifier">PingType</span></code>
+<code><span class="keyword">class </span><span class="identifier">PingType</span><span class="symbol">&lt;</span><span class="identifier">ReasonCodesEnum</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/index.html"><span class="identifier">Enum</span></a><span class="symbol">&lt;</span><a href="-ping-type/index.html#ReasonCodesEnum"><span class="identifier">ReasonCodesEnum</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-ping-type-base/index.html"><span class="identifier">PingTypeBase</span></a></code>
 <p>This implements the developer facing API for custom pings.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-ping-type-base/index.html">PingTypeBase</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">PingTypeBase</span></code>
+<p>The base class of all PingTypes with just enough to track their registration, so
+we can create a heterogeneous collection of ping types.</p>
 </td>
 </tr>
 <tr>

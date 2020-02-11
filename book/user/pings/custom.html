@@ -166,6 +166,7 @@ and hyphens and a maximum of 30 characters.</p>
 <li><code>include_client_id</code> (required): A boolean indicating whether to include the
 <code>client_id</code> in the <a href="index.html#The-client_info-section"><code>client_info</code> section</a>).</li>
 <li><code>send_if_empty</code> (optional, default: false): A boolean indicating if the ping is sent if it contains no metric data.</li>
+<li><code>reasons</code> (optional, default: <code>{}</code>): The reasons that this ping may be sent. The keys are the reason codes, and the values are a textual description of each reason. The ping payload will (optionally) contain one of these reasons in the <code>ping_info.reason</code> field.</li>
 </ul>
 <p>In addition to these parameters, pings also support the parameters related to data review and expiration defined in <a href="../adding-new-metrics.html#common-metric-parameters">common metric parameters</a>: <code>description</code>, <code>notification_emails</code>, <code>bugs</code>, and <code>data_reviews</code>.</p>
 <p>For example, to define a custom ping called <code>search</code> specifically for search information:</p>
@@ -260,13 +261,17 @@ pings = load_pings(resource_filename(__name__, &quot;pings.yaml&quot;))
 <div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <pre><code class="language-kotlin">import org.mozilla.yourApplication.GleanMetrics.Pings
-Pings.search.submit()
+Pings.search.submit(
+    GleanMetrics.Pings.searchReasonCodes.performed
+)
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
 <pre><code class="language-swift">import Glean
 
-GleanMetrics.Pings.shared.search.submit()
+GleanMetrics.Pings.shared.search.submit(
+    reason: .performed
+)
 </code></pre>
 </div>
 <div data-lang="Python" class="tab">
@@ -274,7 +279,7 @@ GleanMetrics.Pings.shared.search.submit()
 
 pings = load_pings(&quot;pings.yaml&quot;)
 
-pings.search.submit()
+pings.search.submit(pings.search_reason_codes.PERFORMED)
 </code></pre>
 </div>
 </div>

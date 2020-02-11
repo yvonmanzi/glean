@@ -839,7 +839,7 @@ metric storage and rearrange them correctly in the ping.</p></section>
 </dd>
 <dt id="glean.metrics.PingType"><code class="flex name class">
 <span>class <span class="ident">PingType</span></span>
-<span>(</span><span>name, include_client_id, send_if_empty)</span>
+<span>(</span><span>name, include_client_id, send_if_empty, reason_codes)</span>
 </code></dt>
 <dd>
 <section class="desc"><p>This implements the developer facing API for custom pings.</p>
@@ -850,7 +850,13 @@ ping for eventual uploading.</p></section>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class PingType:
-    def __init__(self, name: str, include_client_id: bool, send_if_empty: bool):
+    def __init__(
+        self,
+        name: str,
+        include_client_id: bool,
+        send_if_empty: bool,
+        reason_codes: List[str],
+    ):
         &#34;&#34;&#34;
         This implements the developer facing API for custom pings.
 
@@ -858,8 +864,13 @@ ping for eventual uploading.</p></section>
         ping for eventual uploading.
         &#34;&#34;&#34;
         self._name = name
+        self._reason_codes = reason_codes
         self._handle = _ffi.lib.glean_new_ping_type(
-            _ffi.ffi_encode_string(name), include_client_id, send_if_empty
+            _ffi.ffi_encode_string(name),
+            include_client_id,
+            send_if_empty,
+            _ffi.ffi_encode_vec_string(reason_codes),
+            len(reason_codes),
         )
         Glean.register_ping_type(self)
 
@@ -874,13 +885,21 @@ ping for eventual uploading.</p></section>
         &#34;&#34;&#34;
         return self._name
 
-    def submit(self):
+    def submit(self, reason: Optional[int] = None):
         &#34;&#34;&#34;
         Collect and submit the ping for eventual uploading.
 
         If the ping currently contains no content, it will not be sent.
+
+        Args:
+            reason (enum, optional): The reason the ping was submitted.
         &#34;&#34;&#34;
-        Glean._submit_pings([self])</code></pre>
+        reason_string = None  # type: Optional[str]
+        if reason is not None:
+            reason_string = self._reason_codes[reason]
+        else:
+            reason_string = None
+        Glean._submit_ping(self, reason_string)</code></pre>
 </details>
 <h3>Instance variables</h3>
 <dl>
@@ -903,22 +922,35 @@ def name(self):
 <h3>Methods</h3>
 <dl>
 <dt id="glean.metrics.PingType.submit"><code class="name flex">
-<span>def <span class="ident">submit</span></span>(<span>self)</span>
+<span>def <span class="ident">submit</span></span>(<span>self, reason=None)</span>
 </code></dt>
 <dd>
 <section class="desc"><p>Collect and submit the ping for eventual uploading.</p>
-<p>If the ping currently contains no content, it will not be sent.</p></section>
+<p>If the ping currently contains no content, it will not be sent.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>reason</code></strong> :&ensp;<code>enum</code>, optional</dt>
+<dd>The reason the ping was submitted.</dd>
+</dl></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def submit(self):
+<pre><code class="python">def submit(self, reason: Optional[int] = None):
     &#34;&#34;&#34;
     Collect and submit the ping for eventual uploading.
 
     If the ping currently contains no content, it will not be sent.
+
+    Args:
+        reason (enum, optional): The reason the ping was submitted.
     &#34;&#34;&#34;
-    Glean._submit_pings([self])</code></pre>
+    reason_string = None  # type: Optional[str]
+    if reason is not None:
+        reason_string = self._reason_codes[reason]
+    else:
+        reason_string = None
+    Glean._submit_ping(self, reason_string)</code></pre>
 </details>
 </dd>
 </dl>

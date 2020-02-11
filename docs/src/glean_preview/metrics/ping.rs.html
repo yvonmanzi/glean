@@ -37,6 +37,16 @@
 <span id="37">37</span>
 <span id="38">38</span>
 <span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -61,10 +71,20 @@
     <span class="doccomment">/// * `name` - The name of the ping.</span>
     <span class="doccomment">/// * `include_client_id` - Whether to include the client ID in the assembled ping when.</span>
     <span class="doccomment">/// * `send_if_empty` - Whether the ping should be sent empty or not.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">name</span>: <span class="ident">A</span>, <span class="ident">include_client_id</span>: <span class="ident">bool</span>, <span class="ident">send_if_empty</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="doccomment">/// * `reason_codes` - The valid reason codes for this ping.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>(
+        <span class="ident">name</span>: <span class="ident">A</span>,
+        <span class="ident">include_client_id</span>: <span class="ident">bool</span>,
+        <span class="ident">send_if_empty</span>: <span class="ident">bool</span>,
+        <span class="ident">reason_codes</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">name</span>.<span class="ident">into</span>();
-        <span class="kw">let</span> <span class="ident">ping_type</span> <span class="op">=</span>
-            <span class="ident">glean_core</span>::<span class="ident">metrics</span>::<span class="ident">PingType</span>::<span class="ident">new</span>(<span class="ident">name</span>.<span class="ident">clone</span>(), <span class="ident">include_client_id</span>, <span class="ident">send_if_empty</span>);
+        <span class="kw">let</span> <span class="ident">ping_type</span> <span class="op">=</span> <span class="ident">glean_core</span>::<span class="ident">metrics</span>::<span class="ident">PingType</span>::<span class="ident">new</span>(
+            <span class="ident">name</span>.<span class="ident">clone</span>(),
+            <span class="ident">include_client_id</span>,
+            <span class="ident">send_if_empty</span>,
+            <span class="ident">reason_codes</span>,
+        );
         <span class="self">Self</span> { <span class="ident">name</span>, <span class="ident">ping_type</span> }
     }
 
@@ -73,8 +93,8 @@
     <span class="doccomment">/// ## Return value</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns true if a ping was assembled and queued, false otherwise.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">submit</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">crate</span>::<span class="ident">submit_ping</span>(<span class="self">self</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">submit</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">reason</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">crate</span>::<span class="ident">submit_ping</span>(<span class="self">self</span>, <span class="ident">reason</span>)
     }
 }
 </pre></div>

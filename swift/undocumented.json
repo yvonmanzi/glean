@@ -15,6 +15,20 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/distiller/project/glean-core/ios/Glean/Metrics/Ping.swift",
+      "line": 7,
+      "symbol": "ReasonCodes",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/glean-core/ios/Glean/Metrics/Ping.swift",
+      "line": 28,
+      "symbol": "PingBase.init(name:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/distiller/project/glean-core/ios/Glean/Net/HttpPingUploader.swift",
       "line": 24,
       "symbol": "HttpPingUploader.init(configuration:pingDirectory:)",

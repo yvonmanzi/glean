@@ -28,6 +28,17 @@
 <span id="28">28</span>
 <span id="29">29</span>
 <span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -52,10 +63,21 @@
 <span class="kw">impl</span> <span class="ident">InternalPings</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">InternalPings</span> {
         <span class="ident">InternalPings</span> {
-            <span class="ident">baseline</span>: <span class="ident">PingType</span>::<span class="ident">new</span>(<span class="string">&quot;baseline&quot;</span>, <span class="bool-val">true</span>, <span class="bool-val">false</span>),
-            <span class="ident">metrics</span>: <span class="ident">PingType</span>::<span class="ident">new</span>(<span class="string">&quot;metrics&quot;</span>, <span class="bool-val">true</span>, <span class="bool-val">false</span>),
-            <span class="ident">events</span>: <span class="ident">PingType</span>::<span class="ident">new</span>(<span class="string">&quot;events&quot;</span>, <span class="bool-val">true</span>, <span class="bool-val">false</span>),
-            <span class="ident">deletion_request</span>: <span class="ident">PingType</span>::<span class="ident">new</span>(<span class="string">&quot;deletion-request&quot;</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>),
+            <span class="ident">baseline</span>: <span class="ident">PingType</span>::<span class="ident">new</span>(<span class="string">&quot;baseline&quot;</span>, <span class="bool-val">true</span>, <span class="bool-val">false</span>, <span class="macro">vec</span><span class="macro">!</span>[]),
+            <span class="ident">metrics</span>: <span class="ident">PingType</span>::<span class="ident">new</span>(
+                <span class="string">&quot;metrics&quot;</span>,
+                <span class="bool-val">true</span>,
+                <span class="bool-val">false</span>,
+                <span class="macro">vec</span><span class="macro">!</span>[
+                    <span class="string">&quot;overdue&quot;</span>.<span class="ident">to_string</span>(),
+                    <span class="string">&quot;reschedule&quot;</span>.<span class="ident">to_string</span>(),
+                    <span class="string">&quot;today&quot;</span>.<span class="ident">to_string</span>(),
+                    <span class="string">&quot;tomorrow&quot;</span>.<span class="ident">to_string</span>(),
+                    <span class="string">&quot;upgrade&quot;</span>.<span class="ident">to_string</span>(),
+                ],
+            ),
+            <span class="ident">events</span>: <span class="ident">PingType</span>::<span class="ident">new</span>(<span class="string">&quot;events&quot;</span>, <span class="bool-val">true</span>, <span class="bool-val">false</span>, <span class="macro">vec</span><span class="macro">!</span>[]),
+            <span class="ident">deletion_request</span>: <span class="ident">PingType</span>::<span class="ident">new</span>(<span class="string">&quot;deletion-request&quot;</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="macro">vec</span><span class="macro">!</span>[]),
         }
     }
 }
