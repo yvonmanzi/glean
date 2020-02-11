@@ -158,24 +158,24 @@
 <h2><a class="header" href="#description" id="description">Description</a></h2>
 <p>The <code>metrics</code> ping is intended for all of the metrics that are explicitly set by the application or are included in the application's <code>metrics.yaml</code> file (except events).
 The reported data is tied to the ping's <em>measurement window</em>, which is the time between the collection of two <code>metrics</code> ping.
-Ideally, this window is expected to be about 24 hours, given that the collection is scheduled daily at 4AM.
+Ideally, this window is expected to be about 24 hours, given that the collection is scheduled daily at 04:00.
 Data in the <a href="index.html#the-ping_info-section"><code>ping_info</code></a> section of the ping can be used to infer the length of this window.
 If the application crashes, unsent recorded metrics are sent along with the next <code>metrics</code> ping.</p>
 <blockquote>
 <p><strong>Note:</strong> As the <code>metrics</code> ping was specifically designed for mobile operating systems, it is not sent when using the Glean Python bindings.</p>
 </blockquote>
 <h2><a class="header" href="#scheduling" id="scheduling">Scheduling</a></h2>
-<p>The desired behavior is to collect the ping at the first available opportunity after 4AM local time on a new calendar day.
+<p>The desired behavior is to collect the ping at the first available opportunity after 04:00 local time on a new calendar day.
 This breaks down into three scenarios:</p>
 <ol>
 <li>the application was just installed;</li>
 <li>the application was just started (after a crash or a long inactivity period);</li>
-<li>the application was open and the 4AM due time was hit.</li>
+<li>the application was open and the 04:00 due time was hit.</li>
 </ol>
 <p>In the first case, since the application was just installed, if the due time for the current calendar day has passed, a <code>metrics</code> ping is immediately generated and scheduled for sending. Otherwise, if the due time for the current calendar day has not passed, a ping collection is scheduled for that time.</p>
-<p>In the second case, if the <code>metrics</code> ping was already collected on the current calendar day, a new collection will be scheduled for the next calendar day, at 4AM.
+<p>In the second case, if the <code>metrics</code> ping was already collected on the current calendar day, a new collection will be scheduled for the next calendar day, at 04:00.
 If no collection happened yet, and the due time for the current calendar day has passed, a <code>metrics</code> ping is immediately generated and scheduled for sending.</p>
-<p>In the third case, similarly to the previous case, if the <code>metrics</code> ping was already collected on the current calendar day when we hit 4AM, then a new collection is scheduled for the next calendar day.
+<p>In the third case, similarly to the previous case, if the <code>metrics</code> ping was already collected on the current calendar day when we hit 04:00, then a new collection is scheduled for the next calendar day.
 Otherwise, the <code>metrics</code> is immediately collected and scheduled for sending.</p>
 <p>More <a href="#scheduling-examples">scheduling examples</a> are included below.</p>
 <h2><a class="header" href="#contents" id="contents">Contents</a></h2>
@@ -231,49 +231,49 @@ For instance, in order to select a String field called <code>test</code> you wou
 <h3><a class="header" href="#crossing-due-time-with-the-application-closed" id="crossing-due-time-with-the-application-closed">Crossing due time with the application closed</a></h3>
 <ol>
 <li>
-<p>The application is opened on Feb 7 on 3PM, closed on 3:05PM.</p>
+<p>The application is opened on Feb 7 on 15:00, closed on 15:05.</p>
 <ul>
 <li>Glean records one metric A (say startup time in ms) during this measurement window MW1.</li>
 </ul>
 </li>
 <li>
-<p>The application is opened again on Feb 8 on 5PM.</p>
+<p>The application is opened again on Feb 8 on 17:00.</p>
 </li>
 </ol>
 <ul>
 <li>
-<p>Glean notes that we passed local 4AM since MW1.</p>
+<p>Glean notes that we passed local 04:00 since MW1.</p>
 </li>
 <li>
 <p>Glean closes MW1, with:</p>
 <ul>
-<li><code>start_time=Feb7/3PM</code>;</li>
-<li><code>end_time=Feb8/5PM</code>.</li>
+<li><code>start_time=Feb7/15:00</code>;</li>
+<li><code>end_time=Feb8/17:00</code>.</li>
 </ul>
 </li>
 <li>
-<p>Glean records metric A again, into MW2, which has a start_time of Feb8/5PM.</p>
+<p>Glean records metric A again, into MW2, which has a start_time of Feb8/17:00.</p>
 </li>
 </ul>
 <h3><a class="header" href="#crossing-due-time-and-changing-timezones" id="crossing-due-time-and-changing-timezones">Crossing due time and changing timezones</a></h3>
 <ol>
 <li>
-<p>The application is opened on Feb 7 on 3PM in timezone UTC, closed on 3:05PM.</p>
+<p>The application is opened on Feb 7 on 15:00 in timezone UTC, closed on 15:05.</p>
 <ul>
 <li>Glean records one metric A (say startup time in ms) during this measurement window MW1.</li>
 </ul>
 </li>
 <li>
-<p>The application is opened again on Feb 8 on 5PM in timezone UTC+1.</p>
+<p>The application is opened again on Feb 8 on 17:00 in timezone UTC+1.</p>
 <ul>
 <li>
-<p>Glean notes that we passed local 4AM UTC+1 since MW1.</p>
+<p>Glean notes that we passed local 04:00 UTC+1 since MW1.</p>
 </li>
 <li>
 <p>Glean closes MW1, with:</p>
 <ul>
-<li><code>start_time=Feb7/3PM/UTC</code>;</li>
-<li><code>end_time=Feb8/5PM/UTC+1</code>.</li>
+<li><code>start_time=Feb7/15:00/UTC</code>;</li>
+<li><code>end_time=Feb8/17:00/UTC+1</code>.</li>
 </ul>
 </li>
 <li>
@@ -285,22 +285,22 @@ For instance, in order to select a String field called <code>test</code> you wou
 <h3><a class="header" href="#the-application-doesnt-run-in-a-week" id="the-application-doesnt-run-in-a-week">The application doesn’t run in a week</a></h3>
 <ol>
 <li>
-<p>The application is opened on Feb 7 on 3PM in timezone UTC, closed on 3:05PM.</p>
+<p>The application is opened on Feb 7 on 15:00 in timezone UTC, closed on 15:05.</p>
 <ul>
 <li>Glean records one metric A (say startup time in ms) during this measurement window MW1.</li>
 </ul>
 </li>
 <li>
-<p>The application is opened again on Feb 16 on 5PM in timezone UTC.</p>
+<p>The application is opened again on Feb 16 on 17:00 in timezone UTC.</p>
 <ul>
 <li>
-<p>Glean notes that we passed local 4AM UTC since MW1.</p>
+<p>Glean notes that we passed local 04:00 UTC since MW1.</p>
 </li>
 <li>
 <p>Glean closes MW1, with:</p>
 <ul>
-<li><code>start_time=Feb7/3PM/UTC</code>;</li>
-<li><code>end_time=Feb16/5PM/UTC</code>.</li>
+<li><code>start_time=Feb7/15:00/UTC</code>;</li>
+<li><code>end_time=Feb16/17:00/UTC</code>.</li>
 </ul>
 </li>
 <li>
@@ -312,22 +312,22 @@ For instance, in order to select a String field called <code>test</code> you wou
 <h3><a class="header" href="#the-application-doesnt-run-for-a-week-and-when-its-finally-re-opened-the-timezone-has-changed" id="the-application-doesnt-run-for-a-week-and-when-its-finally-re-opened-the-timezone-has-changed">The application doesn’t run for a week, and when it’s finally re-opened the timezone has changed</a></h3>
 <ol>
 <li>
-<p>The application is opened on Feb 7 on 3PM in timezone UTC, closed on 3:05PM.</p>
+<p>The application is opened on Feb 7 on 15:00 in timezone UTC, closed on 15:05.</p>
 <ul>
 <li>Glean records one metric A (say startup time in ms) during this measurement window MW1.</li>
 </ul>
 </li>
 <li>
-<p>The application is opened again on Feb 16 on 5PM in timezone UTC+1.</p>
+<p>The application is opened again on Feb 16 on 17:00 in timezone UTC+1.</p>
 <ul>
 <li>
-<p>Glean notes that we passed local 4AM UTC+1 since MW1.</p>
+<p>Glean notes that we passed local 04:00 UTC+1 since MW1.</p>
 </li>
 <li>
 <p>Glean closes MW1, with:</p>
 <ul>
-<li><code>start_time=Feb7/3PM/UTC</code></li>
-<li><code>end_time=Feb16/5PM/UTC+1</code>.</li>
+<li><code>start_time=Feb7/15:00/UTC</code></li>
+<li><code>end_time=Feb16/17:00/UTC+1</code>.</li>
 </ul>
 </li>
 <li>
@@ -336,25 +336,25 @@ For instance, in order to select a String field called <code>test</code> you wou
 </ul>
 </li>
 </ol>
-<h3><a class="header" href="#the-user-changes-timezone-in-an-extreme-enough-fashion-that-they-cross-4am-twice-on-the-same-date" id="the-user-changes-timezone-in-an-extreme-enough-fashion-that-they-cross-4am-twice-on-the-same-date">The user changes timezone in an extreme enough fashion that they cross 4AM twice on the same date</a></h3>
+<h3><a class="header" href="#the-user-changes-timezone-in-an-extreme-enough-fashion-that-they-cross-0400-twice-on-the-same-date" id="the-user-changes-timezone-in-an-extreme-enough-fashion-that-they-cross-0400-twice-on-the-same-date">The user changes timezone in an extreme enough fashion that they cross 04:00 twice on the same date</a></h3>
 <ol>
 <li>
-<p>The application is opened on Feb 7 at 3PM in timezone UTC+11, closed at 3:05PM</p>
+<p>The application is opened on Feb 7 at 15:00 in timezone UTC+11, closed at 15:05.</p>
 <ul>
 <li>Glean records one metric A (say startup time in ms) during this measurement window MW1.</li>
 </ul>
 </li>
 <li>
-<p>The application is opened again on Feb 8 at 4:30AM in timezone UTC+11.</p>
+<p>The application is opened again on Feb 8 at 04:30 in timezone UTC+11.</p>
 <ul>
 <li>
-<p>Glean notes that we passed local 4AM UTC+11.</p>
+<p>Glean notes that we passed local 04:00 UTC+11.</p>
 </li>
 <li>
 <p>Glean closes MW1, with:</p>
 <ul>
-<li><code>start_time=Feb7/3PM/UTC+11</code>;</li>
-<li><code>end_time=Feb8/4:30AM/UTC+11</code>.</li>
+<li><code>start_time=Feb7/15:00/UTC+11</code>;</li>
+<li><code>end_time=Feb8/04:30/UTC+11</code>.</li>
 </ul>
 </li>
 <li>
@@ -363,29 +363,29 @@ For instance, in order to select a String field called <code>test</code> you wou
 </ul>
 </li>
 <li>
-<p>The user changes to timezone UTC-10 and opens the application at Feb 7 at 10PM in timezone UTC-10</p>
+<p>The user changes to timezone UTC-10 and opens the application at Feb 7 at 22:00 in timezone UTC-10</p>
 <ul>
 <li>Glean records metric A again, into MW2 (not MW1, which was already sent).</li>
 </ul>
 </li>
 <li>
-<p>The user opens the application at Feb 8 5AM in timezone UTC-10</p>
+<p>The user opens the application at Feb 8 05:00 in timezone UTC-10</p>
 <ul>
-<li>Glean notes that we have not yet passed local 4AM on Feb 9</li>
+<li>Glean notes that we have not yet passed local 04:00 on Feb 9</li>
 <li>Measurement window MW2 remains the current measurement window</li>
 </ul>
 </li>
 <li>
-<p>The user opens the application at Feb 9 7AM in timezone UTC-10</p>
+<p>The user opens the application at Feb 9 07:00 in timezone UTC-10</p>
 <ul>
 <li>
-<p>Glean notes that we have passed local 4AM on Feb 9</p>
+<p>Glean notes that we have passed local 04:00 on Feb 9</p>
 </li>
 <li>
 <p>Glean closes MW2 with:</p>
 <ul>
-<li><code>start_time=Feb8/4:30AM/UTC+11</code>;</li>
-<li><code>end_time=Feb9/7AM/UTC-10</code>.</li>
+<li><code>start_time=Feb8/04:30/UTC+11</code>;</li>
+<li><code>end_time=Feb9/19:00/UTC-10</code>.</li>
 </ul>
 </li>
 <li>
