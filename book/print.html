@@ -2843,17 +2843,17 @@ This may occur, for example, when a newly launched activity covers the entire sc
 The system may also call <code>onStop()</code> when the activity has finished running, and is about to be terminated.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/user/pings/index.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#the-baseline-ping" id="the-baseline-ping">The <code>baseline</code> ping</a></h1>
 <h2><a class="header" href="#description" id="description">Description</a></h2>
-<p>This ping is intended to provide metrics that are managed by the library itself, and not explicitly set by the application or included in the application's <code>metrics.yaml</code> file.
-If the application crashes no <code>baseline</code> ping is sent, no additional ping is generated with the data from before the crash.</p>
+<p>This ping is intended to provide metrics that are managed by the library itself, and not explicitly set by the application or included in the application's <code>metrics.yaml</code> file.</p>
 <blockquote>
 <p><strong>Note:</strong> As the <code>baseline</code> ping was specifically designed for mobile operating systems, it is not sent when using the Glean Python bindings.</p>
 </blockquote>
 <h2><a class="header" href="#scheduling" id="scheduling">Scheduling</a></h2>
-<p>The <code>baseline</code> ping is automatically sent when the application is moved to the <a href="user/pings/index.html#defining-background-state">background</a>.</p>
+<p>The <code>baseline</code> ping is automatically submitted with a <code>reason: background</code> when the application is moved to the <a href="user/pings/index.html#defining-background-state">background</a>.
+The <code>baseline</code> ping will be submitted at startup with a <code>reason: dirty_startup</code>, if the previous session was not cleanly closed. This only happens from the second start.</p>
 <h2><a class="header" href="#contents" id="contents">Contents</a></h2>
 <p>The baseline ping includes the following fields:</p>
 <table><thead><tr><th>Field name</th><th>Type</th><th>Description</th></tr></thead><tbody>
-<tr><td><code>duration</code></td><td>Timespan</td><td>The duration, in seconds, of the last foreground session. <sup class="footnote-reference"><a href="#1">1</a></sup></td></tr>
+<tr><td><code>duration</code></td><td>Timespan</td><td>The duration, in seconds, of the last foreground session. Only available if <code>reason: background</code>. <sup class="footnote-reference"><a href="#1">1</a></sup></td></tr>
 <tr><td><code>locale</code></td><td>String</td><td>The locale of the application.</td></tr>
 </tbody></table>
 <div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
@@ -5605,6 +5605,9 @@ submitted.</li>
 <ul>
 <li>Collections performed before initialization (preinit tasks) are now dispatched off
 the main thread during initialization.</li>
+<li>The baseline ping will now include <code>reason</code> codes that indicate why it was
+submitted. If an unclean shutdown is detected (e.g. due to force-close), this
+ping will be sent at startup with <code>reason: dirty_startup</code>.</li>
 </ul>
 </li>
 <li>iOS:
