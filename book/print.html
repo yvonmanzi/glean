@@ -5596,6 +5596,13 @@ All the default pings have their scheduling and submission handled by the SDK.</
 <li><code>ping_type</code> is not included in the <code>ping_info</code> any more (<a href="https://github.com/mozilla/glean/pull/653">#653</a>), the pipeline takes the value from the submission URL.</li>
 </ul>
 </li>
+<li>iOS:
+<ul>
+<li>The baseline ping will now include <code>reason</code> codes that indicate why it was
+submitted. If an unclean shutdown is detected (e.g. due to force-close), this
+ping will be sent at startup with <code>reason: dirty_startup</code>.</li>
+</ul>
+</li>
 </ul>
 <h1><a class="header" href="#v2420-2020-02-11" id="v2420-2020-02-11">v24.2.0 (2020-02-11)</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v24.1.0...v24.2.0">Full changelog</a></p>
