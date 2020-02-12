@@ -1266,6 +1266,13 @@ Only the first 16 labels seen by the Glean SDK will be tracked. After that, any 
 <blockquote>
 <p><strong>Note</strong>: Be careful with using arbitrary strings as labels and make sure they can't accidentally contain identifying data (like directory paths or user input).</p>
 </blockquote>
+<h2><a class="header" href="#adding-or-changing-metric-types" id="adding-or-changing-metric-types">Adding or changing metric types</a></h2>
+<p>Glean has a <a href="https://wiki.mozilla.org/Glean/Adding_or_changing_Glean_metric_types">well-defined process</a> for requesting changes to existing metric types or suggesting the implementation of new metric types:</p>
+<ol>
+<li>Glean consumers need to file a bug in the <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&amp;component=Glean%20Metric%20Types">Data platforms &amp; tools::Glean Metric Types</a> component, filling in the provided form;</li>
+<li>The triage owner of the Bugzilla component prioritizes this within 6 business days and kicks off the <a href="https://wiki.mozilla.org/Glean/Adding_or_changing_Glean_metric_types#The_decision_making_process">decision making process</a>.</li>
+<li>Once the decision process is completed, the bug is closed with a comment outlining the decision that was made.</li>
+</ol>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/user/metrics/index.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#boolean" id="boolean">Boolean</a></h1>
 <p>Booleans are used for simple flags, for example &quot;is a11y enabled&quot;?.</p>
 <h2><a class="header" href="#configuration" id="configuration">Configuration</a></h2>
