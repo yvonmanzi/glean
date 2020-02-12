@@ -5095,7 +5095,7 @@ Therefore, when a new Glean SDK release is made, <code>android-components</code>
 <p>Ensure that CI has completed and the artifacts have published to <a href="https://github.com/mozilla/glean/releases/">the Glean GitHub releases page</a>.</p>
 </li>
 <li>
-<p>Publish Glean to <a href="https://maven.mozilla.org/">Mozilla's Maven repository</a>. 
+<p>Publish Glean to <a href="https://maven.mozilla.org/">Mozilla's Maven repository</a>.
 This is currently a manual step that can only performed by individuals with the necessary credentials.
 Ask in <code>#releaseduty-mobile</code> on Mozilla's internal Slack for assistance.</p>
 </li>
@@ -5112,6 +5112,8 @@ This involves copying the Android-specific changes and the general changes to Gl
 </ul>
 </li>
 </ol>
+<p><strong>IMPORTANT:</strong> Until the <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1592947">Glean Gradle plugin work is complete</a>, all downstream consumers of android-components will also need to update their version of Glean to match the version used in android-components so that their unit tests can run correctly.</p>
+<p>In Fenix, for example, the <a href="https://github.com/mozilla-mobile/fenix/blob/5e4ef202b85e273cf46ec5c7ec1b80f30ca4e77c/buildSrc/src/main/java/Dependencies.kt#L44">Glean version is specified here</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/dev/cut-a-new-release.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#internal-documentation" id="internal-documentation">Internal documentation</a></h1>
 <p>This chapter describes aspects of Glean that are internal implementation details.</p>
 <p>This includes</p>
