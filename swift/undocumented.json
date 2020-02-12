@@ -2,7 +2,14 @@
   "warnings": [
     {
       "file": "/Users/distiller/project/glean-core/ios/Glean/Glean.swift",
-      "line": 293,
+      "line": 69,
+      "symbol": "Glean.initialize(uploadEnabled:configuration:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/glean-core/ios/Glean/Glean.swift",
+      "line": 313,
       "symbol": "Glean.testGetExperimentData(experimentId:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
