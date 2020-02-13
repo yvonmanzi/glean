@@ -5598,6 +5598,11 @@ All the default pings have their scheduling and submission handled by the SDK.</
 <li><code>ping_type</code> is not included in the <code>ping_info</code> any more (<a href="https://github.com/mozilla/glean/pull/653">#653</a>), the pipeline takes the value from the submission URL.</li>
 </ul>
 </li>
+<li>Android:
+<ul>
+<li>The <code>Glean.initialize</code> method runs mostly off the main thread (<a href="https://github.com/mozilla/glean/pull/672">#672</a>).</li>
+</ul>
+</li>
 <li>iOS:
 <ul>
 <li>The baseline ping will now include <code>reason</code> codes that indicate why it was
