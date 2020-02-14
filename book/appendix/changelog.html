@@ -160,6 +160,13 @@
 <li>General:
 <ul>
 <li><code>ping_type</code> is not included in the <code>ping_info</code> any more (<a href="https://github.com/mozilla/glean/pull/653">#653</a>), the pipeline takes the value from the submission URL.</li>
+<li>The version of <code>glean_parser</code> has been upgraded to 1.18.2:
+<ul>
+<li><strong>Breaking Change (Java API)</strong> Have the metrics names in Java match the names in Kotlin.
+See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1588060">Bug 1588060</a>.</li>
+<li>The reasons a ping are sent are now included in the generated markdown documentation.</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>Android:
