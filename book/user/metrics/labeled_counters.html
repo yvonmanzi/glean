@@ -235,10 +235,10 @@ assert 1 == metrics.stability.crash_count.test_get_num_recorded_errors(
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
 <ul>
 <li>
-<p>Labels support lowercase alphanumeric characters; they additionally allow for dots (<code>.</code>), underscores (<code>_</code>) and/or hyphens (<code>-</code>).</p>
+<p>Labels must conform to the <a href="index.html#label-format">label formatting regular expression</a>.</p>
 </li>
 <li>
-<p>Labels are limited to starting with either a letter or an underscore character.</p>
+<p>Labels support lowercase alphanumeric characters; they additionally allow for dots (<code>.</code>), underscores (<code>_</code>) and/or hyphens (<code>-</code>).</p>
 </li>
 <li>
 <p>Each label must have a maximum of 60 bytes, when encoded as UTF-8.</p>

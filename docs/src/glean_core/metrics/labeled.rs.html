@@ -215,6 +215,7 @@
 <span id="215">215</span>
 <span id="216">216</span>
 <span id="217">217</span>
+<span id="218">218</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -242,7 +243,6 @@
     <span class="doccomment">/// * `this_is_fine_too`</span>
     <span class="doccomment">/// * `this.is_still_fine`</span>
     <span class="doccomment">/// * `thisisfine`</span>
-    <span class="doccomment">/// * `this.is_fine.2`</span>
     <span class="doccomment">/// * `_.is_fine`</span>
     <span class="doccomment">/// * `this.is-fine`</span>
     <span class="doccomment">/// * `this-is-fine`</span>
@@ -251,7 +251,9 @@
     <span class="doccomment">/// * `1.not_fine`</span>
     <span class="doccomment">/// * `this.$isnotfine`</span>
     <span class="doccomment">/// * `-.not_fine`</span>
-    <span class="kw">static</span> <span class="kw-2">ref</span> <span class="ident">LABEL_REGEX</span>: <span class="ident">Regex</span> <span class="op">=</span> <span class="ident">Regex</span>::<span class="ident">new</span>(<span class="string">&quot;^[a-z_][a-z0-9_-]{0,29}(\\.[a-z0-9_-]{0,29})*$&quot;</span>).<span class="ident">unwrap</span>();
+    <span class="kw">static</span> <span class="kw-2">ref</span> <span class="ident">LABEL_REGEX</span>: <span class="ident">Regex</span> <span class="op">=</span> <span class="ident">Regex</span>::<span class="ident">new</span>(
+        <span class="string">&quot;^[a-z_][a-z0-9_-]{0,29}(\\.[a-z_][a-z0-9_-]{0,29})*$&quot;</span>
+    ).<span class="ident">unwrap</span>();
 }
 
 <span class="doccomment">/// A labeled metric.</span>

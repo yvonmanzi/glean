@@ -1266,6 +1266,11 @@ Only the first 16 labels seen by the Glean SDK will be tracked. After that, any 
 <blockquote>
 <p><strong>Note</strong>: Be careful with using arbitrary strings as labels and make sure they can't accidentally contain identifying data (like directory paths or user input).</p>
 </blockquote>
+<h3><a class="header" href="#label-format" id="label-format">Label format</a></h3>
+<p>To ensure maximum support in database columns, labels must be made up of dot-separated identifiers with lowercase ASCII alphanumerics, containing underscores and dashes.</p>
+<p>Specifically, they must conform to this regular expression:</p>
+<pre><code>^[a-z_][a-z0-9_-]{0,29}(\\.[a-z_][a-z0-9_-]{0,29})*$
+</code></pre>
 <h2><a class="header" href="#adding-or-changing-metric-types" id="adding-or-changing-metric-types">Adding or changing metric types</a></h2>
 <p>Glean has a <a href="https://wiki.mozilla.org/Glean/Adding_or_changing_Glean_metric_types">well-defined process</a> for requesting changes to existing metric types or suggesting the implementation of new metric types:</p>
 <ol>
@@ -1536,10 +1541,10 @@ assert 1 == metrics.stability.crash_count.test_get_num_recorded_errors(
 <h2><a class="header" href="#limits-3" id="limits-3">Limits</a></h2>
 <ul>
 <li>
-<p>Labels support lowercase alphanumeric characters; they additionally allow for dots (<code>.</code>), underscores (<code>_</code>) and/or hyphens (<code>-</code>).</p>
+<p>Labels must conform to the <a href="user/metrics/index.html#label-format">label formatting regular expression</a>.</p>
 </li>
 <li>
-<p>Labels are limited to starting with either a letter or an underscore character.</p>
+<p>Labels support lowercase alphanumeric characters; they additionally allow for dots (<code>.</code>), underscores (<code>_</code>) and/or hyphens (<code>-</code>).</p>
 </li>
 <li>
 <p>Each label must have a maximum of 60 bytes, when encoded as UTF-8.</p>
@@ -1749,13 +1754,10 @@ XCTAssert(Login.errorsByStage[&quot;server_auth&quot;].testHasValue())
 <h2><a class="header" href="#limits-5" id="limits-5">Limits</a></h2>
 <ul>
 <li>
-<p>Labels support lowercase alphanumeric characters; they additionally allow for dots (<code>.</code>), underscores (<code>_</code>) and/or hyphens (<code>-</code>).</p>
+<p>Labels must conform to the <a href="user/metrics/index.html#label-format">label formatting regular expression</a>.</p>
 </li>
 <li>
-<p>Labels are limited to starting with either a letter or an underscore character.</p>
-</li>
-<li>
-<p>Each label must have a maximum of 60 characters.</p>
+<p>Each label must have a maximum of 60 bytes, when encoded as UTF-8.</p>
 </li>
 <li>
 <p>If the labels are specified in the <code>metrics.yaml</code>, using a different label will be replaced with the special value <code>__other__</code>.</p>
@@ -5649,6 +5651,8 @@ See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1588060">Bug 1588060</
 <li>Android:
 <ul>
 <li>The <code>Glean.initialize</code> method runs mostly off the main thread (<a href="https://github.com/mozilla/glean/pull/672">#672</a>).</li>
+<li>Labels in labeled metrics now have a correct, and slightly stricter, regular expression.
+See <a href="https://mozilla.github.io/glean/user/metrics/index.html#label-format">label format</a> for more information.</li>
 </ul>
 </li>
 <li>iOS:
