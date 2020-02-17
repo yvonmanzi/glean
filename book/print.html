@@ -1311,15 +1311,15 @@ assertTrue(Flags.a11yEnabled.testGetValue())
 <div data-lang="Java" class="tab">
 <pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Flags
 
-Flags.INSTANCE.getA11yEnabled.set(System.isAccesibilityEnabled())
+Flags.INSTANCE.a11yEnabled.set(System.isAccesibilityEnabled())
 </code></pre>
 <p>There are test APIs available too:</p>
 <pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Flags
 
 // Was anything recorded?
-assertTrue(Flags.INSTANCE.getA11yEnabled.testHasValue())
+assertTrue(Flags.INSTANCE.a11yEnabled.testHasValue())
 // Does it have the expected value?
-assertTrue(Flags.INSTANCE.getA11yEnabled.testGetValue())
+assertTrue(Flags.INSTANCE.a11yEnabled.testGetValue())
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
@@ -1390,19 +1390,19 @@ assertEquals(
 <div data-lang="Java" class="tab">
 <pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Controls
 
-Controls.INSTANCE.getRefreshPressed.add() // Adds 1 to the counter.
-Controls.INSTANCE.getRefreshPressed.add(5) // Adds 5 to the counter.
+Controls.INSTANCE.refreshPressed.add() // Adds 1 to the counter.
+Controls.INSTANCE.refreshPressed.add(5) // Adds 5 to the counter.
 </code></pre>
 <p>There are test APIs available too:</p>
 <pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Controls
 
 // Was anything recorded?
-assertTrue(Controls.INSTANCE.getRefreshPressed.testHasValue())
+assertTrue(Controls.INSTANCE.refreshPressed.testHasValue())
 // Does the counter have the expected value?
-assertEquals(6, Controls.INSTANCE.getRefreshPressed.testGetValue())
+assertEquals(6, Controls.INSTANCE.refreshPressed.testGetValue())
 // Did the counter record an negative value?
 assertEquals(
-    1, Controls.INSTANCE.getRefreshPressed.testGetNumRecordedErrors(ErrorType.InvalidValue)
+    1, Controls.INSTANCE.refreshPressed.testGetNumRecordedErrors(ErrorType.InvalidValue)
 )
 </code></pre>
 </div>
@@ -1621,22 +1621,22 @@ assertEquals(1, SearchDefault.name.testGetNumRecordedErrors(ErrorType.InvalidVal
 <pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.SearchDefault
 
 // Record a value into the metric.
-SearchDefault.INSTANCE.getName.set(&quot;duck duck go&quot;)
+SearchDefault.INSTANCE.name.set(&quot;duck duck go&quot;)
 // If it changed later, you can record the new value:
-SearchDefault.INSTANCE.getName.set(&quot;wikipedia&quot;)
+SearchDefault.INSTANCE.name.set(&quot;wikipedia&quot;)
 </code></pre>
 <p>There are test APIs available too:</p>
 <pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.SearchDefault
 
 // Was anything recorded?
-assertTrue(SearchDefault.INSTANCE.getName.testHasValue())
+assertTrue(SearchDefault.INSTANCE.name.testHasValue())
 // Does the string metric have the expected value?
 // IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
-assertEquals(&quot;wikipedia&quot;, SearchDefault.INSTANCE.getName.testGetValue())
+assertEquals(&quot;wikipedia&quot;, SearchDefault.INSTANCE.name.testGetValue())
 // Was the string truncated, and an error reported?
 assertEquals(
     1, 
-    SearchDefault.INSTANCE.getName.testGetNumRecordedErrors(
+    SearchDefault.INSTANCE.name.testGetNumRecordedErrors(
         ErrorType.InvalidValue
     )
 )
@@ -1937,17 +1937,17 @@ assertEquals(1, Auth.loginTime.testGetNumRecordedErrors(ErrorType.InvalidValue))
 <pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Auth
 
 fun onShowLogin() {
-    Auth.INSTANCE.getLoginTime.start()
+    Auth.INSTANCE.loginTime.start()
     // ...
 }
 
 fun onLogin() {
-    Auth.INSTANCE.getLoginTime.stop()
+    Auth.INSTANCE.loginTime.stop()
     // ...
 }
 
 fun onLoginCancel() {
-    Auth.INSTANCE.getLoginTime.cancel()
+    Auth.INSTANCE.loginTime.cancel()
     // ...
 }
 </code></pre>
@@ -1956,13 +1956,13 @@ fun onLoginCancel() {
 <pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Auth
 
 // Was anything recorded?
-assertTrue(Auth.INSTANCE.getLoginTime.testHasValue())
+assertTrue(Auth.INSTANCE.loginTime.testHasValue())
 // Does the timer have the expected value
-assertTrue(Auth.INSTANCE.getLoginTime.testGetValue() &gt; 0)
+assertTrue(Auth.INSTANCE.loginTime.testGetValue() &gt; 0)
 // Was the timing recorded incorrectly?
 assertEquals(
     1, 
-    Auth.INSTANCE.getLoginTime.testGetNumRecordedErrors(
+    Auth.INSTANCE.loginTime.testGetNumRecordedErrors(
         ErrorType.InvalidValue
     )
 )
@@ -2120,11 +2120,11 @@ import org.mozilla.yourApplication.GleanMetrics.Pages
 val timerId : GleanTimerId
 
 fun onPageStart(e: Event) {
-    timerId = Pages.INSTANCE.getPageLoad.start()
+    timerId = Pages.INSTANCE.pageLoad.start()
 }
 
 fun onPageLoaded(e: Event) {
-    Pages.INSTANCE.getPageLoad.stopAndAccumulate(timerId)
+    Pages.INSTANCE.pageLoad.stopAndAccumulate(timerId)
 }
 </code></pre>
 <p>There are test APIs available too.  For convenience, properties <code>sum</code> and <code>count</code> are exposed to facilitate validating that data was recorded correctly.</p>
@@ -2132,10 +2132,10 @@ fun onPageLoaded(e: Event) {
 <pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Pages
 
 // Was anything recorded?
-assertTrue(pages.INSTANCE.getPageLoad.testHasValue())
+assertTrue(pages.INSTANCE.pageLoad.testHasValue())
 
 // Get snapshot.
-val snapshot = pages.INSTANCE.getPageLoad.testGetValue()
+val snapshot = pages.INSTANCE.pageLoad.testGetValue()
 
 // Does the sum have the expected value?
 assertEquals(11, snapshot.getSum)
@@ -2146,7 +2146,7 @@ assertEquals(2L, snapshot.getCount)
 // Was an error recorded?
 assertEquals(
     1, 
-    pages.INSTANCE.getPageLoad.testGetNumRecordedErrors(
+    pages.INSTANCE.pageLoad.testGetNumRecordedErrors(
         ErrorType.InvalidValue
     )
 )
@@ -2341,16 +2341,16 @@ assertEquals(uuid, User.clientId.testGetValue())
 <div data-lang="Java" class="tab">
 <pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.User
 
-User.INSTANCE.getClientId.generateAndSet() // Generate a new UUID and record it
-User.INSTANCE.getClientId.set(UUID.randomUUID())  // Set a UUID explicitly
+User.INSTANCE.clientId.generateAndSet() // Generate a new UUID and record it
+User.INSTANCE.clientId.set(UUID.randomUUID())  // Set a UUID explicitly
 </code></pre>
 <p>There are test APIs available too:</p>
 <pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.User
 
 // Was anything recorded?
-assertTrue(User.INSTANCE.getClientId.testHasValue())
+assertTrue(User.INSTANCE.clientId.testHasValue())
 // Was it the expected value?
-assertEquals(uuid, User.INSTANCE.getClientId.testGetValue())
+assertEquals(uuid, User.INSTANCE.clientId.testGetValue())
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
@@ -2456,20 +2456,20 @@ assertEquals(1, Install.firstRun.testGetNumRecordedErrors(ErrorType.InvalidValue
 <div data-lang="Java" class="tab">
 <pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Install
 
-Install.INSTANCE.getFirstRun.set() // Records &quot;now&quot;
-Install.INSTANCE.getFirstRun.set(Calendar(2019, 3, 25)) // Records a custom datetime
+Install.INSTANCE.firstRun.set() // Records &quot;now&quot;
+Install.INSTANCE.firstRun.set(Calendar(2019, 3, 25)) // Records a custom datetime
 </code></pre>
 <p>There are test APIs available too:</p>
 <pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Install
 
 // Was anything recorded?
-assertTrue(Install.INSTANCE.getFirstRun.testHasValue())
+assertTrue(Install.INSTANCE.firstRun.testHasValue())
 // Was it the expected value?
 // NOTE: Datetimes always include a timezone offset from UTC, hence the
 // &quot;-05:00&quot; suffix.
-assertEquals(&quot;2019-03-25-05:00&quot;, Install.INSTANCE.getFirstRun.testGetValueAsString())
+assertEquals(&quot;2019-03-25-05:00&quot;, Install.INSTANCE.firstRun.testGetValueAsString())
 // Was the value invalid?
-assertEquals(1, Install.INSTANCE.getFirstRun.testGetNumRecordedErrors(ErrorType.InvalidValue))
+assertEquals(1, Install.INSTANCE.firstRun.testGetNumRecordedErrors(ErrorType.InvalidValue))
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">

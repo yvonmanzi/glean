@@ -200,22 +200,22 @@ assertEquals(1, SearchDefault.name.testGetNumRecordedErrors(ErrorType.InvalidVal
 <pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.SearchDefault
 
 // Record a value into the metric.
-SearchDefault.INSTANCE.getName.set(&quot;duck duck go&quot;)
+SearchDefault.INSTANCE.name.set(&quot;duck duck go&quot;)
 // If it changed later, you can record the new value:
-SearchDefault.INSTANCE.getName.set(&quot;wikipedia&quot;)
+SearchDefault.INSTANCE.name.set(&quot;wikipedia&quot;)
 </code></pre>
 <p>There are test APIs available too:</p>
 <pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.SearchDefault
 
 // Was anything recorded?
-assertTrue(SearchDefault.INSTANCE.getName.testHasValue())
+assertTrue(SearchDefault.INSTANCE.name.testHasValue())
 // Does the string metric have the expected value?
 // IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
-assertEquals(&quot;wikipedia&quot;, SearchDefault.INSTANCE.getName.testGetValue())
+assertEquals(&quot;wikipedia&quot;, SearchDefault.INSTANCE.name.testGetValue())
 // Was the string truncated, and an error reported?
 assertEquals(
     1, 
-    SearchDefault.INSTANCE.getName.testGetNumRecordedErrors(
+    SearchDefault.INSTANCE.name.testGetNumRecordedErrors(
         ErrorType.InvalidValue
     )
 )
