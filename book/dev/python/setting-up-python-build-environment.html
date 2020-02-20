@@ -260,6 +260,10 @@ This generally will not be portable to other Linux distributions, and PyPI will 
 In order to create wheels that can be installed on the broadest range of Linux distributions, the Python Packaging Authority's <a href="https://github.com/pypa/manylinux">manylinux</a> project maintains a Docker image for building compatible Linux wheels.</p>
 <p>The CircleCI configuration handles making these wheels from tagged releases.
 If you need to reproduce this locally, see the CircleCI job <code>pypi-linux-release</code> for an example of how this Docker image is used in practice.</p>
+<h2><a class="header" href="#building-wheels-for-windows" id="building-wheels-for-windows">Building wheels for Windows</a></h2>
+<p>The official wheels for Windows are produced on a Linux virtual machine using the Mingw toolchain.</p>
+<p>The CircleCI configuration handles making these wheels from tagged releases.
+If you need to reproduce this locally, see the CircleCI job <code>pypi-windows-release</code> for an example of how this is done in practice.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/dev/python/setting-up-python-build-environment.md">Edit this file on GitHub.</a></footer>
                     </main>
 
