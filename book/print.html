@@ -35,6 +35,9 @@
         
 
         
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -2056,8 +2059,10 @@ HistorySync.setRawNanos(duration)
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/user/metrics/timespan.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#timing-distribution" id="timing-distribution">Timing Distribution</a></h1>
 <p>Timing distributions are used to accumulate and store time measurement, for analyzing distributions of the timing data.</p>
 <p>To measure the distribution of single timespans, see <a href="user/metrics/timespan.html">Timespans</a>. To record absolute times, see <a href="user/metrics/datetime.html">Datetimes</a>.</p>
-<p>Timing distributions are recorded in a histogram where the buckets have an exponential distribution, specifically with 8 buckets for every power of 2.
-This makes them suitable for measuring timings on a number of time scales without any configuration.</p>
+<p>Timing distributions are recorded in a histogram where the buckets have an exponential distribution, specifically with 8 buckets for every power of 2. 
+That is, the function from a value \( x \) to a bucket index is:</p>
+<p>\[ \lfloor 8 \log_2(x) \rfloor \]</p>
+<p>This makes them suitable for measuring timings on a number of time scales without any configuration.</p>
 <p>Timings always span the full length between <code>start</code> and <code>stopAndAccumulate</code>.
 If the Glean upload is disabled when calling <code>start</code>, the timer is still started.
 If the Glean upload is disabled at the time <code>stopAndAccumulate</code> is called, nothing is recorded.</p>
@@ -2217,7 +2222,9 @@ On Android, the <a href="https://developer.android.com/reference/android/os/Syst
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/user/metrics/timing_distribution.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#memory-distribution" id="memory-distribution">Memory Distribution</a></h1>
 <p>Memory distributions are used to accumulate and store memory sizes.</p>
 <p>Memory distributions are recorded in a histogram where the buckets have an exponential distribution, specifically with 16 buckets for every power of 2.
-This makes them suitable for measuring memory sizes on a number of different scales without any configuration.</p>
+That is, the function from a value \( x \) to a bucket index is:</p>
+<p>\[ \lfloor 16 \log_2(x) \rfloor \]</p>
+<p>This makes them suitable for measuring memory sizes on a number of different scales without any configuration.</p>
 <h2><a class="header" href="#configuration-8" id="configuration-8">Configuration</a></h2>
 <p>If you wanted to create a memory distribution to measure the amount of heap memory allocated, first you need to add an entry for it to the <code>metrics.yaml</code> file:</p>
 <pre><code class="language-YAML">memory:
@@ -6192,7 +6199,9 @@ They could be release notes, documentation, hopes, dreams, or whatever: so long 
         
         <script type="text/javascript">
         window.addEventListener('load', function() {
-            window.setTimeout(window.print, 100);
+            MathJax.Hub.Register.StartupHook('End', function() {
+                window.setTimeout(window.print, 100);
+            });
         });
         </script>
         
