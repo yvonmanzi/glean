@@ -170,7 +170,7 @@ Additionally, error metrics are always sent in the <a href="pings/metrics.html">
 <pre><code class="language-Kotlin">MyMetrics.stringMetric.set(&quot;this_string_is_longer_than_the_limit_for_string_metrics&quot;)
 </code></pre>
 <p>The following error metric counter would be incremented:</p>
-<pre><code class="language-Kotlin">Glean.error.invalidValue.add(1)
+<pre><code class="language-Kotlin">Glean.error.invalidValue[&quot;my_metrics.string_metric&quot;].add(1)
 </code></pre>
 <p>Resulting in the following keys in the ping:</p>
 <pre><code class="language-json">{
