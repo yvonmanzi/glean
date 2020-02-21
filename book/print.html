@@ -1329,7 +1329,7 @@ assertTrue(Flags.a11yEnabled.testGetValue())
 <div data-lang="Java" class="tab">
 <pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Flags
 
-Flags.INSTANCE.a11yEnabled.set(System.isAccesibilityEnabled())
+Flags.INSTANCE.a11yEnabled.set(System.isAccessibilityEnabled())
 </code></pre>
 <p>There are test APIs available too:</p>
 <pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Flags
@@ -1341,7 +1341,7 @@ assertTrue(Flags.INSTANCE.a11yEnabled.testGetValue())
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
-<pre><code class="language-Swift">Flags.a11yEnabled.set(self.isAccesibilityElement)
+<pre><code class="language-Swift">Flags.a11yEnabled.set(self.isAccessibilityEnabled)
 </code></pre>
 <p>There are test APIs available too:</p>
 <pre><code class="language-Swift">@testable import Glean
@@ -1350,6 +1350,19 @@ assertTrue(Flags.INSTANCE.a11yEnabled.testGetValue())
 XCTAssertTrue(Flags.a11yEnabled.testHasValue())
 // Does the counter have the expected value?
 XCTAssertTrue(try Flags.a11yEnabled.testGetValue())
+</code></pre>
+</div>
+<div data-lang="Python" class="tab">
+<pre><code class="language-Python">from glean import load_metrics
+metrics = load_metrics(&quot;metrics.yaml&quot;)
+
+metrics.flags.a11y_enabled.set(is_accessibility_enabled())
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-Python"># Was anything recorded?
+assert metrics.flags.a11y_enabled.test_has_value()
+# Does it have the expected value?
+assert True is metrics.flags.a11y_enabled.test_get_value()
 </code></pre>
 </div>
 </div>
@@ -1370,6 +1383,7 @@ XCTAssertTrue(try Flags.a11yEnabled.testGetValue())
 <ul>
 <li><a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-boolean-metric-type/index.html">Kotlin API docs</a></li>
 <li><a href="user/metrics/../../../swift/Classes/BooleanMetricType.html">Swift API docs</a></li>
+<li><a href="user/metrics/../../../python/glean/metrics/boolean.html">Python API docs</a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/user/metrics/boolean.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#counter" id="counter">Counter</a></h1>
 <p>Used to count how often something happens, say how often a certain button was pressed. A counter always starts from <code>0</code>. Each time you record to a counter, its value is incremented.</p>
@@ -5801,6 +5815,13 @@ All the default pings have their scheduling and submission handled by the SDK.</
 <p><a href="appendix/twig.html">This Week in Glean</a> is a series of blog posts that the Glean Team at Mozilla is using to try to communicate better about our work.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/appendix/glossary.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v25.0.0...master">Full changelog</a></p>
+<ul>
+<li>Python:
+<ul>
+<li>The boolean metric type is now supported in Python.</li>
+</ul>
+</li>
+</ul>
 <h1><a class="header" href="#v2500-2020-02-17" id="v2500-2020-02-17">v25.0.0 (2020-02-17)</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v24.2.0...v25.0.0">Full changelog</a></p>
 <ul>

@@ -190,7 +190,7 @@ assertTrue(Flags.a11yEnabled.testGetValue())
 <div data-lang="Java" class="tab">
 <pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Flags
 
-Flags.INSTANCE.a11yEnabled.set(System.isAccesibilityEnabled())
+Flags.INSTANCE.a11yEnabled.set(System.isAccessibilityEnabled())
 </code></pre>
 <p>There are test APIs available too:</p>
 <pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Flags
@@ -202,7 +202,7 @@ assertTrue(Flags.INSTANCE.a11yEnabled.testGetValue())
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
-<pre><code class="language-Swift">Flags.a11yEnabled.set(self.isAccesibilityElement)
+<pre><code class="language-Swift">Flags.a11yEnabled.set(self.isAccessibilityEnabled)
 </code></pre>
 <p>There are test APIs available too:</p>
 <pre><code class="language-Swift">@testable import Glean
@@ -211,6 +211,19 @@ assertTrue(Flags.INSTANCE.a11yEnabled.testGetValue())
 XCTAssertTrue(Flags.a11yEnabled.testHasValue())
 // Does the counter have the expected value?
 XCTAssertTrue(try Flags.a11yEnabled.testGetValue())
+</code></pre>
+</div>
+<div data-lang="Python" class="tab">
+<pre><code class="language-Python">from glean import load_metrics
+metrics = load_metrics(&quot;metrics.yaml&quot;)
+
+metrics.flags.a11y_enabled.set(is_accessibility_enabled())
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-Python"># Was anything recorded?
+assert metrics.flags.a11y_enabled.test_has_value()
+# Does it have the expected value?
+assert True is metrics.flags.a11y_enabled.test_get_value()
 </code></pre>
 </div>
 </div>
@@ -231,6 +244,7 @@ XCTAssertTrue(try Flags.a11yEnabled.testGetValue())
 <ul>
 <li><a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-boolean-metric-type/index.html">Kotlin API docs</a></li>
 <li><a href="../../../swift/Classes/BooleanMetricType.html">Swift API docs</a></li>
+<li><a href="../../../python/glean/metrics/boolean.html">Python API docs</a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/user/metrics/boolean.md">Edit this file on GitHub.</a></footer>
                     </main>
