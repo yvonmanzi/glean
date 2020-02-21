@@ -71,7 +71,19 @@ else:
 
         On Python prior to 3.7, this may have less than millisecond resolution.
         &#34;&#34;&#34;
-        return int(time.time() * 1000.0)</code></pre>
+        return int(time.time() * 1000.0)
+
+
+class classproperty:
+    &#34;&#34;&#34;
+    Decorator for creating a property on a class (rather than an instance).
+    &#34;&#34;&#34;
+
+    def __init__(self, f):
+        self.f = f
+
+    def __get__(self, obj, owner):
+        return self.f(owner)</code></pre>
 </details>
 </section>
 <section>
@@ -136,6 +148,31 @@ for the currently set locale.</p>
 </dl>
 </section>
 <section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="glean.util.classproperty"><code class="flex name class">
+<span>class <span class="ident">classproperty</span></span>
+<span>(</span><span>f)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Decorator for creating a property on a class (rather than an instance).</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class classproperty:
+    &#34;&#34;&#34;
+    Decorator for creating a property on a class (rather than an instance).
+    &#34;&#34;&#34;
+
+    def __init__(self, f):
+        self.f = f
+
+    def __get__(self, obj, owner):
+        return self.f(owner)</code></pre>
+</details>
+</dd>
+</dl>
 </section>
 </article>
 <nav id="sidebar">
@@ -153,6 +190,13 @@ for the currently set locale.</p>
 <ul class="">
 <li><code><a title="glean.util.get_locale_tag" href="#glean.util.get_locale_tag">get_locale_tag</a></code></li>
 <li><code><a title="glean.util.time_ms" href="#glean.util.time_ms">time_ms</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="glean.util.classproperty" href="#glean.util.classproperty">classproperty</a></code></h4>
+</li>
 </ul>
 </li>
 </ul>

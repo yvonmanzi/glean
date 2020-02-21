@@ -180,6 +180,13 @@ class Glean:
             def check_pending_deletion_request():
                 DeletionPingUploadWorker.process()
 
+    @util.classproperty
+    def configuration(cls):
+        &#34;&#34;&#34;
+        Access the configuration object to change dynamic parameters.
+        &#34;&#34;&#34;
+        return cls._configuration
+
     @classmethod
     def reset(cls):
         &#34;&#34;&#34;
@@ -602,6 +609,13 @@ initialized from the application.</p>
             def check_pending_deletion_request():
                 DeletionPingUploadWorker.process()
 
+    @util.classproperty
+    def configuration(cls):
+        &#34;&#34;&#34;
+        Access the configuration object to change dynamic parameters.
+        &#34;&#34;&#34;
+        return cls._configuration
+
     @classmethod
     def reset(cls):
         &#34;&#34;&#34;
@@ -871,6 +885,13 @@ initialized from the application.</p>
         if sent_ping:
             PingUploadWorker.process()</code></pre>
 </details>
+<h3>Class variables</h3>
+<dl>
+<dt id="glean.glean.Glean.configuration"><code class="name">var <span class="ident">configuration</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
 <h3>Static methods</h3>
 <dl>
 <dt id="glean.glean.Glean.get_data_dir"><code class="name flex">
@@ -1386,6 +1407,7 @@ def test_is_experiment_active(cls, experiment_id: str) -&gt; bool:
 <li>
 <h4><code><a title="glean.glean.Glean" href="#glean.glean.Glean">Glean</a></code></h4>
 <ul class="">
+<li><code><a title="glean.glean.Glean.configuration" href="#glean.glean.Glean.configuration">configuration</a></code></li>
 <li><code><a title="glean.glean.Glean.get_data_dir" href="#glean.glean.Glean.get_data_dir">get_data_dir</a></code></li>
 <li><code><a title="glean.glean.Glean.get_upload_enabled" href="#glean.glean.Glean.get_upload_enabled">get_upload_enabled</a></code></li>
 <li><code><a title="glean.glean.Glean.initialize" href="#glean.glean.Glean.initialize">initialize</a></code></li>

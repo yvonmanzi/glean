@@ -119,16 +119,18 @@ class Configuration:
 
     @channel.setter
     def channel(self, value: str):
+        from ._builtins import metrics
+
         self._channel = value
+
+        metrics.glean.internal.metrics.app_channel.set(value)
 
     @property
     def max_events(self) -&gt; int:
         &#34;&#34;&#34;The number of events to store before force-sending.&#34;&#34;&#34;
         return self._max_events
 
-    @max_events.setter
-    def max_events(self, value: int):
-        self._max_events = value
+    # max_events can&#39;t be changed after Glean is initialized
 
     @property
     def log_pings(self) -&gt; bool:
@@ -273,16 +275,18 @@ implementation. Defaults to <a title="glean.net.HttpClientUploader" href="net/in
 
     @channel.setter
     def channel(self, value: str):
+        from ._builtins import metrics
+
         self._channel = value
+
+        metrics.glean.internal.metrics.app_channel.set(value)
 
     @property
     def max_events(self) -&gt; int:
         &#34;&#34;&#34;The number of events to store before force-sending.&#34;&#34;&#34;
         return self._max_events
 
-    @max_events.setter
-    def max_events(self, value: int):
-        self._max_events = value
+    # max_events can&#39;t be changed after Glean is initialized
 
     @property
     def log_pings(self) -&gt; bool:
