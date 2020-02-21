@@ -966,14 +966,14 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_upload_enabled</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">flag</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="ident">log</span>::<span class="macro">info</span><span class="macro">!</span>(<span class="string">&quot;Upload enabled: {:?}&quot;</span>, <span class="ident">flag</span>);
 
-        <span class="comment">// When upload is disabled, submit a deletion-request ping</span>
-        <span class="kw">if</span> <span class="op">!</span><span class="ident">flag</span> {
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">internal_pings</span>.<span class="ident">deletion_request</span>.<span class="ident">submit</span>(<span class="self">self</span>, <span class="prelude-val">None</span>) {
-                <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;Failed to send deletion-request ping on optout: {}&quot;</span>, <span class="ident">err</span>);
-            }
-        }
-
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">upload_enabled</span> <span class="op">!</span><span class="op">=</span> <span class="ident">flag</span> {
+            <span class="comment">// When upload is disabled, submit a deletion-request ping</span>
+            <span class="kw">if</span> <span class="op">!</span><span class="ident">flag</span> {
+                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">internal_pings</span>.<span class="ident">deletion_request</span>.<span class="ident">submit</span>(<span class="self">self</span>, <span class="prelude-val">None</span>) {
+                    <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;Failed to submit deletion-request ping on optout: {}&quot;</span>, <span class="ident">err</span>);
+                }
+            }
+
             <span class="self">self</span>.<span class="ident">upload_enabled</span> <span class="op">=</span> <span class="ident">flag</span>;
             <span class="self">self</span>.<span class="ident">on_change_upload_enabled</span>(<span class="ident">flag</span>);
             <span class="bool-val">true</span>
