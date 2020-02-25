@@ -245,6 +245,31 @@ XCTAssertEqual(6, try Install.firstRun.testGetValue())
 XCTAssertEqual(1, Install.firstRun.getNumRecordedErrors(.invalidValue))
 </code></pre>
 </div>
+<div data-lang="Python" class="tab">
+<pre><code class="language-Python">import datetime
+
+from glean import load_metrics
+metrics = load_metrics(&quot;metrics.yaml&quot;)
+
+# Records &quot;now&quot;
+metrics.install.first_run.set()
+# Records a custom datetime
+metrics.install.first_run.set(datetime.datetime(2019, 3, 25))
+</code></pre>
+<p>There are test APIs available too.</p>
+<pre><code class="language-Python"># Was anything recorded?
+assert metrics.install.first_run.test_has_value()
+
+# Was it the expected value?
+# NOTE: Datetimes always include a timezone offset from UTC, hence the
+# &quot;-05:00&quot; suffix.
+assert &quot;2019-03-25-05:00&quot; == metrics.install.first_run.test_get_value_as_str()
+# Was the value invalid?
+assert 1 == metrics.install.test_get_num_recorded_errors(
+    ErrorType.INVALID_VALUE
+)
+</code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
@@ -263,6 +288,7 @@ XCTAssertEqual(1, Install.firstRun.getNumRecordedErrors(.invalidValue))
 <ul>
 <li><a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-datetime-metric-type/index.html">Kotlin API docs</a></li>
 <li><a href="../../../swift/Classes/DatetimeMetricType.html">Swift API docs</a></li>
+<li><a href="../../../python/glean/metrics/datetime.html">Python API docs</a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/user/metrics/datetime.md">Edit this file on GitHub.</a></footer>
                     </main>
