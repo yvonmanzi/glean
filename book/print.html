@@ -1993,7 +1993,7 @@ assertTrue(Auth.INSTANCE.loginTime.testHasValue())
 assertTrue(Auth.INSTANCE.loginTime.testGetValue() &gt; 0)
 // Was the timing recorded incorrectly?
 assertEquals(
-    1, 
+    1,
     Auth.INSTANCE.loginTime.testGetNumRecordedErrors(
         ErrorType.InvalidValue
     )
@@ -2028,6 +2028,33 @@ XCTAssert(try Auth.loginTime.testGetValue() &gt; 0)
 XCTAssertEqual(1, Auth.loginTime.testGetNumRecordedErrors(.invalidValue))
 </code></pre>
 </div>
+<div data-lang="Python" class="tab">
+<pre><code class="language-Python">from glean import load_metrics
+metrics = load_metrics(&quot;metrics.yaml&quot;)
+
+def on_show_login():
+    metrics.auth.login_time.start()
+    # ...
+
+def on_login():
+    metrics.auth.login_time.stop()
+    # ...
+
+def on_login_cancel():
+    metrics.auth.login_time.cancel()
+    # ...
+</code></pre>
+<p>The time reported in the telemetry ping will be timespan recorded during the lifetime of the ping.</p>
+<p>There are test APIs available too:</p>
+<pre><code class="language-Python"># Was anything recorded?
+assert metrics.auth.login_time.test_has_value()
+# Does the timer have the expected value
+assert metrics.auth.login_time.test_get_value() &gt; 0
+# Was the timing recorded incorrectly?
+assert 1 == metrics.auth.local_time.test_get_num_recorded_errors(
+    ErrorType.INVALID_VALUE
+)
+</code></pre>
 </div>
 </div>
 <h2><a class="header" href="#raw-api" id="raw-api">Raw API</a></h2>
@@ -2050,6 +2077,13 @@ HistorySync.setRawNanos(duration)
 </div>
 <div data-lang="Swift" class="tab">
 <pre><code class="language-Swift">let duration = SyncResult.status.syncs.took.toLong()
+HistorySync.setRawNanos(duration)
+</code></pre>
+</div>
+<div data-lang="Python" class="tab">
+<pre><code class="language-Python">import org.mozilla.yourApplication.GleanMetrics.HistorySync
+
+val duration = SyncResult.status.syncs.took.toLong()
 HistorySync.setRawNanos(duration)
 </code></pre>
 </div>
@@ -2082,6 +2116,7 @@ HistorySync.setRawNanos(duration)
 <ul>
 <li><a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-timespan-metric-type/index.html">Kotlin API docs</a></li>
 <li><a href="user/metrics/../../../swift/Classes/TimespanMetricType.html">Swift API docs</a></li>
+<li><a href="user/metrics/../../../python/glean/metrics/timespan.html">Python API docs</a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/user/metrics/timespan.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#timing-distribution" id="timing-distribution">Timing Distribution</a></h1>
 <p>Timing distributions are used to accumulate and store time measurement, for analyzing distributions of the timing data.</p>
@@ -5844,7 +5879,7 @@ All the default pings have their scheduling and submission handled by the SDK.</
 <ul>
 <li>Python:
 <ul>
-<li>The Boolean and Datetime metric types are now supported in Python.</li>
+<li>The Boolean, Datetime and Timespan metric types are now supported in Python.</li>
 </ul>
 </li>
 </ul>
