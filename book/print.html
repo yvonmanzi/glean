@@ -1069,14 +1069,22 @@ Run it like this to filter for an application:</p>
 <p>Glean provides a couple of configuration flags to assist with debugging Python applications.</p>
 <h2><a class="header" href="#tagging-pings" id="tagging-pings">Tagging pings</a></h2>
 <p>The <code>Glean.configuration.ping_tag</code> property can be used to add a special flag to the HTTP header so that the ping will end up in the <a href="https://docs.telemetry.mozilla.org/concepts/glean/debug_ping_view.html">Glean Debug View</a>.</p>
-<p>For example:</p>
-<pre><code>Glean.configuration.ping_tag = &quot;my-ping-tag&quot;
+<p>You can set it after <code>Glean.initialize</code> is called:</p>
+<pre><code class="language-py">from Glean import Glean, Configuration
+Glean.initialize(
+    application_id=&quot;my-app-id&quot;,
+    application_version=&quot;0.1.0&quot;,
+    upload_enabled=True,
+)
 
-pings.custom_ping.submit()
+# ...
+
+Glean.configuration.ping_tag = &quot;my-ping-tag&quot;
 </code></pre>
-<p>will send the custom ping to the Glean Debug View.</p>
+<p>After doing so, something like <code>pings.custom_ping.submit()</code> will send the custom ping to the Glean Debug View.</p>
 <h2><a class="header" href="#logging-pings" id="logging-pings">Logging pings</a></h2>
 <p>If the <code>Glean.configuration.log_pings</code> property is set to <code>True</code>, pings are logged to the console whenever they are submitted.</p>
+<p>You can set this property in a similar way as the <code>ping_tag</code> property above.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/user/debugging/python.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#error-reporting" id="error-reporting">Error reporting</a></h1>
 <p>The Glean SDK records the number of errors that occur when metrics are passed invalid data or are otherwise used incorrectly. 
 This information is reported back in special labeled counter metrics in the <code>glean.error</code> category. 
