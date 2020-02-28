@@ -194,7 +194,7 @@ Generally, when a metric is no longer needed, it should simply be removed. This 
 <p><code>lifetime</code>: Defines the lifetime of the metric. Different lifetimes affect when the metrics value is reset.</p>
 <ul>
 <li><code>ping</code> (default): The metric is reset each time it is sent in a ping.</li>
-<li><code>application</code>: The metric is related to an application run, and is reset when the application restarts.</li>
+<li><code>application</code>: The metric is related to an application run, and is reset when the application restarts. Care should be taken when using this lifetime: if the metric is sent with the <a href="pings/metrics.html"><code>metrics</code> ping</a>, set its value as early as possible and make sure that the value is set on every application run, otherwise it may be missing from some pings.</li>
 <li><code>user</code>: The metric is part of the user's profile.</li>
 </ul>
 </li>
