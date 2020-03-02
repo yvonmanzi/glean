@@ -204,13 +204,13 @@ Add this to your Gradle configuration:</p>
 <pre><code class="language-Groovy">implementation &quot;org.mozilla.components:service-glean:{latest-version}&quot;
 </code></pre>
 <blockquote>
-<p><strong>Important:</strong> the <code>{latest-version}</code> placeholder in the above link should be replaced with the version number of the Glean SDK used by the project.</p>
+<p><strong>Important:</strong> the <code>{latest-version}</code> placeholder in the above link should be replaced with the version of Android Components used by the project.</p>
 </blockquote>
-<p>For example, if version <em>6.0.2</em> is used, then the include directive becomes:</p>
-<pre><code class="language-Groovy">implementation &quot;org.mozilla.components:service-glean:6.0.2&quot;
-</code></pre>
 <p>The Glean SDK is released as part of <a href="https://github.com/mozilla-mobile/android-components">android-components</a>.  Therefore, it follows android-components' versions.
 The <a href="https://github.com/mozilla-mobile/android-components/releases/">android-components release page</a> can be used to determine the latest version.</p>
+<p>For example, if version <em>33.0.0</em> is used, then the include directive becomes:</p>
+<pre><code class="language-Groovy">implementation &quot;org.mozilla.components:service-glean:33.0.0&quot;
+</code></pre>
 </div>
 <div data-lang="Swift" class="tab">
 <h4><a class="header" href="#setting-up-the-dependency-1" id="setting-up-the-dependency-1">Setting up the dependency</a></h4>
@@ -280,28 +280,34 @@ This is also required for any new metric automatically collected by the Glean SD
 <p>The Glean Gradle plugin is distributed through Mozilla's Maven, so we need to tell your build where to look for it by adding the following to the top of your <code>build.gradle</code>:</p>
 <pre><code>buildscript {
     repositories {
+        // Include the next clause if you are tracking snapshots of android components
+        maven {
+            url &quot;https://snapshots.maven.mozilla.org/maven2&quot;
+        }
         maven {
             url &quot;https://maven.mozilla.org/maven2&quot;
         }
 
         dependencies {
-            classpath &quot;org.mozilla.telemetry:glean-gradle-plugin:{latest-version}&quot;
+            classpath &quot;org.mozilla.components:tooling-gradle-plugin:{android-components-version}&quot;
         }
     }
 }
 </code></pre>
 <blockquote>
-<p><strong>Important:</strong> as above, the <code>{latest-version}</code> placeholder in the above link should be replaced with the version number of the Glean SDK used by the project.</p>
+<p><strong>Important:</strong> as above, the <code>{android-components-version}</code> placeholder in the above link should be replaced with the version number of android components used in your project.</p>
 </blockquote>
 <p>The JetBrains Python plugin is distributed in the Gradle plugin repository, so it can be included with:</p>
 <pre><code class="language-Groovy">plugins {
     id &quot;com.jetbrains.python.envs&quot; version &quot;0.0.26&quot;
 }
 </code></pre>
-<p>Right before the end of the same file, we need to apply the Glean Gradle plugin:</p>
-<pre><code class="language-Groovy">apply plugin: &quot;org.mozilla.telemetry.glean-gradle-plugin&quot;
+<p>Right before the end of the same file, we need to apply the Glean Gradle plugin.
+Set any <a href="user/android-build-configuration-options.html">additional parameters</a> to control the behavior of the Glean Gradle plugin before calling <code>apply plugin</code>.</p>
+<pre><code class="language-Groovy">// Optionally, set any parameters to send to the plugin.
+ext.gleanGenerateMarkdownDocs = true
+apply plugin: &quot;org.mozilla.telemetry.glean-gradle-plugin&quot;
 </code></pre>
-<p>There are <a href="user/android-build-configuration-options.html">additional parameters</a> that can be set to control the behavior of the Glean Gradle plugin, but they are rarely needed for normal use.</p>
 <blockquote>
 <p><strong>Note:</strong> Earlier versions of Glean used a Gradle script (<code>sdk_generator.gradle</code>) rather than a Gradle plugin. Its use is deprecated and projects should be updated to use the Gradle plugin as described above.</p>
 </blockquote>
