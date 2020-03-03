@@ -299,7 +299,7 @@ XCTAssertEqual(1, pages.pageLoad.testGetNumRecordedErrors(.invalidValue))
 <ul>
 <li>
 <p>Timings are recorded in nanoseconds.
-On Android, the <a href="https://developer.android.com/reference/android/os/SystemClock.html#elapsedRealtimeNanos()"><code>SystemClock.getElapsedNanos()</code></a> function is used, so it is limited by the accuracy and performance of that timer.</p>
+On Android, the <a href="https://developer.android.com/reference/android/os/SystemClock.html#elapsedRealtimeNanos()"><code>SystemClock.elapsedRealtimeNanos()</code></a> function is used, so it is limited by the accuracy and performance of that timer.</p>
 </li>
 <li>
 <p>The maximum timing value that will be recorded is 10 minutes. Longer times will be truncated to 10 minutes and an error will be recorded.</p>
