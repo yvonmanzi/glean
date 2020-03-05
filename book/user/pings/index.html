@@ -243,10 +243,31 @@ A typical submission URL looks like</p>
 <tr><td><code>X-Client-Version</code></td><td>e.g. <code>0.40.0</code></td><td>The Glean SDK version, sent as a custom header to support handling of Glean pings in the legacy pipeline</td></tr>
 </tbody></table>
 <h2><a class="header" href="#defining-background-state" id="defining-background-state">Defining background state</a></h2>
-<p>These docs refer to application 'background' state in several places.
-This specifically means when the activity is no longer visible to the user, it has entered the Stopped state, and the system invokes the <a href="https://developer.android.com/reference/android/app/Activity.html#onStop()"><code>onStop()</code></a> callback.
-This may occur, for example, when a newly launched activity covers the entire screen.
-The system may also call <code>onStop()</code> when the activity has finished running, and is about to be terminated.</p>
+<p>These docs refer to application 'background' state in several places.</p>
+<div class="tabs">
+<div class="tabbar"></div>
+<div class="tabcontents">
+<div data-lang="Kotlin" class="tab">
+<p>For Android, this specifically means when the activity is no longer visible to the user, it has entered the
+Stopped state, and the system invokes the <a href="https://developer.android.com/reference/android/app/Activity.html#onStop()"><code>onStop()</code></a> callback.</p>
+<p>This may occur, if the user uses <code>Overview</code> button to change to another app, the user presses the <code>Back</code> button and
+navigates to a previous application or the home screen, or if the user presses the <code>Home</code> button to return to the
+home screen.  This can also occur if the user navigates away from the application through some notification or
+other means.</p>
+<p>The system may also call <code>onStop()</code> when the activity has finished running, and is about to be terminated.</p>
+</div>
+<div data-lang="Swift" class="tab">
+<p>For iOS, this specifically means when the app is no longer visible to the user, or when the <code>UIApplicationDelegate</code>
+receives the <a href="https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622997-applicationdidenterbackground"><code>applicationDidEnterBackground</code></a> event.</p>
+<p>This may occur if the user opens the task switcher to change to another app, or if the user presses the <code>Home</code> button
+to show the home screen.  This can also occur if the user navigates away from the app through a notification or other
+means.</p>
+<blockquote>
+<p><strong>Note:</strong> Glean does not currently support <a href="https://developer.apple.com/documentation/uikit/app_and_environment/managing_your_app_s_life_cycle">Scene based lifecycle events</a> that were introduced in iOS 13.</p>
+</blockquote>
+</div>
+</div>
+</div>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/user/pings/index.md">Edit this file on GitHub.</a></footer>
                     </main>
 
