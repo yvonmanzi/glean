@@ -167,6 +167,7 @@ That is, the function from a value \( x \) to a bucket index is:</p>
 <p>Timings always span the full length between <code>start</code> and <code>stopAndAccumulate</code>.
 If the Glean upload is disabled when calling <code>start</code>, the timer is still started.
 If the Glean upload is disabled at the time <code>stopAndAccumulate</code> is called, nothing is recorded.</p>
+<p>Multiple concurrent timespans in different threads may be measured at the same time.</p>
 <h2><a class="header" href="#configuration" id="configuration">Configuration</a></h2>
 <p>If you wanted to create a timing distribution to measure page load times, first you need to add an entry for it to the <code>metrics.yaml</code> file:</p>
 <pre><code class="language-YAML">pages:

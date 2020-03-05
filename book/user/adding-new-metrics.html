@@ -158,12 +158,9 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#adding-new-metrics" id="adding-new-metrics">Adding new metrics</a></h1>
-<p>All metrics that your project collects must be defined in a <code>metrics.yaml</code> file.
-This file should be at the root of the application or library module.
-The format of that file is documented <a href="https://mozilla.github.io/glean_parser/metrics-yaml.html">here</a>.</p>
 <p>When adding a new metric, the workflow is:</p>
 <ul>
-<li>Decide on which <a href="metrics/index.html">metric type</a> you want to use.</li>
+<li>Consider the question you are trying to answer with this data, and choose the <a href="metrics/index.html">metric type</a> and parameters to use.</li>
 <li>Add a new entry to <a href="#The-metricsyaml-file"><code>metrics.yaml</code></a>.</li>
 <li>Add code to your project to record into the metric by calling the Glean SDK.</li>
 </ul>
@@ -171,7 +168,103 @@ The format of that file is documented <a href="https://mozilla.github.io/glean_p
 <p><strong>Important</strong>: Any new data collection requires documentation and data-review.
 This is also required for any new metric automatically collected by the Glean SDK.</p>
 </blockquote>
-<h2><a class="header" href="#the-metricsyaml-file" id="the-metricsyaml-file">The <code>metrics.yaml</code> file</a></h2>
+<h2><a class="header" href="#choosing-a-metric-type" id="choosing-a-metric-type">Choosing a metric type</a></h2>
+<p>The following is a set of questions to ask about the data being collected to help better determine which metric type to use.</p>
+<h3><a class="header" href="#is-it-a-single-measurement" id="is-it-a-single-measurement">Is it a single measurement?</a></h3>
+<p>If the value is true or false, use a <a href="metrics/boolean.html">boolean metric</a>.</p>
+<p>If the value is a string, use a <a href="metrics/string.html">string metric</a>. For example, to record the name of the default search engine. Beware: string metrics are exceedingly general, and you are probably best served by selecting the most specific metric for the job, since you'll get better error checking and richer analysis tools for free. For example, avoid storing a number in a string metric --- you probably want a <a href="metrics/counter.html">counter metric</a> instead.</p>
+<p>If you need to store multiple string values in a metric, use a <a href="metrics/string_list.html">string list metric</a>. For example, you may want to record the list of other Mozilla products installed on the device.</p>
+<!-- TODO: If you do know the list of values you might store and you just want to record their presence, consider using a [labeled boolean](metrics/labeled_boolean.html) instead. -->
+<!-- If you have a related set of metrics that you want to record strings for, and you don't know the things the strings relate to at build time, use a [labeled string metric](metrics/labeled_strings.html). -->
+<p>For all of the simple metric types in this section that measure single values, it is especially important to consider how the lifetime of the value relates to the ping it is being sent in. Since these metrics don't perform any aggregation on the client side, when a ping containing the metric is submitted, it will contain only the &quot;last known&quot; value for the metric, potentially resulting in <strong>data loss</strong>.  There is further discussion of <a href="#When-should-Glean-automatically-reset-the-measurement">metric lifetimes</a> below.</p>
+<h3><a class="header" href="#are-you-counting-things" id="are-you-counting-things">Are you counting things?</a></h3>
+<p>If you want to know how many times something happened, use a <a href="metrics/counter.html">counter metric</a>.  If you are counting a group of related things, or you don't know what all of the things to count are at build time, use a <a href="metrics/labeled_counters.html">labeled counter metric</a>.</p>
+<p>If you need to know when the things being counted happened relative to other things, consider using an <a href="metrics/event.html">event</a>.</p>
+<h3><a class="header" href="#are-you-measuring-time" id="are-you-measuring-time">Are you measuring time?</a></h3>
+<p>If you need to record an absolute time, use a <a href="metrics/datetime.html">datetime metric</a>. Datetimes are recorded in the user's local time, according to their device's real time clock, along with a timezone offset from UTC. Datetime metrics allow specifying the resolution they are collected at, and to stay <a href="https://www.mozilla.org/en-US/about/policy/lean-data/stay-lean/">lean</a>, they should only be collected at the minimum resolution required to answer your question.</p>
+<p>If you need to record how long something takes you have a few options. </p>
+<p>If you need to measure the total time spent doing a particular task, look to the <a href="metrics/timespan.html">timespan metric</a>. Timespan metrics allow specifying the resolution they are collected at, and to stay <a href="https://www.mozilla.org/en-US/about/policy/lean-data/stay-lean/">lean</a>, they should only be collected at the minimum resolution required to answer your question.
+Note that this metric should only be used to measure time on a single thread. If multiple overlapping timespans are measured for the same metric, an invalid state error is recorded. </p>
+<p>If you need to measure the relative occurrences of many timings, use a <a href="metrics/timing_distribution.html">timing distribution</a>. It builds a histogram of timing measurements, and is safe to record multiple concurrent timespans on different threads.</p>
+<p>If you need to know the time between multiple distinct actions that aren't a simple &quot;begin&quot; and &quot;end&quot; pair, consider using an <a href="metrics/event.html">event</a>.</p>
+<h3><a class="header" href="#do-you-need-to-know-the-order-of-events-relative-to-other-events" id="do-you-need-to-know-the-order-of-events-relative-to-other-events">Do you need to know the order of events relative to other events?</a></h3>
+<p>If you need to know the order of actions relative to other actions, such as, the user performed tasks A, B, and then C, and this is meaningfully different from the user performing tasks A, C and then B, (in other words, the order is meaningful beyond just the <em>fact</em> that a set of tasks were performed), use an <a href="metrics/event.html">event metric</a>.</p>
+<p>Importantly, events are the most expensive metric type to record, transmit, store and analyze, so they should be used sparingly, and only when none of the other metric types are sufficient for answering your question.</p>
+<h3><a class="header" href="#for-how-long-do-you-need-to-collect-this-data" id="for-how-long-do-you-need-to-collect-this-data">For how long do you need to collect this data?</a></h3>
+<p>Think carefully about how long the metric will be needed, and set the <code>expires</code> parameter to disable the metric at the earliest possible time. 
+This is an important component of Mozilla's <a href="https://www.mozilla.org/en-US/about/policy/lean-data/stay-lean/">lean data practices</a>.</p>
+<p>When the metric passes its expiration date (determined at build time), it will automatically stop collecting data.</p>
+<p>When a metric's expiration is within in 14 days, emails will be sent from <code>telemetry-alerts@mozilla.com</code> to the <code>notification_emails</code> addresses associated with the metric.
+At that time, the metric should be removed, which involves removing it from the <code>metrics.yaml</code> file and removing uses of it in the source code.
+Removing a metric does not affect the availability of data already collected by the pipeline.</p>
+<p>If the metric is still needed after its expiration date, it should go back for <a href="https://wiki.mozilla.org/Firefox/Data_Collection">another round of data review</a> to have its expiration date extended.</p>
+<h3><a class="header" href="#when-should-glean-automatically-clear-the-measurement" id="when-should-glean-automatically-clear-the-measurement">When should Glean automatically clear the measurement?</a></h3>
+<p>The <code>lifetime</code> parameter of a metric defines when its value will be cleared. There are three lifetime options available:</p>
+<ul>
+<li>
+<p><code>ping</code> (default): The metric is cleared each time it is submitted in the ping.
+This is the most common case, and should be used for metrics that are highly dynamic, such as things computed in response to the user's interaction with the application.</p>
+</li>
+<li>
+<p><code>application</code>: The metric is related to an application run, and is cleared after the application restarts and any Glean-owned ping, due at startup, is submitted.
+This should be used for things that are constant during the run of an application, such as the operating system version.
+In practice, these metrics are generally set during application startup.
+A common mistake---using the <code>ping</code> lifetime for these type of metrics---means that they will only be included in the first ping sent during a particular run of the application.</p>
+</li>
+<li>
+<p><code>user</code>: The metric is part of the user's profile.
+This should be used for things that change only when the user's profile is created.
+It is rare to use this lifetime outside of some metrics that are built in to Glean, such as <code>client_id</code>.</p>
+</li>
+</ul>
+<p>While lifetimes are important to understand for all metric types, they are particularly important for the metric types that record single values and don't aggregate on the client (<code>boolean</code>, <code>string</code>, <code>labeled_string</code>, <code>string_list</code>, <code>datetime</code> and <code>uuid</code>), since these metrics will send the &quot;last known&quot; value and missing the earlier values could be a form of unintended data loss.</p>
+<h4><a class="header" href="#a-lifetime-example" id="a-lifetime-example">A lifetime example</a></h4>
+<p>Let's work through an example to see how these lifetimes play out in practice. Let's suppose we have a user preference, &quot;turbo mode&quot;, which defaults to <code>false</code>, but the user can turn it to <code>true</code> at any time.  We want to know when this flag is <code>true</code> so we can measure its affect on other metrics in the same ping.  In the following diagram, we look at a time period that sends 4 pings across two separate runs of the application. We assume here, that like Glean's built-in <a href="pings/metrics.html">metrics ping</a>, the developer writing the metric isn't in control of when the ping is submitted. </p>
+<p>In this diagram, the ping &quot;lifetimes&quot; are represented as rectangles, but the moment the ping is &quot;submitted&quot; is represented by its right edge. The user changes the &quot;turbo mode&quot; setting from <code>false</code> to <code>true</code> in the first run, and then toggles it again twice in the second run. </p>
+<p><img src="metric-lifetime-timeline.svg" alt="Metric lifetime timeline" /></p>
+<ul>
+<li>
+<p><strong>A. Ping lifetime, set on change</strong>: The value isn't included in Ping 1, because Glean doesn't know about it yet.  It is included in the first ping after being recorded (Ping 2), which causes it to be cleared.</p>
+</li>
+<li>
+<p><strong>B. Ping lifetime, set on init and change</strong>: The default value is included in Ping 1, and the changed value is included in Ping 2, which causes it to be cleared.  It therefore misses Ping 3, but when the application is started, it is recorded again and it is included in Ping 4.  However, this causes it to be cleared again and it is not in Ping 5.</p>
+</li>
+<li>
+<p><strong>C. Application lifetime, set on change</strong>: The value isn't included in Ping 1, because Glean doesn't know about it yet. After the value is changed, it is included in Pings 2 and 3, but then due to application restart it is cleared, so it is not included until the value is manually toggled again.</p>
+</li>
+<li>
+<p><strong>D. Application, set on init and change</strong>: The default value is included in Ping 1, and the changed value is included in Pings 2 and 3. Even though the application startup causes it to be cleared, it is set again, and all subsequent pings also have the value.</p>
+</li>
+<li>
+<p><strong>E. User, set on change</strong>: The default value is missing from Ping 1, but since <code>user</code> lifetime metrics aren't cleared unless the user profile is reset (e.g. on Android, when the product is uninstalled), it is included in all subsequent pings.</p>
+</li>
+<li>
+<p><strong>F. User, set on init and change</strong>: Since <code>user</code> lifetime metrics aren't cleared unless the user profile is reset, it is included in all subsequent pings.  This would be true even if the &quot;turbo mode&quot; preference were never changed again.</p>
+</li>
+</ul>
+<p>Note that for all of the metric configurations, the toggle of the preference off and on during Ping 4 is completely missed.  If you need to create a ping containing one, and only one, value for this metric, consider using a <a href="pings/custom.html">custom ping</a> to create a ping whose lifetime matches the lifetime of the value.</p>
+<h4><a class="header" href="#what-if-none-of-these-lifetimes-are-appropriate" id="what-if-none-of-these-lifetimes-are-appropriate">What if none of these lifetimes are appropriate?</a></h4>
+<p>If the timing at which the metric is sent in the ping needs to closely match the timing of the metrics value, the best option is to use a <a href="pings/custom.html">custom ping</a> to manually control when pings are sent.</p>
+<h3><a class="header" href="#what-should-this-new-metric-be-called" id="what-should-this-new-metric-be-called">What should this new metric be called?</a></h3>
+<h4><a class="header" href="#reuse-names-from-other-applications" id="reuse-names-from-other-applications">Reuse names from other applications</a></h4>
+<p>There's a lot of value using the same name for analogous metrics collected across different products. For example, BigQuery makes it simple to join columns with the same name across multiple tables. Therefore, we encourage you to investigate if a similar metric is already being collected by another product. If it is, there may be an opportunity for code reuse across these products, and if all the projects are using Glean, it's easy for libraries to send their own metrics. If sharing the code doesn't make sense, at a minimum we recommend using the same metric name for similar actions and concepts whenever possible.</p>
+<h4><a class="header" href="#make-names-unique-within-an-application" id="make-names-unique-within-an-application">Make names unique within an application</a></h4>
+<p>Metric identifiers (the combination of a metric's category and name) must be unique across all metrics that are sent by a single application.
+This includes not only the metrics defined in the app's <code>metrics.yaml</code>, but the <code>metrics.yaml</code> of any Glean-using library that the application uses, including Glean itself.
+Therefore, care should be taken to name things specifically enough so as to avoid namespace collisions.
+In practice, this generally involves thinking carefully about the <code>category</code> of the metric, more than the <code>name</code>.</p>
+<blockquote>
+<p><strong>Note:</strong> Duplicate metric identifiers are not currently detected at build time. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1578383">bug 1578383</a> for progress on that.
+However, the <a href="https://github.com/mozilla/probe-scraper">probe_scraper</a> process, which runs nightly, will detect duplicate metrics and e-mail the <code>notification_emails</code> associated with the given metrics.</p>
+</blockquote>
+<h4><a class="header" href="#be-as-specific-as-possible" id="be-as-specific-as-possible">Be as specific as possible</a></h4>
+<p>More broadly, you should choose the names of metrics to be as specific as possible.
+It is not necessary to put the type of the metric in the category or name, since this information is retained in other ways through the entire end-to-end system.</p>
+<p>For example, if defining a set of events related to search, put them in a category called <code>search</code>, rather than just <code>events</code> or <code>search_events</code>. The <code>events</code> word here would be redundant.</p>
+<h3><a class="header" href="#what-if-none-of-these-metric-types-is-the-right-fit" id="what-if-none-of-these-metric-types-is-the-right-fit">What if none of these metric types is the right fit?</a></h3>
+<p>The current set of metrics Glean supports is based on known common use cases, but new use cases are discovered all the time.</p>
+<p>Please reach out to us on <a href="https://chat.mozilla.org/#/room/#glean:mozilla.org">#glean:mozilla.org</a>. If you think you need a new metric type, we <a href="metrics/index.html#adding-or-changing-metric-types">have a process for that</a>.</p>
+<h2><a class="header" href="#adding-the-metric-to-the-metricsyaml-file" id="adding-the-metric-to-the-metricsyaml-file">Adding the metric to the <code>metrics.yaml</code> file</a></h2>
 <p>The <a href="https://mozilla.github.io/glean_parser/metrics-yaml.html"><code>metrics.yaml</code> file</a> defines the metrics your application or library will send.
 They are organized into categories.
 The overall organization is:</p>
@@ -186,7 +279,7 @@ toolbar:
     notification_emails:
       - CHANGE-ME@example.com
     bugs:
-      - 123456789
+      - https://bugzilla.mozilla.org/123456789/
     data_reviews:
       - http://example.com/path/to/data-review
     expires: 2019-06-01  # &lt;-- Update to a date in the future
@@ -194,47 +287,16 @@ toolbar:
   double_click:
     ...
 
-category2.subcategory:  # Categories can contain subcategories
+category2.subcategory:  # Categories can contain subcategories using `.`
   metric:
     ...
 
 </code></pre>
 <p>The details of the metric parameters are described in <a href="metric-parameters.html">metric parameters</a>.</p>
 <p>The <code>metrics.yaml</code> file is used to generate code in the target language (e.g. Kotlin, Swift, ...) that becomes the public API to access your application's metrics.</p>
-<h2><a class="header" href="#recommendations-for-defining-new-metrics" id="recommendations-for-defining-new-metrics">Recommendations for defining new metrics</a></h2>
-<p>“There are only two hard things in Computer Science: cache invalidation and naming things” -- attributed to Phil Karlton.</p>
-<h3><a class="header" href="#lifetimes" id="lifetimes">Lifetimes</a></h3>
-<p>The <code>lifetime</code> parameter of a metric defines when it will be reset. There are three options available:</p>
-<ul>
-<li><code>ping</code> (default): The metric is reset each time it is sent in the ping.
-This is the most common case, and should be used for metrics that are highly dynamic, such as things computed in response to the user's interaction with the application.</li>
-<li><code>application</code>: The metric is related to an application run, and is reset only when the application restarts.
-This should be used for things that are constant during the run of an application, such as the operating system version.
-In practice, these metrics are generally set during application startup.
-A common mistake---using the <code>ping</code> lifetime for these type of metrics---means that they will only be included in the first ping sent during a particular run of the application.</li>
-<li><code>user</code>: The metric is part of the user's profile.
-This should be used for things that change only when the user's profile is created.
-It is rare to use this lifetime outside of some metrics that are built in to Glean, such as <code>client_id</code>.</li>
-</ul>
-<h3><a class="header" href="#naming-things" id="naming-things">Naming things</a></h3>
-<p>Metric identifiers (the combination of a metric's category and name) must be unique across all metrics that are sent by an application.
-This includes not only the metrics defined in the app's <code>metrics.yaml</code>, but the <code>metrics.yaml</code> of any Glean-using library that the application uses, including Glean itself.
-Therefore, care should be taken to name things specifically enough so as to avoid namespace collisions.
-In practice, this generally involves thinking carefully about the <code>category</code> of the metric, more than the <code>name</code>.</p>
-<blockquote>
-<p><strong>Note:</strong> Duplicate metric identifiers are not currently detected at build time. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1578383">bug 1578383</a> for progress on that.
-However, the <a href="https://github.com/mozilla/probe-scraper">probe_scraper</a> process, which runs nightly, will detect duplicate metrics and e-mail the <code>notification_emails</code> associated with the given metrics.</p>
-</blockquote>
-<p>More broadly, you should choose the category and names of metrics to be as specific as possible.
-It is not necessary to put the type of the metric in the category or name, since this information is retained in other ways through the entire end-to-end system.</p>
-<p>For example, if defining a set of events related to search, put them in a category called <code>search</code>, rather than just <code>events</code> or <code>search_events</code>.</p>
-<h3><a class="header" href="#expiration" id="expiration">Expiration</a></h3>
-<p>You should think carefully about how long the metric will be needed, and set it to expire at the soonest time possible.
-When a metric is about to expire, emails will be sent to the <code>notification_emails</code> addresses associated with the metric.
-At that time, the metric should be removed, which involves removing it from the <code>metrics.yaml</code> file and removing uses of it in the source code.
-Removing a metric does not affect the availability of data already collected by the pipeline.</p>
-<p>If the metric is still needed, it should go back for <a href="https://wiki.mozilla.org/Firefox/Data_Collection">another round of data review</a> to have its expiration date extended.</p>
-<h2><a class="header" href="#a-note-about-case-inflection" id="a-note-about-case-inflection">A note about case inflection</a></h2>
+<h2><a class="header" href="#using-the-metric-from-your-code" id="using-the-metric-from-your-code">Using the metric from your code</a></h2>
+<p>The <a href="metrics/index.html">reference documentation for each metric type</a> goes into detail about using each metric type from your code.</p>
+<p>One thing to note is that we try to adhere to the coding conventions of each language wherever possible, to the metric name in the <code>metrics.yaml</code> (which is in <code>snake_case</code>) may be changed to some other case convention, such as <code>camelCase</code>, when used from code.</p>
 <div class="tabs">
 <div class="tabbar"></div>
 <div class="tabcontents">
