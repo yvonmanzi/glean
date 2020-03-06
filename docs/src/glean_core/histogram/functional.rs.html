@@ -187,8 +187,8 @@
 
 <span class="kw">impl</span> <span class="ident">Functional</span> {
     <span class="doccomment">/// Instantiate a new functional bucketing.</span>
-    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">log_base</span>: <span class="ident">f64</span>, <span class="ident">buckets_per_magnitutde</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Functional</span> {
-        <span class="kw">let</span> <span class="ident">exponent</span> <span class="op">=</span> <span class="ident">log_base</span>.<span class="ident">powf</span>(<span class="number">1.0</span> <span class="op">/</span> <span class="ident">buckets_per_magnitutde</span>);
+    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">log_base</span>: <span class="ident">f64</span>, <span class="ident">buckets_per_magnitude</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Functional</span> {
+        <span class="kw">let</span> <span class="ident">exponent</span> <span class="op">=</span> <span class="ident">log_base</span>.<span class="ident">powf</span>(<span class="number">1.0</span> <span class="op">/</span> <span class="ident">buckets_per_magnitude</span>);
 
         <span class="ident">Functional</span> { <span class="ident">exponent</span> }
     }
@@ -224,12 +224,12 @@
 
 <span class="kw">impl</span> <span class="ident">Histogram</span><span class="op">&lt;</span><span class="ident">Functional</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Create a histogram with functional buckets.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">functional</span>(<span class="ident">log_base</span>: <span class="ident">f64</span>, <span class="ident">buckets_per_magnitutde</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Histogram</span><span class="op">&lt;</span><span class="ident">Functional</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">functional</span>(<span class="ident">log_base</span>: <span class="ident">f64</span>, <span class="ident">buckets_per_magnitude</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Histogram</span><span class="op">&lt;</span><span class="ident">Functional</span><span class="op">&gt;</span> {
         <span class="ident">Histogram</span> {
             <span class="ident">values</span>: <span class="ident">HashMap</span>::<span class="ident">new</span>(),
             <span class="ident">count</span>: <span class="number">0</span>,
             <span class="ident">sum</span>: <span class="number">0</span>,
-            <span class="ident">bucketing</span>: <span class="ident">Functional</span>::<span class="ident">new</span>(<span class="ident">log_base</span>, <span class="ident">buckets_per_magnitutde</span>),
+            <span class="ident">bucketing</span>: <span class="ident">Functional</span>::<span class="ident">new</span>(<span class="ident">log_base</span>, <span class="ident">buckets_per_magnitude</span>),
         }
     }
 
