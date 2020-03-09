@@ -233,6 +233,34 @@ XCTAssertEqual(2, snapshot.count)
 XCTAssertEqual(1, Memory.heapAllocated.testGetNumRecordedErrors(.invalidValue))
 </code></pre>
 </div>
+<div data-lang="Python" class="tab">
+<pre><code class="language-Python">from glean import load_metrics
+metrics = load_metrics(&quot;metrics.yaml&quot;)
+
+def allocate_memory(nbytes):
+    # ...
+    metrics.memory.heap_allocated.accumulate(nbytes / 1024)
+</code></pre>
+<p>There are test APIs available too.  For convenience, properties <code>sum</code> and <code>count</code> are exposed to facilitate validating that data was recorded correctly.</p>
+<p>Continuing the <code>heapAllocated</code> example above, at this point the metric should have a <code>sum == 11</code> and a <code>count == 2</code>:</p>
+<pre><code class="language-Python"># Was anything recorded?
+assert metrics.memory.head_allocated.test_has_value()
+
+# Get snapshot
+snapshot = metrics.memory.heap_allocated.test_get_value()
+
+# Does the sum have the expected value?
+assert 11 == snapshot.sum
+
+# Usually you don't know the exact memory values, but how many should have been recorded.
+assert 2 == snapshot.count
+
+# Did this record a negative value?
+assert 1 == metrics.memory.heap_allocated.test_get_num_recorded_errors(
+    ErrorType.INVALID_VALUE
+)
+</code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
@@ -252,6 +280,7 @@ XCTAssertEqual(1, Memory.heapAllocated.testGetNumRecordedErrors(.invalidValue))
 <ul>
 <li><a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-memory-distribution-metric-type/index.html">Kotlin API docs</a></li>
 <li><a href="../../../swift/Classes/MemoryDistributionMetricType.html">Swift API docs</a></li>
+<li><a href="../../../python/glean/metrics/timing_distribution.html">Python API docs</a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/user/metrics/memory_distribution.md">Edit this file on GitHub.</a></footer>
                     </main>
