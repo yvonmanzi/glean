@@ -2218,7 +2218,7 @@ HistorySync.setRawNanos(duration)
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/user/metrics/timespan.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#timing-distribution" id="timing-distribution">Timing Distribution</a></h1>
 <p>Timing distributions are used to accumulate and store time measurement, for analyzing distributions of the timing data.</p>
 <p>To measure the distribution of single timespans, see <a href="user/metrics/timespan.html">Timespans</a>. To record absolute times, see <a href="user/metrics/datetime.html">Datetimes</a>.</p>
-<p>Timing distributions are recorded in a histogram where the buckets have an exponential distribution, specifically with 8 buckets for every power of 2. 
+<p>Timing distributions are recorded in a histogram where the buckets have an exponential distribution, specifically with 8 buckets for every power of 2.
 That is, the function from a value \( x \) to a bucket index is:</p>
 <p>\[ \lfloor 8 \log_2(x) \rfloor \]</p>
 <p>This makes them suitable for measuring timings on a number of time scales without any configuration.</p>
@@ -2312,7 +2312,7 @@ assertEquals(2L, snapshot.getCount)
 
 // Was an error recorded?
 assertEquals(
-    1, 
+    1,
     pages.INSTANCE.pageLoad.testGetNumRecordedErrors(
         ErrorType.InvalidValue
     )
@@ -2352,13 +2352,56 @@ XCTAssertEqual(2, snapshot.count)
 XCTAssertEqual(1, pages.pageLoad.testGetNumRecordedErrors(.invalidValue))
 </code></pre>
 </div>
+<div data-lang="Python" class="tab">
+<pre><code class="language-Python">from glean import load_metrics
+metrics = load_metrics(&quot;metrics.yaml&quot;)
+
+class PageHandler:
+    def __init__(self):
+        self.timer_id = None
+
+    def on_page_start(self, event):
+        # ...
+        self.timer_id = metrics.pages.page_load.start()
+
+    def on_page_loaded(self, event):
+        # ...
+        metrics.pages.page_load.store_and_accumulate(self.timer_id)
+</code></pre>
+<p>There are test APIs available too.  For convenience, properties <code>sum</code> and <code>count</code> are exposed to facilitate validating that data was recorded correctly.</p>
+<p>Continuing the <code>page_load</code> example above, at this point the metric should have a <code>sum == 11</code> and a <code>count == 2</code>:</p>
+<pre><code class="language-Python"># Was anything recorded?
+assert metrics.pages.page_load.test_has_value()
+
+# Get snapshot.
+snapshot = metrics.pages.page_load.test_get_value()
+
+# Does the sum have the expected value?
+assert 11 == snapshot.sum
+
+# Usually you don't know the exact timing values, but how many should have been recorded.
+assert 2 == snapshot.count
+
+# Was an error recorded?
+assert 1 == metrics.pages.page_load.test_get_num_recorded_errors(
+    ErrorType.INVALID_VALUE
+)
+</code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits-8" id="limits-8">Limits</a></h2>
 <ul>
 <li>
-<p>Timings are recorded in nanoseconds.
-On Android, the <a href="https://developer.android.com/reference/android/os/SystemClock.html#elapsedRealtimeNanos()"><code>SystemClock.elapsedRealtimeNanos()</code></a> function is used, so it is limited by the accuracy and performance of that timer.</p>
+<p>Timings are recorded in nanoseconds.</p>
+<ul>
+<li>
+<p>On Android, the <a href="https://developer.android.com/reference/android/os/SystemClock.html#elapsedRealtimeNanos()"><code>SystemClock.elapsedRealtimeNanos()</code></a> function is used, so it is limited by the accuracy and performance of that timer.</p>
+</li>
+<li>
+<p>On Python 3.7 and later, <a href="https://docs.python.org/3/library/time.html#time.monotonic_ns"><code>time.monotonic_ns()</code></a> is used.  On earlier versions of Python, <a href="https://docs.python.org/3/library/time.html#time.monotonic"><code>time.monotonics()</code></a> is used, which is not guaranteed to have nanosecond resolution.</p>
+</li>
+</ul>
 </li>
 <li>
 <p>The maximum timing value that will be recorded is 10 minutes. Longer times will be truncated to 10 minutes and an error will be recorded.</p>
@@ -2378,6 +2421,7 @@ On Android, the <a href="https://developer.android.com/reference/android/os/Syst
 <ul>
 <li><a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-timing-distribution-metric-type/index.html">Kotlin API docs</a></li>
 <li><a href="user/metrics/../../../swift/Classes/TimingDistributionMetricType.html">Swift API docs</a></li>
+<li><a href="user/metrics/../../../python/glean/metrics/timing_distribution.html">Python API docs</a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/user/metrics/timing_distribution.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#memory-distribution" id="memory-distribution">Memory Distribution</a></h1>
 <p>Memory distributions are used to accumulate and store memory sizes.</p>
