@@ -66,32 +66,23 @@ __all__ = [
 <dl>
 <dt><code class="name"><a title="glean.config" href="config.html">glean.config</a></code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>Provides an object to pass configuration to Glean.</p></section>
 </dd>
 <dt><code class="name"><a title="glean.glean" href="glean.html">glean.glean</a></code></dt>
 <dd>
-<section class="desc"></section>
-</dd>
-<dt><code class="name"><a title="glean.hardware" href="hardware.html">glean.hardware</a></code></dt>
-<dd>
-<section class="desc"><p>This module provides a cross-platform abstraction to get system model and
-manufacturer information.</p></section>
+<section class="desc"><p>The main Glean general API.</p></section>
 </dd>
 <dt><code class="name"><a title="glean.metrics" href="metrics/index.html">glean.metrics</a></code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>This module contains all of the metric types.</p></section>
 </dd>
 <dt><code class="name"><a title="glean.net" href="net/index.html">glean.net</a></code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>Network functionality for Glean.</p></section>
 </dd>
 <dt><code class="name"><a title="glean.testing" href="testing/index.html">glean.testing</a></code></dt>
 <dd>
-<section class="desc"></section>
-</dd>
-<dt><code class="name"><a title="glean.util" href="util.html">glean.util</a></code></dt>
-<dd>
-<section class="desc"></section>
+<section class="desc"><p>Utilities for writing unit tests involving Glean.</p></section>
 </dd>
 </dl>
 </section>
@@ -107,7 +98,7 @@ manufacturer information.</p></section>
 <section class="desc"><p>Load metrics from a <code>metrics.yaml</code> file.</p>
 <h2 id="args">Args</h2>
 <dl>
-<dt><strong><code>filepath</code></strong></dt>
+<dt><strong><code>filepath</code></strong> :&ensp;<code>Path</code></dt>
 <dd>The path to the file, or a list of paths, to load.</dd>
 <dt><strong><a title="glean.config" href="config.html"><code>glean.config</code></a></strong> :&ensp;<code>dict</code></dt>
 <dd>A dictionary of options that change parsing behavior.
@@ -135,7 +126,7 @@ the <code>metrics.yaml</code> file.</dd>
     Load metrics from a `metrics.yaml` file.
 
     Args:
-        filepath: The path to the file, or a list of paths, to load.
+        filepath (Path): The path to the file, or a list of paths, to load.
         config (dict): A dictionary of options that change parsing behavior.
             These are documented in glean_parser:
             https://mozilla.github.io/glean_parser/glean_parser.html#glean_parser.parser.parse_objects
@@ -188,7 +179,7 @@ the <code>metrics.yaml</code> file.</dd>
 <section class="desc"><p>Load pings from a <code>pings.yaml</code> file.</p>
 <h2 id="args">Args</h2>
 <dl>
-<dt><strong><code>filepath</code></strong></dt>
+<dt><strong><code>filepath</code></strong> :&ensp;<code>Path</code></dt>
 <dd>The path to the file, or a list of paths, to load.</dd>
 <dt><strong><a title="glean.config" href="config.html"><code>glean.config</code></a></strong> :&ensp;<code>dict</code></dt>
 <dd>A dictionary of options that change parsing behavior.
@@ -216,7 +207,7 @@ the <code>pings.yaml</code> file.</dd>
     Load pings from a `pings.yaml` file.
 
     Args:
-        filepath: The path to the file, or a list of paths, to load.
+        filepath (Path): The path to the file, or a list of paths, to load.
         config (dict): A dictionary of options that change parsing behavior.
             These are documented in glean_parser:
             https://mozilla.github.io/glean_parser/glean_parser.html#glean_parser.parser.parse_objects
@@ -483,7 +474,11 @@ def user_agent(self) -&gt; Optional[str]:
 <section class="desc"><p>The main Glean API.</p>
 <p>Before any data collection can take place, the Glean SDK <strong>must</strong> be
 initialized from the application.</p>
-<pre><code>&gt;&gt;&gt; Glean.initialize(application_id="my-app", application_version="0.0.0", upload_enabled=True)
+<pre><code>&gt;&gt;&gt; Glean.initialize(
+...     application_id="my-app",
+...     application_version="0.0.0",
+...     upload_enabled=True
+... )
 </code></pre></section>
 <details class="source">
 <summary>
@@ -496,7 +491,11 @@ initialized from the application.</p>
     Before any data collection can take place, the Glean SDK **must** be
     initialized from the application.
 
-    &gt;&gt;&gt; Glean.initialize(application_id=&#34;my-app&#34;, application_version=&#34;0.0.0&#34;, upload_enabled=True)
+    &gt;&gt;&gt; Glean.initialize(
+    ...     application_id=&#34;my-app&#34;,
+    ...     application_version=&#34;0.0.0&#34;,
+    ...     upload_enabled=True
+    ... )
     &#34;&#34;&#34;
 
     # Whether Glean was initialized
@@ -612,7 +611,7 @@ initialized from the application.</p>
             def check_pending_deletion_request():
                 DeletionPingUploadWorker.process()
 
-    @util.classproperty
+    @_util.classproperty
     def configuration(cls):
         &#34;&#34;&#34;
         Access the configuration object to change dynamic parameters.
@@ -802,13 +801,13 @@ initialized from the application.</p>
         &#34;&#34;&#34;
         from ._builtins import metrics
 
-        metrics.glean.baseline.locale.set(util.get_locale_tag())
+        metrics.glean.baseline.locale.set(_util.get_locale_tag())
         metrics.glean.internal.metrics.os.set(platform.system())
         metrics.glean.internal.metrics.os_version.set(platform.release())
         metrics.glean.internal.metrics.architecture.set(platform.machine())
-        metrics.glean.internal.metrics.locale.set(util.get_locale_tag())
+        metrics.glean.internal.metrics.locale.set(_util.get_locale_tag())
 
-        sysinfo = hardware.get_system_information()
+        sysinfo = _hardware.get_system_information()
         metrics.glean.internal.metrics.device_manufacturer.set(sysinfo.manufacturer)
         metrics.glean.internal.metrics.device_model.set(sysinfo.model)
 
@@ -1404,11 +1403,9 @@ def test_is_experiment_active(cls, experiment_id: str) -&gt; bool:
 <ul>
 <li><code><a title="glean.config" href="config.html">glean.config</a></code></li>
 <li><code><a title="glean.glean" href="glean.html">glean.glean</a></code></li>
-<li><code><a title="glean.hardware" href="hardware.html">glean.hardware</a></code></li>
 <li><code><a title="glean.metrics" href="metrics/index.html">glean.metrics</a></code></li>
 <li><code><a title="glean.net" href="net/index.html">glean.net</a></code></li>
 <li><code><a title="glean.testing" href="testing/index.html">glean.testing</a></code></li>
-<li><code><a title="glean.util" href="util.html">glean.util</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
