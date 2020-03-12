@@ -220,6 +220,30 @@ XCTAssertEqual([&quot;Google&quot;, &quot;DuckDuckGo&quot;], try Search.engines.
 XCTAssertEqual(1, Search.engines.testGetNumRecordedErrors(.invalidValue))
 </code></pre>
 </div>
+<div data-lang="Python" class="tab">
+<pre><code class="language-Python">from glean import load_metrics
+
+metrics = load_metrics(&quot;metrics.yaml&quot;)
+
+# Add them one at a time
+for engine in engines:
+    metrics.search.engines.add(engine)
+
+# Set them in one go
+metrics.search.engines.set(engines)
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-Python"># Was anything recorded?
+assert metrics.search.engines.test_has_value()
+# Does it have the expected value?
+# IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
+assert [&quot;Google&quot;, &quot;DuckDuckGo&quot;] == metrics.search.engines.test_get_value()
+# Were any of the values too long, and thus an error was recorded?
+assert 1 == metrics.search.engines.test_get_num_recorded_errors(
+    ErrorType.INVALID_VALUE
+)
+</code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
@@ -247,6 +271,7 @@ XCTAssertEqual(1, Search.engines.testGetNumRecordedErrors(.invalidValue))
 <h2><a class="header" href="#reference" id="reference">Reference</a></h2>
 <ul>
 <li><a href="../../../javadoc/glean/mozilla.telemetry.glean.private/-string-list-metric-type/index.html">Kotlin API docs</a></li>
+<li><a href="../../../python/glean/metrics/string_list.html">Python API docs</a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/user/metrics/string_list.md">Edit this file on GitHub.</a></footer>
                     </main>

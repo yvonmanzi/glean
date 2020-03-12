@@ -357,11 +357,6 @@ If you are unsure which files those are, skip this step and add the files after 
 </ol>
 </div>
 <div data-lang="Python" class="tab">
-<blockquote>
-<p><strong>Important:</strong> The Python bindings are already being used internally for testing of Mozilla's data platform.
-However, they are not ready for production or inclusion in applications that are distributed to end users.
-Progress on this support is being <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1598673">tracked in this bug</a>.</p>
-</blockquote>
 <p>For Python, the <code>metrics.yaml</code> file must be available and loaded at runtime.</p>
 <p>If your project is a script (i.e. just Python files in a directory), you can load the <code>metrics.yaml</code> using:</p>
 <pre><code class="language-Python">from glean import load_metrics
@@ -1975,6 +1970,30 @@ XCTAssertEqual([&quot;Google&quot;, &quot;DuckDuckGo&quot;], try Search.engines.
 XCTAssertEqual(1, Search.engines.testGetNumRecordedErrors(.invalidValue))
 </code></pre>
 </div>
+<div data-lang="Python" class="tab">
+<pre><code class="language-Python">from glean import load_metrics
+
+metrics = load_metrics(&quot;metrics.yaml&quot;)
+
+# Add them one at a time
+for engine in engines:
+    metrics.search.engines.add(engine)
+
+# Set them in one go
+metrics.search.engines.set(engines)
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-Python"># Was anything recorded?
+assert metrics.search.engines.test_has_value()
+# Does it have the expected value?
+# IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
+assert [&quot;Google&quot;, &quot;DuckDuckGo&quot;] == metrics.search.engines.test_get_value()
+# Were any of the values too long, and thus an error was recorded?
+assert 1 == metrics.search.engines.test_get_num_recorded_errors(
+    ErrorType.INVALID_VALUE
+)
+</code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits-6" id="limits-6">Limits</a></h2>
@@ -2002,6 +2021,7 @@ XCTAssertEqual(1, Search.engines.testGetNumRecordedErrors(.invalidValue))
 <h2><a class="header" href="#reference-6" id="reference-6">Reference</a></h2>
 <ul>
 <li><a href="user/metrics/../../../javadoc/glean/mozilla.telemetry.glean.private/-string-list-metric-type/index.html">Kotlin API docs</a></li>
+<li><a href="user/metrics/../../../python/glean/metrics/string_list.html">Python API docs</a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/user/metrics/string_list.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#timespan" id="timespan">Timespan</a></h1>
 <p>Timespans are used to make a measurement of how much time is spent in a particular task.</p>
@@ -4465,9 +4485,6 @@ The project directory can be imported and all the build details can be left to t
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/dev/ios/debug-glean-on-ios.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#python-bindings" id="python-bindings">Python bindings</a></h1>
 <p>The Glean SDK contains Python bindings for use in Python applications and test frameworks.
 It makes use of the underlying <a href="dev/python/../core/index.html">Rust component</a> with a Python-specific API on top.</p>
-<blockquote>
-<p><strong>Note:</strong> The Python bindings are a work in progress and are not ready for use.</p>
-</blockquote>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/dev/python/index.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#setup-the-python-build-environment" id="setup-the-python-build-environment">Setup the Python Build Environment</a></h1>
 <p>This document describes how to set up an environment for the development of the Glean Python bindings.</p>
 <p>Instructions for installing a copy of the Glean Python bindings into your own environment for use in your project are described in <a href="dev/python/../../user/adding-glean-to-your-project.html">adding Glean to your project</a>.</p>
