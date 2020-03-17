@@ -192,7 +192,7 @@ assertTrue(Stability.crashCount[&quot;native_code_crash&quot;].testHasValue())
 // Do the counters have the expected values?
 assertEquals(1, Stability.crashCount[&quot;uncaught_exception&quot;].testGetValue())
 assertEquals(3, Stability.crashCount[&quot;native_code_crash&quot;].testGetValue())
-// Did we record any invalid labels?
+// Were there any invalid labels?
 assertEquals(0, Stability.crashCount.testGetNumRecordedErrors(ErrorType.InvalidLabel))
 </code></pre>
 </div>
@@ -209,6 +209,8 @@ XCTAssert(Stability.crashCount[&quot;native_code_crash&quot;].testHasValue())
 // Do the counters have the expected values?
 XCTAssertEqual(1, try Stability.crashCount[&quot;uncaught_exception&quot;].testGetValue())
 XCTAssertEqual(3, try Stability.crashCount[&quot;native_code_crash&quot;].testGetValue())
+// Were there any invalid labels?
+XCTAssertEqual(0, Stability.crashCount.testGetNumRecordedErrors(.invalidLabel))
 </code></pre>
 </div>
 <div data-lang="Python" class="tab">
@@ -227,7 +229,7 @@ assert metrics.stability.crash_count[&quot;native_code_crash&quot;].test_has_val
 # Do the counters have the expected values?
 assert 1 == metrics.stability.crash_count[&quot;uncaught_exception&quot;].test_get_value()
 assert 3 == metrics.stability.crash_count[&quot;native_code_crash&quot;].test_get_value()
-# Did we record any invalid labels?
+# Were there any invalid labels?
 assert 0 == metrics.stability.crash_count.test_get_num_recorded_errors(
     ErrorType.INVALID_LABEL
 )

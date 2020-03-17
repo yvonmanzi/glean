@@ -198,6 +198,9 @@ assertEquals(0, Login.errorsByStage.testGetNumRecordedErrors(ErrorType.InvalidLa
 
 // Was anything recorded?
 XCTAssert(Login.errorsByStage[&quot;server_auth&quot;].testHasValue())
+
+// Were there any invalid labels?
+XCTAssertEqual(0, Login.errorsByStage.testGetNumRecordedErrors(.invalidLabel))
 </code></pre>
 </div>
 <div data-lang="Python" class="tab">

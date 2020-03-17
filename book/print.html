@@ -1486,7 +1486,7 @@ assert True is metrics.flags.a11y_enabled.test_get_value()
     description: &gt;
       a11y features enabled on the device. ...
     labels:
-      - screen_reader 
+      - screen_reader
       - high_contrast
     ...
 </code></pre>
@@ -1528,6 +1528,8 @@ XCTAssert(Accessibility.features[&quot;high_contrast&quot;].testHasValue())
 // Do the booleans have the expected values?
 XCTAssertEqual(true, try Accessibility.features[&quot;screen_reader&quot;].testGetValue())
 XCTAssertEqual(false, try Accessibility.features[&quot;high_contrast&quot;].testGetValue())
+// Were there any invalid labels?
+XCTAssertEqual(0, Accessibility.features.testGetNumRecordedErrors(.invalidLabel))
 </code></pre>
 </div>
 <div data-lang="Python" class="tab">
@@ -1576,7 +1578,7 @@ assert 0 == metrics.accessibility.features.test_get_num_recorded_errors(
 </ul>
 <h2><a class="header" href="#examples-1" id="examples-1">Examples</a></h2>
 <ul>
-<li>Record a related set of boolean flags. </li>
+<li>Record a related set of boolean flags.</li>
 </ul>
 <h2><a class="header" href="#recorded-errors-1" id="recorded-errors-1">Recorded Errors</a></h2>
 <ul>
@@ -1735,7 +1737,7 @@ assertTrue(Stability.crashCount[&quot;native_code_crash&quot;].testHasValue())
 // Do the counters have the expected values?
 assertEquals(1, Stability.crashCount[&quot;uncaught_exception&quot;].testGetValue())
 assertEquals(3, Stability.crashCount[&quot;native_code_crash&quot;].testGetValue())
-// Did we record any invalid labels?
+// Were there any invalid labels?
 assertEquals(0, Stability.crashCount.testGetNumRecordedErrors(ErrorType.InvalidLabel))
 </code></pre>
 </div>
@@ -1752,6 +1754,8 @@ XCTAssert(Stability.crashCount[&quot;native_code_crash&quot;].testHasValue())
 // Do the counters have the expected values?
 XCTAssertEqual(1, try Stability.crashCount[&quot;uncaught_exception&quot;].testGetValue())
 XCTAssertEqual(3, try Stability.crashCount[&quot;native_code_crash&quot;].testGetValue())
+// Were there any invalid labels?
+XCTAssertEqual(0, Stability.crashCount.testGetNumRecordedErrors(.invalidLabel))
 </code></pre>
 </div>
 <div data-lang="Python" class="tab">
@@ -1770,7 +1774,7 @@ assert metrics.stability.crash_count[&quot;native_code_crash&quot;].test_has_val
 # Do the counters have the expected values?
 assert 1 == metrics.stability.crash_count[&quot;uncaught_exception&quot;].test_get_value()
 assert 3 == metrics.stability.crash_count[&quot;native_code_crash&quot;].test_get_value()
-# Did we record any invalid labels?
+# Were there any invalid labels?
 assert 0 == metrics.stability.crash_count.test_get_num_recorded_errors(
     ErrorType.INVALID_LABEL
 )
@@ -1987,6 +1991,9 @@ assertEquals(0, Login.errorsByStage.testGetNumRecordedErrors(ErrorType.InvalidLa
 
 // Was anything recorded?
 XCTAssert(Login.errorsByStage[&quot;server_auth&quot;].testHasValue())
+
+// Were there any invalid labels?
+XCTAssertEqual(0, Login.errorsByStage.testGetNumRecordedErrors(.invalidLabel))
 </code></pre>
 </div>
 <div data-lang="Python" class="tab">
