@@ -160,6 +160,26 @@
                         <h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v25.1.0...master">Full changelog</a></p>
 <ul>
+<li>General:
+<ul>
+<li>The version of <code>glean_parser</code> has been updated to 1.19.0:
+<ul>
+<li><strong>Breaking change:</strong> The regular expression used to validate labels is
+stricter and more correct.</li>
+<li>Add more information about pings to markdown documentation:
+<ul>
+<li>State whether the ping includes client id;</li>
+<li>Add list of data review links;</li>
+<li>Add list of related bugs links.</li>
+</ul>
+</li>
+<li><code>glean_parser</code> now makes it easier to write external translation functions for
+different language targets.</li>
+<li>BUGFIX: glean_parser now works on 32-bit Windows.</li>
+</ul>
+</li>
+</ul>
+</li>
 <li>Android:
 <ul>
 <li><code>gradlew clean</code> will no longer remove the Miniconda installation in
