@@ -199,6 +199,11 @@
 <span id="199">199</span>
 <span id="200">200</span>
 <span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -211,6 +216,8 @@
 
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">Bucketing</span>, <span class="ident">Histogram</span>};
 
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">util</span>::<span class="ident">floating_point_context</span>::<span class="ident">FloatingPointContext</span>;
+
 <span class="doccomment">/// Create the possible ranges in an exponential distribution from `min` to `max` with</span>
 <span class="doccomment">/// `bucket_count` buckets.</span>
 <span class="doccomment">///</span>
@@ -221,6 +228,9 @@
 <span class="doccomment">/// That means values in a bucket `i` are `bucket[i] &lt;= value &lt; bucket[i+1]`.</span>
 <span class="doccomment">/// It will always contain an underflow bucket (`&lt; 1`).</span>
 <span class="kw">fn</span> <span class="ident">exponential_range</span>(<span class="ident">min</span>: <span class="ident">u64</span>, <span class="ident">max</span>: <span class="ident">u64</span>, <span class="ident">bucket_count</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> {
+    <span class="comment">// Set the FPU control flag to the required state within this function</span>
+    <span class="kw">let</span> <span class="ident">_fpc</span> <span class="op">=</span> <span class="ident">FloatingPointContext</span>::<span class="ident">new</span>();
+
     <span class="kw">let</span> <span class="ident">log_max</span> <span class="op">=</span> (<span class="ident">max</span> <span class="kw">as</span> <span class="ident">f64</span>).<span class="ident">ln</span>();
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ranges</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">bucket_count</span>);

@@ -569,10 +569,14 @@ def upload(cls, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
                 try:
                     url_path = next(lines).strip()
                     serialized_ping = next(lines)
+                    valid_content = True
                 except StopIteration:
-                    path.unlink()
-                    log.error(&#34;Invalid ping content in {}&#34;.format(path.resolve()))
-                    return False
+                    valid_content = False
+            # On Windows, we must close the file before deleting it
+            if not valid_content:
+                path.unlink()
+                log.error(&#34;Invalid ping content in {}&#34;.format(path.resolve()))
+                return False
         except FileNotFoundError:
             log.error(&#34;Could not find ping file {}&#34;.format(path.resolve()))
             return False

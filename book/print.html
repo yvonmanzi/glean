@@ -4308,7 +4308,7 @@ going to background, in the last session.</p>
 <p>The following metrics are added to the ping:</p>
 <table><thead><tr><th>Name</th><th>Type</th><th>Description</th><th>Data reviews</th><th>Extras</th><th>Expiration</th></tr></thead><tbody>
 <tr><td>glean.baseline.duration</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/timespan.html">timespan</a></td><td>The duration of the last foreground session.</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1512938#c3">1</a></td><td></td><td>never</td></tr>
-<tr><td>glean.baseline.locale</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/string.html">string</a></td><td>The locale of the application (e.g. &quot;es-ES&quot;).</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1512938#c3">1</a></td><td></td><td>never</td></tr>
+<tr><td>glean.baseline.locale</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/string.html">string</a></td><td>The locale of the application (e.g. &quot;es-ES&quot;). If the locale can't be determined on the system, the value is &quot;und&quot;, to indicate &quot;undetermined&quot;.</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1512938#c3">1</a></td><td></td><td>never</td></tr>
 </tbody></table>
 <h2><a class="header" href="#deletion-request" id="deletion-request">deletion-request</a></h2>
 <p>This ping is submitted when a user opts out of sending technical and interaction data to Mozilla. This ping is intended to communicate to the Data Pipeline that the user wishes to have their reported Telemetry data deleted. As such it attempts to send itself at the moment the user opts out of data collection.</p>

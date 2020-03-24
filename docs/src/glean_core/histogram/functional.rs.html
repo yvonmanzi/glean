@@ -161,6 +161,17 @@
 <span id="161">161</span>
 <span id="162">162</span>
 <span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -171,6 +182,8 @@
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
 
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">Bucketing</span>, <span class="ident">Histogram</span>};
+
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">util</span>::<span class="ident">floating_point_context</span>::<span class="ident">FloatingPointContext</span>;
 
 <span class="doccomment">/// A functional bucketing algorithm.</span>
 <span class="doccomment">///</span>
@@ -188,6 +201,9 @@
 <span class="kw">impl</span> <span class="ident">Functional</span> {
     <span class="doccomment">/// Instantiate a new functional bucketing.</span>
     <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">log_base</span>: <span class="ident">f64</span>, <span class="ident">buckets_per_magnitude</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Functional</span> {
+        <span class="comment">// Set the FPU control flag to the required state within this function</span>
+        <span class="kw">let</span> <span class="ident">_fpc</span> <span class="op">=</span> <span class="ident">FloatingPointContext</span>::<span class="ident">new</span>();
+
         <span class="kw">let</span> <span class="ident">exponent</span> <span class="op">=</span> <span class="ident">log_base</span>.<span class="ident">powf</span>(<span class="number">1.0</span> <span class="op">/</span> <span class="ident">buckets_per_magnitude</span>);
 
         <span class="ident">Functional</span> { <span class="ident">exponent</span> }
@@ -198,11 +214,17 @@
     <span class="doccomment">/// mathematical concept, even though the internal representation is stored and</span>
     <span class="doccomment">/// sent using the minimum value in each bucket.</span>
     <span class="kw">fn</span> <span class="ident">sample_to_bucket_index</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">sample</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
+        <span class="comment">// Set the FPU control flag to the required state within this function</span>
+        <span class="kw">let</span> <span class="ident">_fpc</span> <span class="op">=</span> <span class="ident">FloatingPointContext</span>::<span class="ident">new</span>();
+
         ((<span class="ident">sample</span> <span class="op">+</span> <span class="number">1</span>) <span class="kw">as</span> <span class="ident">f64</span>).<span class="ident">log</span>(<span class="self">self</span>.<span class="ident">exponent</span>) <span class="kw">as</span> <span class="ident">u64</span>
     }
 
     <span class="doccomment">/// Determines the minimum value of a bucket, given a bucket index.</span>
     <span class="kw">fn</span> <span class="ident">bucket_index_to_bucket_minimum</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">index</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
+        <span class="comment">// Set the FPU control flag to the required state within this function</span>
+        <span class="kw">let</span> <span class="ident">_fpc</span> <span class="op">=</span> <span class="ident">FloatingPointContext</span>::<span class="ident">new</span>();
+
         <span class="self">self</span>.<span class="ident">exponent</span>.<span class="ident">powf</span>(<span class="ident">index</span> <span class="kw">as</span> <span class="ident">f64</span>) <span class="kw">as</span> <span class="ident">u64</span>
     }
 }
