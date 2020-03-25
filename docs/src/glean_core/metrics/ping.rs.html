@@ -71,6 +71,7 @@
 <span id="71">71</span>
 <span id="72">72</span>
 <span id="73">73</span>
+<span id="74">74</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -102,8 +103,9 @@
     <span class="doccomment">/// ## Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `name` - The name of the ping.</span>
-    <span class="doccomment">/// * `include_client_id` - Whether to include the client ID in the assembled ping when.</span>
-    <span class="doccomment">/// sending.</span>
+    <span class="doccomment">/// * `include_client_id` - Whether to include the client ID in the assembled ping when submitting.</span>
+    <span class="doccomment">/// * `send_if_empty` - Whether the ping should be sent empty or not.</span>
+    <span class="doccomment">/// * `reason_codes` - The valid reason codes for this ping.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>(
         <span class="ident">name</span>: <span class="ident">A</span>,
         <span class="ident">include_client_id</span>: <span class="ident">bool</span>,
