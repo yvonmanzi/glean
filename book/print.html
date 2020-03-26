@@ -716,9 +716,12 @@ For example, the metric defined in the <code>metrics.yaml</code> as:</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/user/adding-new-metrics.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#metric-parameters" id="metric-parameters">Metric parameters</a></h1>
 <h2><a class="header" href="#required-metric-parameters" id="required-metric-parameters">Required metric parameters</a></h2>
 <ul>
-<li>
-<p><code>type</code>: <strong>Required.</strong>  Specifies the type of a metric, like &quot;counter&quot; or &quot;event&quot;. This defines which operations are valid for the metric, how it is stored and how data analysis tooling displays it. See the list of <a href="user/metrics/index.html">supported metric types</a>.</p>
-</li>
+<li><code>type</code>: <strong>Required.</strong>  Specifies the type of a metric, like &quot;counter&quot; or &quot;event&quot;. This defines which operations are valid for the metric, how it is stored and how data analysis tooling displays it. See the list of <a href="user/metrics/index.html">supported metric types</a>.</li>
+</ul>
+<blockquote>
+<p><strong>Important</strong>: Once a metric is released in a product, its <code>type</code> should not be changed. If any data was collected locally with the older <code>type</code>, and hasn't yet been sent in a ping, recording data with the new <code>type</code> may cause any old persisted data to be lost for that metric. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1621757#c1">this comment</a> for an extended explanation of the different scenarios.</p>
+</blockquote>
+<ul>
 <li>
 <p><code>description</code>: <strong>Required.</strong> A textual description of the metric for humans. It should describe what the metric does, what it means for analysts, and its edge cases or any other helpful information.</p>
 <p>The description field may contain <a href="https://www.markdownguide.org/basic-syntax/">markdown syntax</a>.</p>
