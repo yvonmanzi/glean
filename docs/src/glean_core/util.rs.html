@@ -261,6 +261,11 @@
 <span id="261">261</span>
 <span id="262">262</span>
 <span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -376,13 +381,14 @@
 }
 
 <span class="comment">// On i686 on Windows, the CPython interpreter sets the FPU precision control</span>
-<span class="comment">// flag to 53 bits of precision, rather than the 64 bit default. This causes</span>
-<span class="comment">// different floating point results than on other architectures. This context</span>
-<span class="comment">// manager makes it easy to set the precision to 64-bits around floating point</span>
-<span class="comment">// operations.</span>
+<span class="comment">// flag to 53 bits of precision, rather than the 64 bit default. On x86_64 on</span>
+<span class="comment">// Windows, the CPython interpreter changes the rounding control settings. This</span>
+<span class="comment">// causes different floating point results than on other architectures. This</span>
+<span class="comment">// context manager makes it easy to set the correct precision and rounding control</span>
+<span class="comment">// to match our other targets and platforms.</span>
 <span class="comment">//</span>
 <span class="comment">// See https://bugzilla.mozilla.org/show_bug.cgi?id=1623335 for additional context.</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;windows&quot;</span>))]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;windows&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">floating_point_context</span> {
     <span class="kw">use</span> <span class="ident">libc</span>::<span class="ident">size_t</span>;
 
@@ -394,6 +400,10 @@
         <span class="kw">fn</span> <span class="ident">_controlfp_s</span>(<span class="ident">current</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">size_t</span>, <span class="ident">new</span>: <span class="ident">size_t</span>, <span class="ident">mask</span>: <span class="ident">size_t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">size_t</span>;
     }
 
+    <span class="comment">// Rounding control mask</span>
+    <span class="kw">const</span> <span class="ident">MCW_RC</span>: <span class="ident">size_t</span> <span class="op">=</span> <span class="number">0x00000300</span>;
+    <span class="comment">// Round by truncation</span>
+    <span class="kw">const</span> <span class="ident">RC_CHOP</span>: <span class="ident">size_t</span> <span class="op">=</span> <span class="number">0x00000300</span>;
     <span class="comment">// Precision control mask</span>
     <span class="kw">const</span> <span class="ident">MCW_PC</span>: <span class="ident">size_t</span> <span class="op">=</span> <span class="number">0x00030000</span>;
     <span class="comment">// Values for 64-bit precision</span>
@@ -406,7 +416,7 @@
     <span class="kw">impl</span> <span class="ident">FloatingPointContext</span> {
         <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">current</span>: <span class="ident">size_t</span> <span class="op">=</span> <span class="number">0</span>;
-            <span class="kw">let</span> <span class="ident">_err</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">_controlfp_s</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">current</span>, <span class="ident">PC_64</span>, <span class="ident">MCW_PC</span>) };
+            <span class="kw">let</span> <span class="ident">_err</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">_controlfp_s</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">current</span>, <span class="ident">PC_64</span> <span class="op">|</span> <span class="ident">RC_CHOP</span>, <span class="ident">MCW_PC</span> <span class="op">|</span> <span class="ident">MCW_RC</span>) };
 
             <span class="ident">FloatingPointContext</span> {
                 <span class="ident">original_value</span>: <span class="ident">current</span>,
@@ -417,12 +427,12 @@
     <span class="kw">impl</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">FloatingPointContext</span> {
         <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">current</span>: <span class="ident">size_t</span> <span class="op">=</span> <span class="number">0</span>;
-            <span class="kw">let</span> <span class="ident">_err</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">_controlfp_s</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">current</span>, <span class="self">self</span>.<span class="ident">original_value</span>, <span class="ident">MCW_PC</span>) };
+            <span class="kw">let</span> <span class="ident">_err</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">_controlfp_s</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">current</span>, <span class="self">self</span>.<span class="ident">original_value</span>, <span class="ident">MCW_PC</span> <span class="op">|</span> <span class="ident">MCW_RC</span>) };
         }
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;windows&quot;</span>)))]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;windows&quot;</span>))]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">floating_point_context</span> {
     <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FloatingPointContext</span> {}
 
