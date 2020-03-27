@@ -4713,8 +4713,9 @@ pip install -r requirements_dev.txt
 <h3><a class="header" href="#makefile-method" id="makefile-method">Makefile method</a></h3>
 <pre><code class="language-bash">  $ make python-setup
 </code></pre>
+<p>The default location of the virtual environment used by the make file is <code>glean-core/python/.venvX.Y</code>, where <code>X.Y</code> is the version of Python in use. This makes it possible to build and test for multiple versions of Python in the same checkout.</p>
 <blockquote>
-<p><em>Note:</em> If you wish to change the location of the virtual environment that the <code>Makefile</code> uses, set the <code>GLEAN_PYENV</code> environment variable.</p>
+<p><em>Note:</em> If you wish to change the location of the virtual environment that the <code>Makefile</code> uses, pass the <code>GLEAN_PYENV</code> environment variable: <code>make test-python GLEAN_PYENV=mypyenv</code>.</p>
 </blockquote>
 <h2><a class="header" href="#build-the-python-bindings" id="build-the-python-bindings">Build the Python bindings</a></h2>
 <h3><a class="header" href="#manual-method-1" id="manual-method-1">Manual method</a></h3>
