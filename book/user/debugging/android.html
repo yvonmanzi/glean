@@ -190,6 +190,7 @@ These are the currently supported keys:</p>
   --es sendPing metrics \
   --es tagPings test-metrics-ping
 </code></pre>
+<p>The <code>logPings</code> command doesn't trigger ping submission and you won't see any output until a ping has been submitted. You can use the <code>sendPings</code> command to force a ping to be sent, but it could be more desirable to trigger the pings submission on their normal schedule. For instance, the <code>baseline</code> and <code>events</code> pings can be triggered by moving the app out of the foreground and the <code>metrics</code> ping can be triggered normally if it is overdue for the current calendar day. See the <a href="../pings/index.html">ping documentation</a> for more information on ping scheduling to learn when pings are sent.</p>
 <blockquote>
 <p><strong>Note:</strong> In previous versions of Glean the activity was available with the name <code>mozilla.components.service.glean.debug.GleanDebugActivity</code>.</p>
 <p>If you're debugging an old build, try running:</p>

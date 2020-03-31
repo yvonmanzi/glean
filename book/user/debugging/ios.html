@@ -180,6 +180,7 @@
 <li>Invalid commands will log an error and cause the entire URL to be ignored.</li>
 <li>Not all commands are required to be encoded in the URL, you can mix and match the commands that you need.</li>
 <li>Multiple instances of commands are not allowed in the same URL and, if present, will cause the entire URL to be ignored.</li>
+<li>The <code>logPings</code> command doesn't trigger ping submission and you won't see any output until a ping has been submitted. You can use the <code>sendPings</code> command to force a ping to be sent, but it could be more desirable to trigger the pings submission on their normal schedule. For instance, the <code>baseline</code> and <code>events</code> pings can be triggered by moving the app out of the foreground and the <code>metrics</code> ping can be triggered normally if it is overdue for the current calendar day. See the <a href="../pings/index.html">ping documentation</a> for more information on ping scheduling to learn when pings are sent.</li>
 </ul>
 <h3><a class="header" href="#instrumenting-the-application-for-glean-debug-functionality" id="instrumenting-the-application-for-glean-debug-functionality">Instrumenting the application for Glean debug functionality</a></h3>
 <p>In order to enable the debugging features in a Glean SDK consuming iOS application, it is necessary to add some information to the application's <code>Info.plist</code>, and add a line and possibly an override for a function in the <code>AppDelegate.swift</code>.</p>
