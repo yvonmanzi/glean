@@ -723,6 +723,17 @@
 <span id="723">723</span>
 <span id="724">724</span>
 <span id="725">725</span>
+<span id="726">726</span>
+<span id="727">727</span>
+<span id="728">728</span>
+<span id="729">729</span>
+<span id="730">730</span>
+<span id="731">731</span>
+<span id="732">732</span>
+<span id="733">733</span>
+<span id="734">734</span>
+<span id="735">735</span>
+<span id="736">736</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -762,6 +773,7 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">metrics</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">ping</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">storage</span>;
+<span class="kw">mod</span> <span class="ident">system</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;upload&quot;</span>)]</span>
 <span class="kw">mod</span> <span class="ident">upload</span>;
 <span class="kw">mod</span> <span class="ident">util</span>;
@@ -975,6 +987,8 @@
             <span class="comment">// time it is set, that&#39;s indeed our &quot;first run&quot;.</span>
             <span class="self">self</span>.<span class="ident">is_first_run</span> <span class="op">=</span> <span class="bool-val">true</span>;
         }
+
+        <span class="self">self</span>.<span class="ident">set_application_lifetime_core_metrics</span>();
     }
 
     <span class="doccomment">/// Called when Glean is initialized to the point where it can correctly</span>
@@ -1337,6 +1351,11 @@
         <span class="prelude-val">Ok</span>(())
     }
 
+    <span class="doccomment">/// Set internally-handled application lifetime metrics.</span>
+    <span class="kw">fn</span> <span class="ident">set_application_lifetime_core_metrics</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">core_metrics</span>.<span class="ident">os</span>.<span class="ident">set</span>(<span class="self">self</span>, <span class="ident">system</span>::<span class="ident">OS</span>);
+    }
+
     <span class="doccomment">/// ** This is not meant to be used directly.**</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Clear all the metrics that have `Lifetime::Application`.</span>
@@ -1345,6 +1364,9 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">data</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">data_store</span>.<span class="ident">as_ref</span>() {
             <span class="ident">data</span>.<span class="ident">clear_lifetime</span>(<span class="ident">Lifetime</span>::<span class="ident">Application</span>);
         }
+
+        <span class="comment">// Set internally handled app lifetime metrics again.</span>
+        <span class="self">self</span>.<span class="ident">set_application_lifetime_core_metrics</span>();
     }
 
     <span class="doccomment">/// Return whether or not this is the first run on this profile.</span>
