@@ -325,6 +325,20 @@
 <span id="325">325</span>
 <span id="326">326</span>
 <span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -376,10 +390,17 @@
     <span class="ident">R</span>: <span class="ident">IntoFfi</span>,
 {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">error</span> <span class="op">=</span> <span class="ident">ffi_support</span>::<span class="ident">ExternError</span>::<span class="ident">success</span>();
-    <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">ffi_support</span>::<span class="ident">abort_on_panic</span>::<span class="ident">call_with_result</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">error</span>, <span class="op">|</span><span class="op">|</span> {
-        <span class="kw">let</span> <span class="ident">glean</span> <span class="op">=</span> <span class="ident">glean_core</span>::<span class="ident">global_glean</span>().<span class="ident">lock</span>().<span class="ident">unwrap</span>();
-        <span class="ident">callback</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>)
-    });
+    <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span>
+        <span class="ident">ffi_support</span>::<span class="ident">abort_on_panic</span>::<span class="ident">call_with_result</span>(
+            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">error</span>,
+            <span class="op">|</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">glean_core</span>::<span class="ident">global_glean</span>() {
+                <span class="prelude-val">Some</span>(<span class="ident">glean</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="kw">let</span> <span class="ident">glean</span> <span class="op">=</span> <span class="ident">glean</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
+                    <span class="ident">callback</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>)
+                }
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">glean_core</span>::<span class="ident">Error</span>::<span class="ident">not_initialized</span>()),
+            },
+        );
     <span class="ident">handlemap_ext</span>::<span class="ident">log_if_error</span>(<span class="ident">error</span>);
     <span class="ident">res</span>
 }
@@ -397,10 +418,17 @@
     <span class="ident">R</span>: <span class="ident">IntoFfi</span>,
 {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">error</span> <span class="op">=</span> <span class="ident">ffi_support</span>::<span class="ident">ExternError</span>::<span class="ident">success</span>();
-    <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">ffi_support</span>::<span class="ident">abort_on_panic</span>::<span class="ident">call_with_result</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">error</span>, <span class="op">|</span><span class="op">|</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">glean</span> <span class="op">=</span> <span class="ident">glean_core</span>::<span class="ident">global_glean</span>().<span class="ident">lock</span>().<span class="ident">unwrap</span>();
-        <span class="ident">callback</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">glean</span>)
-    });
+    <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span>
+        <span class="ident">ffi_support</span>::<span class="ident">abort_on_panic</span>::<span class="ident">call_with_result</span>(
+            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">error</span>,
+            <span class="op">|</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">glean_core</span>::<span class="ident">global_glean</span>() {
+                <span class="prelude-val">Some</span>(<span class="ident">glean</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">glean</span> <span class="op">=</span> <span class="ident">glean</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
+                    <span class="ident">callback</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">glean</span>)
+                }
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">glean_core</span>::<span class="ident">Error</span>::<span class="ident">not_initialized</span>()),
+            },
+        );
     <span class="ident">handlemap_ext</span>::<span class="ident">log_if_error</span>(<span class="ident">error</span>);
     <span class="ident">res</span>
 }

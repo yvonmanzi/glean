@@ -159,6 +159,19 @@
                     <main>
                         <h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v26.0.0...master">Full changelog</a></p>
+<ul>
+<li>General:
+<ul>
+<li>Glean will now detect when the upload enabled flag changes outside of the application, for example due to a change in a config file. This means that if upload is disabled while the application wasn't running (e.g. between the runs of a Python command using the Glean SDK), the database is correctly cleared and a deletion request ping is sent. See <a href="https://github.com/mozilla/glean/pull/791">#791</a>.</li>
+</ul>
+</li>
+<li>iOS:
+<ul>
+<li>BUGFIX: A bug where the metrics ping is sent immediately at startup on the last day of the month has been fixed.</li>
+<li>Glean for iOS is now being built with Xcode 11.4.0</li>
+</ul>
+</li>
+</ul>
 <h1><a class="header" href="#v2600-2020-03-27" id="v2600-2020-03-27">v26.0.0 (2020-03-27)</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v25.1.0...v26.0.0">Full changelog</a></p>
 <ul>

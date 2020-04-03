@@ -207,6 +207,8 @@
 <span id="207">207</span>
 <span id="208">208</span>
 <span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -296,7 +298,8 @@
 <span class="kw">where</span>
     <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">Glean</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>,
 {
-    <span class="kw">let</span> <span class="ident">lock</span> <span class="op">=</span> <span class="ident">global_glean</span>().<span class="ident">lock</span>().<span class="ident">unwrap</span>();
+    <span class="kw">let</span> <span class="ident">glean</span> <span class="op">=</span> <span class="ident">global_glean</span>().<span class="ident">expect</span>(<span class="string">&quot;Global Glean object not initialized&quot;</span>);
+    <span class="kw">let</span> <span class="ident">lock</span> <span class="op">=</span> <span class="ident">glean</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
     <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">lock</span>)
 }
 
@@ -304,7 +307,8 @@
 <span class="kw">where</span>
     <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Glean</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>,
 {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">lock</span> <span class="op">=</span> <span class="ident">global_glean</span>().<span class="ident">lock</span>().<span class="ident">unwrap</span>();
+    <span class="kw">let</span> <span class="ident">glean</span> <span class="op">=</span> <span class="ident">global_glean</span>().<span class="ident">expect</span>(<span class="string">&quot;Global Glean object not initialized&quot;</span>);
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">lock</span> <span class="op">=</span> <span class="ident">glean</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
     <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">lock</span>)
 }
 
