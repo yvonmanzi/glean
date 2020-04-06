@@ -69,6 +69,7 @@ class Configuration:
         log_pings: bool = False,
         ping_tag: Optional[str] = None,
         ping_uploader: Optional[net.BaseUploader] = None,
+        allow_multiprocessing: bool = True,
     ):
         &#34;&#34;&#34;
         Args:
@@ -86,6 +87,9 @@ class Configuration:
                 uploading pings for debug view.
             ping_uploader (glean.net.BaseUploader): Optional. The ping uploader
                 implementation. Defaults to `glean.net.HttpClientUploader`.
+            allow_multiprocessing (bool): When True (default), use Python
+                multiprocessing to offload some work (such as ping uploading) to a
+                child process.
         &#34;&#34;&#34;
         self._server_endpoint = server_endpoint
         if user_agent is None:
@@ -98,6 +102,7 @@ class Configuration:
         if ping_uploader is None:
             ping_uploader = net.HttpClientUploader()
         self._ping_uploader = ping_uploader
+        self._allow_multiprocessing = allow_multiprocessing
 
     @property
     def server_endpoint(self) -&gt; str:
@@ -179,7 +184,7 @@ __all__ = [&#34;Configuration&#34;]</code></pre>
 <dl>
 <dt id="glean.config.Configuration"><code class="flex name class">
 <span>class <span class="ident">Configuration</span></span>
-<span>(</span><span>server_endpoint='https://incoming.telemetry.mozilla.org', user_agent=None, channel=None, max_events=500, log_pings=False, ping_tag=None, ping_uploader=None)</span>
+<span>(</span><span>server_endpoint='https://incoming.telemetry.mozilla.org', user_agent=None, channel=None, max_events=500, log_pings=False, ping_tag=None, ping_uploader=None, allow_multiprocessing=True)</span>
 </code></dt>
 <dd>
 <section class="desc"><p>Configuration values for Glean.</p>
@@ -206,6 +211,10 @@ uploading pings for debug view.</dd>
 <dt><strong><code>ping_uploader</code></strong> :&ensp;<a title="glean.net.BaseUploader" href="net/index.html#glean.net.BaseUploader"><code>BaseUploader</code></a></dt>
 <dd>Optional. The ping uploader
 implementation. Defaults to <a title="glean.net.HttpClientUploader" href="net/index.html#glean.net.HttpClientUploader"><code>HttpClientUploader</code></a>.</dd>
+<dt><strong><code>allow_multiprocessing</code></strong> :&ensp;<code>bool</code></dt>
+<dd>When True (default), use Python
+multiprocessing to offload some work (such as ping uploading) to a
+child process.</dd>
 </dl></section>
 <details class="source">
 <summary>
@@ -225,6 +234,7 @@ implementation. Defaults to <a title="glean.net.HttpClientUploader" href="net/in
         log_pings: bool = False,
         ping_tag: Optional[str] = None,
         ping_uploader: Optional[net.BaseUploader] = None,
+        allow_multiprocessing: bool = True,
     ):
         &#34;&#34;&#34;
         Args:
@@ -242,6 +252,9 @@ implementation. Defaults to <a title="glean.net.HttpClientUploader" href="net/in
                 uploading pings for debug view.
             ping_uploader (glean.net.BaseUploader): Optional. The ping uploader
                 implementation. Defaults to `glean.net.HttpClientUploader`.
+            allow_multiprocessing (bool): When True (default), use Python
+                multiprocessing to offload some work (such as ping uploading) to a
+                child process.
         &#34;&#34;&#34;
         self._server_endpoint = server_endpoint
         if user_agent is None:
@@ -254,6 +267,7 @@ implementation. Defaults to <a title="glean.net.HttpClientUploader" href="net/in
         if ping_uploader is None:
             ping_uploader = net.HttpClientUploader()
         self._ping_uploader = ping_uploader
+        self._allow_multiprocessing = allow_multiprocessing
 
     @property
     def server_endpoint(self) -&gt; str:

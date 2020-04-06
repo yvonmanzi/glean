@@ -172,6 +172,12 @@
 <li>Glean for iOS is now being built with Xcode 11.4.0</li>
 </ul>
 </li>
+<li>Python:
+<ul>
+<li>Glean will now wait at application exit for up to one second to let its worker thread complete.</li>
+<li>Ping uploading now happens in a separate child process by default. This can be disabled with the <code>allow_multiprocessing</code> configuration option.</li>
+</ul>
+</li>
 </ul>
 <h1><a class="header" href="#v2600-2020-03-27" id="v2600-2020-03-27">v26.0.0 (2020-03-27)</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v25.1.0...v26.0.0">Full changelog</a></p>

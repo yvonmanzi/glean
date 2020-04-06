@@ -386,6 +386,19 @@ This is also required for any new metric automatically collected by the Glean SD
 </blockquote>
 <h3><a class="header" href="#parallelism" id="parallelism">Parallelism</a></h3>
 <p>All of Glean's target languages use a separate worker thread to do most of Glean's work, including any I/O. This thread is fully managed by Glean as an implementation detail. Therefore, users should be free to use the Glean API wherever it is most convenient, without worrying about the performance impact of updating metrics and sending pings.</p>
+<div class="tabs">
+<div class="tabbar"></div>
+<div class="tabcontents">
+<div data-lang="Python" class="tab">
+When using the Python bindings, Glean's work is done on a separate thread, managed by Glean itself.
+Glean releases the Global Interpreter Lock (GIL), therefore your application's threads should not be in contention with Glean's thread.
+<p>Glean installs an <a href="https://docs.python.org/3/library/atexit.html"><code>atexit</code> handler</a> so the Glean thread can attempt to cleanly shut down when your application exits.
+This handler will wait up to 1 second for any pending work to complete.</p>
+<p>In addition, by default ping uploading is performed in a separate child process using Python's multiprocessing module. This process will continue to upload any pending pings even after the main process shuts down.</p>
+<p>Since the multiprocessing module may not work in all contexts, such as in a <a href="https://www.pyinstaller.org/"><code>PyInstaller</code></a> application, there is an option to ensure that ping uploading occurs in the main process. To do this, set the <code>allow_multiprocessing</code> parameter on the <code>glean.Configuration</code> object to <code>False</code>.</p>
+</div>
+</div>
+</div>
 <h3><a class="header" href="#testing-metrics" id="testing-metrics">Testing metrics</a></h3>
 <p>In order to make testing metrics easier 'out of the box', all metrics include a set of test API functions in order to facilitate unit testing.  These include functions to test whether a value has been stored, and functions to retrieve the stored value for validation.  For more information, please refer to <a href="user/testing-metrics.html">Unit testing Glean metrics</a>.</p>
 <h3><a class="header" href="#adding-metadata-about-your-project-to-the-pipeline" id="adding-metadata-about-your-project-to-the-pipeline">Adding metadata about your project to the pipeline</a></h3>
@@ -6326,6 +6339,12 @@ All the default pings have their scheduling and submission handled by the SDK.</
 <ul>
 <li>BUGFIX: A bug where the metrics ping is sent immediately at startup on the last day of the month has been fixed.</li>
 <li>Glean for iOS is now being built with Xcode 11.4.0</li>
+</ul>
+</li>
+<li>Python:
+<ul>
+<li>Glean will now wait at application exit for up to one second to let its worker thread complete.</li>
+<li>Ping uploading now happens in a separate child process by default. This can be disabled with the <code>allow_multiprocessing</code> configuration option.</li>
 </ul>
 </li>
 </ul>

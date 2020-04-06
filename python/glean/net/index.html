@@ -499,14 +499,6 @@ def upload(cls, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class PingUploadWorker:
-    # Ping files are UUIDs.  This matches UUIDs for filtering purposes.
-    _FILE_PATTERN = re.compile(
-        &#34;[0-9a-fA-F]{8}-&#34;
-        &#34;[0-9a-fA-F]{4}-&#34;
-        &#34;[0-9a-fA-F]{4}-&#34;
-        &#34;[0-9a-fA-F]{4}-&#34;
-        &#34;[0-9a-fA-F]{12}&#34;
-    )
 
     # NOTE: The `PINGS_DIR&#34; must be kept in sync with the one in the Rust implementation.
     _PINGS_DIR = &#34;pending_pings&#34;
@@ -518,81 +510,63 @@ def upload(cls, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
         return Glean.get_data_dir() / cls._PINGS_DIR
 
     @classmethod
-    def process(cls) -&gt; bool:
+    def process(cls):
         &#34;&#34;&#34;
         Function to deserialize and process all serialized ping files.
 
         This function will ignore files that don&#39;t match the UUID regex and
         just delete them to prevent files from polluting the ping storage
         directory.
+        &#34;&#34;&#34;
+        from .. import Glean
+
+        if Dispatcher._testing_mode:
+            cls._test_process_sync()
+            return
+
+        if Glean._configuration._allow_multiprocessing:
+            cls._do_process_pings_multiprocessing()
+        else:
+            cls._do_process_pings()
+
+    @classmethod
+    def _do_process_pings_multiprocessing(cls) -&gt; &#34;multiprocessing.Process&#34;:
+        from .. import Glean
+
+        # Only import the multiprocessing library if it&#39;s actually needed
+        import multiprocessing
+
+        p = multiprocessing.Process(
+            target=_process_worker, args=(cls.storage_directory(), Glean._configuration)
+        )
+        p.start()
+        return p
+
+    @classmethod
+    def _do_process_pings(cls) -&gt; bool:
+        from .. import Glean
+
+        return _process(cls.storage_directory(), Glean._configuration)
+
+    @classmethod
+    def _test_process_sync(cls) -&gt; bool:
+        &#34;&#34;&#34;
+        This is a test-only function to process the ping uploads in a separate
+        process, but blocks until it is complete.
 
         Returns:
             uploaded (bool): The success of the upload task.
         &#34;&#34;&#34;
-        success = True
-
-        storage_dir = cls.storage_directory()
-
-        log.debug(&#34;Processing persisted pings at {}&#34;.format(storage_dir.resolve()))
-
-        try:
-            for path in storage_dir.iterdir():
-                if path.is_file():
-                    if cls._FILE_PATTERN.match(path.name):
-                        log.debug(&#34;Processing ping: {}&#34;.format(path.name))
-                        if not cls._process_file(path):
-                            log.error(
-                                &#34;Error processing ping file: {}&#34;.format(path.name)
-                            )
-                            success = False
-                    else:
-                        log.debug(&#34;Pattern mismatch. Deleting {}&#34;.format(path.name))
-                        path.unlink()
-        except FileNotFoundError:
-            log.debug(&#34;File not found: {}&#34;.format(storage_dir.resolve()))
-            success = False
-
-        return success
-
-    @classmethod
-    def _process_file(cls, path: Path) -&gt; bool:
-        &#34;&#34;&#34;
-        Processes a single ping file.
-        &#34;&#34;&#34;
         from .. import Glean
 
-        processed = False
+        assert Dispatcher._testing_mode is True
 
-        try:
-            with path.open(&#34;r&#34;, encoding=&#34;utf-8&#34;) as fd:
-                lines = iter(fd)
-                try:
-                    url_path = next(lines).strip()
-                    serialized_ping = next(lines)
-                    valid_content = True
-                except StopIteration:
-                    valid_content = False
-            # On Windows, we must close the file before deleting it
-            if not valid_content:
-                path.unlink()
-                log.error(&#34;Invalid ping content in {}&#34;.format(path.resolve()))
-                return False
-        except FileNotFoundError:
-            log.error(&#34;Could not find ping file {}&#34;.format(path.resolve()))
-            return False
-        except IOError as e:
-            log.error(&#34;IOError when reading {}: {}&#34;.format(path.resolve(), e))
-            return False
-
-        processed = Glean._configuration.ping_uploader.do_upload(
-            url_path, serialized_ping, Glean._configuration
-        )
-
-        if processed:
-            path.unlink()
-            log.debug(&#34;{} was deleted&#34;.format(path.name))
-
-        return processed</code></pre>
+        if Glean._configuration._allow_multiprocessing:
+            p = cls._do_process_pings_multiprocessing()
+            p.join()
+            return p.exitcode == 0
+        else:
+            return cls._do_process_pings()</code></pre>
 </details>
 <h3>Subclasses</h3>
 <ul class="hlist">
@@ -607,52 +581,30 @@ def upload(cls, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
 <section class="desc"><p>Function to deserialize and process all serialized ping files.</p>
 <p>This function will ignore files that don't match the UUID regex and
 just delete them to prevent files from polluting the ping storage
-directory.</p>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>uploaded</code></strong> :&ensp;<code>bool</code></dt>
-<dd>The success of the upload task.</dd>
-</dl></section>
+directory.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def process(cls) -&gt; bool:
+def process(cls):
     &#34;&#34;&#34;
     Function to deserialize and process all serialized ping files.
 
     This function will ignore files that don&#39;t match the UUID regex and
     just delete them to prevent files from polluting the ping storage
     directory.
-
-    Returns:
-        uploaded (bool): The success of the upload task.
     &#34;&#34;&#34;
-    success = True
+    from .. import Glean
 
-    storage_dir = cls.storage_directory()
+    if Dispatcher._testing_mode:
+        cls._test_process_sync()
+        return
 
-    log.debug(&#34;Processing persisted pings at {}&#34;.format(storage_dir.resolve()))
-
-    try:
-        for path in storage_dir.iterdir():
-            if path.is_file():
-                if cls._FILE_PATTERN.match(path.name):
-                    log.debug(&#34;Processing ping: {}&#34;.format(path.name))
-                    if not cls._process_file(path):
-                        log.error(
-                            &#34;Error processing ping file: {}&#34;.format(path.name)
-                        )
-                        success = False
-                else:
-                    log.debug(&#34;Pattern mismatch. Deleting {}&#34;.format(path.name))
-                    path.unlink()
-    except FileNotFoundError:
-        log.debug(&#34;File not found: {}&#34;.format(storage_dir.resolve()))
-        success = False
-
-    return success</code></pre>
+    if Glean._configuration._allow_multiprocessing:
+        cls._do_process_pings_multiprocessing()
+    else:
+        cls._do_process_pings()</code></pre>
 </details>
 </dd>
 <dt id="glean.net.PingUploadWorker.storage_directory"><code class="name flex">
