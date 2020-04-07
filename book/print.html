@@ -3268,7 +3268,7 @@ Optional fields are marked accordingly.</p>
 <tr><td><code>os_version</code></td><td>String</td><td>The user-visible version of the operating system (e.g. &quot;1.2.3&quot;)</td></tr>
 <tr><td><code>android_sdk_version</code></td><td>String</td><td><em>Optional</em>. The Android specific SDK version of the software running on this hardware device (e.g. &quot;23&quot;)</td></tr>
 <tr><td><code>telemetry_sdk_build</code></td><td>String</td><td>The version of the Glean SDK</td></tr>
-<tr><td><code>locale</code></td><td>String</td><td>The locale of the application during initialization (e.g. &quot;es-ES&quot;). If the locale can't be determined on the system, the value is &quot;und&quot;, to indicate &quot;undetermined&quot;.</td></tr>
+<tr><td><code>locale</code></td><td>String</td><td><em>Optional</em>. The locale of the application during initialization (e.g. &quot;es-ES&quot;). If the locale can't be determined on the system, the value is &quot;und&quot;, to indicate &quot;undetermined&quot;.</td></tr>
 </tbody></table>
 <p>All the metrics surviving application restarts (e.g. <code>client_id</code>, ...) are removed once the application using the Glean SDK is uninstalled.</p>
 <h3><a class="header" href="#the-experiments-object" id="the-experiments-object">The <code>experiments</code> object</a></h3>
