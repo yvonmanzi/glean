@@ -188,7 +188,7 @@ Optional fields are marked accordingly.</p>
 <tr><td><code>experiments</code></td><td>Object</td><td><em>Optional</em>. A dictionary of <a href="#the-experiments-object">active experiments</a></td></tr>
 <tr><td><code>start_time</code></td><td>Datetime</td><td>The time of the start of collection of the data in the ping, in local time and with minute precision, including timezone information.</td></tr>
 <tr><td><code>end_time</code></td><td>Datetime</td><td>The time of the end of collection of the data in the ping, in local time and with minute precision, including timezone information. This is also the time this ping was generated and is likely well before ping transmission time.</td></tr>
-<tr><td><code>reason</code></td><td>String</td><td>The optional reason the ping was submitted. The specific set of values and their meanings are defined for each metric type in the <code>reasons</code> field in the <code>pings.yaml</code> file.</td></tr>
+<tr><td><code>reason</code></td><td>String</td><td><em>Optional</em>. The reason the ping was submitted. The specific set of values and their meanings are defined for each metric type in the <code>reasons</code> field in the <code>pings.yaml</code> file.</td></tr>
 </tbody></table>
 <p>All the metrics surviving application restarts (e.g. <code>seq</code>, ...) are removed once the application using the Glean SDK is uninstalled.</p>
 <h3><a class="header" href="#the-client_info-section" id="the-client_info-section">The <code>client_info</code> section</a></h3>
