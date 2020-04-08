@@ -6327,7 +6327,9 @@ All the default pings have their scheduling and submission handled by the SDK.</
 <h2><a class="header" href="#this-week-in-glean-twig" id="this-week-in-glean-twig">This Week in Glean (TWiG)</a></h2>
 <p><a href="appendix/twig.html">This Week in Glean</a> is a series of blog posts that the Glean Team at Mozilla is using to try to communicate better about our work.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/appendix/glossary.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
-<p><a href="https://github.com/mozilla/glean/compare/v26.0.0...master">Full changelog</a></p>
+<p><a href="https://github.com/mozilla/glean/compare/v27.0.0...master">Full changelog</a></p>
+<h1><a class="header" href="#v2700-2020-04-08" id="v2700-2020-04-08">v27.0.0 (2020-04-08)</a></h1>
+<p><a href="https://github.com/mozilla/glean/compare/v26.0.0...v27.0.0">Full changelog</a></p>
 <ul>
 <li>General:
 <ul>
@@ -6339,6 +6341,13 @@ All the default pings have their scheduling and submission handled by the SDK.</
 <ul>
 <li>BUGFIX: A bug where the metrics ping is sent immediately at startup on the last day of the month has been fixed.</li>
 <li>Glean for iOS is now being built with Xcode 11.4.0</li>
+<li>The <code>measure</code> convenience function on timing distributions and time spans will now cancel the timing if the measured function throws, then rethrow the exception (<a href="https://github.com/mozilla/glean/pull/808">#808</a>)</li>
+<li>Broken doc generation has been fixed (<a href="https://github.com/mozilla/glean/pull/805">#805</a>).</li>
+</ul>
+</li>
+<li>Kotlin
+<ul>
+<li>The <code>measure</code> convenience function on timing distributions and time spans will now cancel the timing if the measured function throws, then rethrow the exception (<a href="https://github.com/mozilla/glean/pull/808">#808</a>)</li>
 </ul>
 </li>
 <li>Python:
