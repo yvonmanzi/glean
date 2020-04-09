@@ -49,6 +49,7 @@ from ._dispatcher import Dispatcher
 from . import _ffi
 from .net import PingUploadWorker
 from .net import DeletionPingUploadWorker
+from ._process_dispatcher import ProcessDispatcher
 from . import _util
 
 
@@ -59,6 +60,15 @@ if TYPE_CHECKING:
 
 
 log = logging.getLogger(__name__)
+
+
+def _rmtree(path) -&gt; bool:
+    &#34;&#34;&#34;
+    A small wrapper around shutil.rmtree to make it runnable on the
+    ProcessDispatcher.
+    &#34;&#34;&#34;
+    shutil.rmtree(path)
+    return True
 
 
 class Glean:
@@ -196,17 +206,29 @@ class Glean:
         return cls._configuration
 
     @classmethod
-    def reset(cls):
+    def _reset(cls):
         &#34;&#34;&#34;
         Resets the Glean singleton.
         &#34;&#34;&#34;
         # TODO: 1594184 Send the metrics ping
+
+        # WARNING: Do not run any tasks on the Dispatcher from here since this
+        # is called atexit, which also waits for the Dispatcher queue to
+        # complete.
+
         Dispatcher.reset()
         if cls._initialized:
             _ffi.lib.glean_destroy_glean()
         cls._initialized = False
         if cls._destroy_data_dir and cls._data_dir.exists():
-            shutil.rmtree(str(cls._data_dir))
+            # This needs to be run in the same one-at-a-time process as the
+            # PingUploadWorker to avoid a race condition. This will block the
+            # main thread waiting for all pending uploads to complete, but this
+            # only happens during testing when the data directory is a
+            # temporary directory, so there is no concern about delaying
+            # application shutdown here.
+            p = ProcessDispatcher.dispatch(_rmtree, (str(cls._data_dir),))
+            p.join()
 
     @classmethod
     def is_initialized(cls) -&gt; bool:
@@ -463,7 +485,7 @@ class Glean:
 __all__ = [&#34;Glean&#34;]
 
 
-atexit.register(Glean.reset)</code></pre>
+atexit.register(Glean._reset)</code></pre>
 </details>
 </section>
 <section>
@@ -628,17 +650,29 @@ initialized from the application.</p>
         return cls._configuration
 
     @classmethod
-    def reset(cls):
+    def _reset(cls):
         &#34;&#34;&#34;
         Resets the Glean singleton.
         &#34;&#34;&#34;
         # TODO: 1594184 Send the metrics ping
+
+        # WARNING: Do not run any tasks on the Dispatcher from here since this
+        # is called atexit, which also waits for the Dispatcher queue to
+        # complete.
+
         Dispatcher.reset()
         if cls._initialized:
             _ffi.lib.glean_destroy_glean()
         cls._initialized = False
         if cls._destroy_data_dir and cls._data_dir.exists():
-            shutil.rmtree(str(cls._data_dir))
+            # This needs to be run in the same one-at-a-time process as the
+            # PingUploadWorker to avoid a race condition. This will block the
+            # main thread waiting for all pending uploads to complete, but this
+            # only happens during testing when the data directory is a
+            # temporary directory, so there is no concern about delaying
+            # application shutdown here.
+            p = ProcessDispatcher.dispatch(_rmtree, (str(cls._data_dir),))
+            p.join()
 
     @classmethod
     def is_initialized(cls) -&gt; bool:
@@ -1098,29 +1132,6 @@ def register_ping_type(cls, ping: &#34;PingType&#34;):
     cls._ping_type_queue.add(ping)</code></pre>
 </details>
 </dd>
-<dt id="glean.glean.Glean.reset"><code class="name flex">
-<span>def <span class="ident">reset</span></span>(<span>)</span>
-</code></dt>
-<dd>
-<section class="desc"><p>Resets the Glean singleton.</p></section>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@classmethod
-def reset(cls):
-    &#34;&#34;&#34;
-    Resets the Glean singleton.
-    &#34;&#34;&#34;
-    # TODO: 1594184 Send the metrics ping
-    Dispatcher.reset()
-    if cls._initialized:
-        _ffi.lib.glean_destroy_glean()
-    cls._initialized = False
-    if cls._destroy_data_dir and cls._data_dir.exists():
-        shutil.rmtree(str(cls._data_dir))</code></pre>
-</details>
-</dd>
 <dt id="glean.glean.Glean.set_experiment_active"><code class="name flex">
 <span>def <span class="ident">set_experiment_active</span></span>(<span>experiment_id, branch, extra=None)</span>
 </code></dt>
@@ -1419,7 +1430,6 @@ def test_is_experiment_active(cls, experiment_id: str) -&gt; bool:
 <li><code><a title="glean.glean.Glean.initialize" href="#glean.glean.Glean.initialize">initialize</a></code></li>
 <li><code><a title="glean.glean.Glean.is_initialized" href="#glean.glean.Glean.is_initialized">is_initialized</a></code></li>
 <li><code><a title="glean.glean.Glean.register_ping_type" href="#glean.glean.Glean.register_ping_type">register_ping_type</a></code></li>
-<li><code><a title="glean.glean.Glean.reset" href="#glean.glean.Glean.reset">reset</a></code></li>
 <li><code><a title="glean.glean.Glean.set_experiment_active" href="#glean.glean.Glean.set_experiment_active">set_experiment_active</a></code></li>
 <li><code><a title="glean.glean.Glean.set_experiment_inactive" href="#glean.glean.Glean.set_experiment_inactive">set_experiment_inactive</a></code></li>
 <li><code><a title="glean.glean.Glean.set_upload_enabled" href="#glean.glean.Glean.set_upload_enabled">set_upload_enabled</a></code></li>
