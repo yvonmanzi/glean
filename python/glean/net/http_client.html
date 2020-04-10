@@ -39,6 +39,7 @@ module.
 
 import http.client
 import logging
+import socket
 from typing import List, Tuple
 import urllib.parse
 
@@ -79,10 +80,20 @@ class HttpClientUploader(base_uploader.BaseUploader):
         else:
             raise ValueError(&#34;Unknown URL scheme {}&#34;.format(parsed_url.scheme))
 
-        conn.request(
-            &#34;POST&#34;, parsed_url.path, body=data.encode(&#34;utf-8&#34;), headers=dict(headers),
-        )
-        response = conn.getresponse()
+        try:
+            conn.request(
+                &#34;POST&#34;,
+                parsed_url.path,
+                body=data.encode(&#34;utf-8&#34;),
+                headers=dict(headers),
+            )
+            response = conn.getresponse()
+        except http.client.HTTPException as e:
+            log.error(&#34;http.client.HTTPException: {}&#34;.format(e))
+            return False
+        except socket.gaierror as e:
+            log.error(&#34;socket.gaierror: {}&#34;.format(e))
+            return False
 
         log.debug(&#34;Ping upload: {}&#34;.format(response.status))
 
@@ -172,10 +183,20 @@ to the user-provided delegate.</p></section>
         else:
             raise ValueError(&#34;Unknown URL scheme {}&#34;.format(parsed_url.scheme))
 
-        conn.request(
-            &#34;POST&#34;, parsed_url.path, body=data.encode(&#34;utf-8&#34;), headers=dict(headers),
-        )
-        response = conn.getresponse()
+        try:
+            conn.request(
+                &#34;POST&#34;,
+                parsed_url.path,
+                body=data.encode(&#34;utf-8&#34;),
+                headers=dict(headers),
+            )
+            response = conn.getresponse()
+        except http.client.HTTPException as e:
+            log.error(&#34;http.client.HTTPException: {}&#34;.format(e))
+            return False
+        except socket.gaierror as e:
+            log.error(&#34;socket.gaierror: {}&#34;.format(e))
+            return False
 
         log.debug(&#34;Ping upload: {}&#34;.format(response.status))
 
@@ -262,10 +283,20 @@ def upload(cls, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
     else:
         raise ValueError(&#34;Unknown URL scheme {}&#34;.format(parsed_url.scheme))
 
-    conn.request(
-        &#34;POST&#34;, parsed_url.path, body=data.encode(&#34;utf-8&#34;), headers=dict(headers),
-    )
-    response = conn.getresponse()
+    try:
+        conn.request(
+            &#34;POST&#34;,
+            parsed_url.path,
+            body=data.encode(&#34;utf-8&#34;),
+            headers=dict(headers),
+        )
+        response = conn.getresponse()
+    except http.client.HTTPException as e:
+        log.error(&#34;http.client.HTTPException: {}&#34;.format(e))
+        return False
+    except socket.gaierror as e:
+        log.error(&#34;socket.gaierror: {}&#34;.format(e))
+        return False
 
     log.debug(&#34;Ping upload: {}&#34;.format(response.status))
 
