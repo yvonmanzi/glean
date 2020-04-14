@@ -161,7 +161,7 @@
 <p>Every Glean ping is in JSON format and contains one or more of the <a href="#ping-sections">common sections</a> with shared information data.</p>
 <p>If data collection is enabled, the Glean SDK provides a set of built-in pings that are assembled out of the box without any developer intervention.  The following is a list of these built-in pings:</p>
 <ul>
-<li><a href="baseline.html"><code>baseline</code> ping</a>: A small ping sent every time the application goes to background.</li>
+<li><a href="baseline.html"><code>baseline</code> ping</a>: A small ping sent every time the application goes to foreground and background. Going to foreground also includes when the application starts.</li>
 <li><a href="metrics.html"><code>metrics</code> ping</a>: The default ping for metrics. Sent approximately daily.</li>
 <li><a href="events.html"><code>events</code> ping</a>: The default ping for events. Sent every time the application goes to background or a certain number of events is reached.</li>
 <li><a href="deletion_request.html"><code>deletion-request</code> ping</a>: Sent when the user disables telemetry in order to request a deletion of their data.</li>
@@ -243,13 +243,16 @@ A typical submission URL looks like</p>
 <tr><td><code>X-Client-Type</code></td><td><code>Glean</code></td><td>Custom header to support handling of Glean pings in the legacy pipeline</td></tr>
 <tr><td><code>X-Client-Version</code></td><td>e.g. <code>0.40.0</code></td><td>The Glean SDK version, sent as a custom header to support handling of Glean pings in the legacy pipeline</td></tr>
 </tbody></table>
-<h2><a class="header" href="#defining-background-state" id="defining-background-state">Defining background state</a></h2>
-<p>These docs refer to application 'background' state in several places.</p>
+<h2><a class="header" href="#defining-foreground-and-background-state" id="defining-foreground-and-background-state">Defining foreground and background state</a></h2>
+<p>These docs refer to application 'foreground' and 'background' state in several places.</p>
 <div class="tabs">
 <div class="tabbar"></div>
 <div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
-<p>For Android, this specifically means when the activity is no longer visible to the user, it has entered the
+<h4><a class="header" href="#foreground" id="foreground">Foreground</a></h4>
+<p>For Android, this specifically means the activity becomes visible to the user, it has entered the Started state, and the system invokes the <a href="https://developer.android.com/reference/android/app/Activity.html#onStart()"><code>onStart()</code></a> callback.</p>
+<h3><a class="header" href="#background" id="background">Background</a></h3>
+<p>This specifically means when the activity is no longer visible to the user, it has entered the
 Stopped state, and the system invokes the <a href="https://developer.android.com/reference/android/app/Activity.html#onStop()"><code>onStop()</code></a> callback.</p>
 <p>This may occur, if the user uses <code>Overview</code> button to change to another app, the user presses the <code>Back</code> button and
 navigates to a previous application or the home screen, or if the user presses the <code>Home</code> button to return to the
@@ -258,6 +261,10 @@ other means.</p>
 <p>The system may also call <code>onStop()</code> when the activity has finished running, and is about to be terminated.</p>
 </div>
 <div data-lang="Swift" class="tab">
+<h3><a class="header" href="#foreground-1" id="foreground-1">Foreground</a></h3>
+<p>For iOS, Glean attaches to the <a href="https://developer.apple.com/documentation/uikit/uiapplication/1622944-willenterforegroundnotification"><code>willEnterForegroundNotification</code></a>.
+This notification is posted by the OS shortly before an app leaves the background state on its way to becoming the active app.</p>
+<h3><a class="header" href="#background-1" id="background-1">Background</a></h3>
 <p>For iOS, this specifically means when the app is no longer visible to the user, or when the <code>UIApplicationDelegate</code>
 receives the <a href="https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622997-applicationdidenterbackground"><code>applicationDidEnterBackground</code></a> event.</p>
 <p>This may occur if the user opens the task switcher to change to another app, or if the user presses the <code>Home</code> button

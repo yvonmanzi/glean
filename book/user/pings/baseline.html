@@ -164,8 +164,9 @@
 <p><strong>Note:</strong> As the <code>baseline</code> ping was specifically designed for mobile operating systems, it is not sent when using the Glean Python bindings.</p>
 </blockquote>
 <h2><a class="header" href="#scheduling" id="scheduling">Scheduling</a></h2>
+<p>The <code>baseline</code> ping is automatically submitted with a <code>reason: foreground</code> when the application is moved to the <a href="index.html#defining-background-state">foreground</a>.  These baseline pings do not contain <code>duration</code>.</p>
 <p>The <code>baseline</code> ping is automatically submitted with a <code>reason: background</code> when the application is moved to the <a href="index.html#defining-background-state">background</a>.
-The <code>baseline</code> ping will be submitted at startup with a <code>reason: dirty_startup</code>, if the previous session was not cleanly closed. This only happens from the second start.</p>
+Occasionally, the <code>baseline</code> ping may fail to send when going to background (e.g. the process is killed quickly).  In that case, it will be submitted at startup with a <code>reason: dirty_startup</code>, if the previous session was not cleanly closed. This only happens from the second start onward.</p>
 <p>See also the <a href="ping-schedules-and-timings.html">ping schedules and timing overview</a>.</p>
 <h2><a class="header" href="#contents" id="contents">Contents</a></h2>
 <p>The baseline ping includes the following fields:</p>
@@ -192,7 +193,8 @@ The <code>baseline</code> ping will be submitted at startup with a <code>reason:
     },
     &quot;seq&quot;: 0,
     &quot;start_time&quot;: &quot;2019-03-29T09:50-04:00&quot;,
-    &quot;end_time&quot;: &quot;2019-03-29T09:53-04:00&quot;
+    &quot;end_time&quot;: &quot;2019-03-29T09:53-04:00&quot;,
+    &quot;reason&quot;: &quot;foreground&quot;
   },
   &quot;client_info&quot;: {
     &quot;telemetry_sdk_build&quot;: &quot;0.49.0&quot;,
