@@ -564,8 +564,8 @@ def upload(cls, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
         assert Dispatcher._testing_mode is True
 
         p = cls._process()
-        p.join()
-        return p.exitcode == 0</code></pre>
+        p.wait()
+        return p.returncode == 0</code></pre>
 </details>
 <h3>Subclasses</h3>
 <ul class="hlist">

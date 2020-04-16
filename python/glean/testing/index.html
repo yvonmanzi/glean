@@ -80,6 +80,23 @@ def reset_glean(
     )
 
 
+class _RecordingUploader:
+    &#34;&#34;&#34;
+    A ping uploader that saves the results to disk for later inspection.
+
+    This is used for testing only, but it needs to be importable from the Glean
+    package since it runs in the ping upload worker subprocess.
+    &#34;&#34;&#34;
+
+    def __init__(self, file_path):
+        self.file_path = file_path
+
+    def do_upload(self, url_path, serialized_ping, configuration):
+        with self.file_path.open(&#34;w&#34;) as fd:
+            fd.write(str(url_path) + &#34;\n&#34;)
+            fd.write(serialized_ping + &#34;\n&#34;)
+
+
 __all__ = [&#34;reset_glean&#34;, &#34;ErrorType&#34;]</code></pre>
 </details>
 </section>

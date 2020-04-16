@@ -87,8 +87,8 @@ class PingUploadWorker:
         assert Dispatcher._testing_mode is True
 
         p = cls._process()
-        p.join()
-        return p.exitcode == 0
+        p.wait()
+        return p.returncode == 0
 
 
 # Ping files are UUIDs.  This matches UUIDs for filtering purposes.
@@ -230,8 +230,8 @@ __all__ = [&#34;PingUploadWorker&#34;]</code></pre>
         assert Dispatcher._testing_mode is True
 
         p = cls._process()
-        p.join()
-        return p.exitcode == 0</code></pre>
+        p.wait()
+        return p.returncode == 0</code></pre>
 </details>
 <h3>Subclasses</h3>
 <ul class="hlist">

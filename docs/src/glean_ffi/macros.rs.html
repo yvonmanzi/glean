@@ -114,8 +114,6 @@
 <span id="114">114</span>
 <span id="115">115</span>
 <span id="116">116</span>
-<span id="117">117</span>
-<span id="118">118</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">define_infallible_handle_map_deleter</span> {
@@ -162,9 +160,7 @@
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">op</span>:<span class="ident">ident</span> <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">op_fn</span>:<span class="ident">ident</span>($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">op_argname</span>:<span class="ident">ident</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">op_argtyp</span>:<span class="ident">ty</span>),<span class="op">*</span> $(,)<span class="kw-2">*</span>)
         ),<span class="op">*</span> $(,)<span class="op">*</span>
     }) <span class="op">=</span><span class="op">&gt;</span> {
-        <span class="ident">lazy_static</span>::<span class="macro">lazy_static</span><span class="macro">!</span> {
-            <span class="kw">pub</span> <span class="kw">static</span> <span class="kw-2">ref</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">metric_map</span>: <span class="ident">ffi_support</span>::<span class="ident">ConcurrentHandleMap</span><span class="op">&lt;</span><span class="ident">glean_core</span>::<span class="ident">metrics</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">metric_type</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">ffi_support</span>::<span class="ident">ConcurrentHandleMap</span>::<span class="ident">new</span>();
-        }
+        <span class="kw">pub</span> <span class="kw">static</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">metric_map</span>: <span class="ident">once_cell</span>::<span class="ident">sync</span>::<span class="ident">Lazy</span><span class="op">&lt;</span><span class="ident">ffi_support</span>::<span class="ident">ConcurrentHandleMap</span><span class="op">&lt;</span><span class="ident">glean_core</span>::<span class="ident">metrics</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">metric_type</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">once_cell</span>::<span class="ident">sync</span>::<span class="ident">Lazy</span>::<span class="ident">new</span>(<span class="ident">ffi_support</span>::<span class="ident">ConcurrentHandleMap</span>::<span class="ident">new</span>);
         <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">define_infallible_handle_map_deleter</span><span class="op">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">metric_map</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">destroy_fn</span>);
 
         $(

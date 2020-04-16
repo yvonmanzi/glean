@@ -6366,6 +6366,7 @@ All the default pings have their scheduling and submission handled by the SDK.</
 <ul>
 <li>BUGFIX: The ping uploader will no longer display a trace back when the upload fails due to a failed DNS lookup, network outage, or related issues that prevent communication with the telemetry endpoint.</li>
 <li>The dependency on <code>inflection</code> has been removed.</li>
+<li>The Python bindings now use <code>subprocess</code> rather than <code>multiprocessing</code> to perform ping uploading in a separate process. This should be more compatible on all of the platforms Glean supports.</li>
 </ul>
 </li>
 </ul>
@@ -6831,6 +6832,7 @@ They could be release notes, documentation, hopes, dreams, or whatever: so long 
 <li>2020-03-09: <a href="https://blog.mozilla.org/data/2020/03/09/this-week-in-glean-metric-lifetimes/">Metric lifetimes</a></li>
 <li>2020-03-13: <a href="https://blog.mozilla.org/data/2020/03/13/this-week-in-glean-adding-support-for-glam-on-glean/">Adding support for GLAM on Glean</a></li>
 <li>2020-03-25: <a href="https://blog.mozilla.org/data/2020/03/25/this-week-in-glean-comparing-apples-to-oranges/">Comparing Apples to Oranges</a></li>
+<li>2020-04-15 <a href="https://chuttenblog.wordpress.com/2020/04/15/this-week-in-glean-how-much-does-that-data-cost/">How Much Does That Data Cost</a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/appendix/twig.md">Edit this file on GitHub.</a></footer>
                     </main>

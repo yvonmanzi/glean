@@ -46,14 +46,13 @@
 <span id="46">46</span>
 <span id="47">47</span>
 <span id="48">48</span>
-<span id="49">49</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
 <span class="comment">// file, You can obtain one at https://mozilla.org/MPL/2.0/.</span>
 
 <span class="kw">use</span> <span class="ident">ffi_support</span>::{<span class="ident">ConcurrentHandleMap</span>, <span class="ident">FfiStr</span>};
-<span class="kw">use</span> <span class="ident">lazy_static</span>::<span class="ident">lazy_static</span>;
+<span class="kw">use</span> <span class="ident">once_cell</span>::<span class="ident">sync</span>::<span class="ident">Lazy</span>;
 
 <span class="kw">use</span> <span class="ident">glean_core</span>::<span class="ident">metrics</span>::<span class="ident">PingType</span>;
 
@@ -61,9 +60,8 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">handlemap_ext</span>::<span class="ident">HandleMapExtension</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">from_raw_string_array</span>, <span class="ident">with_glean_value</span>, <span class="ident">with_glean_value_mut</span>, <span class="ident">RawStringArray</span>};
 
-<span class="macro">lazy_static</span><span class="macro">!</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">static</span> <span class="kw-2">ref</span> <span class="ident">PING_TYPES</span>: <span class="ident">ConcurrentHandleMap</span><span class="op">&lt;</span><span class="ident">PingType</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">ConcurrentHandleMap</span>::<span class="ident">new</span>();
-}
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">static</span> <span class="ident">PING_TYPES</span>: <span class="ident">Lazy</span><span class="op">&lt;</span><span class="ident">ConcurrentHandleMap</span><span class="op">&lt;</span><span class="ident">PingType</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span>
+    <span class="ident">Lazy</span>::<span class="ident">new</span>(<span class="ident">ConcurrentHandleMap</span>::<span class="ident">new</span>);
 <span class="kw">crate</span>::<span class="macro">define_infallible_handle_map_deleter</span><span class="macro">!</span>(<span class="ident">PING_TYPES</span>, <span class="ident">glean_destroy_ping_type</span>);
 
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
