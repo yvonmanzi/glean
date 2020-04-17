@@ -3286,14 +3286,14 @@ See <a href="user/pings/../experiments-api.html">Using the Experiments API</a> o
 <h2><a class="header" href="#ping-submission" id="ping-submission">Ping submission</a></h2>
 <p>The pings that the Glean SDK generates are submitted to the Mozilla servers at specific paths, in order to provide additional metadata without the need to unpack the ping payload.
 A typical submission URL looks like</p>
-<p><code>&quot;&lt;server-address&gt;/submit/&lt;application-id&gt;/&lt;doc-type&gt;/&lt;glean-schema-version&gt;/&lt;ping-uuid&gt;&quot;</code></p>
+<p><code>&quot;&lt;server-address&gt;/submit/&lt;application-id&gt;/&lt;doc-type&gt;/&lt;glean-schema-version&gt;/&lt;document-id&gt;&quot;</code></p>
 <p>where:</p>
 <ul>
 <li><code>&lt;server-address&gt;</code>: the address of the server that receives the pings;</li>
 <li><code>&lt;application-id&gt;</code>: a unique application id, automatically detected by the Glean SDK; this is the value returned by <a href="http://developer.android.com/reference/android/content/Context.html#getPackageName()"><code>Context.getPackageName()</code></a>;</li>
 <li><code>&lt;doc-type&gt;</code>: the name of the ping; this can be one of the pings available out of the box with the Glean SDK, or a custom ping;</li>
 <li><code>&lt;glean-schema-version&gt;</code>: the version of the Glean ping schema;</li>
-<li><code>&lt;ping-uuid&gt;</code>: a unique identifier for this ping.</li>
+<li><code>&lt;document-id&gt;</code>: a unique identifier for this ping.</li>
 </ul>
 <h3><a class="header" href="#submitted-headers" id="submitted-headers">Submitted headers</a></h3>
 <p>A pre-defined set of headers is additionally sent along with the submitted ping:</p>
