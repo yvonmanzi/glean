@@ -260,7 +260,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">ErrorType</span> {
-    <span class="doccomment">/// The error type&#39;s metric name</span>
+    <span class="doccomment">/// The error type&#39;s metric id</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="ident">ErrorType</span>::<span class="ident">InvalidValue</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;invalid_value&quot;</span>,
@@ -322,7 +322,7 @@
 <span class="doccomment">/// * meta - The metric&#39;s meta data</span>
 <span class="doccomment">/// * error -  The error type to record</span>
 <span class="doccomment">/// * message - The message to log. This message is not sent with the ping.</span>
-<span class="doccomment">///             It does not need to include the metric name, as that is automatically prepended to the message.</span>
+<span class="doccomment">///             It does not need to include the metric id, as that is automatically prepended to the message.</span>
 <span class="doccomment">///  * num_errors - The number of errors of the same type to report.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">record_error</span><span class="op">&lt;</span><span class="ident">O</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>(
     <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>,

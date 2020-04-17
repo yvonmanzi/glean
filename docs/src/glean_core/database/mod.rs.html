@@ -1163,9 +1163,9 @@
             <span class="kw">let</span> <span class="ident">store</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_store</span>(<span class="ident">Lifetime</span>::<span class="ident">Ping</span>);
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="macro">unwrap_or</span><span class="macro">!</span>(<span class="ident">store</span>.<span class="ident">iter_start</span>(<span class="kw-2">&amp;</span><span class="ident">reader</span>), <span class="kw">return</span>);
 
-            <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>((<span class="ident">metric_name</span>, <span class="ident">value</span>))) <span class="op">=</span> <span class="ident">iter</span>.<span class="ident">next</span>() {
-                <span class="kw">let</span> <span class="ident">metric_name</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">metric_name</span>) {
-                    <span class="prelude-val">Ok</span>(<span class="ident">metric_name</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">metric_name</span>.<span class="ident">to_string</span>(),
+            <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>((<span class="ident">metric_id</span>, <span class="ident">value</span>))) <span class="op">=</span> <span class="ident">iter</span>.<span class="ident">next</span>() {
+                <span class="kw">let</span> <span class="ident">metric_id</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">metric_id</span>) {
+                    <span class="prelude-val">Ok</span>(<span class="ident">metric_id</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">metric_id</span>.<span class="ident">to_string</span>(),
                     <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">continue</span>,
                 };
                 <span class="kw">let</span> <span class="ident">metric</span>: <span class="ident">Metric</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">value</span>.<span class="ident">expect</span>(<span class="string">&quot;Value missing in iteration&quot;</span>) {
@@ -1173,7 +1173,7 @@
                     <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">continue</span>,
                 };
 
-                <span class="ident">data</span>.<span class="ident">insert</span>(<span class="ident">metric_name</span>, <span class="ident">metric</span>);
+                <span class="ident">data</span>.<span class="ident">insert</span>(<span class="ident">metric_id</span>, <span class="ident">metric</span>);
             }
         }
     }
@@ -1195,7 +1195,7 @@
     <span class="doccomment">///   a given labeled metric. If not provided, the entire storage for the given lifetime</span>
     <span class="doccomment">///   will be iterated over.</span>
     <span class="doccomment">/// * `transaction_fn`: Called for each entry being iterated over. It is</span>
-    <span class="doccomment">///   passed two arguments: `(metric_name: &amp;[u8], metric: &amp;Metric)`.</span>
+    <span class="doccomment">///   passed two arguments: `(metric_id: &amp;[u8], metric: &amp;Metric)`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ## Panics</span>
     <span class="doccomment">///</span>
@@ -1235,17 +1235,17 @@
             <span class="kw">return</span>
         );
 
-        <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>((<span class="ident">metric_name</span>, <span class="ident">value</span>))) <span class="op">=</span> <span class="ident">iter</span>.<span class="ident">next</span>() {
-            <span class="kw">if</span> <span class="op">!</span><span class="ident">metric_name</span>.<span class="ident">starts_with</span>(<span class="ident">iter_start</span>.<span class="ident">as_bytes</span>()) {
+        <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>((<span class="ident">metric_id</span>, <span class="ident">value</span>))) <span class="op">=</span> <span class="ident">iter</span>.<span class="ident">next</span>() {
+            <span class="kw">if</span> <span class="op">!</span><span class="ident">metric_id</span>.<span class="ident">starts_with</span>(<span class="ident">iter_start</span>.<span class="ident">as_bytes</span>()) {
                 <span class="kw">break</span>;
             }
 
-            <span class="kw">let</span> <span class="ident">metric_name</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">metric_name</span>[<span class="ident">len</span>..];
+            <span class="kw">let</span> <span class="ident">metric_id</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">metric_id</span>[<span class="ident">len</span>..];
             <span class="kw">let</span> <span class="ident">metric</span>: <span class="ident">Metric</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">value</span>.<span class="ident">expect</span>(<span class="string">&quot;Value missing in iteration&quot;</span>) {
                 <span class="ident">rkv</span>::<span class="ident">Value</span>::<span class="ident">Blob</span>(<span class="ident">blob</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unwrap_or</span><span class="macro">!</span>(<span class="ident">bincode</span>::<span class="ident">deserialize</span>(<span class="ident">blob</span>), <span class="kw">continue</span>),
                 <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">continue</span>,
             };
-            <span class="ident">transaction_fn</span>(<span class="ident">metric_name</span>, <span class="kw-2">&amp;</span><span class="ident">metric</span>);
+            <span class="ident">transaction_fn</span>(<span class="ident">metric_id</span>, <span class="kw-2">&amp;</span><span class="ident">metric</span>);
         }
     }
 
@@ -1467,12 +1467,12 @@
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">metrics</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
             {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">store</span>.<span class="ident">iter_from</span>(<span class="kw-2">&amp;</span><span class="ident">writer</span>, <span class="kw-2">&amp;</span><span class="ident">storage_name</span>)<span class="question-mark">?</span>;
-                <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>((<span class="ident">metric_name</span>, <span class="kw">_</span>))) <span class="op">=</span> <span class="ident">iter</span>.<span class="ident">next</span>() {
-                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">metric_name</span>) <span class="op">=</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">metric_name</span>) {
-                        <span class="kw">if</span> <span class="op">!</span><span class="ident">metric_name</span>.<span class="ident">starts_with</span>(<span class="kw-2">&amp;</span><span class="ident">storage_name</span>) {
+                <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>((<span class="ident">metric_id</span>, <span class="kw">_</span>))) <span class="op">=</span> <span class="ident">iter</span>.<span class="ident">next</span>() {
+                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">metric_id</span>) <span class="op">=</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">metric_id</span>) {
+                        <span class="kw">if</span> <span class="op">!</span><span class="ident">metric_id</span>.<span class="ident">starts_with</span>(<span class="kw-2">&amp;</span><span class="ident">storage_name</span>) {
                             <span class="kw">break</span>;
                         }
-                        <span class="ident">metrics</span>.<span class="ident">push</span>(<span class="ident">metric_name</span>.<span class="ident">to_owned</span>());
+                        <span class="ident">metrics</span>.<span class="ident">push</span>(<span class="ident">metric_id</span>.<span class="ident">to_owned</span>());
                     }
                 }
             }
@@ -1496,7 +1496,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `lifetime` - the lifetime of the storage in which to look for the metric.</span>
     <span class="doccomment">/// * `storage_name` - the name of the storage to store/fetch data from.</span>
-    <span class="doccomment">/// * `metric_key` - the metric key/name.</span>
+    <span class="doccomment">/// * `metric_id` - the metric category + name.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ## Return value</span>
     <span class="doccomment">///</span>
@@ -1512,9 +1512,9 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">lifetime</span>: <span class="ident">Lifetime</span>,
         <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">metric_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">metric_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">final_key</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">get_storage_key</span>(<span class="ident">storage_name</span>, <span class="prelude-val">Some</span>(<span class="ident">metric_name</span>));
+        <span class="kw">let</span> <span class="ident">final_key</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">get_storage_key</span>(<span class="ident">storage_name</span>, <span class="prelude-val">Some</span>(<span class="ident">metric_id</span>));
 
         <span class="comment">// Lifetime::Ping data is not persisted to disk if</span>
         <span class="comment">// Glean has `delay_ping_lifetime_io` set to true</span>
@@ -1653,9 +1653,9 @@
 
         <span class="comment">// Verify that the data is correctly recorded.</span>
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">found_metrics</span> <span class="op">=</span> <span class="number">0</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">snapshotter</span> <span class="op">=</span> <span class="op">|</span><span class="ident">metric_name</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">metric</span>: <span class="kw-2">&amp;</span><span class="ident">Metric</span><span class="op">|</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">snapshotter</span> <span class="op">=</span> <span class="op">|</span><span class="ident">metric_id</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">metric</span>: <span class="kw-2">&amp;</span><span class="ident">Metric</span><span class="op">|</span> {
             <span class="ident">found_metrics</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-            <span class="kw">let</span> <span class="ident">metric_id</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_utf8_lossy</span>(<span class="ident">metric_name</span>).<span class="ident">into_owned</span>();
+            <span class="kw">let</span> <span class="ident">metric_id</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_utf8_lossy</span>(<span class="ident">metric_id</span>).<span class="ident">into_owned</span>();
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">test_metric_id</span>, <span class="ident">metric_id</span>);
             <span class="kw">match</span> <span class="ident">metric</span> {
                 <span class="ident">Metric</span>::<span class="ident">String</span>(<span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">test_value</span>, <span class="ident">s</span>),
@@ -1688,9 +1688,9 @@
 
         <span class="comment">// Verify that the data is correctly recorded.</span>
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">found_metrics</span> <span class="op">=</span> <span class="number">0</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">snapshotter</span> <span class="op">=</span> <span class="op">|</span><span class="ident">metric_name</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">metric</span>: <span class="kw-2">&amp;</span><span class="ident">Metric</span><span class="op">|</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">snapshotter</span> <span class="op">=</span> <span class="op">|</span><span class="ident">metric_id</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">metric</span>: <span class="kw-2">&amp;</span><span class="ident">Metric</span><span class="op">|</span> {
             <span class="ident">found_metrics</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-            <span class="kw">let</span> <span class="ident">metric_id</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_utf8_lossy</span>(<span class="ident">metric_name</span>).<span class="ident">into_owned</span>();
+            <span class="kw">let</span> <span class="ident">metric_id</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_utf8_lossy</span>(<span class="ident">metric_id</span>).<span class="ident">into_owned</span>();
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">test_metric_id</span>, <span class="ident">metric_id</span>);
             <span class="kw">match</span> <span class="ident">metric</span> {
                 <span class="ident">Metric</span>::<span class="ident">String</span>(<span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">test_value</span>, <span class="ident">s</span>),
@@ -1726,9 +1726,9 @@
 
         <span class="comment">// Verify that the data is correctly recorded.</span>
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">found_metrics</span> <span class="op">=</span> <span class="number">0</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">snapshotter</span> <span class="op">=</span> <span class="op">|</span><span class="ident">metric_name</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">metric</span>: <span class="kw-2">&amp;</span><span class="ident">Metric</span><span class="op">|</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">snapshotter</span> <span class="op">=</span> <span class="op">|</span><span class="ident">metric_id</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">metric</span>: <span class="kw-2">&amp;</span><span class="ident">Metric</span><span class="op">|</span> {
             <span class="ident">found_metrics</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-            <span class="kw">let</span> <span class="ident">metric_id</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_utf8_lossy</span>(<span class="ident">metric_name</span>).<span class="ident">into_owned</span>();
+            <span class="kw">let</span> <span class="ident">metric_id</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_utf8_lossy</span>(<span class="ident">metric_id</span>).<span class="ident">into_owned</span>();
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">test_metric_id</span>, <span class="ident">metric_id</span>);
             <span class="kw">match</span> <span class="ident">metric</span> {
                 <span class="ident">Metric</span>::<span class="ident">String</span>(<span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">test_value</span>, <span class="ident">s</span>),
@@ -1774,10 +1774,10 @@
         <span class="comment">// Take a snapshot for the data, all the lifetimes.</span>
         {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">snapshot</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap</span>::<span class="ident">new</span>();
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">snapshotter</span> <span class="op">=</span> <span class="op">|</span><span class="ident">metric_name</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">metric</span>: <span class="kw-2">&amp;</span><span class="ident">Metric</span><span class="op">|</span> {
-                <span class="kw">let</span> <span class="ident">metric_name</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_utf8_lossy</span>(<span class="ident">metric_name</span>).<span class="ident">into_owned</span>();
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">snapshotter</span> <span class="op">=</span> <span class="op">|</span><span class="ident">metric_id</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">metric</span>: <span class="kw-2">&amp;</span><span class="ident">Metric</span><span class="op">|</span> {
+                <span class="kw">let</span> <span class="ident">metric_id</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_utf8_lossy</span>(<span class="ident">metric_id</span>).<span class="ident">into_owned</span>();
                 <span class="kw">match</span> <span class="ident">metric</span> {
-                    <span class="ident">Metric</span>::<span class="ident">String</span>(<span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">snapshot</span>.<span class="ident">insert</span>(<span class="ident">metric_name</span>, <span class="ident">s</span>.<span class="ident">to_string</span>()),
+                    <span class="ident">Metric</span>::<span class="ident">String</span>(<span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">snapshot</span>.<span class="ident">insert</span>(<span class="ident">metric_id</span>, <span class="ident">s</span>.<span class="ident">to_string</span>()),
                     <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unexpected data found&quot;</span>),
                 };
             };
@@ -1798,10 +1798,10 @@
         <span class="comment">// Take a snapshot again and check that we&#39;re only clearing the Ping lifetime.</span>
         {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">snapshot</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap</span>::<span class="ident">new</span>();
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">snapshotter</span> <span class="op">=</span> <span class="op">|</span><span class="ident">metric_name</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">metric</span>: <span class="kw-2">&amp;</span><span class="ident">Metric</span><span class="op">|</span> {
-                <span class="kw">let</span> <span class="ident">metric_name</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_utf8_lossy</span>(<span class="ident">metric_name</span>).<span class="ident">into_owned</span>();
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">snapshotter</span> <span class="op">=</span> <span class="op">|</span><span class="ident">metric_id</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">metric</span>: <span class="kw-2">&amp;</span><span class="ident">Metric</span><span class="op">|</span> {
+                <span class="kw">let</span> <span class="ident">metric_id</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_utf8_lossy</span>(<span class="ident">metric_id</span>).<span class="ident">into_owned</span>();
                 <span class="kw">match</span> <span class="ident">metric</span> {
-                    <span class="ident">Metric</span>::<span class="ident">String</span>(<span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">snapshot</span>.<span class="ident">insert</span>(<span class="ident">metric_name</span>, <span class="ident">s</span>.<span class="ident">to_string</span>()),
+                    <span class="ident">Metric</span>::<span class="ident">String</span>(<span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">snapshot</span>.<span class="ident">insert</span>(<span class="ident">metric_id</span>, <span class="ident">s</span>.<span class="ident">to_string</span>()),
                     <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unexpected data found&quot;</span>),
                 };
             };
@@ -1854,9 +1854,9 @@
         <span class="comment">// Verify that &quot;telemetry_test.single_metric_retain&quot; is still around for all lifetimes.</span>
         <span class="kw">for</span> <span class="ident">lifetime</span> <span class="kw">in</span> <span class="ident">lifetimes</span>.<span class="ident">iter</span>() {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">found_metrics</span> <span class="op">=</span> <span class="number">0</span>;
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">snapshotter</span> <span class="op">=</span> <span class="op">|</span><span class="ident">metric_name</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">metric</span>: <span class="kw-2">&amp;</span><span class="ident">Metric</span><span class="op">|</span> {
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">snapshotter</span> <span class="op">=</span> <span class="op">|</span><span class="ident">metric_id</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">metric</span>: <span class="kw-2">&amp;</span><span class="ident">Metric</span><span class="op">|</span> {
                 <span class="ident">found_metrics</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-                <span class="kw">let</span> <span class="ident">metric_id</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_utf8_lossy</span>(<span class="ident">metric_name</span>).<span class="ident">into_owned</span>();
+                <span class="kw">let</span> <span class="ident">metric_id</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_utf8_lossy</span>(<span class="ident">metric_id</span>).<span class="ident">into_owned</span>();
                 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}_retain&quot;</span>, <span class="ident">metric_id_pattern</span>), <span class="ident">metric_id</span>);
                 <span class="kw">match</span> <span class="ident">metric</span> {
                     <span class="ident">Metric</span>::<span class="ident">String</span>(<span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">&quot;retain&quot;</span>, <span class="ident">s</span>),
