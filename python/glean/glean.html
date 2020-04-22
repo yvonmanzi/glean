@@ -471,7 +471,7 @@ class Glean:
             return
 
         if not cls.get_upload_enabled():
-            log.error(&#34;Glean must be enabled before submitting pings.&#34;)
+            log.error(&#34;Glean disabled: not submitting any pings.&#34;)
             return
 
         sent_ping = _ffi.lib.glean_submit_ping_by_name(
@@ -915,7 +915,7 @@ initialized from the application.</p>
             return
 
         if not cls.get_upload_enabled():
-            log.error(&#34;Glean must be enabled before submitting pings.&#34;)
+            log.error(&#34;Glean disabled: not submitting any pings.&#34;)
             return
 
         sent_ping = _ffi.lib.glean_submit_ping_by_name(
