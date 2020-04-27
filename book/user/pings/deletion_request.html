@@ -163,11 +163,25 @@
 <p>This ping contains the client id.</p>
 <p>This ping is intended to communicate to the Data Pipeline that the user wishes to have their reported Telemetry data deleted.
 As such it attempts to send itself at the moment the user opts out of data collection, and continues to try and send itself.</p>
+<blockquote>
+<p><strong>Note:</strong> It is possible to send secondary ids in the deletion request ping.  For instance, if the application is migrating
+from legacy telemetry to Glean, the legacy client ids can be added to the deletion request ping by creating a <code>metrics.yaml</code>
+entry for the id to be added with a <code>send_in_pings</code> value of <code>deletion_request</code>.</p>
+<p>An example <code>metrics.yaml</code> entry might look like this:</p>
+<pre><code>legacy_client_id:
+   type: uuid
+   description:
+     A UUID uniquely identifying the legacy client.
+   send_in_pings:
+     - deletion_request
+   ...
+</code></pre>
+</blockquote>
 <h2><a class="header" href="#scheduling" id="scheduling">Scheduling</a></h2>
 <p>The <code>deletion-request</code> ping is automatically submitted when upload is disabled in Glean.
 If upload fails, it is retried after Glean is initialized.</p>
 <h2><a class="header" href="#contents" id="contents">Contents</a></h2>
-<p>The <code>deletion-request</code> does not contain additional metrics.</p>
+<p>The <code>deletion-request</code> does not contain additional metrics aside from secondary ids that have been added.</p>
 <h2><a class="header" href="#example-deletion-request-ping" id="example-deletion-request-ping">Example <code>deletion-request</code> ping</a></h2>
 <pre><code class="language-json">{
   &quot;ping_info&quot;: {
@@ -187,6 +201,11 @@ If upload fails, it is retried after Glean is initialized.</p>
     &quot;app_build&quot;: &quot;1&quot;,
     &quot;app_display_version&quot;: &quot;1.0&quot;,
     &quot;client_id&quot;: &quot;35dab852-74db-43f4-8aa0-88884211e545&quot;
+  },
+  &quot;metrics&quot;: {
+    &quot;uuid&quot;: {
+      &quot;legacy_client_id&quot;: &quot;5faffa6d-6147-4d22-a93e-c1dbd6e06171&quot;
+    }
   }
 }
 </code></pre>
