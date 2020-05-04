@@ -89,10 +89,16 @@ class HttpClientUploader(base_uploader.BaseUploader):
             )
             response = conn.getresponse()
         except http.client.HTTPException as e:
-            log.error(&#34;http.client.HTTPException: {}&#34;.format(e))
+            log.error(&#34;http.client.HTTPException: &#39;{}&#39; {}&#34;.format(url, e))
             return False
         except socket.gaierror as e:
-            log.error(&#34;socket.gaierror: {}&#34;.format(e))
+            log.error(&#34;socket.gaierror: &#39;{}&#39; {}&#34;.format(url, e))
+            return False
+        except OSError as e:
+            log.error(&#34;OSError: &#39;{}&#39; {}&#34;.format(url, e))
+            return False
+        except Exception as e:
+            log.error(&#34;Unknown Exception: &#39;{}&#39; {}&#34;.format(url, e))
             return False
 
         log.debug(&#34;Ping upload: {}&#34;.format(response.status))
@@ -192,10 +198,16 @@ to the user-provided delegate.</p></section>
             )
             response = conn.getresponse()
         except http.client.HTTPException as e:
-            log.error(&#34;http.client.HTTPException: {}&#34;.format(e))
+            log.error(&#34;http.client.HTTPException: &#39;{}&#39; {}&#34;.format(url, e))
             return False
         except socket.gaierror as e:
-            log.error(&#34;socket.gaierror: {}&#34;.format(e))
+            log.error(&#34;socket.gaierror: &#39;{}&#39; {}&#34;.format(url, e))
+            return False
+        except OSError as e:
+            log.error(&#34;OSError: &#39;{}&#39; {}&#34;.format(url, e))
+            return False
+        except Exception as e:
+            log.error(&#34;Unknown Exception: &#39;{}&#39; {}&#34;.format(url, e))
             return False
 
         log.debug(&#34;Ping upload: {}&#34;.format(response.status))
@@ -292,10 +304,16 @@ def upload(cls, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
         )
         response = conn.getresponse()
     except http.client.HTTPException as e:
-        log.error(&#34;http.client.HTTPException: {}&#34;.format(e))
+        log.error(&#34;http.client.HTTPException: &#39;{}&#39; {}&#34;.format(url, e))
         return False
     except socket.gaierror as e:
-        log.error(&#34;socket.gaierror: {}&#34;.format(e))
+        log.error(&#34;socket.gaierror: &#39;{}&#39; {}&#34;.format(url, e))
+        return False
+    except OSError as e:
+        log.error(&#34;OSError: &#39;{}&#39; {}&#34;.format(url, e))
+        return False
+    except Exception as e:
+        log.error(&#34;Unknown Exception: &#39;{}&#39; {}&#34;.format(url, e))
         return False
 
     log.debug(&#34;Ping upload: {}&#34;.format(response.status))
