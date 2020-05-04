@@ -4796,8 +4796,9 @@ pip install -r requirements_dev.txt
 </code></pre>
 <p>The default location of the virtual environment used by the make file is <code>glean-core/python/.venvX.Y</code>, where <code>X.Y</code> is the version of Python in use. This makes it possible to build and test for multiple versions of Python in the same checkout.</p>
 <blockquote>
-<p><em>Note:</em> If you wish to change the location of the virtual environment that the <code>Makefile</code> uses, pass the <code>GLEAN_PYENV</code> environment variable: <code>make test-python GLEAN_PYENV=mypyenv</code>.</p>
+<p><em>Note:</em> If you wish to change the location of the virtual environment that the <code>Makefile</code> uses, pass the <code>GLEAN_PYENV</code> environment variable: <code>make python-setup GLEAN_PYENV=mypyenv</code>.</p>
 </blockquote>
+<p>By default, the <code>Makefile</code> installs the latest version available of each of Glean's dependencies.  If you wish to install the minimum required versions instead, (useful primarily to ensure that Glean doesn't unintentionally use newer APIs in its dependencies) pass the <code>GLEAN_PYDEPS=min</code> environment variable: <code>make python-setup GLEAN_PYDEPS=min</code>.</p>
 <h2><a class="header" href="#build-the-python-bindings" id="build-the-python-bindings">Build the Python bindings</a></h2>
 <h3><a class="header" href="#manual-method-1" id="manual-method-1">Manual method</a></h3>
 <p>First, rebuild the Rust core if any Rust changes were made:</p>
@@ -6439,9 +6440,21 @@ All the default pings have their scheduling and submission handled by the SDK.</
 </ul>
 <p><a href="https://github.com/mozilla/glean/compare/v28.0.0...master">Full changelog</a></p>
 <ul>
+<li>General:
+<ul>
+<li>The version of glean_parser has been upgraded to v1.20.2:
+<ul>
+<li><strong>Breaking change:</strong> glinter errors found during code generation will now return an error code.</li>
+<li><code>glean_parser</code> now produces a linter warning when <code>user</code> lifetime metrics are set to expire. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1604854">bug 1604854</a> for additional context.</li>
+</ul>
+</li>
+</ul>
+</li>
 <li>Python:
 <ul>
 <li>BUGFIX: Fixed a race condition in the <code>atexit</code> handler, that would have resulted in the message &quot;No database found&quot;.  See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1634310">bug 1634310</a>.</li>
+<li>The minimum versions of many secondary dependencies have been lowered to make the Glean SDK compatible with more environments.</li>
+<li>Dependencies that depend on the version of Python being used are now specified using the <code>Declaring platform specific dependencies syntax in setuptools &lt;https://setuptools.readthedocs.io/en/latest/setuptools.html#declaring-platform-specific-dependencies&gt;</code>__. This means that more recent versions of dependencies are likely to be installed on Python 3.6 and later, and unnecessary backport libraries won't be installed on more recent Python versions.</li>
 </ul>
 </li>
 </ul>

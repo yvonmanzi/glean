@@ -824,7 +824,12 @@ previously registered in the metrics.yaml file.</p>
         Returns:
             value (datetime.datetime): value of the stored metric.
         &#34;&#34;&#34;
-        return iso8601.parse_date(self.test_get_value_as_str(ping_name))
+        if sys.version_info &lt; (3, 7):
+            return iso8601.parse_date(self.test_get_value_as_str(ping_name))
+        else:
+            return datetime.datetime.fromisoformat(
+                self.test_get_value_as_str(ping_name)
+            )
 
     def test_get_num_recorded_errors(
         self, error_type: ErrorType, ping_name: Optional[str] = None
@@ -976,7 +981,12 @@ of the ping to retrieve the metric for.</dd>
     Returns:
         value (datetime.datetime): value of the stored metric.
     &#34;&#34;&#34;
-    return iso8601.parse_date(self.test_get_value_as_str(ping_name))</code></pre>
+    if sys.version_info &lt; (3, 7):
+        return iso8601.parse_date(self.test_get_value_as_str(ping_name))
+    else:
+        return datetime.datetime.fromisoformat(
+            self.test_get_value_as_str(ping_name)
+        )</code></pre>
 </details>
 </dd>
 <dt id="glean.metrics.DatetimeMetricType.test_get_value_as_str"><code class="name flex">
