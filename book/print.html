@@ -6431,13 +6431,6 @@ All the default pings have their scheduling and submission handled by the SDK.</
 <h2><a class="header" href="#this-week-in-glean-twig" id="this-week-in-glean-twig">This Week in Glean (TWiG)</a></h2>
 <p><a href="appendix/twig.html">This Week in Glean</a> is a series of blog posts that the Glean Team at Mozilla is using to try to communicate better about our work.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/appendix/glossary.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
-<ul>
-<li>Android
-<ul>
-<li>The <code>PingType.submit()</code> can now be called without a <code>null</code> by Java consumers.</li>
-</ul>
-</li>
-</ul>
 <p><a href="https://github.com/mozilla/glean/compare/v28.0.0...master">Full changelog</a></p>
 <ul>
 <li>General:
@@ -6450,9 +6443,15 @@ All the default pings have their scheduling and submission handled by the SDK.</
 </li>
 </ul>
 </li>
+<li>Android
+<ul>
+<li>The <code>PingType.submit()</code> can now be called without a <code>null</code> by Java consumers.</li>
+</ul>
+</li>
 <li>Python:
 <ul>
 <li>BUGFIX: Fixed a race condition in the <code>atexit</code> handler, that would have resulted in the message &quot;No database found&quot;.  See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1634310">bug 1634310</a>.</li>
+<li>The Glean FFI header is now parsed at build time rather than runtime. Relevant for packaging in <code>PyInstaller</code>, the wheel no longer includes <code>glean.h</code> and adds <code>_glean_ffi.py</code>.</li>
 <li>The minimum versions of many secondary dependencies have been lowered to make the Glean SDK compatible with more environments.</li>
 <li>Dependencies that depend on the version of Python being used are now specified using the <code>Declaring platform specific dependencies syntax in setuptools &lt;https://setuptools.readthedocs.io/en/latest/setuptools.html#declaring-platform-specific-dependencies&gt;</code>__. This means that more recent versions of dependencies are likely to be installed on Python 3.6 and later, and unnecessary backport libraries won't be installed on more recent Python versions.</li>
 </ul>
