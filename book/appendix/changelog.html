@@ -162,7 +162,7 @@
 <ul>
 <li>General:
 <ul>
-<li>The version of glean_parser has been upgraded to v1.20.2:
+<li>The version of glean_parser has been upgraded to v1.20.2 (<a href="https://github.com/mozilla/glean/pull/827">#827</a>):
 <ul>
 <li><strong>Breaking change:</strong> glinter errors found during code generation will now return an error code.</li>
 <li><code>glean_parser</code> now produces a linter warning when <code>user</code> lifetime metrics are set to expire. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1604854">bug 1604854</a> for additional context.</li>
@@ -172,15 +172,20 @@
 </li>
 <li>Android
 <ul>
-<li>The <code>PingType.submit()</code> can now be called without a <code>null</code> by Java consumers.</li>
+<li>The <code>PingType.submit()</code> can now be called without a <code>null</code> by Java consumers (<a href="https://github.com/mozilla/glean/pull/853">#853</a>).</li>
 </ul>
 </li>
 <li>Python:
 <ul>
-<li>BUGFIX: Fixed a race condition in the <code>atexit</code> handler, that would have resulted in the message &quot;No database found&quot;.  See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1634310">bug 1634310</a>.</li>
-<li>The Glean FFI header is now parsed at build time rather than runtime. Relevant for packaging in <code>PyInstaller</code>, the wheel no longer includes <code>glean.h</code> and adds <code>_glean_ffi.py</code>.</li>
+<li>BUGFIX: Fixed a race condition in the <code>atexit</code> handler, that would have resulted in the message &quot;No database found&quot; (<a href="https://github.com/mozilla/glean/pull/854">#854</a>).</li>
+<li>The Glean FFI header is now parsed at build time rather than runtime. Relevant for packaging in <code>PyInstaller</code>, the wheel no longer includes <code>glean.h</code> and adds <code>_glean_ffi.py</code> (<a href="https://github.com/mozilla/glean/pull/852">#852</a>).</li>
 <li>The minimum versions of many secondary dependencies have been lowered to make the Glean SDK compatible with more environments.</li>
-<li>Dependencies that depend on the version of Python being used are now specified using the <code>Declaring platform specific dependencies syntax in setuptools &lt;https://setuptools.readthedocs.io/en/latest/setuptools.html#declaring-platform-specific-dependencies&gt;</code>__. This means that more recent versions of dependencies are likely to be installed on Python 3.6 and later, and unnecessary backport libraries won't be installed on more recent Python versions.</li>
+<li>Dependencies that depend on the version of Python being used are now specified using the <a href="https://setuptools.readthedocs.io/en/latest/setuptools.html#declaring-platform-specific-dependencies">Declaring platform specific dependencies syntax in setuptools</a>. This means that more recent versions of dependencies are likely to be installed on Python 3.6 and later, and unnecessary backport libraries won't be installed on more recent Python versions.</li>
+</ul>
+</li>
+<li>iOS:
+<ul>
+<li>Glean for iOS is now being built with Xcode 11.4.1 (<a href="https://github.com/mozilla/glean/pull/856">#856</a>)</li>
 </ul>
 </li>
 </ul>
