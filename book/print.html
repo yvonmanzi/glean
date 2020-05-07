@@ -2417,6 +2417,15 @@ That is, the function from a value \( x \) to a bucket index is:</p>
 If the Glean upload is disabled when calling <code>start</code>, the timer is still started.
 If the Glean upload is disabled at the time <code>stopAndAccumulate</code> is called, nothing is recorded.</p>
 <p>Multiple concurrent timespans in different threads may be measured at the same time.</p>
+<p>Timings are always stored and sent in the payload as nanoseconds. However, the <code>time_unit</code> parameter
+controls the minimum and maximum values that will recorded:</p>
+<ul>
+<li><code>nanosecond</code>: 1ns &lt;= x &lt;= 10 minutes</li>
+<li><code>microsecond</code>: 1μs &lt;= x &lt;= ~6.94 days</li>
+<li><code>millisecond</code>: 1ms &lt;= x &lt;= ~19 years</li>
+</ul>
+<p>Overflowing this range is considered an error and is reported through the error reporting mechanism. Underflowing this range is not an error and the value is silently truncated to the minimum value.</p>
+<p>Additionally, when a metric comes from GeckoView (the <code>geckoview_datapoint</code> parameter is present), the <code>time_unit</code> parameter specifies the unit that the samples are in when passed to Glean. Glean will convert all of the incoming samples to nanoseconds internally.</p>
 <h2><a class="header" href="#configuration-8" id="configuration-8">Configuration</a></h2>
 <p>If you wanted to create a timing distribution to measure page load times, first you need to add an entry for it to the <code>metrics.yaml</code> file:</p>
 <pre><code class="language-YAML">pages:
@@ -2426,9 +2435,6 @@ If the Glean upload is disabled at the time <code>stopAndAccumulate</code> is ca
       Counts how long each page takes to load
     ...
 </code></pre>
-<blockquote>
-<p>Note: Timing distributions have an optional <code>time_unit</code> parameter that is only used when samples are provided directly from an external tool in a unit other than nanoseconds.</p>
-</blockquote>
 <h2><a class="header" href="#api-9" id="api-9">API</a></h2>
 <p>Now you can use the timing distribution from the application's code.
 Starting a timer returns a timer ID that needs to be used to stop or cancel the timer at a later point.
@@ -2595,7 +2601,13 @@ assert 1 == metrics.pages.page_load.test_get_num_recorded_errors(
 </ul>
 </li>
 <li>
-<p>The maximum timing value that will be recorded is 10 minutes. Longer times will be truncated to 10 minutes and an error will be recorded.</p>
+<p>The maximum timing value that will be recorded depends on the <code>time_unit</code> parameter:</p>
+<ul>
+<li><code>nanosecond</code>: 1ns &lt;= x &lt;= 10 minutes</li>
+<li><code>microsecond</code>: 1μs &lt;= x &lt;= ~6.94 days</li>
+<li><code>millisecond</code>: 1ms &lt;= x &lt;= ~19 years</li>
+</ul>
+<p>Longer times will be truncated to the maximum value and an error will be recorded.</p>
 </li>
 </ul>
 <h2><a class="header" href="#examples-8" id="examples-8">Examples</a></h2>
@@ -2606,7 +2618,7 @@ assert 1 == metrics.pages.page_load.test_get_num_recorded_errors(
 <ul>
 <li><code>invalid_value</code>: If recording a negative timespan.</li>
 <li><code>invalid_state</code>: If a non-existing/stopped timer is stopped again.</li>
-<li><code>invalid_overflow</code>: If recording a time longer than 10 minutes.</li>
+<li><code>invalid_overflow</code>: If recording a time longer than the maximum for the given unit.</li>
 </ul>
 <h2><a class="header" href="#reference-9" id="reference-9">Reference</a></h2>
 <ul>
@@ -6432,6 +6444,14 @@ All the default pings have their scheduling and submission handled by the SDK.</
 <p><a href="appendix/twig.html">This Week in Glean</a> is a series of blog posts that the Glean Team at Mozilla is using to try to communicate better about our work.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/appendix/glossary.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v29.0.0...master">Full changelog</a></p>
+<ul>
+<li>General:
+<ul>
+<li>The version of glean_parser has been upgraded to v1.20.3</li>
+<li>The minimum and maximum values of a timing distribution can now be controlled by the <code>time_unit</code> parameter. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1630997">bug 1630997</a> for more details.</li>
+</ul>
+</li>
+</ul>
 <h1><a class="header" href="#v2900-2020-05-05" id="v2900-2020-05-05">v29.0.0 (2020-05-05)</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v28.0.0...v29.0.0">Full changelog</a></p>
 <ul>

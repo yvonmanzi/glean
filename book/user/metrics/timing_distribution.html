@@ -168,6 +168,15 @@ That is, the function from a value \( x \) to a bucket index is:</p>
 If the Glean upload is disabled when calling <code>start</code>, the timer is still started.
 If the Glean upload is disabled at the time <code>stopAndAccumulate</code> is called, nothing is recorded.</p>
 <p>Multiple concurrent timespans in different threads may be measured at the same time.</p>
+<p>Timings are always stored and sent in the payload as nanoseconds. However, the <code>time_unit</code> parameter
+controls the minimum and maximum values that will recorded:</p>
+<ul>
+<li><code>nanosecond</code>: 1ns &lt;= x &lt;= 10 minutes</li>
+<li><code>microsecond</code>: 1μs &lt;= x &lt;= ~6.94 days</li>
+<li><code>millisecond</code>: 1ms &lt;= x &lt;= ~19 years</li>
+</ul>
+<p>Overflowing this range is considered an error and is reported through the error reporting mechanism. Underflowing this range is not an error and the value is silently truncated to the minimum value.</p>
+<p>Additionally, when a metric comes from GeckoView (the <code>geckoview_datapoint</code> parameter is present), the <code>time_unit</code> parameter specifies the unit that the samples are in when passed to Glean. Glean will convert all of the incoming samples to nanoseconds internally.</p>
 <h2><a class="header" href="#configuration" id="configuration">Configuration</a></h2>
 <p>If you wanted to create a timing distribution to measure page load times, first you need to add an entry for it to the <code>metrics.yaml</code> file:</p>
 <pre><code class="language-YAML">pages:
@@ -177,9 +186,6 @@ If the Glean upload is disabled at the time <code>stopAndAccumulate</code> is ca
       Counts how long each page takes to load
     ...
 </code></pre>
-<blockquote>
-<p>Note: Timing distributions have an optional <code>time_unit</code> parameter that is only used when samples are provided directly from an external tool in a unit other than nanoseconds.</p>
-</blockquote>
 <h2><a class="header" href="#api" id="api">API</a></h2>
 <p>Now you can use the timing distribution from the application's code.
 Starting a timer returns a timer ID that needs to be used to stop or cancel the timer at a later point.
@@ -346,7 +352,13 @@ assert 1 == metrics.pages.page_load.test_get_num_recorded_errors(
 </ul>
 </li>
 <li>
-<p>The maximum timing value that will be recorded is 10 minutes. Longer times will be truncated to 10 minutes and an error will be recorded.</p>
+<p>The maximum timing value that will be recorded depends on the <code>time_unit</code> parameter:</p>
+<ul>
+<li><code>nanosecond</code>: 1ns &lt;= x &lt;= 10 minutes</li>
+<li><code>microsecond</code>: 1μs &lt;= x &lt;= ~6.94 days</li>
+<li><code>millisecond</code>: 1ms &lt;= x &lt;= ~19 years</li>
+</ul>
+<p>Longer times will be truncated to the maximum value and an error will be recorded.</p>
 </li>
 </ul>
 <h2><a class="header" href="#examples" id="examples">Examples</a></h2>
@@ -357,7 +369,7 @@ assert 1 == metrics.pages.page_load.test_get_num_recorded_errors(
 <ul>
 <li><code>invalid_value</code>: If recording a negative timespan.</li>
 <li><code>invalid_state</code>: If a non-existing/stopped timer is stopped again.</li>
-<li><code>invalid_overflow</code>: If recording a time longer than 10 minutes.</li>
+<li><code>invalid_overflow</code>: If recording a time longer than the maximum for the given unit.</li>
 </ul>
 <h2><a class="header" href="#reference" id="reference">Reference</a></h2>
 <ul>

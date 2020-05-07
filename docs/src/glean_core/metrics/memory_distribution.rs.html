@@ -392,7 +392,7 @@
 
         <span class="kw">if</span> <span class="ident">num_too_log_samples</span> <span class="op">&gt;</span> <span class="number">0</span> {
             <span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
-                <span class="string">&quot;Accumulated {} samples longer than 10 minutes&quot;</span>,
+                <span class="string">&quot;Accumulated {} samples larger than 1TB&quot;</span>,
                 <span class="ident">num_too_log_samples</span>
             );
             <span class="ident">record_error</span>(
