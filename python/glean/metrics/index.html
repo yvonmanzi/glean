@@ -209,7 +209,7 @@ previously registered in the metrics.yaml file.</p>
         if getattr(self, &#34;_handle&#34;, 0) != 0:
             _ffi.lib.glean_destroy_boolean_metric(self._handle)
 
-    def set(self, value: bool) -&gt; None:
+    def set(self, value: bool):
         &#34;&#34;&#34;
         Set a boolean value.
 
@@ -283,7 +283,7 @@ previously registered in the metrics.yaml file.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set(self, value: bool) -&gt; None:
+<pre><code class="python">def set(self, value: bool):
     &#34;&#34;&#34;
     Set a boolean value.
 
@@ -440,7 +440,7 @@ enforced.</p></section>
         if getattr(self, &#34;_handle&#34;, 0) != 0:
             _ffi.lib.glean_destroy_counter_metric(self._handle)
 
-    def add(self, amount: int = 1) -&gt; None:
+    def add(self, amount: int = 1):
         &#34;&#34;&#34;
         Add to counter value.
 
@@ -536,7 +536,7 @@ counter by.</dd>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def add(self, amount: int = 1) -&gt; None:
+<pre><code class="python">def add(self, amount: int = 1):
     &#34;&#34;&#34;
     Add to counter value.
 
@@ -736,7 +736,7 @@ previously registered in the metrics.yaml file.</p>
         if getattr(self, &#34;_handle&#34;, 0) != 0:
             _ffi.lib.glean_destroy_datetime_metric(self._handle)
 
-    def set(self, value: Optional[datetime.datetime] = None) -&gt; None:
+    def set(self, value: Optional[datetime.datetime] = None):
         &#34;&#34;&#34;
         Set a datetime value, truncating it to the metric&#39;s resolution.
 
@@ -870,7 +870,7 @@ value to set. If not provided, will record the current time.</dd>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set(self, value: Optional[datetime.datetime] = None) -&gt; None:
+<pre><code class="python">def set(self, value: Optional[datetime.datetime] = None):
     &#34;&#34;&#34;
     Set a datetime value, truncating it to the metric&#39;s resolution.
 
@@ -1134,7 +1134,7 @@ enforced.</p></section>
         if getattr(self, &#34;_handle&#34;, 0) != 0:
             _ffi.lib.glean_destroy_event_metric(self._handle)
 
-    def record(self, extra: Optional[Dict[int, str]] = None) -&gt; None:
+    def record(self, extra: Optional[Dict[int, str]] = None):
         &#34;&#34;&#34;
         Record an event by using the information provided by the instance of
         this class.
@@ -1258,7 +1258,7 @@ for values is 100.</p></section>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def record(self, extra: Optional[Dict[int, str]] = None) -&gt; None:
+<pre><code class="python">def record(self, extra: Optional[Dict[int, str]] = None):
     &#34;&#34;&#34;
     Record an event by using the information provided by the instance of
     this class.
@@ -1465,6 +1465,7 @@ metric storage and rearrange them correctly in the ping.</p></section>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li>glean.metrics.labeled.LabeledMetricBase</li>
+<li>abc.ABC</li>
 </ul>
 </dd>
 <dt id="glean.metrics.LabeledCounterMetricType"><code class="flex name class">
@@ -1497,6 +1498,7 @@ metric storage and rearrange them correctly in the ping.</p></section>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li>glean.metrics.labeled.LabeledMetricBase</li>
+<li>abc.ABC</li>
 </ul>
 </dd>
 <dt id="glean.metrics.LabeledStringMetricType"><code class="flex name class">
@@ -1529,6 +1531,7 @@ metric storage and rearrange them correctly in the ping.</p></section>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li>glean.metrics.labeled.LabeledMetricBase</li>
+<li>abc.ABC</li>
 </ul>
 </dd>
 <dt id="glean.metrics.Lifetime"><code class="flex name class">
@@ -1994,13 +1997,13 @@ ping for eventual uploading.</p></section>
             _ffi.lib.glean_destroy_ping_type(self._handle)
 
     @property
-    def name(self) -&gt; str:
+    def name(self):
         &#34;&#34;&#34;
         Get the name of the ping.
         &#34;&#34;&#34;
         return self._name
 
-    def submit(self, reason: Optional[int] = None) -&gt; None:
+    def submit(self, reason: Optional[int] = None):
         &#34;&#34;&#34;
         Collect and submit the ping for eventual uploading.
 
@@ -2026,7 +2029,7 @@ ping for eventual uploading.</p></section>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@property
-def name(self) -&gt; str:
+def name(self):
     &#34;&#34;&#34;
     Get the name of the ping.
     &#34;&#34;&#34;
@@ -2051,7 +2054,7 @@ def name(self) -&gt; str:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def submit(self, reason: Optional[int] = None) -&gt; None:
+<pre><code class="python">def submit(self, reason: Optional[int] = None):
     &#34;&#34;&#34;
     Collect and submit the ping for eventual uploading.
 
@@ -2119,27 +2122,27 @@ the event.</p></section>
         self._extra = extra
 
     @property
-    def category(self) -&gt; str:
+    def category(self):
         &#34;&#34;&#34;The event&#39;s category, part of the full identifier.&#34;&#34;&#34;
         return self._category
 
     @property
-    def name(self) -&gt; str:
+    def name(self):
         &#34;&#34;&#34;The event&#39;s name, part of the full identifier.&#34;&#34;&#34;
         return self._name
 
     @property
-    def timestamp(self) -&gt; int:
+    def timestamp(self):
         &#34;&#34;&#34;The event&#39;s timestamp.&#34;&#34;&#34;
         return self._timestamp
 
     @property
-    def extra(self) -&gt; Optional[Dict[str, str]]:
+    def extra(self):
         &#34;&#34;&#34;Any extra data recorded for the event.&#34;&#34;&#34;
         return self._extra
 
     @property
-    def identifier(self) -&gt; str:
+    def identifier(self):
         if self.category == &#34;&#34;:
             return self.name
         else:
@@ -2155,7 +2158,7 @@ the event.</p></section>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@property
-def category(self) -&gt; str:
+def category(self):
     &#34;&#34;&#34;The event&#39;s category, part of the full identifier.&#34;&#34;&#34;
     return self._category</code></pre>
 </details>
@@ -2168,7 +2171,7 @@ def category(self) -&gt; str:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@property
-def extra(self) -&gt; Optional[Dict[str, str]]:
+def extra(self):
     &#34;&#34;&#34;Any extra data recorded for the event.&#34;&#34;&#34;
     return self._extra</code></pre>
 </details>
@@ -2181,7 +2184,7 @@ def extra(self) -&gt; Optional[Dict[str, str]]:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@property
-def identifier(self) -&gt; str:
+def identifier(self):
     if self.category == &#34;&#34;:
         return self.name
     else:
@@ -2196,7 +2199,7 @@ def identifier(self) -&gt; str:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@property
-def name(self) -&gt; str:
+def name(self):
     &#34;&#34;&#34;The event&#39;s name, part of the full identifier.&#34;&#34;&#34;
     return self._name</code></pre>
 </details>
@@ -2209,7 +2212,7 @@ def name(self) -&gt; str:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@property
-def timestamp(self) -&gt; int:
+def timestamp(self):
     &#34;&#34;&#34;The event&#39;s timestamp.&#34;&#34;&#34;
     return self._timestamp</code></pre>
 </details>
@@ -2251,12 +2254,12 @@ experiment.</p></section>
         self._extra = extra
 
     @property
-    def branch(self) -&gt; str:
+    def branch(self):
         &#34;&#34;&#34;The experiment&#39;s branch.&#34;&#34;&#34;
         return self._branch
 
     @property
-    def extra(self) -&gt; Dict[str, str]:
+    def extra(self):
         &#34;&#34;&#34;Any extra data associated with this experiment.&#34;&#34;&#34;
         return self._extra</code></pre>
 </details>
@@ -2270,7 +2273,7 @@ experiment.</p></section>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@property
-def branch(self) -&gt; str:
+def branch(self):
     &#34;&#34;&#34;The experiment&#39;s branch.&#34;&#34;&#34;
     return self._branch</code></pre>
 </details>
@@ -2283,7 +2286,7 @@ def branch(self) -&gt; str:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@property
-def extra(self) -&gt; Dict[str, str]:
+def extra(self):
     &#34;&#34;&#34;Any extra data associated with this experiment.&#34;&#34;&#34;
     return self._extra</code></pre>
 </details>
@@ -2707,7 +2710,7 @@ enforced.</p></section>
         if getattr(self, &#34;_handle&#34;, 0) != 0:
             _ffi.lib.glean_destroy_string_metric(self._handle)
 
-    def set(self, value: str) -&gt; None:
+    def set(self, value: str):
         &#34;&#34;&#34;
         Set a string value.
 
@@ -2805,7 +2808,7 @@ the string exceeds the maximum length, it will be truncated.</dd>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set(self, value: str) -&gt; None:
+<pre><code class="python">def set(self, value: str):
     &#34;&#34;&#34;
     Set a string value.
 
@@ -3099,7 +3102,7 @@ previously registered in the metrics.yaml file.</p>
         if getattr(self, &#34;_handle&#34;, 0) != 0:
             _ffi.lib.glean_destroy_timespan_metric(self._handle)
 
-    def start(self) -&gt; None:
+    def start(self):
         &#34;&#34;&#34;
         Start tracking time for the provided metric.
 
@@ -3116,7 +3119,7 @@ previously registered in the metrics.yaml file.</p>
         def start():
             _ffi.lib.glean_timespan_set_start(self._handle, start_time)
 
-    def stop(self) -&gt; None:
+    def stop(self):
         &#34;&#34;&#34;
         Stop tracking time for the provided metric.
 
@@ -3134,7 +3137,7 @@ previously registered in the metrics.yaml file.</p>
         def stop():
             _ffi.lib.glean_timespan_set_stop(self._handle, stop_time)
 
-    def cancel(self) -&gt; None:
+    def cancel(self):
         &#34;&#34;&#34;
         Abort a previous `start` call. No error is recorded if no `start` was called.
         &#34;&#34;&#34;
@@ -3145,7 +3148,7 @@ previously registered in the metrics.yaml file.</p>
         def cancel():
             _ffi.lib.glean_timespan_cancel(self._handle)
 
-    def set_raw_nanos(self, elapsed_nanos: int) -&gt; None:
+    def set_raw_nanos(self, elapsed_nanos: int):
         &#34;&#34;&#34;
         Explicitly set the timespan value, in nanoseconds.
 
@@ -3239,7 +3242,7 @@ previously registered in the metrics.yaml file.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def cancel(self) -&gt; None:
+<pre><code class="python">def cancel(self):
     &#34;&#34;&#34;
     Abort a previous `start` call. No error is recorded if no `start` was called.
     &#34;&#34;&#34;
@@ -3268,7 +3271,7 @@ times in a way that can not make use of [start]/[stop]/[cancel].</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_raw_nanos(self, elapsed_nanos: int) -&gt; None:
+<pre><code class="python">def set_raw_nanos(self, elapsed_nanos: int):
     &#34;&#34;&#34;
     Explicitly set the timespan value, in nanoseconds.
 
@@ -3300,7 +3303,7 @@ start time will be preserved.</p></section>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def start(self) -&gt; None:
+<pre><code class="python">def start(self):
     &#34;&#34;&#34;
     Start tracking time for the provided metric.
 
@@ -3331,7 +3334,7 @@ existing value.</p></section>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def stop(self) -&gt; None:
+<pre><code class="python">def stop(self):
     &#34;&#34;&#34;
     Stop tracking time for the provided metric.
 
@@ -4034,7 +4037,7 @@ previously registered in the metrics.yaml file.</p>
         self.set(id)
         return id
 
-    def set(self, value: uuid.UUID) -&gt; None:
+    def set(self, value: uuid.UUID):
         &#34;&#34;&#34;
         Explicitly set an existing UUID value.
 
@@ -4154,7 +4157,7 @@ previously registered in the metrics.yaml file.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set(self, value: uuid.UUID) -&gt; None:
+<pre><code class="python">def set(self, value: uuid.UUID):
     &#34;&#34;&#34;
     Explicitly set an existing UUID value.
 

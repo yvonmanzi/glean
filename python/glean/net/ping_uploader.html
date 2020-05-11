@@ -29,17 +29,12 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 
-import sys
+import abc
 from typing import List, Tuple
 
 
-if sys.version_info &gt;= (3, 8):
-    from typing import Protocol
-else:
-    Protocol = object
-
-
-class PingUploader(Protocol):
+class PingUploader(abc.ABC):
+    @abc.abstractmethod
     def upload(self, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
         &#34;&#34;&#34;
         Upload a ping to a server.
@@ -76,12 +71,14 @@ __all__ = [&#34;PingUploader&#34;]</code></pre>
 <span>(</span><span>*args, **kwargs)</span>
 </code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class PingUploader(Protocol):
+<pre><code class="python">class PingUploader(abc.ABC):
+    @abc.abstractmethod
     def upload(self, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
         &#34;&#34;&#34;
         Upload a ping to a server.
@@ -100,6 +97,10 @@ __all__ = [&#34;PingUploader&#34;]</code></pre>
         &#34;&#34;&#34;
         pass</code></pre>
 </details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>abc.ABC</li>
+</ul>
 <h3>Subclasses</h3>
 <ul class="hlist">
 <li><a title="glean.net.base_uploader.BaseUploader" href="base_uploader.html#glean.net.base_uploader.BaseUploader">BaseUploader</a></li>
@@ -132,7 +133,8 @@ was a recoverable error that callers can deal with.</dd>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def upload(self, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
+<pre><code class="python">@abc.abstractmethod
+def upload(self, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
     &#34;&#34;&#34;
     Upload a ping to a server.
 

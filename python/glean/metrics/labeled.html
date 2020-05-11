@@ -29,7 +29,8 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 
-from typing import Any, Callable, List, Optional, Set, Type
+import abc
+from typing import Callable, List, Optional, Set, Type
 
 
 from .. import _ffi
@@ -40,7 +41,7 @@ from .string import StringMetricType
 from ..testing import ErrorType
 
 
-class LabeledMetricBase:
+class LabeledMetricBase(abc.ABC):
     &#34;&#34;&#34;
     This implements the developer-facing API for labeled metrics.
 
@@ -101,7 +102,7 @@ class LabeledMetricBase:
             label_len,
         )
 
-    def __getitem__(self, item: str) -&gt; Any:
+    def __getitem__(self, item: str):
         &#34;&#34;&#34;
         Get the specific metric for a given label.
 
@@ -222,6 +223,7 @@ metric storage and rearrange them correctly in the ping.</p></section>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li>glean.metrics.labeled.LabeledMetricBase</li>
+<li>abc.ABC</li>
 </ul>
 </dd>
 <dt id="glean.metrics.labeled.LabeledCounterMetricType"><code class="flex name class">
@@ -254,6 +256,7 @@ metric storage and rearrange them correctly in the ping.</p></section>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li>glean.metrics.labeled.LabeledMetricBase</li>
+<li>abc.ABC</li>
 </ul>
 </dd>
 <dt id="glean.metrics.labeled.LabeledStringMetricType"><code class="flex name class">
@@ -286,6 +289,7 @@ metric storage and rearrange them correctly in the ping.</p></section>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li>glean.metrics.labeled.LabeledMetricBase</li>
+<li>abc.ABC</li>
 </ul>
 </dd>
 </dl>

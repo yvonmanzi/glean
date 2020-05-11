@@ -102,7 +102,7 @@ to the user-provided delegate.</p></section>
     &#34;&#34;&#34;
 
     @staticmethod
-    def _log_ping(path: str, data: str) -&gt; None:
+    def _log_ping(path: str, data: str):
         &#34;&#34;&#34;
         Log the contents of the ping to the console.
 
@@ -120,7 +120,7 @@ to the user-provided delegate.</p></section>
             log.debug(&#34;Glean ping to URL: {}\n{}&#34;.format(path, indented))
 
     @staticmethod
-    def _create_date_header_value() -&gt; str:
+    def _create_date_header_value():
         &#34;&#34;&#34;
         Generate an RFC 1123 date string to be used in the HTTP header.
         &#34;&#34;&#34;
@@ -185,6 +185,7 @@ to the user-provided delegate.</p></section>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="glean.net.ping_uploader.PingUploader" href="ping_uploader.html#glean.net.ping_uploader.PingUploader">PingUploader</a></li>
+<li>abc.ABC</li>
 </ul>
 <h3>Subclasses</h3>
 <ul class="hlist">
@@ -406,6 +407,7 @@ to the user-provided delegate.</p></section>
 <ul class="hlist">
 <li><a title="glean.net.base_uploader.BaseUploader" href="base_uploader.html#glean.net.base_uploader.BaseUploader">BaseUploader</a></li>
 <li><a title="glean.net.ping_uploader.PingUploader" href="ping_uploader.html#glean.net.ping_uploader.PingUploader">PingUploader</a></li>
+<li>abc.ABC</li>
 </ul>
 <h3>Static methods</h3>
 <dl>
@@ -634,12 +636,14 @@ def storage_directory(cls) -&gt; Path:
 <span>(</span><span>*args, **kwargs)</span>
 </code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class PingUploader(Protocol):
+<pre><code class="python">class PingUploader(abc.ABC):
+    @abc.abstractmethod
     def upload(self, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
         &#34;&#34;&#34;
         Upload a ping to a server.
@@ -658,6 +662,10 @@ def storage_directory(cls) -&gt; Path:
         &#34;&#34;&#34;
         pass</code></pre>
 </details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>abc.ABC</li>
+</ul>
 <h3>Subclasses</h3>
 <ul class="hlist">
 <li><a title="glean.net.base_uploader.BaseUploader" href="base_uploader.html#glean.net.base_uploader.BaseUploader">BaseUploader</a></li>
@@ -690,7 +698,8 @@ was a recoverable error that callers can deal with.</dd>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def upload(self, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
+<pre><code class="python">@abc.abstractmethod
+def upload(self, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
     &#34;&#34;&#34;
     Upload a ping to a server.
 

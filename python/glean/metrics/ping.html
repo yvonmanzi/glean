@@ -66,13 +66,13 @@ class PingType:
             _ffi.lib.glean_destroy_ping_type(self._handle)
 
     @property
-    def name(self) -&gt; str:
+    def name(self):
         &#34;&#34;&#34;
         Get the name of the ping.
         &#34;&#34;&#34;
         return self._name
 
-    def submit(self, reason: Optional[int] = None) -&gt; None:
+    def submit(self, reason: Optional[int] = None):
         &#34;&#34;&#34;
         Collect and submit the ping for eventual uploading.
 
@@ -140,13 +140,13 @@ ping for eventual uploading.</p></section>
             _ffi.lib.glean_destroy_ping_type(self._handle)
 
     @property
-    def name(self) -&gt; str:
+    def name(self):
         &#34;&#34;&#34;
         Get the name of the ping.
         &#34;&#34;&#34;
         return self._name
 
-    def submit(self, reason: Optional[int] = None) -&gt; None:
+    def submit(self, reason: Optional[int] = None):
         &#34;&#34;&#34;
         Collect and submit the ping for eventual uploading.
 
@@ -172,7 +172,7 @@ ping for eventual uploading.</p></section>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@property
-def name(self) -&gt; str:
+def name(self):
     &#34;&#34;&#34;
     Get the name of the ping.
     &#34;&#34;&#34;
@@ -197,7 +197,7 @@ def name(self) -&gt; str:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def submit(self, reason: Optional[int] = None) -&gt; None:
+<pre><code class="python">def submit(self, reason: Optional[int] = None):
     &#34;&#34;&#34;
     Collect and submit the ping for eventual uploading.
 

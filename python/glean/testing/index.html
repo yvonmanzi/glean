@@ -36,7 +36,7 @@ Utilities for writing unit tests involving Glean.
 
 
 from pathlib import Path
-from typing import Any, Optional
+from typing import Optional
 
 
 from glean import Configuration
@@ -49,7 +49,7 @@ def reset_glean(
     application_version: str,
     configuration: Optional[Configuration] = None,
     clear_stores: bool = True
-) -&gt; None:
+):
     &#34;&#34;&#34;
     Resets the Glean singleton.
 
@@ -95,9 +95,7 @@ class _RecordingUploader:
     def __init__(self, file_path):
         self.file_path = file_path
 
-    def do_upload(
-        self, url_path: str, serialized_ping: str, configuration: Any
-    ) -&gt; None:
+    def do_upload(self, url_path, serialized_ping, configuration):
         with self.file_path.open(&#34;w&#34;) as fd:
             fd.write(str(url_path) + &#34;\n&#34;)
             fd.write(serialized_ping + &#34;\n&#34;)
@@ -146,7 +144,7 @@ global settings.</dd>
     application_version: str,
     configuration: Optional[Configuration] = None,
     clear_stores: bool = True
-) -&gt; None:
+):
     &#34;&#34;&#34;
     Resets the Glean singleton.
 
