@@ -180,6 +180,7 @@
 <p>Products using the Glean SDK to collect telemetry <strong>must</strong>:</p>
 <ul>
 <li>add documentation for any new metric collected with the library in its repository (see <a href="user/pings/index.html">an example</a>);</li>
+<li>include the markdown-formatted documentation generated from the <code>metrics.yaml</code> and <code>pings.yaml</code> files in the project's documentation;</li>
 <li>go through data review for the newly collected data by following <a href="https://wiki.mozilla.org/Firefox/Data_Collection">this process</a>;</li>
 <li>provide a way for users to turn data collection off (e.g. providing settings to control
 <code>Glean.setUploadEnabled()</code>).</li>
@@ -376,6 +377,14 @@ metrics = load_metrics(resource_filename(__name__, &quot;metrics.yaml&quot;))
 # Use a metric on the returned object
 metrics.your_category.your_metric.set(&quot;value&quot;)
 </code></pre>
+<p>The documentation for your application or library's metrics and pings are written in <code>metrics.yaml</code> and <code>pings.yaml</code>. However, you should also provide human-readable markdown files based on this information, and this is a requirement for Mozilla projects using Glean. For other languages and platforms, this transformation is done automatically as part of the build. However, for Python the integration to automatically generate docs is an additional step.</p>
+<p>Glean provides a commandline tool for automatically generating markdown documentation from your <code>metrics.yaml</code> and <code>pings.yaml</code> files. To perform that translation, run <code>glean_parser</code>'s <code>translate</code> command:</p>
+<pre><code class="language-sh">python3 -m glean_parser translate -f markdown -o docs metrics.yaml pings.yaml
+</code></pre>
+<p>To get more help about the commandline options:</p>
+<pre><code class="language-sh">python3 -m glean_parser translate --help
+</code></pre>
+<p>We recommend integrating this step into your project's documentation build. The details of that integration is left to you, since it depends on the documentation tool being used and how your project is set up.</p>
 </div>
 </div>
 </div>
