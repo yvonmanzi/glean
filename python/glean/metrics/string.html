@@ -77,7 +77,7 @@ class StringMetricType:
         if getattr(self, &#34;_handle&#34;, 0) != 0:
             _ffi.lib.glean_destroy_string_metric(self._handle)
 
-    def set(self, value: str):
+    def set(self, value: str) -&gt; None:
         &#34;&#34;&#34;
         Set a string value.
 
@@ -224,7 +224,7 @@ enforced.</p></section>
         if getattr(self, &#34;_handle&#34;, 0) != 0:
             _ffi.lib.glean_destroy_string_metric(self._handle)
 
-    def set(self, value: str):
+    def set(self, value: str) -&gt; None:
         &#34;&#34;&#34;
         Set a string value.
 
@@ -322,7 +322,7 @@ the string exceeds the maximum length, it will be truncated.</dd>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set(self, value: str):
+<pre><code class="python">def set(self, value: str) -&gt; None:
     &#34;&#34;&#34;
     Set a string value.
 

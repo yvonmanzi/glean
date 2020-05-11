@@ -70,27 +70,27 @@ class RecordedEventData:
         self._extra = extra
 
     @property
-    def category(self):
+    def category(self) -&gt; str:
         &#34;&#34;&#34;The event&#39;s category, part of the full identifier.&#34;&#34;&#34;
         return self._category
 
     @property
-    def name(self):
+    def name(self) -&gt; str:
         &#34;&#34;&#34;The event&#39;s name, part of the full identifier.&#34;&#34;&#34;
         return self._name
 
     @property
-    def timestamp(self):
+    def timestamp(self) -&gt; int:
         &#34;&#34;&#34;The event&#39;s timestamp.&#34;&#34;&#34;
         return self._timestamp
 
     @property
-    def extra(self):
+    def extra(self) -&gt; Optional[Dict[str, str]]:
         &#34;&#34;&#34;Any extra data recorded for the event.&#34;&#34;&#34;
         return self._extra
 
     @property
-    def identifier(self):
+    def identifier(self) -&gt; str:
         if self.category == &#34;&#34;:
             return self.name
         else:
@@ -137,7 +137,7 @@ class EventMetricType:
         if getattr(self, &#34;_handle&#34;, 0) != 0:
             _ffi.lib.glean_destroy_event_metric(self._handle)
 
-    def record(self, extra: Optional[Dict[int, str]] = None):
+    def record(self, extra: Optional[Dict[int, str]] = None) -&gt; None:
         &#34;&#34;&#34;
         Record an event by using the information provided by the instance of
         this class.
@@ -313,7 +313,7 @@ enforced.</p></section>
         if getattr(self, &#34;_handle&#34;, 0) != 0:
             _ffi.lib.glean_destroy_event_metric(self._handle)
 
-    def record(self, extra: Optional[Dict[int, str]] = None):
+    def record(self, extra: Optional[Dict[int, str]] = None) -&gt; None:
         &#34;&#34;&#34;
         Record an event by using the information provided by the instance of
         this class.
@@ -437,7 +437,7 @@ for values is 100.</p></section>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def record(self, extra: Optional[Dict[int, str]] = None):
+<pre><code class="python">def record(self, extra: Optional[Dict[int, str]] = None) -&gt; None:
     &#34;&#34;&#34;
     Record an event by using the information provided by the instance of
     this class.
@@ -663,27 +663,27 @@ the event.</p></section>
         self._extra = extra
 
     @property
-    def category(self):
+    def category(self) -&gt; str:
         &#34;&#34;&#34;The event&#39;s category, part of the full identifier.&#34;&#34;&#34;
         return self._category
 
     @property
-    def name(self):
+    def name(self) -&gt; str:
         &#34;&#34;&#34;The event&#39;s name, part of the full identifier.&#34;&#34;&#34;
         return self._name
 
     @property
-    def timestamp(self):
+    def timestamp(self) -&gt; int:
         &#34;&#34;&#34;The event&#39;s timestamp.&#34;&#34;&#34;
         return self._timestamp
 
     @property
-    def extra(self):
+    def extra(self) -&gt; Optional[Dict[str, str]]:
         &#34;&#34;&#34;Any extra data recorded for the event.&#34;&#34;&#34;
         return self._extra
 
     @property
-    def identifier(self):
+    def identifier(self) -&gt; str:
         if self.category == &#34;&#34;:
             return self.name
         else:
@@ -699,7 +699,7 @@ the event.</p></section>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@property
-def category(self):
+def category(self) -&gt; str:
     &#34;&#34;&#34;The event&#39;s category, part of the full identifier.&#34;&#34;&#34;
     return self._category</code></pre>
 </details>
@@ -712,7 +712,7 @@ def category(self):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@property
-def extra(self):
+def extra(self) -&gt; Optional[Dict[str, str]]:
     &#34;&#34;&#34;Any extra data recorded for the event.&#34;&#34;&#34;
     return self._extra</code></pre>
 </details>
@@ -725,7 +725,7 @@ def extra(self):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@property
-def identifier(self):
+def identifier(self) -&gt; str:
     if self.category == &#34;&#34;:
         return self.name
     else:
@@ -740,7 +740,7 @@ def identifier(self):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@property
-def name(self):
+def name(self) -&gt; str:
     &#34;&#34;&#34;The event&#39;s name, part of the full identifier.&#34;&#34;&#34;
     return self._name</code></pre>
 </details>
@@ -753,7 +753,7 @@ def name(self):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@property
-def timestamp(self):
+def timestamp(self) -&gt; int:
     &#34;&#34;&#34;The event&#39;s timestamp.&#34;&#34;&#34;
     return self._timestamp</code></pre>
 </details>

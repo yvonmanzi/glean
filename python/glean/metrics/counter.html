@@ -77,7 +77,7 @@ class CounterMetricType:
         if getattr(self, &#34;_handle&#34;, 0) != 0:
             _ffi.lib.glean_destroy_counter_metric(self._handle)
 
-    def add(self, amount: int = 1):
+    def add(self, amount: int = 1) -&gt; None:
         &#34;&#34;&#34;
         Add to counter value.
 
@@ -222,7 +222,7 @@ enforced.</p></section>
         if getattr(self, &#34;_handle&#34;, 0) != 0:
             _ffi.lib.glean_destroy_counter_metric(self._handle)
 
-    def add(self, amount: int = 1):
+    def add(self, amount: int = 1) -&gt; None:
         &#34;&#34;&#34;
         Add to counter value.
 
@@ -318,7 +318,7 @@ counter by.</dd>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def add(self, amount: int = 1):
+<pre><code class="python">def add(self, amount: int = 1) -&gt; None:
     &#34;&#34;&#34;
     Add to counter value.
 

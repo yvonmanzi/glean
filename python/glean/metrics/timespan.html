@@ -80,7 +80,7 @@ class TimespanMetricType:
         if getattr(self, &#34;_handle&#34;, 0) != 0:
             _ffi.lib.glean_destroy_timespan_metric(self._handle)
 
-    def start(self):
+    def start(self) -&gt; None:
         &#34;&#34;&#34;
         Start tracking time for the provided metric.
 
@@ -97,7 +97,7 @@ class TimespanMetricType:
         def start():
             _ffi.lib.glean_timespan_set_start(self._handle, start_time)
 
-    def stop(self):
+    def stop(self) -&gt; None:
         &#34;&#34;&#34;
         Stop tracking time for the provided metric.
 
@@ -115,7 +115,7 @@ class TimespanMetricType:
         def stop():
             _ffi.lib.glean_timespan_set_stop(self._handle, stop_time)
 
-    def cancel(self):
+    def cancel(self) -&gt; None:
         &#34;&#34;&#34;
         Abort a previous `start` call. No error is recorded if no `start` was called.
         &#34;&#34;&#34;
@@ -126,7 +126,7 @@ class TimespanMetricType:
         def cancel():
             _ffi.lib.glean_timespan_cancel(self._handle)
 
-    def set_raw_nanos(self, elapsed_nanos: int):
+    def set_raw_nanos(self, elapsed_nanos: int) -&gt; None:
         &#34;&#34;&#34;
         Explicitly set the timespan value, in nanoseconds.
 
@@ -275,7 +275,7 @@ previously registered in the metrics.yaml file.</p>
         if getattr(self, &#34;_handle&#34;, 0) != 0:
             _ffi.lib.glean_destroy_timespan_metric(self._handle)
 
-    def start(self):
+    def start(self) -&gt; None:
         &#34;&#34;&#34;
         Start tracking time for the provided metric.
 
@@ -292,7 +292,7 @@ previously registered in the metrics.yaml file.</p>
         def start():
             _ffi.lib.glean_timespan_set_start(self._handle, start_time)
 
-    def stop(self):
+    def stop(self) -&gt; None:
         &#34;&#34;&#34;
         Stop tracking time for the provided metric.
 
@@ -310,7 +310,7 @@ previously registered in the metrics.yaml file.</p>
         def stop():
             _ffi.lib.glean_timespan_set_stop(self._handle, stop_time)
 
-    def cancel(self):
+    def cancel(self) -&gt; None:
         &#34;&#34;&#34;
         Abort a previous `start` call. No error is recorded if no `start` was called.
         &#34;&#34;&#34;
@@ -321,7 +321,7 @@ previously registered in the metrics.yaml file.</p>
         def cancel():
             _ffi.lib.glean_timespan_cancel(self._handle)
 
-    def set_raw_nanos(self, elapsed_nanos: int):
+    def set_raw_nanos(self, elapsed_nanos: int) -&gt; None:
         &#34;&#34;&#34;
         Explicitly set the timespan value, in nanoseconds.
 
@@ -415,7 +415,7 @@ previously registered in the metrics.yaml file.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def cancel(self):
+<pre><code class="python">def cancel(self) -&gt; None:
     &#34;&#34;&#34;
     Abort a previous `start` call. No error is recorded if no `start` was called.
     &#34;&#34;&#34;
@@ -444,7 +444,7 @@ times in a way that can not make use of [start]/[stop]/[cancel].</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_raw_nanos(self, elapsed_nanos: int):
+<pre><code class="python">def set_raw_nanos(self, elapsed_nanos: int) -&gt; None:
     &#34;&#34;&#34;
     Explicitly set the timespan value, in nanoseconds.
 
@@ -476,7 +476,7 @@ start time will be preserved.</p></section>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def start(self):
+<pre><code class="python">def start(self) -&gt; None:
     &#34;&#34;&#34;
     Start tracking time for the provided metric.
 
@@ -507,7 +507,7 @@ existing value.</p></section>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def stop(self):
+<pre><code class="python">def stop(self) -&gt; None:
     &#34;&#34;&#34;
     Stop tracking time for the provided metric.
 
