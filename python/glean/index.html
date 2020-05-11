@@ -323,7 +323,7 @@ to offload some work (such as ping uploading).</dd>
         self._server_endpoint = value
 
     @property
-    def user_agent(self) -&gt; Optional[str]:
+    def user_agent(self) -&gt; str:
         &#34;&#34;&#34;The user agent used when sending pings.&#34;&#34;&#34;
         return self._user_agent
 
@@ -466,7 +466,7 @@ def server_endpoint(self) -&gt; str:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@property
-def user_agent(self) -&gt; Optional[str]:
+def user_agent(self) -&gt; str:
     &#34;&#34;&#34;The user agent used when sending pings.&#34;&#34;&#34;
     return self._user_agent</code></pre>
 </details>
@@ -538,7 +538,7 @@ initialized from the application.</p>
         upload_enabled: bool,
         configuration: Optional[Configuration] = None,
         data_dir: Optional[Path] = None,
-    ):
+    ) -&gt; None:
         &#34;&#34;&#34;
         Initialize the Glean SDK.
 
@@ -621,14 +621,14 @@ initialized from the application.</p>
                 DeletionPingUploadWorker.process()
 
     @_util.classproperty
-    def configuration(cls):
+    def configuration(cls) -&gt; Configuration:
         &#34;&#34;&#34;
         Access the configuration object to change dynamic parameters.
         &#34;&#34;&#34;
         return cls._configuration
 
     @classmethod
-    def _reset(cls):
+    def _reset(cls) -&gt; None:
         &#34;&#34;&#34;
         Resets the Glean singleton.
         &#34;&#34;&#34;
@@ -673,7 +673,7 @@ initialized from the application.</p>
         return cls._initialized
 
     @classmethod
-    def register_ping_type(cls, ping: &#34;PingType&#34;):
+    def register_ping_type(cls, ping: &#34;PingType&#34;) -&gt; None:
         &#34;&#34;&#34;
         Register the ping type in the registry.
         &#34;&#34;&#34;
@@ -687,7 +687,7 @@ initialized from the application.</p>
         cls._ping_type_queue.add(ping)
 
     @classmethod
-    def test_has_ping_type(cls, ping_name: str):
+    def test_has_ping_type(cls, ping_name: str) -&gt; bool:
         &#34;&#34;&#34;
         Returns True if a ping by this name is in the ping registry.
         &#34;&#34;&#34;
@@ -696,7 +696,7 @@ initialized from the application.</p>
         )
 
     @classmethod
-    def set_upload_enabled(cls, enabled: bool):
+    def set_upload_enabled(cls, enabled: bool) -&gt; None:
         &#34;&#34;&#34;
         Enable or disable Glean collection and upload.
 
@@ -742,7 +742,7 @@ initialized from the application.</p>
     @classmethod
     def set_experiment_active(
         cls, experiment_id: str, branch: str, extra: Optional[Dict[str, str]] = None
-    ):
+    ) -&gt; None:
         &#34;&#34;&#34;
         Indicate that an experiment is running. Glean will then add an
         experiment annotation to the environment which is sent with pings. This
@@ -772,7 +772,7 @@ initialized from the application.</p>
             )
 
     @classmethod
-    def set_experiment_inactive(cls, experiment_id: str):
+    def set_experiment_inactive(cls, experiment_id: str) -&gt; None:
         &#34;&#34;&#34;
         Indicate that the experiment is no longer running.
 
@@ -829,7 +829,7 @@ initialized from the application.</p>
         return RecordedExperimentData(**json_tree)  # type: ignore
 
     @classmethod
-    def _initialize_core_metrics(cls):
+    def _initialize_core_metrics(cls) -&gt; None:
         &#34;&#34;&#34;
         Set a few metrics that will be sent as part of every ping.
         &#34;&#34;&#34;
@@ -871,7 +871,7 @@ initialized from the application.</p>
         )
 
     @classmethod
-    def _submit_ping(cls, ping: &#34;PingType&#34;, reason: Optional[str] = None):
+    def _submit_ping(cls, ping: &#34;PingType&#34;, reason: Optional[str] = None) -&gt; None:
         &#34;&#34;&#34;
         Collect and submit a ping for eventual uploading.
 
@@ -886,7 +886,7 @@ initialized from the application.</p>
 
     @classmethod
     @Dispatcher.task
-    def _submit_ping_by_name(cls, ping_name: str, reason: Optional[str] = None):
+    def _submit_ping_by_name(cls, ping_name: str, reason: Optional[str] = None) -&gt; None:
         &#34;&#34;&#34;
         Collect and submit a ping by name for eventual uploading.
 
@@ -1001,7 +1001,7 @@ def initialize(
     upload_enabled: bool,
     configuration: Optional[Configuration] = None,
     data_dir: Optional[Path] = None,
-):
+) -&gt; None:
     &#34;&#34;&#34;
     Initialize the Glean SDK.
 
@@ -1111,7 +1111,7 @@ def is_initialized(cls) -&gt; bool:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def register_ping_type(cls, ping: &#34;PingType&#34;):
+def register_ping_type(cls, ping: &#34;PingType&#34;) -&gt; None:
     &#34;&#34;&#34;
     Register the ping type in the registry.
     &#34;&#34;&#34;
@@ -1149,7 +1149,7 @@ ping</p></section>
 <pre><code class="python">@classmethod
 def set_experiment_active(
     cls, experiment_id: str, branch: str, extra: Optional[Dict[str, str]] = None
-):
+) -&gt; None:
     &#34;&#34;&#34;
     Indicate that an experiment is running. Glean will then add an
     experiment annotation to the environment which is sent with pings. This
@@ -1194,7 +1194,7 @@ def set_experiment_active(
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def set_experiment_inactive(cls, experiment_id: str):
+def set_experiment_inactive(cls, experiment_id: str) -&gt; None:
     &#34;&#34;&#34;
     Indicate that the experiment is no longer running.
 
@@ -1229,7 +1229,7 @@ is uploaded.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def set_upload_enabled(cls, enabled: bool):
+def set_upload_enabled(cls, enabled: bool) -&gt; None:
     &#34;&#34;&#34;
     Enable or disable Glean collection and upload.
 
@@ -1348,7 +1348,7 @@ def test_get_experiment_data(cls, experiment_id: str) -&gt; &#34;RecordedExperim
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def test_has_ping_type(cls, ping_name: str):
+def test_has_ping_type(cls, ping_name: str) -&gt; bool:
     &#34;&#34;&#34;
     Returns True if a ping by this name is in the ping registry.
     &#34;&#34;&#34;
