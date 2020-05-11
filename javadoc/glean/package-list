@@ -9,6 +9,6 @@ mozilla.telemetry.glean.config
 mozilla.telemetry.glean.debug
 mozilla.telemetry.glean.net
 mozilla.telemetry.glean.private
-mozilla.telemetry.glean.scheduler
+mozilla.telemetry.glean.rust
 mozilla.telemetry.glean.testing
 mozilla.telemetry.glean.utils

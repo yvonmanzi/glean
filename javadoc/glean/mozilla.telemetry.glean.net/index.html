@@ -23,6 +23,15 @@ to the user-provided delegate.</p>
 </tr>
 <tr>
 <td>
+<p><a href="-http-response/index.html">HttpResponse</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">HttpResponse</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-upload-result/index.html"><span class="identifier">UploadResult</span></a></code>
+<p>A HTTP response code.</p>
+</td>
+</tr>
+<tr>
+<td>
 <p><a href="-http-u-r-l-connection-uploader/index.html">HttpURLConnectionUploader</a></p>
 </td>
 <td>
@@ -39,6 +48,40 @@ storing or attempting to send the ping again.</p>
 <code><span class="keyword">interface </span><span class="identifier">PingUploader</span></code>
 <p>The interface defining how to send pings.</p>
 </td>
+</tr>
+<tr>
+<td>
+<p><a href="-recoverable-failure/index.html">RecoverableFailure</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">RecoverableFailure</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-upload-result/index.html"><span class="identifier">UploadResult</span></a></code>
+<p>A recoverable failure.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-unrecoverable-failure/index.html">UnrecoverableFailure</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">UnrecoverableFailure</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-upload-result/index.html"><span class="identifier">UploadResult</span></a></code>
+<p>An unrecoverable upload failure.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-upload-result/index.html">UploadResult</a></p>
+</td>
+<td>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">UploadResult</span></code>
+<p>The result of the ping upload.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-upload-task-tag/index.html">UploadTaskTag</a></p>
+</td>
+<td>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">UploadTaskTag</span></code></td>
 </tr>
 </tbody>
 </table>

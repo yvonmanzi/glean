@@ -33,6 +33,8 @@
         
         <link rel="stylesheet" href="glean.css">
         
+        <link rel="stylesheet" href="mermaid.css">
+        
 
         
         <!-- MathJax -->
@@ -87,8 +89,8 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Glean</a></li><li class="expanded "><a href="user/index.html"><strong aria-hidden="true">2.</strong> Using the Glean SDK</a></li><li><ol class="section"><li class="expanded "><a href="user/adding-glean-to-your-project.html"><strong aria-hidden="true">2.1.</strong> Adding Glean to your project</a></li><li class="expanded "><a href="user/general-api.html"><strong aria-hidden="true">2.2.</strong> The General API</a></li><li class="expanded "><a href="user/adding-new-metrics.html"><strong aria-hidden="true">2.3.</strong> Adding new metrics</a></li><li class="expanded "><a href="user/metric-parameters.html"><strong aria-hidden="true">2.4.</strong> Metric parameters</a></li><li class="expanded "><a href="user/testing-metrics.html"><strong aria-hidden="true">2.5.</strong> Testing metrics</a></li><li class="expanded "><a href="user/debugging/index.html"><strong aria-hidden="true">2.6.</strong> Debugging products using Glean</a></li><li><ol class="section"><li class="expanded "><a href="user/debugging/android.html"><strong aria-hidden="true">2.6.1.</strong> Android</a></li><li class="expanded "><a href="user/debugging/ios.html"><strong aria-hidden="true">2.6.2.</strong> iOS</a></li><li class="expanded "><a href="user/debugging/python.html"><strong aria-hidden="true">2.6.3.</strong> Python</a></li></ol></li><li class="expanded "><a href="user/error-reporting.html"><strong aria-hidden="true">2.7.</strong> Error reporting</a></li><li class="expanded "><a href="user/experiments-api.html"><strong aria-hidden="true">2.8.</strong> Using the experiments API</a></li><li class="expanded "><a href="user/metrics/index.html"><strong aria-hidden="true">2.9.</strong> Metric types</a></li><li><ol class="section"><li class="expanded "><a href="user/metrics/boolean.html"><strong aria-hidden="true">2.9.1.</strong> Boolean</a></li><li class="expanded "><a href="user/metrics/labeled_booleans.html"><strong aria-hidden="true">2.9.2.</strong> Labeled Booleans</a></li><li class="expanded "><a href="user/metrics/counter.html"><strong aria-hidden="true">2.9.3.</strong> Counter</a></li><li class="expanded "><a href="user/metrics/labeled_counters.html"><strong aria-hidden="true">2.9.4.</strong> Labeled Counters</a></li><li class="expanded "><a href="user/metrics/string.html"><strong aria-hidden="true">2.9.5.</strong> String</a></li><li class="expanded "><a href="user/metrics/labeled_strings.html"><strong aria-hidden="true">2.9.6.</strong> Labeled Strings</a></li><li class="expanded "><a href="user/metrics/string_list.html"><strong aria-hidden="true">2.9.7.</strong> String List</a></li><li class="expanded "><a href="user/metrics/timespan.html"><strong aria-hidden="true">2.9.8.</strong> Timespan</a></li><li class="expanded "><a href="user/metrics/timing_distribution.html"><strong aria-hidden="true">2.9.9.</strong> Timing Distribution</a></li><li class="expanded "><a href="user/metrics/memory_distribution.html"><strong aria-hidden="true">2.9.10.</strong> Memory Distribution</a></li><li class="expanded "><a href="user/metrics/uuid.html"><strong aria-hidden="true">2.9.11.</strong> UUID</a></li><li class="expanded "><a href="user/metrics/datetime.html"><strong aria-hidden="true">2.9.12.</strong> Datetime</a></li><li class="expanded "><a href="user/metrics/event.html"><strong aria-hidden="true">2.9.13.</strong> Event</a></li><li class="expanded "><a href="user/metrics/custom_distribution.html"><strong aria-hidden="true">2.9.14.</strong> Custom Distribution</a></li><li class="expanded "><a href="user/metrics/quantity.html"><strong aria-hidden="true">2.9.15.</strong> Quantity</a></li></ol></li><li class="expanded "><a href="user/pings/index.html"><strong aria-hidden="true">2.10.</strong> Pings</a></li><li><ol class="section"><li class="expanded "><a href="user/pings/ping-schedules-and-timings.html"><strong aria-hidden="true">2.10.1.</strong> Ping schedules and timings overview</a></li><li class="expanded "><a href="user/pings/baseline.html"><strong aria-hidden="true">2.10.2.</strong> Baseline Ping</a></li><li class="expanded "><a href="user/pings/deletion_request.html"><strong aria-hidden="true">2.10.3.</strong> Deletion Request Ping</a></li><li class="expanded "><a href="user/pings/metrics.html"><strong aria-hidden="true">2.10.4.</strong> Metrics Ping</a></li><li class="expanded "><a href="user/pings/events.html"><strong aria-hidden="true">2.10.5.</strong> Events Ping</a></li><li class="expanded "><a href="user/pings/custom.html"><strong aria-hidden="true">2.10.6.</strong> Custom Pings</a></li><li class="expanded "><a href="user/pings/testing-custom-pings.html"><strong aria-hidden="true">2.10.7.</strong> Testing custom pings</a></li></ol></li><li class="expanded "><a href="user/android-build-configuration-options.html"><strong aria-hidden="true">2.11.</strong> Android build configuration options</a></li><li class="expanded "><a href="user/focused-use-cases.html"><strong aria-hidden="true">2.12.</strong> Focused Use Cases</a></li><li><ol class="section"><li class="expanded "><a href="user/instrument-android-crashes-example.html"><strong aria-hidden="true">2.12.1.</strong> Instrumenting Android Crashes With Glean</a></li></ol></li></ol></li><li class="expanded "><a href="user/collected-metrics/metrics.html"><strong aria-hidden="true">3.</strong> Metrics collected by the Glean SDK</a></li><li class="expanded "><a href="dev/index.html"><strong aria-hidden="true">4.</strong> Developing the Glean SDK</a></li><li><ol class="section"><li class="expanded "><a href="dev/testing.html"><strong aria-hidden="true">4.1.</strong> Testing</a></li><li class="expanded "><a href="dev/docs.html"><strong aria-hidden="true">4.2.</strong> Developing documentation</a></li><li class="expanded "><a href="dev/android/index.html"><strong aria-hidden="true">4.3.</strong> Android bindings</a></li><li><ol class="section"><li class="expanded "><a href="dev/android/setup-android-build-environment.html"><strong aria-hidden="true">4.3.1.</strong> Setup Build Environment</a></li></ol></li><li class="expanded "><a href="dev/ios/index.html"><strong aria-hidden="true">4.4.</strong> iOS bindings</a></li><li><ol class="section"><li class="expanded "><a href="dev/ios/setup-ios-build-environment.html"><strong aria-hidden="true">4.4.1.</strong> Setup Build Environment</a></li><li class="expanded "><a href="dev/ios/debug-glean-on-ios.html"><strong aria-hidden="true">4.4.2.</strong> Debugging Different Versions of Glean</a></li></ol></li><li class="expanded "><a href="dev/python/index.html"><strong aria-hidden="true">4.5.</strong> Python bindings</a></li><li><ol class="section"><li class="expanded "><a href="dev/python/setting-up-python-build-environment.html"><strong aria-hidden="true">4.5.1.</strong> Setup Build Environment</a></li></ol></li><li class="expanded "><a href="dev/core/index.html"><strong aria-hidden="true">4.6.</strong> Rust Component</a></li><li><ol class="section"><li class="expanded "><a href="dev/core/dependency-management.html"><strong aria-hidden="true">4.6.1.</strong> Dependency Management</a></li><li class="expanded "><a href="dev/core/new-metric-type.html"><strong aria-hidden="true">4.6.2.</strong> Adding a new metric type</a></li><li><ol class="section"><li class="expanded "><a href="dev/core/new-metric-type/ffi.html"><strong aria-hidden="true">4.6.2.1.</strong> FFI</a></li><li class="expanded "><a href="dev/core/new-metric-type/kotlin.html"><strong aria-hidden="true">4.6.2.2.</strong> Kotlin</a></li><li class="expanded "><a href="dev/core/new-metric-type/swift.html"><strong aria-hidden="true">4.6.2.3.</strong> Swift</a></li><li class="expanded "><a href="dev/core/new-metric-type/python.html"><strong aria-hidden="true">4.6.2.4.</strong> Python</a></li></ol></li></ol></li><li class="expanded "><a href="dev/ffi/index.html"><strong aria-hidden="true">4.7.</strong> FFI Layer</a></li><li><ol class="section"><li class="expanded "><a href="dev/ffi/when-to-use-what-in-the-ffi.html"><strong aria-hidden="true">4.7.1.</strong> When/How FFI</a></li></ol></li><li class="expanded "><a href="contributing.html"><strong aria-hidden="true">4.8.</strong> Contributing</a></li><li><ol class="section"><li class="expanded "><a href="code_coverage.html"><strong aria-hidden="true">4.8.1.</strong> Code coverage</a></li></ol></li><li class="expanded "><a href="dev/cut-a-new-release.html"><strong aria-hidden="true">4.9.</strong> Release process</a></li><li class="expanded "><a href="dev/core/internal/index.html"><strong aria-hidden="true">4.10.</strong> Internal implementation details</a></li><li><ol class="section"><li class="expanded "><a href="dev/core/internal/reserved-ping-names.html"><strong aria-hidden="true">4.10.1.</strong> Reserved ping names</a></li><li class="expanded "><a href="dev/core/internal/clearing.html"><strong aria-hidden="true">4.10.2.</strong> Clearing metrics when disabling/enabling Glean</a></li><li class="expanded "><a href="dev/core/internal/payload.html"><strong aria-hidden="true">4.10.3.</strong> Payload format</a></li><li class="expanded "><a href="dev/core/internal/directory-structure.html"><strong aria-hidden="true">4.10.4.</strong> Directory structure</a></li><li class="expanded "><a href="dev/core/internal/debug-pings.html"><strong aria-hidden="true">4.10.5.</strong> Debug Pings</a></li><li class="expanded "><a href="dev/core/internal/implementations.html"><strong aria-hidden="true">4.10.6.</strong> Implementations</a></li><li class="expanded "><a href="dev/core/internal/sdk-ndk-versions.html"><strong aria-hidden="true">4.10.7.</strong> Android SDK/NDK versions</a></li></ol></li><li class="expanded "><a href="dev/howtos/index.html"><strong aria-hidden="true">4.11.</strong> Howtos</a></li><li><ol class="section"><li class="expanded "><a href="dev/howtos/development-with-android-components.html"><strong aria-hidden="true">4.11.1.</strong> Development with android-components</a></li><li class="expanded "><a href="dev/howtos/locally-published-components-in-fenix.html"><strong aria-hidden="true">4.11.2.</strong> Locally-published components in Fenix</a></li></ol></li></ol></li><li class="expanded "><a href="api/index.html"><strong aria-hidden="true">5.</strong> API Documentation</a></li><li class="expanded "><a href="appendix/index.html"><strong aria-hidden="true">6.</strong> Appendix</a></li><li><ol class="section"><li class="expanded "><a href="appendix/glossary.html"><strong aria-hidden="true">6.1.</strong> Glossary</a></li><li class="expanded "><a href="appendix/changelog.html"><strong aria-hidden="true">6.2.</strong> Changelog</a></li><li class="expanded "><a href="appendix/twig.html"><strong aria-hidden="true">6.3.</strong> This Week in Glean</a></li></ol></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Glean</a></li><li class="chapter-item expanded "><a href="user/index.html"><strong aria-hidden="true">2.</strong> Using the Glean SDK</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="user/adding-glean-to-your-project.html"><strong aria-hidden="true">2.1.</strong> Adding Glean to your project</a></li><li class="chapter-item expanded "><a href="user/general-api.html"><strong aria-hidden="true">2.2.</strong> The General API</a></li><li class="chapter-item expanded "><a href="user/adding-new-metrics.html"><strong aria-hidden="true">2.3.</strong> Adding new metrics</a></li><li class="chapter-item expanded "><a href="user/metric-parameters.html"><strong aria-hidden="true">2.4.</strong> Metric parameters</a></li><li class="chapter-item expanded "><a href="user/testing-metrics.html"><strong aria-hidden="true">2.5.</strong> Testing metrics</a></li><li class="chapter-item expanded "><a href="user/debugging/index.html"><strong aria-hidden="true">2.6.</strong> Debugging products using Glean</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="user/debugging/android.html"><strong aria-hidden="true">2.6.1.</strong> Android</a></li><li class="chapter-item expanded "><a href="user/debugging/ios.html"><strong aria-hidden="true">2.6.2.</strong> iOS</a></li><li class="chapter-item expanded "><a href="user/debugging/python.html"><strong aria-hidden="true">2.6.3.</strong> Python</a></li></ol></li><li class="chapter-item expanded "><a href="user/error-reporting.html"><strong aria-hidden="true">2.7.</strong> Error reporting</a></li><li class="chapter-item expanded "><a href="user/experiments-api.html"><strong aria-hidden="true">2.8.</strong> Using the experiments API</a></li><li class="chapter-item expanded "><a href="user/metrics/index.html"><strong aria-hidden="true">2.9.</strong> Metric types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="user/metrics/boolean.html"><strong aria-hidden="true">2.9.1.</strong> Boolean</a></li><li class="chapter-item expanded "><a href="user/metrics/labeled_booleans.html"><strong aria-hidden="true">2.9.2.</strong> Labeled Booleans</a></li><li class="chapter-item expanded "><a href="user/metrics/counter.html"><strong aria-hidden="true">2.9.3.</strong> Counter</a></li><li class="chapter-item expanded "><a href="user/metrics/labeled_counters.html"><strong aria-hidden="true">2.9.4.</strong> Labeled Counters</a></li><li class="chapter-item expanded "><a href="user/metrics/string.html"><strong aria-hidden="true">2.9.5.</strong> String</a></li><li class="chapter-item expanded "><a href="user/metrics/labeled_strings.html"><strong aria-hidden="true">2.9.6.</strong> Labeled Strings</a></li><li class="chapter-item expanded "><a href="user/metrics/string_list.html"><strong aria-hidden="true">2.9.7.</strong> String List</a></li><li class="chapter-item expanded "><a href="user/metrics/timespan.html"><strong aria-hidden="true">2.9.8.</strong> Timespan</a></li><li class="chapter-item expanded "><a href="user/metrics/timing_distribution.html"><strong aria-hidden="true">2.9.9.</strong> Timing Distribution</a></li><li class="chapter-item expanded "><a href="user/metrics/memory_distribution.html"><strong aria-hidden="true">2.9.10.</strong> Memory Distribution</a></li><li class="chapter-item expanded "><a href="user/metrics/uuid.html"><strong aria-hidden="true">2.9.11.</strong> UUID</a></li><li class="chapter-item expanded "><a href="user/metrics/datetime.html"><strong aria-hidden="true">2.9.12.</strong> Datetime</a></li><li class="chapter-item expanded "><a href="user/metrics/event.html"><strong aria-hidden="true">2.9.13.</strong> Event</a></li><li class="chapter-item expanded "><a href="user/metrics/custom_distribution.html"><strong aria-hidden="true">2.9.14.</strong> Custom Distribution</a></li><li class="chapter-item expanded "><a href="user/metrics/quantity.html"><strong aria-hidden="true">2.9.15.</strong> Quantity</a></li></ol></li><li class="chapter-item expanded "><a href="user/pings/index.html"><strong aria-hidden="true">2.10.</strong> Pings</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="user/pings/ping-schedules-and-timings.html"><strong aria-hidden="true">2.10.1.</strong> Ping schedules and timings overview</a></li><li class="chapter-item expanded "><a href="user/pings/baseline.html"><strong aria-hidden="true">2.10.2.</strong> Baseline Ping</a></li><li class="chapter-item expanded "><a href="user/pings/deletion_request.html"><strong aria-hidden="true">2.10.3.</strong> Deletion Request Ping</a></li><li class="chapter-item expanded "><a href="user/pings/metrics.html"><strong aria-hidden="true">2.10.4.</strong> Metrics Ping</a></li><li class="chapter-item expanded "><a href="user/pings/events.html"><strong aria-hidden="true">2.10.5.</strong> Events Ping</a></li><li class="chapter-item expanded "><a href="user/pings/custom.html"><strong aria-hidden="true">2.10.6.</strong> Custom Pings</a></li><li class="chapter-item expanded "><a href="user/pings/testing-custom-pings.html"><strong aria-hidden="true">2.10.7.</strong> Testing custom pings</a></li></ol></li><li class="chapter-item expanded "><a href="user/android-build-configuration-options.html"><strong aria-hidden="true">2.11.</strong> Android build configuration options</a></li><li class="chapter-item expanded "><a href="user/focused-use-cases.html"><strong aria-hidden="true">2.12.</strong> Focused Use Cases</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="user/instrument-android-crashes-example.html"><strong aria-hidden="true">2.12.1.</strong> Instrumenting Android Crashes With Glean</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="user/collected-metrics/metrics.html"><strong aria-hidden="true">3.</strong> Metrics collected by the Glean SDK</a></li><li class="chapter-item expanded "><a href="dev/index.html"><strong aria-hidden="true">4.</strong> Developing the Glean SDK</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="dev/testing.html"><strong aria-hidden="true">4.1.</strong> Testing</a></li><li class="chapter-item expanded "><a href="dev/docs.html"><strong aria-hidden="true">4.2.</strong> Developing documentation</a></li><li class="chapter-item expanded "><a href="dev/android/index.html"><strong aria-hidden="true">4.3.</strong> Android bindings</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="dev/android/setup-android-build-environment.html"><strong aria-hidden="true">4.3.1.</strong> Setup Build Environment</a></li></ol></li><li class="chapter-item expanded "><a href="dev/ios/index.html"><strong aria-hidden="true">4.4.</strong> iOS bindings</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="dev/ios/setup-ios-build-environment.html"><strong aria-hidden="true">4.4.1.</strong> Setup Build Environment</a></li><li class="chapter-item expanded "><a href="dev/ios/debug-glean-on-ios.html"><strong aria-hidden="true">4.4.2.</strong> Debugging Different Versions of Glean</a></li></ol></li><li class="chapter-item expanded "><a href="dev/python/index.html"><strong aria-hidden="true">4.5.</strong> Python bindings</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="dev/python/setting-up-python-build-environment.html"><strong aria-hidden="true">4.5.1.</strong> Setup Build Environment</a></li></ol></li><li class="chapter-item expanded "><a href="dev/core/index.html"><strong aria-hidden="true">4.6.</strong> Rust Component</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="dev/core/dependency-management.html"><strong aria-hidden="true">4.6.1.</strong> Dependency Management</a></li><li class="chapter-item expanded "><a href="dev/core/new-metric-type.html"><strong aria-hidden="true">4.6.2.</strong> Adding a new metric type</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="dev/core/new-metric-type/ffi.html"><strong aria-hidden="true">4.6.2.1.</strong> FFI</a></li><li class="chapter-item expanded "><a href="dev/core/new-metric-type/kotlin.html"><strong aria-hidden="true">4.6.2.2.</strong> Kotlin</a></li><li class="chapter-item expanded "><a href="dev/core/new-metric-type/swift.html"><strong aria-hidden="true">4.6.2.3.</strong> Swift</a></li><li class="chapter-item expanded "><a href="dev/core/new-metric-type/python.html"><strong aria-hidden="true">4.6.2.4.</strong> Python</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="dev/ffi/index.html"><strong aria-hidden="true">4.7.</strong> FFI Layer</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="dev/ffi/when-to-use-what-in-the-ffi.html"><strong aria-hidden="true">4.7.1.</strong> When/How FFI</a></li></ol></li><li class="chapter-item expanded "><a href="contributing.html"><strong aria-hidden="true">4.8.</strong> Contributing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="code_coverage.html"><strong aria-hidden="true">4.8.1.</strong> Code coverage</a></li></ol></li><li class="chapter-item expanded "><a href="dev/cut-a-new-release.html"><strong aria-hidden="true">4.9.</strong> Release process</a></li><li class="chapter-item expanded "><a href="dev/core/internal/index.html"><strong aria-hidden="true">4.10.</strong> Internal implementation details</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="dev/core/internal/reserved-ping-names.html"><strong aria-hidden="true">4.10.1.</strong> Reserved ping names</a></li><li class="chapter-item expanded "><a href="dev/core/internal/clearing.html"><strong aria-hidden="true">4.10.2.</strong> Clearing metrics when disabling/enabling Glean</a></li><li class="chapter-item expanded "><a href="dev/core/internal/payload.html"><strong aria-hidden="true">4.10.3.</strong> Payload format</a></li><li class="chapter-item expanded "><a href="dev/core/internal/directory-structure.html"><strong aria-hidden="true">4.10.4.</strong> Directory structure</a></li><li class="chapter-item expanded "><a href="dev/core/internal/debug-pings.html"><strong aria-hidden="true">4.10.5.</strong> Debug Pings</a></li><li class="chapter-item expanded "><a href="dev/core/internal/upload.html"><strong aria-hidden="true">4.10.6.</strong> Upload mechanism</a></li><li class="chapter-item expanded "><a href="dev/core/internal/implementations.html"><strong aria-hidden="true">4.10.7.</strong> Implementations</a></li><li class="chapter-item expanded "><a href="dev/core/internal/sdk-ndk-versions.html"><strong aria-hidden="true">4.10.8.</strong> Android SDK/NDK versions</a></li></ol></li><li class="chapter-item expanded "><a href="dev/howtos/index.html"><strong aria-hidden="true">4.11.</strong> Howtos</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="dev/howtos/development-with-android-components.html"><strong aria-hidden="true">4.11.1.</strong> Development with android-components</a></li><li class="chapter-item expanded "><a href="dev/howtos/locally-published-components-in-fenix.html"><strong aria-hidden="true">4.11.2.</strong> Locally-published components in Fenix</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="api/index.html"><strong aria-hidden="true">5.</strong> API Documentation</a></li><li class="chapter-item expanded "><a href="appendix/index.html"><strong aria-hidden="true">6.</strong> Appendix</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="appendix/glossary.html"><strong aria-hidden="true">6.1.</strong> Glossary</a></li><li class="chapter-item expanded "><a href="appendix/changelog.html"><strong aria-hidden="true">6.2.</strong> Changelog</a></li><li class="chapter-item expanded "><a href="appendix/twig.html"><strong aria-hidden="true">6.3.</strong> This Week in Glean</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -97,41 +99,40 @@
 
             <div class="page">
                 
-                <div id="menu-bar" class="menu-bar">
-                    <div id="menu-bar-sticky-container">
-                        <div class="left-buttons">
-                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                                <i class="fa fa-bars"></i>
-                            </button>
-                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                                <i class="fa fa-paint-brush"></i>
-                            </button>
-                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
-                            </ul>
-                            
-                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
-                                <i class="fa fa-search"></i>
-                            </button>
-                            
-                        </div>
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
 
-                        <h1 class="menu-title">Glean - Cross-platform Telemetry library</h1>
+                    <h1 class="menu-title">Glean - Cross-platform Telemetry library</h1>
 
-                        <div class="right-buttons">
-                            <a href="print.html" title="Print this book" aria-label="Print this book">
-                                <i id="print-button" class="fa fa-print"></i>
-                            </a>
-                            
-                            <a href="https://github.com/mozilla/glean" title="Git repository" aria-label="Git repository">
-                                <i id="git-repository-button" class="fa fa-github"></i>
-                            </a>
-                            
-                        </div>
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        <a href="https://github.com/mozilla/glean" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
                     </div>
                 </div>
 
@@ -2605,9 +2606,9 @@ assert 1 == metrics.pages.page_load.test_get_num_recorded_errors(
 <ul>
 <li><code>nanosecond</code>: 1ns &lt;= x &lt;= 10 minutes</li>
 <li><code>microsecond</code>: 1μs &lt;= x &lt;= ~6.94 days</li>
-<li><code>millisecond</code>: 1ms &lt;= x &lt;= ~19 years</li>
+<li><code>millisecond</code>: 1ms &lt;= x &lt;= ~19 years
+Longer times will be truncated to the maximum value and an error will be recorded.</li>
 </ul>
-<p>Longer times will be truncated to the maximum value and an error will be recorded.</p>
 </li>
 </ul>
 <h2><a class="header" href="#examples-8" id="examples-8">Examples</a></h2>
@@ -4896,9 +4897,6 @@ If you need to reproduce this locally, see the CircleCI job <code>pypi-windows-r
 <li>A ping serializer</li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/dev/core/index.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#dependency-management-guidelines" id="dependency-management-guidelines">Dependency Management Guidelines</a></h1>
-<hr />
-<p>This is currently copied from <a href="https://github.com/mozilla/application-services/blob/4347ea9c590d2319db1c994680832cc20bc3758d/docs/dependency-management.md">application-services documentation</a>.</p>
-<hr />
 <p>This repository uses third-party code from a variety of sources, so we need to be mindful
 of how these dependencies will affect our consumers.  Considerations include:</p>
 <ul>
@@ -4918,18 +4916,8 @@ existing dependencies:</p>
 <ul>
 <li>Check <code>Cargo.lock</code> into the repository.</li>
 <li>Generate built artifacts using the <code>--locked</code> flag to <code>cargo build</code>, as an additional
-assurance that the existing <code>Cargo.lock</code> will be respected.
-<ul>
-<li>TODO: how to actually make this happen via rust-android-gradle plugin?</li>
-</ul>
-</li>
-<li>Regularly run <a href="https://github.com/RustSec/cargo-audit">cargo-audit</a> in CI to alert us to
-security problems in our dependencies.
-<ul>
-<li>It runs on every PR, and once per hour as a scheduled job with failures reported to slack.</li>
-</ul>
-</li>
-<li>Use <a href="https://github.com/onur/cargo-license">cargo-license</a> for a basic license-compatibility
+assurance that the existing <code>Cargo.lock</code> will be respected.</li>
+<li>Use <a href="https://github.com/EmbarkStudios/cargo-deny">cargo-deny</a> for a basic license-compatibility
 check as part of CI, to guard against human error.</li>
 </ul>
 <p>Adding a new dependency, whether we like it or not, is a big deal - that dependency and everything
@@ -4946,7 +4934,7 @@ Remember the cautionary tale of <a href="https://www.theregister.co.uk/2016/03/2
 <li>Prefer crates that have a a high level of due-diligence already applied, such as:
 <ul>
 <li>Crates that are <a href="https://dxr.mozilla.org/mozilla-central/source/third_party/rust">already vendored into Firefox</a>.</li>
-<li>Crates from <a href="https://github.com/rust-lang-nursery">rust-lang-nursery</a>.</li>
+<li>Crates from <a href="https://github.com/rust-lang-nursery">rust-lang-nursery</a> or <a href="https://github.com/rust-lang">rust-lang</a>.</li>
 <li>Crates that appear to be widely used in the Rust community.</li>
 </ul>
 </li>
@@ -5357,9 +5345,6 @@ __all__ = [
 <p>The core part of the Glean SDK provides an FFI layer for its API.
 This FFI layer can be consumed by platform-specific bindings, such as the <a href="dev/ffi/../android/index.html">Kotlin bindings for Android</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/dev/ffi/index.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#when-to-use-what-method-of-passing-data-between-rust-and-javaswift" id="when-to-use-what-method-of-passing-data-between-rust-and-javaswift">When to use what method of passing data between Rust and Java/Swift</a></h1>
-<hr />
-<p>This is currently copied from <a href="https://github.com/mozilla/application-services/blob/4347ea9c590d2319db1c994680832cc20bc3758d/docs/howtos/when-to-use-what-in-the-ffi.md">application-services documentation</a>.</p>
-<hr />
 <p>There are a bunch of options here. For the purposes of our discussion,
 there are two kinds of values you may want to pass over the FFI.</p>
 <ol>
@@ -5368,64 +5353,45 @@ isn't really serializable).</li>
 <li>Plain ol' data.</li>
 </ol>
 <h2><a class="header" href="#types-with-identity" id="types-with-identity">Types with identity</a></h2>
-<p>Examples of this are things like database connections, the <code>FirefoxAccounts</code>
-struct, etc. These types are complex, implemented in Rust, and it's not
-unreasonable for them to come to Java/Kotlin as a type representing a
-resource (e.g. implementing <code>Closable</code>/<code>AutoClosable</code>).</p>
-<p>You have two choices here:</p>
-<ol>
-<li>
-<p>Use a <code>ConcurrentHandleMap</code> to store all instances of your object, and
-pass the handle back and forth as a u64 from Rust / Long from Kotlin.</p>
+<p>Examples of this are all metric type implementations, e.g. <code>StringMetric</code>.
+These types are complex, implemented in Rust and make use of the global Glean singleton on the Rust side,
+They have an equivalent on the wrapper side (Kotlin/Swift/Python), that forwards calls through FFI.</p>
+<p>They all follow the same pattern:</p>
+<p>A <code>ConcurrentHandleMap</code> stores all instances of the same type,
+A handle is passed back and forth as a <code>u64</code> from Rust, <code>Long</code> from Kotlin, <code>UInt64</code> from Swift
+or other equivalent type in other languages.</p>
 <p>This is recommended for most cases, as it's the hardest to mess up.
 Additionally, for types T such that <code>&amp;T: Sync + Send</code>, or that you
 need to call <code>&amp;mut self</code> method, this is the safest choice.</p>
-<p>Additionally, this will ensure panic-safety, as you'll poison your Mutex.</p>
-<p>The <a href="https://docs.rs/ffi-support/*/ffi_support/handle_map/index.html"><code>ffi_support::handle_map</code> docs</a>
-are good, and under <code>ConcurrentHandleMap</code> include an example of how to set
-this up. You can also look at most of the FFI crates, as they do this (with
-the exception of <code>rc_log</code>, which has unique requirements).</p>
-</li>
-<li>
-<p>Using an opaque pointer. This is generally only recommended for rare cases
-like the <code>PlacesInterruptHandle</code> (or the <code>LogAdapterState</code> from <code>rc_log</code>,
-although it will probably eventually use a handle).</p>
-<p>It's good if your synchronization or threading requirements are somewhat
-complex and handled separately, such that the additional overhead of
-the <code>ConcurrentHandleMap</code> is undesirable. You should probably talk to us
-before adding another type that works this way, to make sure it's sound.</p>
-<p>The <a href="https://docs.rs/ffi-support/*/ffi_support/macro.implement_into_ffi_by_pointer.html"><code>ffi_support</code> docs</a>
-discuss how to do this, or take a look at how it's done for
-<code>PlacesInterruptHandle</code>).</p>
-</li>
-</ol>
+<p>Additionally, this will ensure panic-safety, as it will poison the internal Mutex, making further access impossible.</p>
+<p>The <a href="https://docs.rs/ffi-support/*/ffi_support/handle_map/index.html"><code>ffi_support::handle_map</code> docs</a> are good,
+and under <code>ConcurrentHandleMap</code> include an example of how to set this up.</p>
 <h2><a class="header" href="#plain-old-data" id="plain-old-data">Plain Old Data</a></h2>
 <p>This includes both primitive values, strings, arrays, or arbitrarily nested
 structures containing them.</p>
 <h3><a class="header" href="#primitives" id="primitives">Primitives</a></h3>
-<p>Specifically numeric primitives. These we'll tackle first since they're the
-easiest.</p>
-<p>In general, you can just pass them as you wish. There are a couple of
-exceptions/caveats. All of them are caused by JNA/Android issues (Swift has very
-good support for calling over the FFI), but it's our lowest common denominator.</p>
+<p>Numeric primitives are the easiest to pass between languages.
+The main recommendation is: use the equivalent and same-sized type as the one provided by Rust.</p>
+<p>There are a couple of exceptions/caveats, especially for Kotlin. All of them are caused by JNA/Android issues.
+Swift has very good support for calling over the FFI.</p>
 <ol>
 <li>
 <p><code>bool</code>: Don't use it. JNA doesn't handle it well. Instead, use a numeric type
-(like <code>u8</code>) and represent 0 for false and 1 for true for interchange over the
-FFI, converting back to a Kotlin <code>Boolean</code> or swift <code>Bool</code> after (as to
-not expose this somewhat annoying limitation in our public API).</p>
+(like <code>u8</code>) and represent 0 for <code>false</code> and 1 for <code>true</code> for interchange over the
+FFI, converting back to Kotlin's <code>Boolean</code> or Swift's <code>Bool</code> after (as to
+not expose this somewhat annoying limitation in our public API).
+All wrappers already include utility functions to turn 8-bit integers (<code>u8</code>) back to booleans
+(<code>toBool()</code> or equivalent methods).</p>
 </li>
 <li>
 <p><code>usize</code>/<code>isize</code>: These cause the structure size to be different based on the
-platform. JNA does handle this if you use <code>NativeSize</code>, but it's awkward,
-incompatible with it's Direct Mapping optimization (which we don't use but
-want to in the future), and has more overhead than just using <code>i64</code>/<code>i32</code> for
-<code>Long</code>/<code>Int</code>. (You can also use <code>u64</code>/<code>u32</code> for <code>Long</code>/<code>Int</code>, if you're certain the
-value is not negative)</p>
+platform. JNA does handle this if you use <code>NativeSize</code>, but it's awkward.
+Use the size-defined integers instead, such as <code>i64</code>/<code>i32</code> and their language-equivalents
+(Kotlin: <code>Long</code>/<code>Int</code>, Swift:<code>UInt64</code>/<code>UInt32</code>).
+<em>Caution:</em> In Kotlin integers are signed by default. You can use <code>u64</code>/<code>u32</code> for <code>Long</code>/<code>Int</code> if you ensure the values are non-negative through asserts or error reporting code.</p>
 </li>
 <li>
-<p><code>char</code>: I really don't see a reason you need to pass a single code point over the
-FFI, but if someone needs to do this, they instead should just pass it as a <code>u32</code>.</p>
+<p><code>char</code>: Avoid these if possible. If you really have a use case consider <code>u32</code> instead.</p>
 <p>If you do this, you should probably be aware of the fact that Java chars are 16
 bit, and Swift <code>Character</code>s are actually strings (they represent Extended
 Grapheme Clusters, not codepoints).</p>
@@ -5454,35 +5420,35 @@ to the destructor, it will allocate a temporary buffer, pass it to Rust, which
 we'll free, corrupting both heaps 💥. Oops!</p>
 </li>
 <li>
-<p>If the string is passed into Rust from Kotlin/Swift, the rust code should
+<p>If the string is passed into Rust from Kotlin/Swift, the Rust code should
 declare the parameter as a <a href="https://docs.rs/ffi-support/*/ffi_support/struct.FfiStr.html"><code>FfiStr&lt;'_&gt;</code></a>.
 and things should then work more or less automatically. The <code>FfiStr</code> has methods
 for extracting it's data as <code>&amp;str</code>, <code>Option&lt;&amp;str&gt;</code>, <code>String</code>, and <code>Option&lt;String&gt;</code>.</p>
 </li>
 </ol>
-<p>It's also completely fine to use Protobufs or JSON for this case!</p>
 <h3><a class="header" href="#aggregates" id="aggregates">Aggregates</a></h3>
 <p>This is any type that's more complex than a primitive or a string (arrays,
-structures, and combinations there-in). There are two options we recommend for
-these cases:</p>
+structures, and combinations there-in).
+There are two options we recommend for these cases:</p>
 <ol>
 <li>
-<p>Passing data using Protobufs. See the
-&quot;<a href="https://github.com/mozilla/application-services/blob/master/docs/howtos/passing-protobuf-data-over-ffi.md">Using Protobufs-encoded data over Rust FFI</a>&quot;
-document for details on how to do this. We recommend this for all new use cases, unless
-you have a specific reason that JSON is better (e.g. semi-opaque JSON encoded data is
-desired on the other side).</p>
+<p>Passing data as JSON. This is very easy and useful for prototyping, but is
+much slower and requires a great deal of copying and redundant encode/decode
+steps (in general, the data will be copied at least 4 times to make this
+work, and almost certainly more in practice).
+It can be done relatively easily by <code>derive(Serialize, Deserialize)</code>,
+and converting to a JSON string using <code>serde_json::to_string</code>.</p>
+<p>This is a viable option for test-only functions, where the overhead is not important.</p>
 </li>
 <li>
-<p>Passing data as JSON. This is very easy, and useful for prototyping, however
-much slower, requires a great deal of copying and redundant encode/decode
-steps (in general, the data will be copied at least 4 times to make this
-work, and almost certainly more in practice), and can be done relatively
-easily by <code>derive(Serialize, Deserialize)</code>, and adding
-<a href="https://docs.rs/ffi-support/*/ffi_support/macro.implement_into_ffi_by_json.html"><code>ffi_support::implement_into_ffi_by_json</code></a>
-into the crate that defines the type.</p>
-<p>For new non-test code this is not a recommended approach.
-For test code, this can be a useful performance/simplicity trade off to make.</p>
+<p>Use <code>repr(C)</code> structures and copy the data across the boundary,
+carefully replicating the same structure on the wrapper side.
+In Kotlin this will require <code>@Structure.FieldOrder</code> annotations.
+Swift can directly handle C types.</p>
+<p><strong>Caution:</strong> This is error prone! Structures, enumerations and unions need to be kept the same across all layers
+(Rust, generated C header, Kotlin, Swift, ...).
+Be extra careful, avoid adding references to structures and ensure the structures are correctly freed inside Rust.
+Copy out the data and convert into language-appropriate types (e.g. convert <code>*mut c_char</code> into Swift/Kotlin strings) as soon as possible.</p>
 </li>
 </ol>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/dev/ffi/when-to-use-what-in-the-ffi.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#contributing-to-the-glean-sdk" id="contributing-to-the-glean-sdk">Contributing to the Glean SDK</a></h1>
@@ -5644,28 +5610,37 @@ For some developer workflows, <code>upstream</code> can be the same as <code>ori
 </ul>
 <h3><a class="header" href="#create-a-release-branch" id="create-a-release-branch">Create a release branch</a></h3>
 <ol>
-<li>Create a release branch from the <code>master</code> branch:
-<pre><code>git checkout -b release-v25.0.0 master
+<li>
+<p>Create a release branch from the <code>master</code> branch:````
+git checkout -b release-v25.0.0 master````</p>
+<pre><code>
 </code></pre>
 </li>
-<li>Update the changelog .
+<li>
+<p>Update the changelog .</p>
 <ol>
 <li>Add any missing important changes under the <code>Unreleased changes</code> headline.</li>
 <li>Commit any changes to the changelog file due to the previous step.</li>
 </ol>
 </li>
-<li>Run <code>bin/prepare-release.sh &lt;new version&gt;</code> to bump the version number.
+<li>
+<p>Run <code>bin/prepare-release.sh &lt;new version&gt;</code> to bump the version number.</p>
 <ol>
 <li>The new version should be the next patch, minor or major version of what is currently released.</li>
 <li>Let it create a commit for you.</li>
 </ol>
 </li>
-<li>Push the new release branch:
-<pre><code>git push upstream release-v25.0.0
+<li>
+<p>Push the new release branch:````
+git push upstream release-v25.0.0````</p>
+<pre><code>
 </code></pre>
 </li>
-<li>Wait for CI to finish on that branch and ensure it's green: <a href="https://circleci.com/gh/mozilla/glean/tree/release-v25.0.0">https://circleci.com/gh/mozilla/glean/tree/release-v25.0.0</a></li>
-<li>Apply additional commits for bug fixes to this branch.
+<li>
+<p>Wait for CI to finish on that branch and ensure it's green: <a href="https://circleci.com/gh/mozilla/glean/tree/release-v25.0.0">https://circleci.com/gh/mozilla/glean/tree/release-v25.0.0</a></p>
+</li>
+<li>
+<p>Apply additional commits for bug fixes to this branch.</p>
 <ul>
 <li>Adding large new features here is strictly prohibited. They need to go to the <code>master</code> branch and wait for the next release.</li>
 </ul>
@@ -5674,19 +5649,26 @@ For some developer workflows, <code>upstream</code> can be the same as <code>ori
 <h3><a class="header" href="#finish-a-release-branch" id="finish-a-release-branch">Finish a release branch</a></h3>
 <p>When CI has finished and is green for your specific release branch, you are ready to cut a release.</p>
 <ol>
-<li>Check out the main release branch:
-<pre><code>git checkout release
+<li>
+<p>Check out the main release branch:````
+git checkout release````</p>
+<pre><code>
 </code></pre>
 </li>
-<li>Merge the specific release branch:
-<pre><code>git merge --no-ff release-v25.0.0
+<li>
+<p>Merge the specific release branch:````
+git merge --no-ff release-v25.0.0````</p>
+<pre><code>
 </code></pre>
 </li>
-<li>Push the main release branch:
-<pre><code>git push upstream release
+<li>
+<p>Push the main release branch:````
+git push upstream release````</p>
+<pre><code>
 </code></pre>
 </li>
-<li>Tag the release on GitHub:
+<li>
+<p>Tag the release on GitHub:</p>
 <ol>
 <li><a href="https://github.com/mozilla/glean/releases/new">Draft a New Release</a> in the GitHub UI (<code>Releases &gt; Draft a New Release</code>).</li>
 <li>Enter <code>v&lt;myversion&gt;</code> as the tag. It's important this is the same as the version you specified to the <code>prepare_release.sh</code> script, with the <code>v</code> prefix added.</li>
@@ -5694,68 +5676,94 @@ For some developer workflows, <code>upstream</code> can be the same as <code>ori
 <li>Under the description, paste the contents of the release notes from <code>CHANGELOG.md</code>.</li>
 </ol>
 </li>
-<li>Wait for the CI build to complete for the tag.
+<li>
+<p>Wait for the CI build to complete for the tag.</p>
 <ul>
 <li>You can check <a href="https://circleci.com/gh/mozilla/glean">on CircleCI for the running build</a>.</li>
 </ul>
 </li>
-<li>Release the Rust crates:
-<pre><code>cd glean-core
+<li>
+<p>Release the Rust crates:````
+cd glean-core
 cargo publish --verbose
 cd ffi
-cargo publish --verbose
+cargo publish --verbose````</p>
+<pre><code>
 </code></pre>
 </li>
-<li>Send a pull request to merge back the specific release branch to the development branch: <a href="https://github.com/mozilla/glean/compare/master...release-v25.0.0?expand=1">https://github.com/mozilla/glean/compare/master...release-v25.0.0?expand=1</a>
+<li>
+<p>Send a pull request to merge back the specific release branch to the development branch: <a href="https://github.com/mozilla/glean/compare/master...release-v25.0.0?expand=1">https://github.com/mozilla/glean/compare/master...release-v25.0.0?expand=1</a></p>
 <ul>
 <li>This is important so that no changes are lost.</li>
 <li>This might have merge conflicts with the <code>master</code> branch, which you need to fix before it is merged.</li>
 </ul>
 </li>
-<li>Once the above pull request lands, delete the specific release branch.</li>
+<li>
+<p>Once the above pull request lands, delete the specific release branch.</p>
+</li>
 </ol>
 <h2><a class="header" href="#hotfix-release-for-latest-version" id="hotfix-release-for-latest-version">Hotfix release for latest version</a></h2>
 <p>If the latest released version requires a bug fix, a hotfix branch is used.</p>
 <h3><a class="header" href="#create-a-hotfix-branch" id="create-a-hotfix-branch">Create a hotfix branch</a></h3>
 <ol>
-<li>Create a hotfix branch from the main release branch:
-<pre><code>git checkout -b hotfix-v25.0.1 release
+<li>
+<p>Create a hotfix branch from the main release branch:````
+git checkout -b hotfix-v25.0.1 release````</p>
+<pre><code>
 </code></pre>
 </li>
-<li>Run <code>bin/prepare-release.sh &lt;new version&gt;</code> to bump the version number.
+<li>
+<p>Run <code>bin/prepare-release.sh &lt;new version&gt;</code> to bump the version number.</p>
 <ol>
 <li>The new version should be the next patch version of what is currently released.</li>
 <li>Let it create a commit for you.</li>
 </ol>
 </li>
-<li>Push the hotfix branch:
-<pre><code>git push upstream hotfix-v25.0.1
+<li>
+<p>Push the hotfix branch:````
+git push upstream hotfix-v25.0.1````</p>
+<pre><code>
 </code></pre>
 </li>
-<li>Create a local hotfix branch for bugfixes:
-<pre><code>git checkout -b bugfix hotfix-v25.0.1
+<li>
+<p>Create a local hotfix branch for bugfixes:````
+git checkout -b bugfix hotfix-v25.0.1````</p>
+<pre><code>
 </code></pre>
 </li>
-<li>Fix the bug and commit the fix in one or more separate commits.</li>
-<li>Push your bug fixes and create a pull request against the hotfix branch: <a href="https://github.com/mozilla/glean/compare/hotfix-v25.0.1...your-name:bugfix?expand=1">https://github.com/mozilla/glean/compare/hotfix-v25.0.1...your-name:bugfix?expand=1</a></li>
-<li>When that pull request lands, wait for CI to finish on that branch and ensure it's green: <a href="https://circleci.com/gh/mozilla/glean/tree/hotfix-v25.0.1">https://circleci.com/gh/mozilla/glean/tree/hotfix-v25.0.1</a></li>
+<li>
+<p>Fix the bug and commit the fix in one or more separate commits.</p>
+</li>
+<li>
+<p>Push your bug fixes and create a pull request against the hotfix branch: <a href="https://github.com/mozilla/glean/compare/hotfix-v25.0.1...your-name:bugfix?expand=1">https://github.com/mozilla/glean/compare/hotfix-v25.0.1...your-name:bugfix?expand=1</a></p>
+</li>
+<li>
+<p>When that pull request lands, wait for CI to finish on that branch and ensure it's green: <a href="https://circleci.com/gh/mozilla/glean/tree/hotfix-v25.0.1">https://circleci.com/gh/mozilla/glean/tree/hotfix-v25.0.1</a></p>
+</li>
 </ol>
 <h3><a class="header" href="#finish-a-hotfix-branch" id="finish-a-hotfix-branch">Finish a hotfix branch</a></h3>
 <p>When CI has finished and is green for your hotfix branch, you are ready to cut a release, similar to a normal release:</p>
 <ol>
-<li>Check out the main release branch:
-<pre><code>git checkout release
+<li>
+<p>Check out the main release branch:````
+git checkout release````</p>
+<pre><code>
 </code></pre>
 </li>
-<li>Merge the hotfix branch:
-<pre><code>git merge --no-ff hotfix-v25.0.1
+<li>
+<p>Merge the hotfix branch:````
+git merge --no-ff hotfix-v25.0.1````</p>
+<pre><code>
 </code></pre>
 </li>
-<li>Push the main release branch:
-<pre><code>git push upstream release
+<li>
+<p>Push the main release branch:````
+git push upstream release````</p>
+<pre><code>
 </code></pre>
 </li>
-<li>Tag the release on GitHub:
+<li>
+<p>Tag the release on GitHub:</p>
 <ol>
 <li><a href="https://github.com/mozilla/glean/releases/new">Draft a New Release</a> in the GitHub UI (<code>Releases &gt; Draft a New Release</code>).</li>
 <li>Enter <code>v&lt;myversion&gt;</code> as the tag. It's important this is the same as the version you specified to the <code>prepare_release.sh</code> script, with the <code>v</code> prefix added.</li>
@@ -5763,25 +5771,31 @@ cargo publish --verbose
 <li>Under the description, paste the contents of the release notes from <code>CHANGELOG.md</code>.</li>
 </ol>
 </li>
-<li>Wait for the CI build to complete for the tag.
+<li>
+<p>Wait for the CI build to complete for the tag.</p>
 <ul>
 <li>You can check <a href="https://circleci.com/gh/mozilla/glean">on CircleCI for the running build</a>.</li>
 </ul>
 </li>
-<li>Release the Rust crates:
-<pre><code>cd glean-core
+<li>
+<p>Release the Rust crates:````
+cd glean-core
 cargo publish --verbose
 cd ffi
-cargo publish --verbose
+cargo publish --verbose````</p>
+<pre><code>
 </code></pre>
 </li>
-<li>Send a pull request to merge back the hotfix branch to the development branch: <a href="https://github.com/mozilla/glean/compare/master...hotfix-v25.0.1?expand=1">https://github.com/mozilla/glean/compare/master...hotfix-v25.0.1?expand=1</a>
+<li>
+<p>Send a pull request to merge back the hotfix branch to the development branch: <a href="https://github.com/mozilla/glean/compare/master...hotfix-v25.0.1?expand=1">https://github.com/mozilla/glean/compare/master...hotfix-v25.0.1?expand=1</a></p>
 <ul>
 <li>This is important so that no changes are lost.</li>
 <li>This might have merge conflicts with the <code>master</code> branch, which you need to fix before it is merged.</li>
 </ul>
 </li>
-<li>Once the above pull request lands, delete the hotfix branch.</li>
+<li>
+<p>Once the above pull request lands, delete the hotfix branch.</p>
+</li>
 </ol>
 <h2><a class="header" href="#hotfix-release-for-previous-version" id="hotfix-release-for-previous-version">Hotfix release for previous version</a></h2>
 <p>If you need to release a hotfix for a previously released version (that is: not the latest released version), you need a support branch.</p>
@@ -5790,42 +5804,59 @@ cargo publish --verbose
 </blockquote>
 <h3><a class="header" href="#create-a-support-and-hotfix-branch" id="create-a-support-and-hotfix-branch">Create a support and hotfix branch</a></h3>
 <ol>
-<li>Create a support branch from the version tag and push it:
-<pre><code>git checkout -b support/v24.0 v24.0.0
-git push upstream support/v24.0
+<li>
+<p>Create a support branch from the version tag and push it:````
+git checkout -b support/v24.0 v24.0.0
+git push upstream support/v24.0````</p>
+<pre><code>
 </code></pre>
 </li>
-<li>Create a hotfix branch for this support branch:
-<pre><code>git checkout -b hotfix-v24.0.1 support/v24.0
+<li>
+<p>Create a hotfix branch for this support branch:````
+git checkout -b hotfix-v24.0.1 support/v24.0````</p>
+<pre><code>
 </code></pre>
 </li>
-<li>Fix the bug and commit the fix in one or more separate commits into your hotfix branch.</li>
-<li>Push your bug fixes and create a pull request against the support branch: <a href="https://github.com/mozilla/glean/compare/support/v24.0...your-name:hotfix-v24.0.1?expand=1">https://github.com/mozilla/glean/compare/support/v24.0...your-name:hotfix-v24.0.1?expand=1</a></li>
-<li>When that pull request lands, wait for CI to finish on that branch and ensure it's green: <a href="https://circleci.com/gh/mozilla/glean/tree/support/v24.0">https://circleci.com/gh/mozilla/glean/tree/support/v24.0</a></li>
+<li>
+<p>Fix the bug and commit the fix in one or more separate commits into your hotfix branch.</p>
+</li>
+<li>
+<p>Push your bug fixes and create a pull request against the support branch: <a href="https://github.com/mozilla/glean/compare/support/v24.0...your-name:hotfix-v24.0.1?expand=1">https://github.com/mozilla/glean/compare/support/v24.0...your-name:hotfix-v24.0.1?expand=1</a></p>
+</li>
+<li>
+<p>When that pull request lands, wait for CI to finish on that branch and ensure it's green: <a href="https://circleci.com/gh/mozilla/glean/tree/support/v24.0">https://circleci.com/gh/mozilla/glean/tree/support/v24.0</a></p>
+</li>
 </ol>
 <h3><a class="header" href="#finish-a-support-branch" id="finish-a-support-branch">Finish a support branch</a></h3>
 <ol>
-<li>Check out the support branch:
-<pre><code>git checkout support/v24.0
+<li>
+<p>Check out the support branch:````
+git checkout support/v24.0````</p>
+<pre><code>
 </code></pre>
 </li>
-<li>Update the changelog .
+<li>
+<p>Update the changelog .</p>
 <ol>
 <li>Add any missing important changes under the <code>Unreleased changes</code> headline.</li>
 <li>Commit any changes to the changelog file due to the previous step.</li>
 </ol>
 </li>
-<li>Run <code>bin/prepare-release.sh &lt;new version&gt;</code> to bump the version number.
+<li>
+<p>Run <code>bin/prepare-release.sh &lt;new version&gt;</code> to bump the version number.</p>
 <ol>
 <li>The new version should be the next patch version of the support branch.</li>
 <li>Let it create a commit for you.</li>
 </ol>
 </li>
-<li>Push the support branch:
-<pre><code>git push upstream support/v24.0
+<li>
+<p>Push the support branch:````
+git push upstream support/v24.0````</p>
+<pre><code>
 </code></pre>
 </li>
-<li>Tag the release on GitHub:
+<li>
+<p>Tag the release on GitHub:</p>
 <ol>
 <li><a href="https://github.com/mozilla/glean/releases/new">Draft a New Release</a> in the GitHub UI (<code>Releases &gt; Draft a New Release</code>).</li>
 <li>Enter <code>v&lt;myversion&gt;</code> as the tag. It's important this is the same as the version you specified to the <code>prepare_release.sh</code> script, with the <code>v</code> prefix added.</li>
@@ -5833,25 +5864,31 @@ git push upstream support/v24.0
 <li>Under the description, paste the contents of the release notes from <code>CHANGELOG.md</code>.</li>
 </ol>
 </li>
-<li>Wait for the CI build to complete for the tag.
+<li>
+<p>Wait for the CI build to complete for the tag.</p>
 <ul>
 <li>You can check <a href="https://circleci.com/gh/mozilla/glean">on CircleCI for the running build</a>.</li>
 </ul>
 </li>
-<li>Release the Rust crates:
-<pre><code>cd glean-core
+<li>
+<p>Release the Rust crates:````
+cd glean-core
 cargo publish --verbose
 cd ffi
-cargo publish --verbose
+cargo publish --verbose````</p>
+<pre><code>
 </code></pre>
 </li>
-<li>Send a pull request to merge back any bug fixes to the development branch: <a href="https://github.com/mozilla/glean/compare/master...support/v24.0?expand=1">https://github.com/mozilla/glean/compare/master...support/v24.0?expand=1</a>
+<li>
+<p>Send a pull request to merge back any bug fixes to the development branch: <a href="https://github.com/mozilla/glean/compare/master...support/v24.0?expand=1">https://github.com/mozilla/glean/compare/master...support/v24.0?expand=1</a></p>
 <ul>
 <li>This is important so that no changes are lost.</li>
 <li>This might have merge conflicts with the <code>master</code> branch, which you need to fix before it is merged.</li>
 </ul>
 </li>
-<li>Once the above pull request lands, delete the support branch.</li>
+<li>
+<p>Once the above pull request lands, delete the support branch.</p>
+</li>
 </ol>
 <h2><a class="header" href="#upgrading-android-components-to-a-new-version-of-glean" id="upgrading-android-components-to-a-new-version-of-glean">Upgrading android-components to a new version of Glean</a></h2>
 <p>On Android, Mozilla products consume the Glean SDK through its wrapper in <a href="https://github.com/mozilla-mobile/android-components"><code>android-components</code></a>.
@@ -6143,8 +6180,77 @@ See the individual metric types for details on the value payload:</p>
 <hr />
 <div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
 <p>Requires a Mozilla login.</p>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/dev/core/internal/debug-pings.md">Edit this file on GitHub.</a></footer></div>
+<h1><a class="header" href="#upload-mechanism" id="upload-mechanism">Upload mechanism</a></h1>
+<p>The <code>glean-core</code> Rust crate does not handle the ping upload directly.
+Network stacks vastly differ between platforms, applications and operating systems.
+The Glean SDK leverages the available platform capabilities to implement any network communication.</p>
+<p>Glean core controls all upload and coordinates the platform side with its own internals.
+All language bindings implement ping uploading around a common API and protocol.</p>
+<h2><a class="header" href="#upload-task-api" id="upload-task-api">Upload task API</a></h2>
+<p>The following diagram visualizes the communication between Glean core (the Rust crate),
+a Glean language binding (e.g. the Kotlin or Swift implementation) and a Glean end point server.</p>
+<pre class="mermaid">sequenceDiagram
+    participant Glean core
+    participant Glean wrapper
+    participant Server
+
+    Glean wrapper->>Glean core: get_upload_task()
+    Glean core->>Glean wrapper: Task::Upload(task)
+    Glean wrapper-->>Server: POST /submit/{task.id}
+    Server-->>Glean wrapper: 200 OK
+    Glean wrapper->>Glean core: upload_response(200)
+    Glean wrapper->>Glean core: get_upload_task()
+    Glean core->>Glean wrapper: Task::Done
+</pre>
+<p>Glean core will take care of file management, cleanup, rescheduling and throttling<sup class="footnote-reference"><a href="#1">1</a></sup>.</p>
+<blockquote>
+<p><sup class="footnote-reference"><a href="#1">1</a></sup> Note: At this point throttling is not implemented. Follow <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1543612">Bug 1543612</a> for updates.</p>
+</blockquote>
+<h2><a class="header" href="#available-apis" id="available-apis">Available APIs</a></h2>
+<div class="tabs">
+<div class="tabbar"></div>
+<div class="tabcontents">
+<div data-lang="Rust" class="tab">
+<p>For direct Rust consumers the global <code>Glean</code> object provides these methods:</p>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>/// Gets the next task for an uploader.
+fn get_upload_task(&amp;self) -&gt; PingUploadTask
+
+/// Processes the response from an attempt to upload a ping.
+fn process_ping_upload_response(&amp;self, uuid: &amp;str, status: UploadResult)
+<span class="boring">}
+</span></code></pre></pre>
+<p>See the documentation for further usage and explanation of the additional types:</p>
+<ul>
+<li><a href="dev/core/internal/../../../../docs/glean_core/struct.Glean.html#method.get_upload_task"><code>get_upload_task</code></a></li>
+<li><a href="dev/core/internal/../../../../docs/glean_core/struct.Glean.html#method.process_ping_upload_response"><code>process_ping_upload_response</code></a></li>
+<li><a href="dev/core/internal/../../../../docs/glean_core/upload/enum.PingUploadTask.html"><code>PingUploadTask</code></a></li>
+<li><a href="dev/core/internal/../../../../docs/glean_core/upload/enum.UploadResult.html"><code>UploadResult</code></a></li>
+</ul>
 </div>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/dev/core/internal/debug-pings.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#implementations" id="implementations">Implementations</a></h1>
+<div data-lang="FFI" class="tab">
+<p>For FFI consumers (e.g. Kotlin/Swift/Python implementations) these functions are available:</p>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>/// Gets the next task for an uploader. Which can be either:
+extern &quot;C&quot; fn glean_get_upload_task() -&gt; FfiPingUploadTask
+
+/// Processes the response from an attempt to upload a ping.
+extern &quot;C&quot; fn glean_process_ping_upload_response(task: FfiPingUploadTask, status: u32)
+<span class="boring">}
+</span></code></pre></pre>
+<p>See the documentation for additional information about the types:</p>
+<ul>
+<li><a href="dev/core/internal/../../../../docs/glean_ffi/upload/index.html"><code>glean_ffi::upload</code></a></li>
+</ul>
+</div>
+</div>
+</div>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/dev/core/internal/upload.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#implementations" id="implementations">Implementations</a></h1>
 <table><thead><tr><th>Project Name</th><th>Language Bindings</th><th>Operating System</th><th>App Lifecycle Type</th><th>Environment Data source</th></tr></thead><tbody>
 <tr><td>glean-core</td><td>Rust</td><td>all</td><td>all</td><td>none</td></tr>
 <tr><td>glean-ffi</td><td>C</td><td>all</td><td>all</td><td>none</td></tr>
@@ -6160,8 +6266,8 @@ See the individual metric types for details on the value payload:</p>
 </div>
 <div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
 <p><a href="https://firefox-source-docs.mozilla.org/toolkit/components/glean/index.html">Firefox on Glean (FOG)</a> is the name of the layer that integrates the Glean SDK into Firefox Desktop. It is currently being designed and implemented. It is being used as a test bed for how best to write a generic Rust language binding layer and so temporarily ties directly to glean-core instead of an API crate. Prospective non-mozilla-central Rust consumers of the Glean SDK should not follow its example and should instead follow <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1631768">bug 1631768</a> for updates on when the proper language binding crate will be available.</p>
-</div>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/dev/core/internal/implementations.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#android-sdk--ndk-versions" id="android-sdk--ndk-versions">Android SDK / NDK versions</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/dev/core/internal/implementations.md">Edit this file on GitHub.</a></footer></div>
+<h1><a class="header" href="#android-sdk--ndk-versions" id="android-sdk--ndk-versions">Android SDK / NDK versions</a></h1>
 <p>The Glean SDK implementation is currently build against the following versions:</p>
 <ul>
 <li>SDK API 28
@@ -6387,8 +6493,8 @@ These should be understandable to fix, you usually should be able to find a PR w
 so we avoid it.
 Additionally, while the <code>$N</code> we have used in our running example has matched
 (e.g. all of the identifiers ended in <code>-TESTING1</code>, this is not required, so long as you match everything up correctly at the end).</p>
-</div>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/dev/howtos/locally-published-components-in-fenix.md">Edit this file on GitHub.</a></footer><p>The following language-specific API docs are available:</p>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/dev/howtos/locally-published-components-in-fenix.md">Edit this file on GitHub.</a></footer></div>
+<p>The following language-specific API docs are available:</p>
 <ul>
 <li><a href="api/../../javadoc/glean/index.html">Kotlin API docs</a></li>
 <li><a href="api/../../swift/index.html">Swift API docs</a></li>
@@ -7022,6 +7128,10 @@ They could be release notes, documentation, hopes, dreams, or whatever: so long 
         <!-- Custom JS scripts -->
         
         <script type="text/javascript" src="tabs.js"></script>
+        
+        <script type="text/javascript" src="mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="mermaid-init.js"></script>
         
 
         
