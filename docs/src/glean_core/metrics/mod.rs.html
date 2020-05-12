@@ -163,12 +163,29 @@
 <span id="163">163</span>
 <span id="164">164</span>
 <span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
 <span class="comment">// file, You can obtain one at https://mozilla.org/MPL/2.0/.</span>
 
 <span class="doccomment">//! The different metric types supported by the Glean SDK to handle data.</span>
+
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 
 <span class="kw">use</span> <span class="ident">chrono</span>::{<span class="ident">DateTime</span>, <span class="ident">FixedOffset</span>};
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
@@ -192,6 +209,7 @@
 <span class="kw">mod</span> <span class="ident">timing_distribution</span>;
 <span class="kw">mod</span> <span class="ident">uuid</span>;
 
+<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">event_database</span>::<span class="ident">RecordedEvent</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">histogram</span>::{<span class="ident">Functional</span>, <span class="ident">Histogram</span>, <span class="ident">PrecomputedExponential</span>, <span class="ident">PrecomputedLinear</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">util</span>::<span class="ident">get_iso_time_string</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">CommonMetricData</span>;
@@ -222,6 +240,18 @@
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">timing_distribution</span>::<span class="ident">TimerId</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">timing_distribution</span>::<span class="ident">TimingDistributionMetric</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">uuid</span>::<span class="ident">UuidMetric</span>;
+
+<span class="doccomment">/// A snapshot of all buckets and the accumulated sum of a distribution.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Serialize</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">DistributionData</span> {
+    <span class="doccomment">/// A map containig the bucket index mapped to the accumulated count.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This can contain buckets with a count of `0`.</span>
+    <span class="kw">pub</span> <span class="ident">values</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">u64</span>, <span class="ident">u64</span><span class="op">&gt;</span>,
+
+    <span class="doccomment">/// The accumulated sum of all the samples in the distribution.</span>
+    <span class="kw">pub</span> <span class="ident">sum</span>: <span class="ident">u64</span>,
+}
 
 <span class="doccomment">/// The available metrics.</span>
 <span class="doccomment">///</span>

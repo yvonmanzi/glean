@@ -137,30 +137,6 @@
 <span id="137">137</span>
 <span id="138">138</span>
 <span id="139">139</span>
-<span id="140">140</span>
-<span id="141">141</span>
-<span id="142">142</span>
-<span id="143">143</span>
-<span id="144">144</span>
-<span id="145">145</span>
-<span id="146">146</span>
-<span id="147">147</span>
-<span id="148">148</span>
-<span id="149">149</span>
-<span id="150">150</span>
-<span id="151">151</span>
-<span id="152">152</span>
-<span id="153">153</span>
-<span id="154">154</span>
-<span id="155">155</span>
-<span id="156">156</span>
-<span id="157">157</span>
-<span id="158">158</span>
-<span id="159">159</span>
-<span id="160">160</span>
-<span id="161">161</span>
-<span id="162">162</span>
-<span id="163">163</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -248,18 +224,6 @@
     <span class="kw">fn</span> <span class="ident">ranges</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u64</span>];
 }
 
-<span class="doccomment">/// Implement the bucketing algorithm on every object that has that algorithm using dynamic</span>
-<span class="doccomment">/// dispatch.</span>
-<span class="kw">impl</span> <span class="ident">Bucketing</span> <span class="kw">for</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Bucketing</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">sample_to_bucket_minimum</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">sample</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
-        (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">sample_to_bucket_minimum</span>(<span class="ident">sample</span>)
-    }
-
-    <span class="kw">fn</span> <span class="ident">ranges</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u64</span>] {
-        (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">ranges</span>()
-    }
-}
-
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">Bucketing</span><span class="op">&gt;</span> <span class="ident">Histogram</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Get the number of buckets in this histogram.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bucket_count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
@@ -311,18 +275,6 @@
             }
         }
         <span class="ident">res</span>
-    }
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">Bucketing</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span> <span class="ident">Histogram</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Box the contained bucketing algorithm to allow for dynamic dispatch.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">boxed</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Histogram</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Bucketing</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="ident">Histogram</span> {
-            <span class="ident">values</span>: <span class="self">self</span>.<span class="ident">values</span>,
-            <span class="ident">count</span>: <span class="self">self</span>.<span class="ident">count</span>,
-            <span class="ident">sum</span>: <span class="self">self</span>.<span class="ident">sum</span>,
-            <span class="ident">bucketing</span>: <span class="ident">Box</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">bucketing</span>),
-        }
     }
 }
 </pre></div>

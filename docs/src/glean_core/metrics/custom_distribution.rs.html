@@ -176,35 +176,14 @@
 <span id="176">176</span>
 <span id="177">177</span>
 <span id="178">178</span>
-<span id="179">179</span>
-<span id="180">180</span>
-<span id="181">181</span>
-<span id="182">182</span>
-<span id="183">183</span>
-<span id="184">184</span>
-<span id="185">185</span>
-<span id="186">186</span>
-<span id="187">187</span>
-<span id="188">188</span>
-<span id="189">189</span>
-<span id="190">190</span>
-<span id="191">191</span>
-<span id="192">192</span>
-<span id="193">193</span>
-<span id="194">194</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
 <span class="comment">// file, You can obtain one at https://mozilla.org/MPL/2.0/.</span>
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
-
-<span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">Serialize</span>;
-
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error_recording</span>::{<span class="ident">record_error</span>, <span class="ident">ErrorType</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">histogram</span>::{<span class="ident">Bucketing</span>, <span class="ident">Histogram</span>, <span class="ident">HistogramType</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">metrics</span>::<span class="ident">Metric</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">metrics</span>::<span class="ident">MetricType</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">metrics</span>::{<span class="ident">DistributionData</span>, <span class="ident">Metric</span>, <span class="ident">MetricType</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">storage</span>::<span class="ident">StorageManager</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">CommonMetricData</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Glean</span>;
@@ -221,18 +200,11 @@
     <span class="ident">histogram_type</span>: <span class="ident">HistogramType</span>,
 }
 
-<span class="doccomment">/// A serializable representation of a snapshotted histogram.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Serialize</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Snapshot</span> {
-    <span class="ident">values</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">u64</span>, <span class="ident">u64</span><span class="op">&gt;</span>,
-    <span class="ident">sum</span>: <span class="ident">u64</span>,
-}
-
 <span class="doccomment">/// Create a snapshot of the histogram.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The snapshot can be serialized into the payload format.</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">snapshot</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">Bucketing</span><span class="op">&gt;</span>(<span class="ident">hist</span>: <span class="kw-2">&amp;</span><span class="ident">Histogram</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Snapshot</span> {
-    <span class="ident">Snapshot</span> {
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">snapshot</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">Bucketing</span><span class="op">&gt;</span>(<span class="ident">hist</span>: <span class="kw-2">&amp;</span><span class="ident">Histogram</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DistributionData</span> {
+    <span class="ident">DistributionData</span> {
         <span class="ident">values</span>: <span class="ident">hist</span>.<span class="ident">snapshot_values</span>(),
         <span class="ident">sum</span>: <span class="ident">hist</span>.<span class="ident">sum</span>(),
     }
@@ -356,19 +328,15 @@
     <span class="doccomment">/// Get the currently stored histogram.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This doesn&#39;t clear the stored value.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_get_value</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>,
-        <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Histogram</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Bucketing</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_get_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">DistributionData</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="ident">StorageManager</span>.<span class="ident">snapshot_metric</span>(
             <span class="ident">glean</span>.<span class="ident">storage</span>(),
             <span class="ident">storage_name</span>,
             <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>.<span class="ident">identifier</span>(<span class="ident">glean</span>),
         ) {
             <span class="comment">// Boxing the value, in order to return either of the possible buckets</span>
-            <span class="prelude-val">Some</span>(<span class="ident">Metric</span>::<span class="ident">CustomDistributionExponential</span>(<span class="ident">hist</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">hist</span>.<span class="ident">boxed</span>()),
-            <span class="prelude-val">Some</span>(<span class="ident">Metric</span>::<span class="ident">CustomDistributionLinear</span>(<span class="ident">hist</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">hist</span>.<span class="ident">boxed</span>()),
+            <span class="prelude-val">Some</span>(<span class="ident">Metric</span>::<span class="ident">CustomDistributionExponential</span>(<span class="ident">hist</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">snapshot</span>(<span class="kw-2">&amp;</span><span class="ident">hist</span>)),
+            <span class="prelude-val">Some</span>(<span class="ident">Metric</span>::<span class="ident">CustomDistributionLinear</span>(<span class="ident">hist</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">snapshot</span>(<span class="kw-2">&amp;</span><span class="ident">hist</span>)),
             <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
         }
     }
@@ -384,7 +352,7 @@
         <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">test_get_value</span>(<span class="ident">glean</span>, <span class="ident">storage_name</span>)
-            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">hist</span><span class="op">|</span> <span class="ident">serde_json</span>::<span class="ident">to_string</span>(<span class="kw-2">&amp;</span><span class="ident">snapshot</span>(<span class="kw-2">&amp;</span><span class="ident">hist</span>)).<span class="ident">unwrap</span>())
+            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">snapshot</span><span class="op">|</span> <span class="ident">serde_json</span>::<span class="ident">to_string</span>(<span class="kw-2">&amp;</span><span class="ident">snapshot</span>).<span class="ident">unwrap</span>())
     }
 }
 </pre></div>
