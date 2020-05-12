@@ -335,9 +335,12 @@ If you are unsure which files those are, skip this step and add the files after 
 </blockquote>
 </li>
 <li>
-<p>If you are using Git, add the following line to your <code>.gitignore</code> file:</p>
-<pre><code>{project-name}/Generated
+<p>If you are using Git, add the following lines to your <code>.gitignore</code> file:</p>
+<pre><code>.venv/
+{project-name}/Generated
 </code></pre>
+<p>This will ignore files that are generated at build time by the <code>sdk_generator.sh</code> script.
+They don't need to be kept in version control, as they can be re-generated from your <code>metrics.yaml</code> and <code>pings.yaml</code> files.</p>
 </li>
 </ol>
 </div>
