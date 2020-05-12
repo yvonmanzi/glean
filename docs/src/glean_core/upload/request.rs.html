@@ -121,7 +121,7 @@
             <span class="string">&quot;Content-Type&quot;</span>,
             <span class="string">&quot;application/json; charset=utf-8&quot;</span>.<span class="ident">to_string</span>(),
         );
-        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Client-Version&quot;</span>, <span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;CARGO_PKG_VERSION&quot;</span>).<span class="ident">to_string</span>());
+        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Client-Version&quot;</span>, <span class="kw">crate</span>::<span class="ident">GLEAN_VERSION</span>.<span class="ident">to_string</span>());
         <span class="ident">headers</span>
     }
 }
