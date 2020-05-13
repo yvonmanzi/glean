@@ -1458,17 +1458,17 @@ assertTrue(Flags.a11yEnabled.testGetValue())
 </code></pre>
 </div>
 <div data-lang="Java" class="tab">
-<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Flags
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Flags;
 
-Flags.INSTANCE.a11yEnabled.set(System.isAccessibilityEnabled())
+Flags.INSTANCE.a11yEnabled.set(System.isAccessibilityEnabled());
 </code></pre>
 <p>There are test APIs available too:</p>
-<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Flags
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Flags;
 
 // Was anything recorded?
-assertTrue(Flags.INSTANCE.a11yEnabled.testHasValue())
+assertTrue(Flags.INSTANCE.a11yEnabled.testHasValue());
 // Does it have the expected value?
-assertTrue(Flags.INSTANCE.a11yEnabled.testGetValue())
+assertTrue(Flags.INSTANCE.a11yEnabled.testGetValue());
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
@@ -1673,22 +1673,22 @@ assertEquals(
 </code></pre>
 </div>
 <div data-lang="Java" class="tab">
-<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Controls
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Controls;
 
-Controls.INSTANCE.refreshPressed.add() // Adds 1 to the counter.
-Controls.INSTANCE.refreshPressed.add(5) // Adds 5 to the counter.
+Controls.INSTANCE.refreshPressed.add(); // Adds 1 to the counter.
+Controls.INSTANCE.refreshPressed.add(5); // Adds 5 to the counter.
 </code></pre>
 <p>There are test APIs available too:</p>
-<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Controls
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Controls;
 
 // Was anything recorded?
-assertTrue(Controls.INSTANCE.refreshPressed.testHasValue())
+assertTrue(Controls.INSTANCE.refreshPressed.testHasValue());
 // Does the counter have the expected value?
-assertEquals(6, Controls.INSTANCE.refreshPressed.testGetValue())
+assertEquals(6, Controls.INSTANCE.refreshPressed.testGetValue());
 // Did the counter record an negative value?
 assertEquals(
     1, Controls.INSTANCE.refreshPressed.testGetNumRecordedErrors(ErrorType.InvalidValue)
-)
+);
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
@@ -1905,28 +1905,28 @@ assertEquals(1, SearchDefault.name.testGetNumRecordedErrors(ErrorType.InvalidVal
 </code></pre>
 </div>
 <div data-lang="Java" class="tab">
-<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.SearchDefault
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.SearchDefault;
 
 // Record a value into the metric.
-SearchDefault.INSTANCE.name.set(&quot;duck duck go&quot;)
+SearchDefault.INSTANCE.name.set(&quot;duck duck go&quot;);
 // If it changed later, you can record the new value:
-SearchDefault.INSTANCE.name.set(&quot;wikipedia&quot;)
+SearchDefault.INSTANCE.name.set(&quot;wikipedia&quot;);
 </code></pre>
 <p>There are test APIs available too:</p>
 <pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.SearchDefault
 
 // Was anything recorded?
-assertTrue(SearchDefault.INSTANCE.name.testHasValue())
+assertTrue(SearchDefault.INSTANCE.name.testHasValue());
 // Does the string metric have the expected value?
 // IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
-assertEquals(&quot;wikipedia&quot;, SearchDefault.INSTANCE.name.testGetValue())
+assertEquals(&quot;wikipedia&quot;, SearchDefault.INSTANCE.name.testGetValue());
 // Was the string truncated, and an error reported?
 assertEquals(
-    1, 
+    1,
     SearchDefault.INSTANCE.name.testGetNumRecordedErrors(
         ErrorType.InvalidValue
     )
-)
+);
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
@@ -2267,38 +2267,38 @@ assertEquals(1, Auth.loginTime.testGetNumRecordedErrors(ErrorType.InvalidValue))
 </code></pre>
 </div>
 <div data-lang="Java" class="tab">
-<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Auth
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Auth;
 
-fun onShowLogin() {
-    Auth.INSTANCE.loginTime.start()
+void onShowLogin() {
+    Auth.INSTANCE.loginTime.start();
     // ...
 }
 
-fun onLogin() {
-    Auth.INSTANCE.loginTime.stop()
+void onLogin() {
+    Auth.INSTANCE.loginTime.stop();
     // ...
 }
 
-fun onLoginCancel() {
-    Auth.INSTANCE.loginTime.cancel()
+void onLoginCancel() {
+    Auth.INSTANCE.loginTime.cancel();
     // ...
 }
 </code></pre>
 <p>The time reported in the telemetry ping will be timespan recorded during the lifetime of the ping.</p>
 <p>There are test APIs available too:</p>
-<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Auth
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Auth;
 
 // Was anything recorded?
-assertTrue(Auth.INSTANCE.loginTime.testHasValue())
+assertTrue(Auth.INSTANCE.loginTime.testHasValue());
 // Does the timer have the expected value
-assertTrue(Auth.INSTANCE.loginTime.testGetValue() &gt; 0)
+assertTrue(Auth.INSTANCE.loginTime.testGetValue() &gt; 0);
 // Was the timing recorded incorrectly?
 assertEquals(
     1,
     Auth.INSTANCE.loginTime.testGetNumRecordedErrors(
         ErrorType.InvalidValue
     )
-)
+);
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
@@ -2392,7 +2392,22 @@ HistorySync.setRawNanos(duration)
 </div>
 <h2><a class="header" href="#limits-8" id="limits-8">Limits</a></h2>
 <ul>
-<li>None.</li>
+<li>
+<p>Timings are recorded in nanoseconds.</p>
+<ul>
+<li>
+<p>On Android, the <a href="https://developer.android.com/reference/android/os/SystemClock.html#elapsedRealtimeNanos()"><code>SystemClock.elapsedRealtimeNanos()</code></a> function is used, so it is limited by the accuracy and performance of that timer. The time measurement includes time spent in sleep.</p>
+</li>
+<li>
+<p>On iOS, the <a href="https://developer.apple.com/library/archive/documentation/Darwin/Conceptual/KernelProgramming/services/services.html"><code>mach_absolute_time</code></a> function is used,
+so it is limited by the accuracy and performance of that timer.
+The time measurement does not include time spent in sleep.</p>
+</li>
+<li>
+<p>On Python 3.7 and later, <a href="https://docs.python.org/3/library/time.html#time.monotonic_ns"><code>time.monotonic_ns()</code></a> is used.  On earlier versions of Python, <a href="https://docs.python.org/3/library/time.html#time.monotonic"><code>time.monotonics()</code></a> is used, which is not guaranteed to have nanosecond resolution.</p>
+</li>
+</ul>
+</li>
 </ul>
 <h2><a class="header" href="#examples-7" id="examples-7">Examples</a></h2>
 <ul>
@@ -2491,34 +2506,34 @@ assertEquals(1, pages.pageLoad.testGetNumRecordedErrors(ErrorType.InvalidValue))
 </code></pre>
 </div>
 <div data-lang="Java" class="tab">
-<pre><code class="language-Java">import mozilla.components.service.glean.GleanTimerId
-import org.mozilla.yourApplication.GleanMetrics.Pages
+<pre><code class="language-Java">import mozilla.components.service.glean.GleanTimerId;
+import org.mozilla.yourApplication.GleanMetrics.Pages;
 
-val timerId : GleanTimerId
+GleanTimerId timerId;
 
-fun onPageStart(e: Event) {
-    timerId = Pages.INSTANCE.pageLoad.start()
+void onPageStart(Event e) {
+    timerId = Pages.INSTANCE.pageLoad.start();
 }
 
-fun onPageLoaded(e: Event) {
-    Pages.INSTANCE.pageLoad.stopAndAccumulate(timerId)
+void onPageLoaded(Event e) {
+    Pages.INSTANCE.pageLoad.stopAndAccumulate(timerId);
 }
 </code></pre>
 <p>There are test APIs available too.  For convenience, properties <code>sum</code> and <code>count</code> are exposed to facilitate validating that data was recorded correctly.</p>
 <p>Continuing the <code>pageLoad</code> example above, at this point the metric should have a <code>sum == 11</code> and a <code>count == 2</code>:</p>
-<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Pages
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Pages;
 
 // Was anything recorded?
-assertTrue(pages.INSTANCE.pageLoad.testHasValue())
+assertTrue(pages.INSTANCE.pageLoad.testHasValue());
 
 // Get snapshot.
-val snapshot = pages.INSTANCE.pageLoad.testGetValue()
+DistributionData snapshot = pages.INSTANCE.pageLoad.testGetValue();
 
 // Does the sum have the expected value?
-assertEquals(11, snapshot.getSum)
+assertEquals(11, snapshot.getSum);
 
 // Usually you don't know the exact timing values, but how many should have been recorded.
-assertEquals(2L, snapshot.getCount)
+assertEquals(2L, snapshot.getCount);
 
 // Was an error recorded?
 assertEquals(
@@ -2526,7 +2541,7 @@ assertEquals(
     pages.INSTANCE.pageLoad.testGetNumRecordedErrors(
         ErrorType.InvalidValue
     )
-)
+);
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
@@ -2606,7 +2621,12 @@ assert 1 == metrics.pages.page_load.test_get_num_recorded_errors(
 <p>Timings are recorded in nanoseconds.</p>
 <ul>
 <li>
-<p>On Android, the <a href="https://developer.android.com/reference/android/os/SystemClock.html#elapsedRealtimeNanos()"><code>SystemClock.elapsedRealtimeNanos()</code></a> function is used, so it is limited by the accuracy and performance of that timer.</p>
+<p>On Android, the <a href="https://developer.android.com/reference/android/os/SystemClock.html#elapsedRealtimeNanos()"><code>SystemClock.elapsedRealtimeNanos()</code></a> function is used, so it is limited by the accuracy and performance of that timer. The time measurement includes time spent in sleep.</p>
+</li>
+<li>
+<p>On iOS, the <a href="https://developer.apple.com/library/archive/documentation/Darwin/Conceptual/KernelProgramming/services/services.html"><code>mach_absolute_time</code></a> function is used,
+so it is limited by the accuracy and performance of that timer.
+The time measurement does not include time spent in sleep.</p>
 </li>
 <li>
 <p>On Python 3.7 and later, <a href="https://docs.python.org/3/library/time.html#time.monotonic_ns"><code>time.monotonic_ns()</code></a> is used.  On earlier versions of Python, <a href="https://docs.python.org/3/library/time.html#time.monotonic"><code>time.monotonics()</code></a> is used, which is not guaranteed to have nanosecond resolution.</p>
@@ -2797,18 +2817,18 @@ assertEquals(uuid, User.clientId.testGetValue())
 </code></pre>
 </div>
 <div data-lang="Java" class="tab">
-<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.User
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.User;
 
-User.INSTANCE.clientId.generateAndSet() // Generate a new UUID and record it
-User.INSTANCE.clientId.set(UUID.randomUUID())  // Set a UUID explicitly
+User.INSTANCE.clientId.generateAndSet(); // Generate a new UUID and record it
+User.INSTANCE.clientId.set(UUID.randomUUID());  // Set a UUID explicitly
 </code></pre>
 <p>There are test APIs available too:</p>
-<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.User
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.User;
 
 // Was anything recorded?
-assertTrue(User.INSTANCE.clientId.testHasValue())
+assertTrue(User.INSTANCE.clientId.testHasValue());
 // Was it the expected value?
-assertEquals(uuid, User.INSTANCE.clientId.testGetValue())
+assertEquals(uuid, User.INSTANCE.clientId.testGetValue());
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
@@ -2912,22 +2932,22 @@ assertEquals(1, Install.firstRun.testGetNumRecordedErrors(ErrorType.InvalidValue
 </code></pre>
 </div>
 <div data-lang="Java" class="tab">
-<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Install
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Install;
 
-Install.INSTANCE.firstRun.set() // Records &quot;now&quot;
-Install.INSTANCE.firstRun.set(Calendar(2019, 3, 25)) // Records a custom datetime
+Install.INSTANCE.firstRun.set(); // Records &quot;now&quot;
+Install.INSTANCE.firstRun.set(Calendar(2019, 3, 25)); // Records a custom datetime
 </code></pre>
 <p>There are test APIs available too:</p>
-<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Install
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Install;
 
 // Was anything recorded?
-assertTrue(Install.INSTANCE.firstRun.testHasValue())
+assertTrue(Install.INSTANCE.firstRun.testHasValue());
 // Was it the expected value?
 // NOTE: Datetimes always include a timezone offset from UTC, hence the
 // &quot;-05:00&quot; suffix.
-assertEquals(&quot;2019-03-25-05:00&quot;, Install.INSTANCE.firstRun.testGetValueAsString())
+assertEquals(&quot;2019-03-25-05:00&quot;, Install.INSTANCE.firstRun.testGetValueAsString());
 // Was the value invalid?
-assertEquals(1, Install.INSTANCE.firstRun.testGetNumRecordedErrors(ErrorType.InvalidValue))
+assertEquals(1, Install.INSTANCE.firstRun.testGetNumRecordedErrors(ErrorType.InvalidValue));
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
@@ -3116,7 +3136,7 @@ Otherwise, look at the standard distribution metric types:</p>
 <li><a href="user/metrics/memory_distribution.html">Memory Distributions</a></li>
 </ul>
 <blockquote>
-<p>Note: Custom distributions are currently only allowed for GeckoView metrics (the <code>gecko_datapoint</code> parameter is present).</p>
+<p><strong>Note</strong>: Custom distributions are currently only allowed for GeckoView metrics (the <code>gecko_datapoint</code> parameter is present) and thus have only a Kotlin API.</p>
 </blockquote>
 <h2><a class="header" href="#configuration-13" id="configuration-13">Configuration</a></h2>
 <p>Custom distributions have the following required parameters:</p>
@@ -3194,7 +3214,7 @@ assertEquals(1, Graphics.checkerboardPeak.testGetNumRecordedErrors(ErrorType.Inv
 <p>Used to record a single non-negative integer value.
 For example, the width of the display in pixels.</p>
 <blockquote>
-<p>Quantities are only available for metrics that come from Gecko.</p>
+<p><strong>Note</strong>: Quantities are currently only allowed for GeckoView metrics (the <code>gecko_datapoint</code> parameter is present) and thus have only a Kotlin API.</p>
 </blockquote>
 <h2><a class="header" href="#configuration-14" id="configuration-14">Configuration</a></h2>
 <p>Say you're adding a new quantity for the width of the display in pixels. First you need to add an entry for the quantity to the <code>metrics.yaml</code> file:</p>

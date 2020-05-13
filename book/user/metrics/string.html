@@ -201,28 +201,28 @@ assertEquals(1, SearchDefault.name.testGetNumRecordedErrors(ErrorType.InvalidVal
 </code></pre>
 </div>
 <div data-lang="Java" class="tab">
-<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.SearchDefault
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.SearchDefault;
 
 // Record a value into the metric.
-SearchDefault.INSTANCE.name.set(&quot;duck duck go&quot;)
+SearchDefault.INSTANCE.name.set(&quot;duck duck go&quot;);
 // If it changed later, you can record the new value:
-SearchDefault.INSTANCE.name.set(&quot;wikipedia&quot;)
+SearchDefault.INSTANCE.name.set(&quot;wikipedia&quot;);
 </code></pre>
 <p>There are test APIs available too:</p>
 <pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.SearchDefault
 
 // Was anything recorded?
-assertTrue(SearchDefault.INSTANCE.name.testHasValue())
+assertTrue(SearchDefault.INSTANCE.name.testHasValue());
 // Does the string metric have the expected value?
 // IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
-assertEquals(&quot;wikipedia&quot;, SearchDefault.INSTANCE.name.testGetValue())
+assertEquals(&quot;wikipedia&quot;, SearchDefault.INSTANCE.name.testGetValue());
 // Was the string truncated, and an error reported?
 assertEquals(
-    1, 
+    1,
     SearchDefault.INSTANCE.name.testGetNumRecordedErrors(
         ErrorType.InvalidValue
     )
-)
+);
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">

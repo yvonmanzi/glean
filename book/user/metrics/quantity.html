@@ -162,7 +162,7 @@
 <p>Used to record a single non-negative integer value.
 For example, the width of the display in pixels.</p>
 <blockquote>
-<p>Quantities are only available for metrics that come from Gecko.</p>
+<p><strong>Note</strong>: Quantities are currently only allowed for GeckoView metrics (the <code>gecko_datapoint</code> parameter is present) and thus have only a Kotlin API.</p>
 </blockquote>
 <h2><a class="header" href="#configuration" id="configuration">Configuration</a></h2>
 <p>Say you're adding a new quantity for the width of the display in pixels. First you need to add an entry for the quantity to the <code>metrics.yaml</code> file:</p>

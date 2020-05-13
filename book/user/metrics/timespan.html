@@ -218,38 +218,38 @@ assertEquals(1, Auth.loginTime.testGetNumRecordedErrors(ErrorType.InvalidValue))
 </code></pre>
 </div>
 <div data-lang="Java" class="tab">
-<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Auth
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Auth;
 
-fun onShowLogin() {
-    Auth.INSTANCE.loginTime.start()
+void onShowLogin() {
+    Auth.INSTANCE.loginTime.start();
     // ...
 }
 
-fun onLogin() {
-    Auth.INSTANCE.loginTime.stop()
+void onLogin() {
+    Auth.INSTANCE.loginTime.stop();
     // ...
 }
 
-fun onLoginCancel() {
-    Auth.INSTANCE.loginTime.cancel()
+void onLoginCancel() {
+    Auth.INSTANCE.loginTime.cancel();
     // ...
 }
 </code></pre>
 <p>The time reported in the telemetry ping will be timespan recorded during the lifetime of the ping.</p>
 <p>There are test APIs available too:</p>
-<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Auth
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Auth;
 
 // Was anything recorded?
-assertTrue(Auth.INSTANCE.loginTime.testHasValue())
+assertTrue(Auth.INSTANCE.loginTime.testHasValue());
 // Does the timer have the expected value
-assertTrue(Auth.INSTANCE.loginTime.testGetValue() &gt; 0)
+assertTrue(Auth.INSTANCE.loginTime.testGetValue() &gt; 0);
 // Was the timing recorded incorrectly?
 assertEquals(
     1,
     Auth.INSTANCE.loginTime.testGetNumRecordedErrors(
         ErrorType.InvalidValue
     )
-)
+);
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
@@ -343,7 +343,22 @@ HistorySync.setRawNanos(duration)
 </div>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
 <ul>
-<li>None.</li>
+<li>
+<p>Timings are recorded in nanoseconds.</p>
+<ul>
+<li>
+<p>On Android, the <a href="https://developer.android.com/reference/android/os/SystemClock.html#elapsedRealtimeNanos()"><code>SystemClock.elapsedRealtimeNanos()</code></a> function is used, so it is limited by the accuracy and performance of that timer. The time measurement includes time spent in sleep.</p>
+</li>
+<li>
+<p>On iOS, the <a href="https://developer.apple.com/library/archive/documentation/Darwin/Conceptual/KernelProgramming/services/services.html"><code>mach_absolute_time</code></a> function is used,
+so it is limited by the accuracy and performance of that timer.
+The time measurement does not include time spent in sleep.</p>
+</li>
+<li>
+<p>On Python 3.7 and later, <a href="https://docs.python.org/3/library/time.html#time.monotonic_ns"><code>time.monotonic_ns()</code></a> is used.  On earlier versions of Python, <a href="https://docs.python.org/3/library/time.html#time.monotonic"><code>time.monotonics()</code></a> is used, which is not guaranteed to have nanosecond resolution.</p>
+</li>
+</ul>
+</li>
 </ul>
 <h2><a class="header" href="#examples" id="examples">Examples</a></h2>
 <ul>

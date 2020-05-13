@@ -189,17 +189,17 @@ assertTrue(Flags.a11yEnabled.testGetValue())
 </code></pre>
 </div>
 <div data-lang="Java" class="tab">
-<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Flags
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Flags;
 
-Flags.INSTANCE.a11yEnabled.set(System.isAccessibilityEnabled())
+Flags.INSTANCE.a11yEnabled.set(System.isAccessibilityEnabled());
 </code></pre>
 <p>There are test APIs available too:</p>
-<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Flags
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Flags;
 
 // Was anything recorded?
-assertTrue(Flags.INSTANCE.a11yEnabled.testHasValue())
+assertTrue(Flags.INSTANCE.a11yEnabled.testHasValue());
 // Does it have the expected value?
-assertTrue(Flags.INSTANCE.a11yEnabled.testGetValue())
+assertTrue(Flags.INSTANCE.a11yEnabled.testGetValue());
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
