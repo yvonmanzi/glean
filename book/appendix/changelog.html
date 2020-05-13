@@ -159,7 +159,31 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
-<p><a href="https://github.com/mozilla/glean/compare/v29.1.0...master">Full changelog</a></p>
+<p><a href="https://github.com/mozilla/glean/compare/v30.0.0...master">Full changelog</a></p>
+<h1><a class="header" href="#v3000-2020-05-13" id="v3000-2020-05-13">v30.0.0 (2020-05-13)</a></h1>
+<p><a href="https://github.com/mozilla/glean/compare/v29.1.0...v30.0.0">Full changelog</a></p>
+<ul>
+<li>General:
+<ul>
+<li>We completely replaced how the upload mechanism works.
+glean-core (the Rust part) now controls all upload and coordinates the platform side with its own internals.
+All language bindings implement ping uploading around a common API and protocol.
+There is no change for users of Glean, the language bindings for Android and iOS have been adopted to the new mechanism already.</li>
+<li>Expose <code>RecordedEvent</code> and <code>DistributionData</code> types to Rust consumers (<a href="https://github.com/mozilla/glean/pull/876">#876</a>)</li>
+<li>Log crate version at initialize (<a href="https://github.com/mozilla/glean/pull/873">#873</a>)</li>
+</ul>
+</li>
+<li>Android:
+<ul>
+<li>Refactor the ping uploader to use the new upload mechanism.</li>
+</ul>
+</li>
+<li>iOS:
+<ul>
+<li>Refactor the ping uploader to use the new upload mechanism.</li>
+</ul>
+</li>
+</ul>
 <h1><a class="header" href="#v2910-2020-05-11" id="v2910-2020-05-11">v29.1.0 (2020-05-11)</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v29.0.0...v29.1.0">Full changelog</a></p>
 <ul>
@@ -187,7 +211,7 @@
 </li>
 </ul>
 </li>
-<li>Android
+<li>Android:
 <ul>
 <li>The <code>PingType.submit()</code> can now be called without a <code>null</code> by Java consumers (<a href="https://github.com/mozilla/glean/pull/853">#853</a>).</li>
 </ul>
