@@ -466,7 +466,7 @@ class SampleApplication : Application() {
 
         // Initialize the Glean library.
         Glean.initialize(
-            applicationContext, 
+            applicationContext,
             // Here, `settings()` is a method to get user preferences, specific to
             // your application and not part of the Glean SDK API.
             uploadEnabled = settings().isTelemetryEnabled
@@ -482,6 +482,24 @@ Library code should never call <code>Glean.initialize</code>, since it should be
 <p><strong>Note</strong>: if the application has the concept of release channels and knows which channel it is on at run-time, then it can provide the Glean SDK with this information by setting it as part of the <code>Configuration</code> object parameter of the <code>Glean.initialize</code> method. For example:</p>
 </blockquote>
 <pre><code class="language-Kotlin">Glean.initialize(applicationContext, Configuration(channel = &quot;beta&quot;))
+</code></pre>
+<blockquote>
+<p><strong>Note</strong>: When the Glean SDK is consumed through Android Components, it is required to configure an HTTP client to be used for upload.
+For example:</p>
+</blockquote>
+<pre><code class="language-Kotlin">// Requires `org.mozilla.components:concept-fetch`
+import mozilla.components.concept.fetch.Client
+// Requires `org.mozilla.components:lib-fetch-httpurlconnection`.
+// This can be replaced by other implementations, e.g. `lib-fetch-okhttp`
+// or an implementation from `browser-engine-gecko`.
+import mozilla.components.lib.fetch.httpurlconnection.HttpURLConnectionClient
+
+import mozilla.components.service.glean.config.Configuration
+import mozilla.components.service.glean.net.ConceptFetchHttpUploader
+
+val httpClient = ConceptFetchHttpUploader(lazy { HttpURLConnectionClient() as Client })
+val config = Configuration(httpClient = httpClient)
+Glean.initialize(context, uploadEnabled = true, configuration = config)
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
