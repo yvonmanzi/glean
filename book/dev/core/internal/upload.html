@@ -214,10 +214,10 @@ fn process_ping_upload_response(&amp;self, uuid: &amp;str, status: UploadResult)
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
 </span>/// Gets the next task for an uploader. Which can be either:
-extern &quot;C&quot; fn glean_get_upload_task() -&gt; FfiPingUploadTask
+extern &quot;C&quot; fn glean_get_upload_task(result: *mut FfiPingUploadTask)
 
 /// Processes the response from an attempt to upload a ping.
-extern &quot;C&quot; fn glean_process_ping_upload_response(task: FfiPingUploadTask, status: u32)
+extern &quot;C&quot; fn glean_process_ping_upload_response(task: *mut FfiPingUploadTask, status: u32)
 <span class="boring">}
 </span></code></pre></pre>
 <p>See the documentation for additional information about the types:</p>
