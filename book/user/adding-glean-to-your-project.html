@@ -343,6 +343,9 @@ If you are unsure which files those are, skip this step and add the files after 
 They don't need to be kept in version control, as they can be re-generated from your <code>metrics.yaml</code> and <code>pings.yaml</code> files.</p>
 </li>
 </ol>
+<blockquote>
+<p><strong>Important information about Glean and embedded extensions:</strong> Metric collection is a no-op in <a href="https://developer.apple.com/library/archive/documentation/General/Conceptual/ExtensibilityPG/ExtensionOverview.html#//apple_ref/doc/uid/TP40014214-CH2-SW2">application extensions</a> and Glean will not run. Since extensions run in a separate sandbox and process from the application, Glean would run in an extension as if it were a completely separate application with different client ids and storage. This complicates things because Glean doesn’t know or care about other processes. Because of this, Glean is purposefully prevented from running in an application extension and if metrics need to be collected from extensions, it's up to the integrating application to pass the information to the base application to record in Glean.</p>
+</blockquote>
 </div>
 <div data-lang="Python" class="tab">
 <p>For Python, the <code>metrics.yaml</code> file must be available and loaded at runtime.</p>

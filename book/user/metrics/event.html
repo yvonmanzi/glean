@@ -251,6 +251,9 @@ assert 0 == metrics.views.login_opened.test_get_num_recorded_errors(
 <p>When 500 events are queued on the client an events ping is immediately sent.</p>
 </li>
 <li>
+<p>The <code>extra_keys</code> allows for a maximum of 10 keys.</p>
+</li>
+<li>
 <p>The keys in the <code>extra_keys</code> list must be in dotted snake case, with a maximum length of 40 bytes in UTF-8.</p>
 </li>
 <li>

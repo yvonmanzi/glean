@@ -161,9 +161,19 @@
                         <h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v30.0.0...master">Full changelog</a></p>
 <ul>
+<li>Android
+<ul>
+<li>BUGFIX: Fix a race condition that leads to a <code>ConcurrentModificationException</code>. <a href="https://bugzilla.mozilla.org/1635865">Bug 1635865</a></li>
+</ul>
+</li>
 <li>Android &amp; iOS
 <ul>
 <li>Ping payloads are now compressed using gzip.</li>
+</ul>
+</li>
+<li>iOS
+<ul>
+<li><code>Glean.initialize</code> is now a no-op if called from an embedded extension. This means that Glean will only run in the base application process in order to prevent extensions from behaving like separate applications with different client ids from the base application. Applications are responsible for ensuring that extension metrics are only collected within the base application.</li>
 </ul>
 </li>
 </ul>
