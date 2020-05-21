@@ -6531,6 +6531,12 @@ All the default pings have their scheduling and submission handled by the SDK.</
 <li><code>Glean.initialize</code> is now a no-op if called from an embedded extension. This means that Glean will only run in the base application process in order to prevent extensions from behaving like separate applications with different client ids from the base application. Applications are responsible for ensuring that extension metrics are only collected within the base application.</li>
 </ul>
 </li>
+<li>Python
+<ul>
+<li><code>lifetime: application</code> metrics are now cleared after the Glean-owned pings are sent,
+after the product starts.</li>
+</ul>
+</li>
 </ul>
 <h1><a class="header" href="#v3000-2020-05-13" id="v3000-2020-05-13">v30.0.0 (2020-05-13)</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v29.1.0...v30.0.0">Full changelog</a></p>
