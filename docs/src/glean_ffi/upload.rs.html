@@ -204,9 +204,9 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">CString</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_char</span>;
 
-<span class="kw">use</span> <span class="ident">ffi_support</span>::{<span class="ident">ByteBuffer</span>, <span class="ident">IntoFfi</span>};
+<span class="kw">use</span> <span class="ident">ffi_support</span>::<span class="ident">IntoFfi</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">glean_str_free</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">byte_buffer</span>::<span class="ident">ByteBuffer</span>, <span class="ident">glean_str_free</span>};
 <span class="kw">use</span> <span class="ident">glean_core</span>::<span class="ident">upload</span>::<span class="ident">PingUploadTask</span>;
 
 <span class="doccomment">/// Result values of attempted ping uploads encoded for FFI use.</span>

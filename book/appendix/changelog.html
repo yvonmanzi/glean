@@ -159,13 +159,10 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
-<p><a href="https://github.com/mozilla/glean/compare/v30.0.0...master">Full changelog</a></p>
+<p><a href="https://github.com/mozilla/glean/compare/v30.1.0...master">Full changelog</a></p>
+<h1><a class="header" href="#v3010-2020-05-22" id="v3010-2020-05-22">v30.1.0 (2020-05-22)</a></h1>
+<p><a href="https://github.com/mozilla/glean/compare/v30.0.0...v30.1.0">Full changelog</a></p>
 <ul>
-<li>Android
-<ul>
-<li>BUGFIX: Fix a race condition that leads to a <code>ConcurrentModificationException</code>. <a href="https://bugzilla.mozilla.org/1635865">Bug 1635865</a></li>
-</ul>
-</li>
 <li>Android &amp; iOS
 <ul>
 <li>Ping payloads are now compressed using gzip.</li>
@@ -180,6 +177,9 @@
 <ul>
 <li><code>lifetime: application</code> metrics are now cleared after the Glean-owned pings are sent,
 after the product starts.</li>
+<li>Glean Python bindings now build in a native Windows environment.</li>
+<li>BUGFIX: <code>MemoryDistributionMetric</code> now parses correctly in <code>metrics.yaml</code> files.</li>
+<li>BUGFIX: Glean will no longer crash if run as part of another library's coverage testing.</li>
 </ul>
 </li>
 </ul>
@@ -204,6 +204,15 @@ There is no change for users of Glean, the language bindings for Android and iOS
 <li>iOS:
 <ul>
 <li>Refactor the ping uploader to use the new upload mechanism.</li>
+</ul>
+</li>
+</ul>
+<h1><a class="header" href="#v2911-2020-05-22" id="v2911-2020-05-22">v29.1.1 (2020-05-22)</a></h1>
+<p><a href="https://github.com/mozilla/glean/compare/v29.1.0...v29.1.1">Full changelog</a></p>
+<ul>
+<li>Android
+<ul>
+<li>BUGFIX: Fix a race condition that leads to a <code>ConcurrentModificationException</code>. <a href="https://bugzilla.mozilla.org/1635865">Bug 1635865</a></li>
 </ul>
 </li>
 </ul>

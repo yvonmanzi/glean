@@ -21,6 +21,17 @@
 They are defined in <code>glean-core/src/upload/result.rs</code> and re-defined for use in Kotlin here.</p>
 </td>
 </tr>
+<tr>
+<td>
+<p><a href="-rust-buffer/index.html">RustBuffer</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">RustBuffer</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Structure</span></code>
+<p>This is a mapping for the <code>glean_core::byte_buffer::ByteBuffer</code> struct.
+It's a copy of the <code>support.native.RustBuffer</code> class in application-services,
+with the small changes that the length field is a (32-bit) Int instead.</p>
+</td>
+</tr>
 </tbody>
 </table>
 </BODY>
