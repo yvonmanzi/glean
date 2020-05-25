@@ -777,6 +777,10 @@
 <span id="777">777</span>
 <span id="778">778</span>
 <span id="779">779</span>
+<span id="780">780</span>
+<span id="781">781</span>
+<span id="782">782</span>
+<span id="783">783</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -1247,11 +1251,15 @@
     <span class="doccomment">/// * `Upload(PingRequest)` - which means there is a ping to upload. This wraps the actual request object;</span>
     <span class="doccomment">/// * `Done` - which means there are no more pings queued right now.</span>
     <span class="doccomment">///</span>
+    <span class="doccomment">/// ## Arguments</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `log_ping` - Whether to log the ping before returning.</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// # Return value</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// `PingUploadTask` - an enum representing the possible tasks.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_upload_task</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PingUploadTask</span> {
-        <span class="self">self</span>.<span class="ident">upload_manager</span>.<span class="ident">get_upload_task</span>()
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_upload_task</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">log_ping</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PingUploadTask</span> {
+        <span class="self">self</span>.<span class="ident">upload_manager</span>.<span class="ident">get_upload_task</span>(<span class="ident">log_ping</span>)
     }
 
     <span class="doccomment">/// Processes the response from an attempt to upload a ping.</span>
