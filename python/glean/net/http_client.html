@@ -45,6 +45,7 @@ import urllib.parse
 
 
 from . import base_uploader
+from . import ping_uploader
 
 
 log = logging.getLogger(__name__)
@@ -55,7 +56,9 @@ class HttpClientUploader(base_uploader.BaseUploader):
     _DEFAULT_TIMEOUT = 10
 
     @classmethod
-    def upload(cls, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
+    def upload(
+        cls, url: str, data: bytes, headers: List[Tuple[str, str]]
+    ) -&gt; ping_uploader.UploadResult:
         &#34;&#34;&#34;
         Synchronously upload a ping to a server.
 
@@ -78,62 +81,43 @@ class HttpClientUploader(base_uploader.BaseUploader):
                 timeout=cls._DEFAULT_TIMEOUT,
             )
         else:
-            raise ValueError(&#34;Unknown URL scheme {}&#34;.format(parsed_url.scheme))
+            # If we don&#39;t know the URL scheme, log an error and mark this as an unrecoverable
+            # error, like if it were a malformed URL.
+            log.error(&#34;Unknown URL scheme {}&#34;.format(parsed_url.scheme))
+            return ping_uploader.UnrecoverableFailure()
 
         try:
             conn.request(
-                &#34;POST&#34;,
-                parsed_url.path,
-                body=data.encode(&#34;utf-8&#34;),
-                headers=dict(headers),
+                &#34;POST&#34;, parsed_url.path, body=data, headers=dict(headers),
             )
             response = conn.getresponse()
+        except http.client.InvalidURL as e:
+            log.error(
+                &#34;Could not upload telemetry due to malformed URL: &#39;{}&#39; {}&#34;.format(
+                    url, e
+                )
+            )
+            return ping_uploader.UnrecoverableFailure()
         except http.client.HTTPException as e:
-            log.error(&#34;http.client.HTTPException: &#39;{}&#39; {}&#34;.format(url, e))
-            return False
+            log.error(
+                &#34;http.client.HTTPException while uploading ping: &#39;{}&#39; {}&#34;.format(url, e)
+            )
+            return ping_uploader.RecoverableFailure()
         except socket.gaierror as e:
-            log.error(&#34;socket.gaierror: &#39;{}&#39; {}&#34;.format(url, e))
-            return False
+            log.error(&#34;socket.gaierror while uploading ping: &#39;{}&#39; {}&#34;.format(url, e))
+            return ping_uploader.RecoverableFailure()
         except OSError as e:
-            log.error(&#34;OSError: &#39;{}&#39; {}&#34;.format(url, e))
-            return False
+            log.error(&#34;OSError while uploading ping: &#39;{}&#39; {}&#34;.format(url, e))
+            return ping_uploader.RecoverableFailure()
         except Exception as e:
-            log.error(&#34;Unknown Exception: &#39;{}&#39; {}&#34;.format(url, e))
-            return False
+            log.error(&#34;Unknown Exception while uploading ping: &#39;{}&#39; {}&#34;.format(url, e))
+            return ping_uploader.RecoverableFailure()
 
-        log.debug(&#34;Ping upload: {}&#34;.format(response.status))
-
-        status_class = response.status // 100
+        status_code = response.status
 
         conn.close()
 
-        if status_class == 2:  # 2xx status
-            # Known success
-            # 200 - OK.  Request accepted into the pipeline
-            log.debug(&#34;Ping successfully sent ({})&#34;.format(response.status))
-            return True
-        elif status_class == 4:  # 4xx status
-            # Known client (4xx) errors:
-            # 404 - not found - POST/PUT to an unknown namespace
-            # 405 - wrong request type (anything other than POST/PUT)
-            # 411 - missing content-length header
-            # 413 - request body too large (Note that if we have badly-behaved
-            #       clients that retry on 4XX, we should send back 202 on
-            #       body/path too long).
-            # 414 - request path too long (See above)
-
-            # Something our client did is not correct. It&#39;s unlikely that the
-            # client is going to recover from this by re-trying again, so we
-            # just log and error and report a successful upload to the service.
-            log.error(&#34;Server returned client error code: {}&#34;.format(response.status))
-            return True
-        else:
-            # Known other errors:
-            # 500 - internal error
-
-            # For all other errors, we log a warning and try again at a later time.
-            log.error(&#34;Server returned response code: {}&#34;.format(response.status))
-            return False
+        return ping_uploader.HttpResponse(status_code)
 
 
 __all__ = [&#34;HttpClientUploader&#34;]</code></pre>
@@ -164,7 +148,9 @@ to the user-provided delegate.</p></section>
     _DEFAULT_TIMEOUT = 10
 
     @classmethod
-    def upload(cls, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
+    def upload(
+        cls, url: str, data: bytes, headers: List[Tuple[str, str]]
+    ) -&gt; ping_uploader.UploadResult:
         &#34;&#34;&#34;
         Synchronously upload a ping to a server.
 
@@ -187,62 +173,43 @@ to the user-provided delegate.</p></section>
                 timeout=cls._DEFAULT_TIMEOUT,
             )
         else:
-            raise ValueError(&#34;Unknown URL scheme {}&#34;.format(parsed_url.scheme))
+            # If we don&#39;t know the URL scheme, log an error and mark this as an unrecoverable
+            # error, like if it were a malformed URL.
+            log.error(&#34;Unknown URL scheme {}&#34;.format(parsed_url.scheme))
+            return ping_uploader.UnrecoverableFailure()
 
         try:
             conn.request(
-                &#34;POST&#34;,
-                parsed_url.path,
-                body=data.encode(&#34;utf-8&#34;),
-                headers=dict(headers),
+                &#34;POST&#34;, parsed_url.path, body=data, headers=dict(headers),
             )
             response = conn.getresponse()
+        except http.client.InvalidURL as e:
+            log.error(
+                &#34;Could not upload telemetry due to malformed URL: &#39;{}&#39; {}&#34;.format(
+                    url, e
+                )
+            )
+            return ping_uploader.UnrecoverableFailure()
         except http.client.HTTPException as e:
-            log.error(&#34;http.client.HTTPException: &#39;{}&#39; {}&#34;.format(url, e))
-            return False
+            log.error(
+                &#34;http.client.HTTPException while uploading ping: &#39;{}&#39; {}&#34;.format(url, e)
+            )
+            return ping_uploader.RecoverableFailure()
         except socket.gaierror as e:
-            log.error(&#34;socket.gaierror: &#39;{}&#39; {}&#34;.format(url, e))
-            return False
+            log.error(&#34;socket.gaierror while uploading ping: &#39;{}&#39; {}&#34;.format(url, e))
+            return ping_uploader.RecoverableFailure()
         except OSError as e:
-            log.error(&#34;OSError: &#39;{}&#39; {}&#34;.format(url, e))
-            return False
+            log.error(&#34;OSError while uploading ping: &#39;{}&#39; {}&#34;.format(url, e))
+            return ping_uploader.RecoverableFailure()
         except Exception as e:
-            log.error(&#34;Unknown Exception: &#39;{}&#39; {}&#34;.format(url, e))
-            return False
+            log.error(&#34;Unknown Exception while uploading ping: &#39;{}&#39; {}&#34;.format(url, e))
+            return ping_uploader.RecoverableFailure()
 
-        log.debug(&#34;Ping upload: {}&#34;.format(response.status))
-
-        status_class = response.status // 100
+        status_code = response.status
 
         conn.close()
 
-        if status_class == 2:  # 2xx status
-            # Known success
-            # 200 - OK.  Request accepted into the pipeline
-            log.debug(&#34;Ping successfully sent ({})&#34;.format(response.status))
-            return True
-        elif status_class == 4:  # 4xx status
-            # Known client (4xx) errors:
-            # 404 - not found - POST/PUT to an unknown namespace
-            # 405 - wrong request type (anything other than POST/PUT)
-            # 411 - missing content-length header
-            # 413 - request body too large (Note that if we have badly-behaved
-            #       clients that retry on 4XX, we should send back 202 on
-            #       body/path too long).
-            # 414 - request path too long (See above)
-
-            # Something our client did is not correct. It&#39;s unlikely that the
-            # client is going to recover from this by re-trying again, so we
-            # just log and error and report a successful upload to the service.
-            log.error(&#34;Server returned client error code: {}&#34;.format(response.status))
-            return True
-        else:
-            # Known other errors:
-            # 500 - internal error
-
-            # For all other errors, we log a warning and try again at a later time.
-            log.error(&#34;Server returned response code: {}&#34;.format(response.status))
-            return False</code></pre>
+        return ping_uploader.HttpResponse(status_code)</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -269,7 +236,9 @@ to the user-provided delegate.</p></section>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def upload(cls, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
+def upload(
+    cls, url: str, data: bytes, headers: List[Tuple[str, str]]
+) -&gt; ping_uploader.UploadResult:
     &#34;&#34;&#34;
     Synchronously upload a ping to a server.
 
@@ -292,62 +261,43 @@ def upload(cls, url: str, data: str, headers: List[Tuple[str, str]]) -&gt; bool:
             timeout=cls._DEFAULT_TIMEOUT,
         )
     else:
-        raise ValueError(&#34;Unknown URL scheme {}&#34;.format(parsed_url.scheme))
+        # If we don&#39;t know the URL scheme, log an error and mark this as an unrecoverable
+        # error, like if it were a malformed URL.
+        log.error(&#34;Unknown URL scheme {}&#34;.format(parsed_url.scheme))
+        return ping_uploader.UnrecoverableFailure()
 
     try:
         conn.request(
-            &#34;POST&#34;,
-            parsed_url.path,
-            body=data.encode(&#34;utf-8&#34;),
-            headers=dict(headers),
+            &#34;POST&#34;, parsed_url.path, body=data, headers=dict(headers),
         )
         response = conn.getresponse()
+    except http.client.InvalidURL as e:
+        log.error(
+            &#34;Could not upload telemetry due to malformed URL: &#39;{}&#39; {}&#34;.format(
+                url, e
+            )
+        )
+        return ping_uploader.UnrecoverableFailure()
     except http.client.HTTPException as e:
-        log.error(&#34;http.client.HTTPException: &#39;{}&#39; {}&#34;.format(url, e))
-        return False
+        log.error(
+            &#34;http.client.HTTPException while uploading ping: &#39;{}&#39; {}&#34;.format(url, e)
+        )
+        return ping_uploader.RecoverableFailure()
     except socket.gaierror as e:
-        log.error(&#34;socket.gaierror: &#39;{}&#39; {}&#34;.format(url, e))
-        return False
+        log.error(&#34;socket.gaierror while uploading ping: &#39;{}&#39; {}&#34;.format(url, e))
+        return ping_uploader.RecoverableFailure()
     except OSError as e:
-        log.error(&#34;OSError: &#39;{}&#39; {}&#34;.format(url, e))
-        return False
+        log.error(&#34;OSError while uploading ping: &#39;{}&#39; {}&#34;.format(url, e))
+        return ping_uploader.RecoverableFailure()
     except Exception as e:
-        log.error(&#34;Unknown Exception: &#39;{}&#39; {}&#34;.format(url, e))
-        return False
+        log.error(&#34;Unknown Exception while uploading ping: &#39;{}&#39; {}&#34;.format(url, e))
+        return ping_uploader.RecoverableFailure()
 
-    log.debug(&#34;Ping upload: {}&#34;.format(response.status))
-
-    status_class = response.status // 100
+    status_code = response.status
 
     conn.close()
 
-    if status_class == 2:  # 2xx status
-        # Known success
-        # 200 - OK.  Request accepted into the pipeline
-        log.debug(&#34;Ping successfully sent ({})&#34;.format(response.status))
-        return True
-    elif status_class == 4:  # 4xx status
-        # Known client (4xx) errors:
-        # 404 - not found - POST/PUT to an unknown namespace
-        # 405 - wrong request type (anything other than POST/PUT)
-        # 411 - missing content-length header
-        # 413 - request body too large (Note that if we have badly-behaved
-        #       clients that retry on 4XX, we should send back 202 on
-        #       body/path too long).
-        # 414 - request path too long (See above)
-
-        # Something our client did is not correct. It&#39;s unlikely that the
-        # client is going to recover from this by re-trying again, so we
-        # just log and error and report a successful upload to the service.
-        log.error(&#34;Server returned client error code: {}&#34;.format(response.status))
-        return True
-    else:
-        # Known other errors:
-        # 500 - internal error
-
-        # For all other errors, we log a warning and try again at a later time.
-        log.error(&#34;Server returned response code: {}&#34;.format(response.status))
-        return False</code></pre>
+    return ping_uploader.HttpResponse(status_code)</code></pre>
 </details>
 </dd>
 </dl>

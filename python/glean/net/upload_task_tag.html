@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.7.2" />
-<title>glean.net.deletion_ping_upload_worker API documentation</title>
+<title>glean.net.upload_task_tag API documentation</title>
 <meta name="description" content="" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
@@ -17,7 +17,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>glean.net.deletion_ping_upload_worker</code></h1>
+<h1 class="title">Module <code>glean.net.upload_task_tag</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
@@ -28,23 +28,30 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-
-from pathlib import Path
-from . import PingUploadWorker
+from enum import IntEnum
 
 
-class DeletionPingUploadWorker(PingUploadWorker):
-    # NOTE: The `DELETION_PINGS_DIR&#34; must be kept in sync with the one in the Rust implementation.
-    _DELETION_PINGS_DIR = &#34;deletion_request&#34;
+class UploadTaskTag(IntEnum):
+    &#34;&#34;&#34;
+    An enumeration for the different upload tasks that the Glean uploader supports.
 
-    @classmethod
-    def storage_directory(cls) -&gt; Path:
-        from .. import Glean
+    This *MUST* have the same order as the variants in `glean-core/ffi/src/upload.rs`.
+    &#34;&#34;&#34;
 
-        return Glean.get_data_dir() / cls._DELETION_PINGS_DIR
+    UPLOAD = 0
+    &#34;&#34;&#34;
+    Ping data is available for upload
+    &#34;&#34;&#34;
 
+    WAIT = 1
+    &#34;&#34;&#34;
+    Caller needs to wait before requesting new data
+    &#34;&#34;&#34;
 
-__all__ = [&#34;DeletionPingUploadWorker&#34;]</code></pre>
+    DONE = 2
+    &#34;&#34;&#34;
+    No data available
+    &#34;&#34;&#34;</code></pre>
 </details>
 </section>
 <section>
@@ -56,57 +63,60 @@ __all__ = [&#34;DeletionPingUploadWorker&#34;]</code></pre>
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="glean.net.deletion_ping_upload_worker.DeletionPingUploadWorker"><code class="flex name class">
-<span>class <span class="ident">DeletionPingUploadWorker</span></span>
+<dt id="glean.net.upload_task_tag.UploadTaskTag"><code class="flex name class">
+<span>class <span class="ident">UploadTaskTag</span></span>
 <span>(</span><span>*args, **kwargs)</span>
 </code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>An enumeration for the different upload tasks that the Glean uploader supports.</p>
+<p>This <em>MUST</em> have the same order as the variants in <code>glean-core/ffi/src/upload.rs</code>.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class DeletionPingUploadWorker(PingUploadWorker):
-    # NOTE: The `DELETION_PINGS_DIR&#34; must be kept in sync with the one in the Rust implementation.
-    _DELETION_PINGS_DIR = &#34;deletion_request&#34;
+<pre><code class="python">class UploadTaskTag(IntEnum):
+    &#34;&#34;&#34;
+    An enumeration for the different upload tasks that the Glean uploader supports.
 
-    @classmethod
-    def storage_directory(cls) -&gt; Path:
-        from .. import Glean
+    This *MUST* have the same order as the variants in `glean-core/ffi/src/upload.rs`.
+    &#34;&#34;&#34;
 
-        return Glean.get_data_dir() / cls._DELETION_PINGS_DIR</code></pre>
+    UPLOAD = 0
+    &#34;&#34;&#34;
+    Ping data is available for upload
+    &#34;&#34;&#34;
+
+    WAIT = 1
+    &#34;&#34;&#34;
+    Caller needs to wait before requesting new data
+    &#34;&#34;&#34;
+
+    DONE = 2
+    &#34;&#34;&#34;
+    No data available
+    &#34;&#34;&#34;</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="glean.net.ping_upload_worker.PingUploadWorker" href="ping_upload_worker.html#glean.net.ping_upload_worker.PingUploadWorker">PingUploadWorker</a></li>
+<li>enum.IntEnum</li>
+<li>builtins.int</li>
+<li>enum.Enum</li>
 </ul>
-<h3>Static methods</h3>
+<h3>Class variables</h3>
 <dl>
-<dt id="glean.net.deletion_ping_upload_worker.DeletionPingUploadWorker.storage_directory"><code class="name flex">
-<span>def <span class="ident">storage_directory</span></span>(<span>)</span>
-</code></dt>
+<dt id="glean.net.upload_task_tag.UploadTaskTag.DONE"><code class="name">var <span class="ident">DONE</span></code></dt>
 <dd>
-<section class="desc"></section>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@classmethod
-def storage_directory(cls) -&gt; Path:
-    from .. import Glean
-
-    return Glean.get_data_dir() / cls._DELETION_PINGS_DIR</code></pre>
-</details>
+<section class="desc"><p>No data available</p></section>
+</dd>
+<dt id="glean.net.upload_task_tag.UploadTaskTag.UPLOAD"><code class="name">var <span class="ident">UPLOAD</span></code></dt>
+<dd>
+<section class="desc"><p>Ping data is available for upload</p></section>
+</dd>
+<dt id="glean.net.upload_task_tag.UploadTaskTag.WAIT"><code class="name">var <span class="ident">WAIT</span></code></dt>
+<dd>
+<section class="desc"><p>Caller needs to wait before requesting new data</p></section>
 </dd>
 </dl>
-<h3>Inherited members</h3>
-<ul class="hlist">
-<li><code><b><a title="glean.net.ping_upload_worker.PingUploadWorker" href="ping_upload_worker.html#glean.net.ping_upload_worker.PingUploadWorker">PingUploadWorker</a></b></code>:
-<ul class="hlist">
-<li><code><a title="glean.net.ping_upload_worker.PingUploadWorker.process" href="ping_upload_worker.html#glean.net.ping_upload_worker.PingUploadWorker.process">process</a></code></li>
-</ul>
-</li>
-</ul>
 </dd>
 </dl>
 </section>
@@ -125,9 +135,11 @@ def storage_directory(cls) -&gt; Path:
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="glean.net.deletion_ping_upload_worker.DeletionPingUploadWorker" href="#glean.net.deletion_ping_upload_worker.DeletionPingUploadWorker">DeletionPingUploadWorker</a></code></h4>
+<h4><code><a title="glean.net.upload_task_tag.UploadTaskTag" href="#glean.net.upload_task_tag.UploadTaskTag">UploadTaskTag</a></code></h4>
 <ul class="">
-<li><code><a title="glean.net.deletion_ping_upload_worker.DeletionPingUploadWorker.storage_directory" href="#glean.net.deletion_ping_upload_worker.DeletionPingUploadWorker.storage_directory">storage_directory</a></code></li>
+<li><code><a title="glean.net.upload_task_tag.UploadTaskTag.DONE" href="#glean.net.upload_task_tag.UploadTaskTag.DONE">DONE</a></code></li>
+<li><code><a title="glean.net.upload_task_tag.UploadTaskTag.UPLOAD" href="#glean.net.upload_task_tag.UploadTaskTag.UPLOAD">UPLOAD</a></code></li>
+<li><code><a title="glean.net.upload_task_tag.UploadTaskTag.WAIT" href="#glean.net.upload_task_tag.UploadTaskTag.WAIT">WAIT</a></code></li>
 </ul>
 </li>
 </ul>

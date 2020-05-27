@@ -48,7 +48,6 @@ from .config import Configuration
 from ._dispatcher import Dispatcher
 from . import _ffi
 from .net import PingUploadWorker
-from .net import DeletionPingUploadWorker
 from ._process_dispatcher import ProcessDispatcher
 from . import _util
 
@@ -190,7 +189,10 @@ class Glean:
         # Deal with any pending events so we can start recording new ones
         @Dispatcher.launch_at_front
         def submit_pending_events():
-            if _ffi.lib.glean_on_ready_to_submit_pings():
+            if (
+                _ffi.lib.glean_on_ready_to_submit_pings()
+                or cls._upload_enabled is False
+            ):
                 PingUploadWorker.process()
 
         # Glean Android checks for the &#34;dirty bit&#34; and sends the `baseline` ping
@@ -207,12 +209,6 @@ class Glean:
 
         # Glean Android sets up the lifecycle observer here. We don&#39;t really
         # have a lifecycle.
-
-        if cls._upload_enabled is False:
-
-            @Dispatcher.launch
-            def check_pending_deletion_request():
-                DeletionPingUploadWorker.process()
 
     @_util.classproperty
     def configuration(cls) -&gt; Configuration:
@@ -318,7 +314,7 @@ class Glean:
 
                 if original_enabled is True and cls.get_upload_enabled() is False:
                     # If uploading is disabled, we need to send the deletion-request ping
-                    DeletionPingUploadWorker.process()
+                    PingUploadWorker.process()
 
         else:
             cls._upload_enabled = enabled
@@ -660,7 +656,10 @@ initialized from the application.</p>
         # Deal with any pending events so we can start recording new ones
         @Dispatcher.launch_at_front
         def submit_pending_events():
-            if _ffi.lib.glean_on_ready_to_submit_pings():
+            if (
+                _ffi.lib.glean_on_ready_to_submit_pings()
+                or cls._upload_enabled is False
+            ):
                 PingUploadWorker.process()
 
         # Glean Android checks for the &#34;dirty bit&#34; and sends the `baseline` ping
@@ -677,12 +676,6 @@ initialized from the application.</p>
 
         # Glean Android sets up the lifecycle observer here. We don&#39;t really
         # have a lifecycle.
-
-        if cls._upload_enabled is False:
-
-            @Dispatcher.launch
-            def check_pending_deletion_request():
-                DeletionPingUploadWorker.process()
 
     @_util.classproperty
     def configuration(cls) -&gt; Configuration:
@@ -788,7 +781,7 @@ initialized from the application.</p>
 
                 if original_enabled is True and cls.get_upload_enabled() is False:
                     # If uploading is disabled, we need to send the deletion-request ping
-                    DeletionPingUploadWorker.process()
+                    PingUploadWorker.process()
 
         else:
             cls._upload_enabled = enabled
@@ -1137,7 +1130,10 @@ def initialize(
     # Deal with any pending events so we can start recording new ones
     @Dispatcher.launch_at_front
     def submit_pending_events():
-        if _ffi.lib.glean_on_ready_to_submit_pings():
+        if (
+            _ffi.lib.glean_on_ready_to_submit_pings()
+            or cls._upload_enabled is False
+        ):
             PingUploadWorker.process()
 
     # Glean Android checks for the &#34;dirty bit&#34; and sends the `baseline` ping
@@ -1150,16 +1146,7 @@ def initialize(
         _ffi.lib.glean_clear_application_lifetime_metrics()
         cls._initialize_core_metrics()
 
-    Dispatcher.flush_queued_initial_tasks()
-
-    # Glean Android sets up the lifecycle observer here. We don&#39;t really
-    # have a lifecycle.
-
-    if cls._upload_enabled is False:
-
-        @Dispatcher.launch
-        def check_pending_deletion_request():
-            DeletionPingUploadWorker.process()</code></pre>
+    Dispatcher.flush_queued_initial_tasks()</code></pre>
 </details>
 </dd>
 <dt id="glean.glean.Glean.is_initialized"><code class="name flex">
@@ -1335,7 +1322,7 @@ def set_upload_enabled(cls, enabled: bool) -&gt; None:
 
             if original_enabled is True and cls.get_upload_enabled() is False:
                 # If uploading is disabled, we need to send the deletion-request ping
-                DeletionPingUploadWorker.process()
+                PingUploadWorker.process()
 
     else:
         cls._upload_enabled = enabled</code></pre>

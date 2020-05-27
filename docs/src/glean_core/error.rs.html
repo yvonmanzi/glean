@@ -251,7 +251,7 @@
         }
     }
 
-    <span class="doccomment">/// Indicates an error that no global Glean object is initialized</span>
+    <span class="doccomment">/// Indicates an error that no requested global object is initialized</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">not_initialized</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Error</span> {
         <span class="ident">Error</span> {
             <span class="ident">kind</span>: <span class="ident">ErrorKind</span>::<span class="ident">NotInitialized</span>,

@@ -35,12 +35,14 @@ Utilities for writing unit tests involving Glean.
 &#34;&#34;&#34;
 
 
+import gzip
 from pathlib import Path
-from typing import Any, Optional
+from typing import List, Optional, Tuple
 
 
 from glean import Configuration
 from .error_type import ErrorType  # noqa
+from ..net import base_uploader, ping_uploader
 
 
 def reset_glean(
@@ -84,7 +86,7 @@ def reset_glean(
     )
 
 
-class _RecordingUploader:
+class _RecordingUploader(base_uploader.BaseUploader):
     &#34;&#34;&#34;
     A ping uploader that saves the results to disk for later inspection.
 
@@ -96,11 +98,23 @@ class _RecordingUploader:
         self.file_path = file_path
 
     def do_upload(
-        self, url_path: str, serialized_ping: str, configuration: Any
-    ) -&gt; None:
+        self,
+        path: str,
+        data: bytes,
+        headers: List[Tuple[str, str]],
+        config: &#34;Configuration&#34;,
+    ) -&gt; ping_uploader.UploadResult:
+        is_gzipped = (
+            len([h for h in headers if h[0] == &#34;Content-Encoding&#34; and h[1] == &#34;gzip&#34;])
+            == 1
+        )
+
+        uncompressed_data = gzip.decompress(data) if is_gzipped else data
         with self.file_path.open(&#34;w&#34;) as fd:
-            fd.write(str(url_path) + &#34;\n&#34;)
-            fd.write(serialized_ping + &#34;\n&#34;)
+            fd.write(str(path) + &#34;\n&#34;)
+            fd.write(uncompressed_data.decode(&#34;utf-8&#34;) + &#34;\n&#34;)
+
+        return ping_uploader.HttpResponse(status_code=200)
 
 
 __all__ = [&#34;reset_glean&#34;, &#34;ErrorType&#34;]</code></pre>
