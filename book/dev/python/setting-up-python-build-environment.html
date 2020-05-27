@@ -241,7 +241,7 @@ logging.basicConfig(level=logging.DEBUG)
 <p>Rust log messages are emitted using <a href="https://docs.rs/env_logger/latest/env_logger/"><code>env_logger</code></a>.
 The log level can be controlled with the <code>RUST_LOG</code> environment variable:</p>
 <pre><code class="language-python">import os
-os.environ[&quot;RUST_LOG&quot;] = &quot;DEBUG&quot;
+os.environ[&quot;RUST_LOG&quot;] = &quot;glean_core=DEBUG&quot;
 </code></pre>
 <h2><a class="header" href="#linting-formatting-and-type-checking" id="linting-formatting-and-type-checking">Linting, formatting and type checking</a></h2>
 <p>The Glean Python bindings use the following tools:</p>
