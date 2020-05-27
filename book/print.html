@@ -1657,7 +1657,10 @@ assert 0 == metrics.accessibility.features.test_get_num_recorded_errors(
 <li>Python API docs: <a href="user/metrics/../../../python/glean/metrics/labeled.html"><code>LabeledMetricBase</code></a>, <a href="user/metrics/../../../python/glean/metrics/boolean.html"><code>BooleanMetricType</code></a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/user/metrics/labeled_booleans.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#counter" id="counter">Counter</a></h1>
-<p>Used to count how often something happens, say how often a certain button was pressed. A counter always starts from <code>0</code>. Each time you record to a counter, its value is incremented.</p>
+<p>Used to count how often something happens, say how often a certain button was pressed.
+A counter always starts from <code>0</code>.
+Each time you record to a counter, its value is incremented.
+Unless incremented by a positive value, a counter will not be reported in pings.</p>
 <blockquote>
 <p><strong>IMPORTANT:</strong> When using a counter metric, it is important to let the Glean metric do the counting. Using your own variable for counting and setting the counter yourself could be problematic because it will be difficult to reset the value at the exact moment that the value is sent in a ping. Instead, just use <code>counter.add</code> to increment the value and let Glean handle resetting the counter.</p>
 </blockquote>
@@ -1750,15 +1753,15 @@ assert 1 == metrics.controls.refresh_pressed.test_get_num_recorded_errors(
 </div>
 <h2><a class="header" href="#limits-3" id="limits-3">Limits</a></h2>
 <ul>
-<li>Only increments, saturates at the limits of a 32-bit signed integer.</li>
+<li>Only increments, saturates at the largest value that can be represented as a 32-bit signed integer (<code>2147483647</code>).</li>
 </ul>
 <h2><a class="header" href="#examples-2" id="examples-2">Examples</a></h2>
 <ul>
-<li>How often a certain button was pressed?</li>
+<li>How often was a certain button was pressed?</li>
 </ul>
 <h2><a class="header" href="#recorded-errors-2" id="recorded-errors-2">Recorded errors</a></h2>
 <ul>
-<li><code>invalid_value</code>: If the counter is incremented by a non-positive value.</li>
+<li><code>invalid_value</code>: If the counter is incremented by <code>0</code> or a negative value.</li>
 </ul>
 <h2><a class="header" href="#reference-3" id="reference-3">Reference</a></h2>
 <ul>
@@ -6526,6 +6529,11 @@ All the default pings have their scheduling and submission handled by the SDK.</
 <li>BUGFIX: <code>lifetime: application</code> metrics are no longer recorded as <code>lifetime: user</code>.</li>
 <li>BUGFIX: glean-core is no longer crashing when calling <code>uuid.set</code> with invalid UUIDs. </li>
 <li>Refactor the ping uploader to use the new upload mechanism and add gzip compression.</li>
+</ul>
+</li>
+<li>Rust:
+<ul>
+<li>Expose <code>Datetime</code> types to Rust consumers.</li>
 </ul>
 </li>
 </ul>
