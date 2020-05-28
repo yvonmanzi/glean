@@ -161,19 +161,32 @@
                         <h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v30.1.0...master">Full changelog</a></p>
 <ul>
-<li>General:
+<li>
+<p>General:</p>
 <ul>
-<li>The version of glean_parser has been upgraded to v1.21.0</li>
+<li>The version of <code>glean_parser</code> has been upgraded to v1.22.0
+<ul>
+<li>A maximum of 10 <code>extra_keys</code> is now enforced for event metric types.</li>
+<li><strong>Breaking change</strong>: (Swift only) Combine all metrics and pings into a single generated file Metrics.swift.
+<ul>
+<li>For Swift users this requires to change the list of output files for the <code>sdk_generator.sh</code> script.
+It now only needs to include the single file <code>Generated/Metrics.swift</code>.</li>
 </ul>
 </li>
-<li>Python:
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Python:</p>
 <ul>
 <li>BUGFIX: <code>lifetime: application</code> metrics are no longer recorded as <code>lifetime: user</code>.</li>
-<li>BUGFIX: glean-core is no longer crashing when calling <code>uuid.set</code> with invalid UUIDs. </li>
+<li>BUGFIX: glean-core is no longer crashing when calling <code>uuid.set</code> with invalid UUIDs.</li>
 <li>Refactor the ping uploader to use the new upload mechanism and add gzip compression.</li>
 </ul>
 </li>
-<li>Rust:
+<li>
+<p>Rust:</p>
 <ul>
 <li>Expose <code>Datetime</code> types to Rust consumers.</li>
 </ul>
