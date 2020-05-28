@@ -6542,6 +6542,8 @@ It now only needs to include the single file <code>Generated/Metrics.swift</code
 <li>BUGFIX: <code>lifetime: application</code> metrics are no longer recorded as <code>lifetime: user</code>.</li>
 <li>BUGFIX: glean-core is no longer crashing when calling <code>uuid.set</code> with invalid UUIDs.</li>
 <li>Refactor the ping uploader to use the new upload mechanism and add gzip compression.</li>
+<li>Most of the work in <code>Glean.initialize</code> happens on a worker thread and no longer blocks
+the main thread.</li>
 </ul>
 </li>
 <li>
