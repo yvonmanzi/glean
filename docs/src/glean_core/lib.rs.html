@@ -980,7 +980,7 @@
             <span class="ident">event_data_store</span>,
             <span class="ident">core_metrics</span>: <span class="ident">CoreMetrics</span>::<span class="ident">new</span>(),
             <span class="ident">internal_pings</span>: <span class="ident">InternalPings</span>::<span class="ident">new</span>(),
-            <span class="ident">upload_manager</span>: <span class="ident">PingUploadManager</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">cfg</span>.<span class="ident">data_path</span>),
+            <span class="ident">upload_manager</span>: <span class="ident">PingUploadManager</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">cfg</span>.<span class="ident">data_path</span>, <span class="bool-val">false</span>),
             <span class="ident">data_path</span>: <span class="ident">PathBuf</span>::<span class="ident">from</span>(<span class="ident">cfg</span>.<span class="ident">data_path</span>),
             <span class="ident">application_id</span>,
             <span class="ident">ping_registry</span>: <span class="ident">HashMap</span>::<span class="ident">new</span>(),
