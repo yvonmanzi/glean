@@ -124,6 +124,7 @@
 <span id="124">124</span>
 <span id="125">125</span>
 <span id="126">126</span>
+<span id="127">127</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -139,6 +140,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// A metric&#39;s lifetime determines when its stored data gets reset.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">i32</span>)]</span> <span class="comment">// Use i32 to be compatible with our JNA definition</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Lifetime</span> {
     <span class="doccomment">/// The metric is reset with each sent ping</span>
     <span class="ident">Ping</span>,

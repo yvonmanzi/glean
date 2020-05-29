@@ -487,6 +487,9 @@
 <span id="487">487</span>
 <span id="488">488</span>
 <span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -499,9 +502,12 @@
 
 <span class="kw">use</span> <span class="ident">ffi_support</span>::{<span class="ident">define_string_destructor</span>, <span class="ident">ConcurrentHandleMap</span>, <span class="ident">FfiStr</span>, <span class="ident">IntoFfi</span>};
 
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">glean_core</span>::<span class="ident">metrics</span>::<span class="ident">MemoryUnit</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">glean_core</span>::<span class="ident">metrics</span>::<span class="ident">TimeUnit</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">glean_core</span>::<span class="ident">upload</span>::<span class="ident">ffi_upload_result</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">glean_core</span>::<span class="ident">upload</span>::<span class="ident">PingUploadManager</span>;
 <span class="kw">use</span> <span class="ident">glean_core</span>::<span class="ident">Glean</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">glean_core</span>::<span class="ident">Lifetime</span>;
 
 <span class="kw">mod</span> <span class="ident">macros</span>;
 

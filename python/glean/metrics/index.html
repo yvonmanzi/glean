@@ -1549,17 +1549,17 @@ metric storage and rearrange them correctly in the ping.</p></section>
     Metric lifetimes define when a metric is reset.
     &#34;&#34;&#34;
 
-    PING = 0
+    PING = _ffi.lib.Lifetime_Ping
     &#34;&#34;&#34;
     The metric is reset with each sent ping
     &#34;&#34;&#34;
 
-    APPLICATION = 1
+    APPLICATION = _ffi.lib.Lifetime_Application
     &#34;&#34;&#34;
     The metric is reset on application restart
     &#34;&#34;&#34;
 
-    USER = 2
+    USER = _ffi.lib.Lifetime_User
     &#34;&#34;&#34;
     The metric is reset with each user profile
     &#34;&#34;&#34;</code></pre>
@@ -1906,22 +1906,22 @@ pedantically a Kibibyte.</p></section>
     pedantically a Kibibyte.
     &#34;&#34;&#34;
 
-    BYTE = 0
+    BYTE = _ffi.lib.MemoryUnit_Byte
     &#34;&#34;&#34;
     Byte: 1 byte.
     &#34;&#34;&#34;
 
-    KILOBYTE = 1
+    KILOBYTE = _ffi.lib.MemoryUnit_Kilobyte
     &#34;&#34;&#34;
     Kilobyte: 2^10 bytes
     &#34;&#34;&#34;
 
-    MEGABYTE = 2
+    MEGABYTE = _ffi.lib.MemoryUnit_Megabyte
     &#34;&#34;&#34;
     Megabyte: 2^20 bytes
     &#34;&#34;&#34;
 
-    GIGABYTE = 3
+    GIGABYTE = _ffi.lib.MemoryUnit_Gigabyte
     &#34;&#34;&#34;
     Gigabyte: 2^30 bytes
     &#34;&#34;&#34;</code></pre>
@@ -2973,37 +2973,37 @@ metric types.</p></section>
     metric types.
     &#34;&#34;&#34;
 
-    NANOSECOND = 0
+    NANOSECOND = _ffi.lib.TimeUnit_Nanosecond
     &#34;&#34;&#34;
     Represents nanosecond precision.
     &#34;&#34;&#34;
 
-    MICROSECOND = 1
+    MICROSECOND = _ffi.lib.TimeUnit_Microsecond
     &#34;&#34;&#34;
     Represents microsecond precision.
     &#34;&#34;&#34;
 
-    MILLISECOND = 2
+    MILLISECOND = _ffi.lib.TimeUnit_Millisecond
     &#34;&#34;&#34;
     Represents millisecond precision.
     &#34;&#34;&#34;
 
-    SECOND = 3
+    SECOND = _ffi.lib.TimeUnit_Second
     &#34;&#34;&#34;
     Represents second precision.
     &#34;&#34;&#34;
 
-    MINUTE = 4
+    MINUTE = _ffi.lib.TimeUnit_Minute
     &#34;&#34;&#34;
     Represents minute precision.
     &#34;&#34;&#34;
 
-    HOUR = 5
+    HOUR = _ffi.lib.TimeUnit_Hour
     &#34;&#34;&#34;
     Represents hour precision.
     &#34;&#34;&#34;
 
-    DAY = 6
+    DAY = _ffi.lib.TimeUnit_Day
     &#34;&#34;&#34;
     Represents day precision.
     &#34;&#34;&#34;</code></pre>

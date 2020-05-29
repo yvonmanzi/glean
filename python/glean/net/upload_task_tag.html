@@ -31,24 +31,25 @@
 from enum import IntEnum
 
 
+from .. import _ffi
+
+
 class UploadTaskTag(IntEnum):
     &#34;&#34;&#34;
     An enumeration for the different upload tasks that the Glean uploader supports.
-
-    This *MUST* have the same order as the variants in `glean-core/ffi/src/upload.rs`.
     &#34;&#34;&#34;
 
-    UPLOAD = 0
+    UPLOAD = _ffi.lib.FfiPingUploadTask_Upload
     &#34;&#34;&#34;
     Ping data is available for upload
     &#34;&#34;&#34;
 
-    WAIT = 1
+    WAIT = _ffi.lib.FfiPingUploadTask_Wait
     &#34;&#34;&#34;
     Caller needs to wait before requesting new data
     &#34;&#34;&#34;
 
-    DONE = 2
+    DONE = _ffi.lib.FfiPingUploadTask_Done
     &#34;&#34;&#34;
     No data available
     &#34;&#34;&#34;</code></pre>
@@ -68,8 +69,7 @@ class UploadTaskTag(IntEnum):
 <span>(</span><span>*args, **kwargs)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>An enumeration for the different upload tasks that the Glean uploader supports.</p>
-<p>This <em>MUST</em> have the same order as the variants in <code>glean-core/ffi/src/upload.rs</code>.</p></section>
+<section class="desc"><p>An enumeration for the different upload tasks that the Glean uploader supports.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -77,21 +77,19 @@ class UploadTaskTag(IntEnum):
 <pre><code class="python">class UploadTaskTag(IntEnum):
     &#34;&#34;&#34;
     An enumeration for the different upload tasks that the Glean uploader supports.
-
-    This *MUST* have the same order as the variants in `glean-core/ffi/src/upload.rs`.
     &#34;&#34;&#34;
 
-    UPLOAD = 0
+    UPLOAD = _ffi.lib.FfiPingUploadTask_Upload
     &#34;&#34;&#34;
     Ping data is available for upload
     &#34;&#34;&#34;
 
-    WAIT = 1
+    WAIT = _ffi.lib.FfiPingUploadTask_Wait
     &#34;&#34;&#34;
     Caller needs to wait before requesting new data
     &#34;&#34;&#34;
 
-    DONE = 2
+    DONE = _ffi.lib.FfiPingUploadTask_Done
     &#34;&#34;&#34;
     No data available
     &#34;&#34;&#34;</code></pre>

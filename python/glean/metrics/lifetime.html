@@ -31,6 +31,9 @@
 from enum import Enum
 
 
+from .. import _ffi
+
+
 class Lifetime(Enum):
     &#34;&#34;&#34;
     An enumeration for the different metric lifetimes that Glean supports.
@@ -38,17 +41,17 @@ class Lifetime(Enum):
     Metric lifetimes define when a metric is reset.
     &#34;&#34;&#34;
 
-    PING = 0
+    PING = _ffi.lib.Lifetime_Ping
     &#34;&#34;&#34;
     The metric is reset with each sent ping
     &#34;&#34;&#34;
 
-    APPLICATION = 1
+    APPLICATION = _ffi.lib.Lifetime_Application
     &#34;&#34;&#34;
     The metric is reset on application restart
     &#34;&#34;&#34;
 
-    USER = 2
+    USER = _ffi.lib.Lifetime_User
     &#34;&#34;&#34;
     The metric is reset with each user profile
     &#34;&#34;&#34;</code></pre>
@@ -81,17 +84,17 @@ class Lifetime(Enum):
     Metric lifetimes define when a metric is reset.
     &#34;&#34;&#34;
 
-    PING = 0
+    PING = _ffi.lib.Lifetime_Ping
     &#34;&#34;&#34;
     The metric is reset with each sent ping
     &#34;&#34;&#34;
 
-    APPLICATION = 1
+    APPLICATION = _ffi.lib.Lifetime_Application
     &#34;&#34;&#34;
     The metric is reset on application restart
     &#34;&#34;&#34;
 
-    USER = 2
+    USER = _ffi.lib.Lifetime_User
     &#34;&#34;&#34;
     The metric is reset with each user profile
     &#34;&#34;&#34;</code></pre>

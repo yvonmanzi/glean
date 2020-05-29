@@ -32,43 +32,46 @@
 from enum import IntEnum
 
 
+from .. import _ffi
+
+
 class TimeUnit(IntEnum):
     &#34;&#34;&#34;
     An enumeration of different resolutions supported by the time-related
     metric types.
     &#34;&#34;&#34;
 
-    NANOSECOND = 0
+    NANOSECOND = _ffi.lib.TimeUnit_Nanosecond
     &#34;&#34;&#34;
     Represents nanosecond precision.
     &#34;&#34;&#34;
 
-    MICROSECOND = 1
+    MICROSECOND = _ffi.lib.TimeUnit_Microsecond
     &#34;&#34;&#34;
     Represents microsecond precision.
     &#34;&#34;&#34;
 
-    MILLISECOND = 2
+    MILLISECOND = _ffi.lib.TimeUnit_Millisecond
     &#34;&#34;&#34;
     Represents millisecond precision.
     &#34;&#34;&#34;
 
-    SECOND = 3
+    SECOND = _ffi.lib.TimeUnit_Second
     &#34;&#34;&#34;
     Represents second precision.
     &#34;&#34;&#34;
 
-    MINUTE = 4
+    MINUTE = _ffi.lib.TimeUnit_Minute
     &#34;&#34;&#34;
     Represents minute precision.
     &#34;&#34;&#34;
 
-    HOUR = 5
+    HOUR = _ffi.lib.TimeUnit_Hour
     &#34;&#34;&#34;
     Represents hour precision.
     &#34;&#34;&#34;
 
-    DAY = 6
+    DAY = _ffi.lib.TimeUnit_Day
     &#34;&#34;&#34;
     Represents day precision.
     &#34;&#34;&#34;</code></pre>
@@ -100,37 +103,37 @@ metric types.</p></section>
     metric types.
     &#34;&#34;&#34;
 
-    NANOSECOND = 0
+    NANOSECOND = _ffi.lib.TimeUnit_Nanosecond
     &#34;&#34;&#34;
     Represents nanosecond precision.
     &#34;&#34;&#34;
 
-    MICROSECOND = 1
+    MICROSECOND = _ffi.lib.TimeUnit_Microsecond
     &#34;&#34;&#34;
     Represents microsecond precision.
     &#34;&#34;&#34;
 
-    MILLISECOND = 2
+    MILLISECOND = _ffi.lib.TimeUnit_Millisecond
     &#34;&#34;&#34;
     Represents millisecond precision.
     &#34;&#34;&#34;
 
-    SECOND = 3
+    SECOND = _ffi.lib.TimeUnit_Second
     &#34;&#34;&#34;
     Represents second precision.
     &#34;&#34;&#34;
 
-    MINUTE = 4
+    MINUTE = _ffi.lib.TimeUnit_Minute
     &#34;&#34;&#34;
     Represents minute precision.
     &#34;&#34;&#34;
 
-    HOUR = 5
+    HOUR = _ffi.lib.TimeUnit_Hour
     &#34;&#34;&#34;
     Represents hour precision.
     &#34;&#34;&#34;
 
-    DAY = 6
+    DAY = _ffi.lib.TimeUnit_Day
     &#34;&#34;&#34;
     Represents day precision.
     &#34;&#34;&#34;</code></pre>

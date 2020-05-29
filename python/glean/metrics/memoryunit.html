@@ -32,6 +32,9 @@
 from enum import IntEnum
 
 
+from .. import _ffi
+
+
 class MemoryUnit(IntEnum):
     &#34;&#34;&#34;
     An enumeration of different resolutions supported by the
@@ -41,22 +44,22 @@ class MemoryUnit(IntEnum):
     pedantically a Kibibyte.
     &#34;&#34;&#34;
 
-    BYTE = 0
+    BYTE = _ffi.lib.MemoryUnit_Byte
     &#34;&#34;&#34;
     Byte: 1 byte.
     &#34;&#34;&#34;
 
-    KILOBYTE = 1
+    KILOBYTE = _ffi.lib.MemoryUnit_Kilobyte
     &#34;&#34;&#34;
     Kilobyte: 2^10 bytes
     &#34;&#34;&#34;
 
-    MEGABYTE = 2
+    MEGABYTE = _ffi.lib.MemoryUnit_Megabyte
     &#34;&#34;&#34;
     Megabyte: 2^20 bytes
     &#34;&#34;&#34;
 
-    GIGABYTE = 3
+    GIGABYTE = _ffi.lib.MemoryUnit_Gigabyte
     &#34;&#34;&#34;
     Gigabyte: 2^30 bytes
     &#34;&#34;&#34;</code></pre>
@@ -93,22 +96,22 @@ pedantically a Kibibyte.</p></section>
     pedantically a Kibibyte.
     &#34;&#34;&#34;
 
-    BYTE = 0
+    BYTE = _ffi.lib.MemoryUnit_Byte
     &#34;&#34;&#34;
     Byte: 1 byte.
     &#34;&#34;&#34;
 
-    KILOBYTE = 1
+    KILOBYTE = _ffi.lib.MemoryUnit_Kilobyte
     &#34;&#34;&#34;
     Kilobyte: 2^10 bytes
     &#34;&#34;&#34;
 
-    MEGABYTE = 2
+    MEGABYTE = _ffi.lib.MemoryUnit_Megabyte
     &#34;&#34;&#34;
     Megabyte: 2^20 bytes
     &#34;&#34;&#34;
 
-    GIGABYTE = 3
+    GIGABYTE = _ffi.lib.MemoryUnit_Gigabyte
     &#34;&#34;&#34;
     Gigabyte: 2^30 bytes
     &#34;&#34;&#34;</code></pre>

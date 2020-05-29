@@ -42,7 +42,7 @@
 
 <span class="kw">use</span> <span class="ident">ffi_support</span>::<span class="ident">FfiStr</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">define_metric</span>, <span class="ident">handlemap_ext</span>::<span class="ident">HandleMapExtension</span>, <span class="ident">with_glean_value</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">define_metric</span>, <span class="ident">handlemap_ext</span>::<span class="ident">HandleMapExtension</span>, <span class="ident">with_glean_value</span>, <span class="ident">Lifetime</span>};
 
 <span class="macro">define_metric</span><span class="macro">!</span>(<span class="ident">CounterMetric</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">COUNTER_METRICS</span> {
     <span class="ident">new</span>           <span class="op">-</span><span class="op">&gt;</span> <span class="ident">glean_new_counter_metric</span>(),

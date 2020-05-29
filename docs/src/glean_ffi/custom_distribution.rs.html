@@ -74,7 +74,7 @@
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">define_metric</span>, <span class="ident">from_raw_int64_array</span>, <span class="ident">handlemap_ext</span>::<span class="ident">HandleMapExtension</span>, <span class="ident">with_glean_value</span>,
-    <span class="ident">RawInt64Array</span>,
+    <span class="ident">Lifetime</span>, <span class="ident">RawInt64Array</span>,
 };
 
 <span class="macro">define_metric</span><span class="macro">!</span>(<span class="ident">CustomDistributionMetric</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">CUSTOM_DISTRIBUTION_METRICS</span> {
