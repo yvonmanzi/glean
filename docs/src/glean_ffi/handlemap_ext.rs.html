@@ -192,7 +192,7 @@
     <span class="kw">if</span> <span class="op">!</span><span class="ident">error</span>.<span class="ident">get_code</span>().<span class="ident">is_success</span>() {
         <span class="comment">// in practice this should never panic, but you never know...</span>
         <span class="ident">ffi_support</span>::<span class="ident">abort_on_panic</span>::<span class="ident">call_with_output</span>(<span class="op">|</span><span class="op">|</span> {
-            <span class="ident">log</span>::<span class="macro">warn</span><span class="macro">!</span>(
+            <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(
                 <span class="string">&quot;Glean failed ({:?}): {}&quot;</span>,
                 <span class="ident">error</span>.<span class="ident">get_code</span>(),
                 <span class="ident">error</span>.<span class="ident">get_message</span>().<span class="ident">as_str</span>()
