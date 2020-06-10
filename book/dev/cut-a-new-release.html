@@ -187,15 +187,15 @@ For some developer workflows, <code>upstream</code> can be the same as <code>ori
 <h2><a class="header" href="#standard-release" id="standard-release">Standard Release</a></h2>
 <p>Releases can only be done by one of the Glean maintainers.</p>
 <ul>
-<li>Main development branch: <code>master</code></li>
+<li>Main development branch: <code>main</code></li>
 <li>Main release branch: <code>release</code></li>
 <li>Specific release branch: <code>release-vX.Y.Z</code></li>
 <li>Hotfix branch: <code>hotfix-X.Y.(Z+1)</code></li>
 </ul>
 <h3><a class="header" href="#create-a-release-branch" id="create-a-release-branch">Create a release branch</a></h3>
 <ol>
-<li>Create a release branch from the <code>master</code> branch:
-<pre><code>git checkout -b release-v25.0.0 master
+<li>Create a release branch from the <code>main</code> branch:
+<pre><code>git checkout -b release-v25.0.0 main
 </code></pre>
 </li>
 <li>Update the changelog .
@@ -217,7 +217,7 @@ For some developer workflows, <code>upstream</code> can be the same as <code>ori
 <li>Wait for CI to finish on that branch and ensure it's green: <a href="https://circleci.com/gh/mozilla/glean/tree/release-v25.0.0">https://circleci.com/gh/mozilla/glean/tree/release-v25.0.0</a></li>
 <li>Apply additional commits for bug fixes to this branch.
 <ul>
-<li>Adding large new features here is strictly prohibited. They need to go to the <code>master</code> branch and wait for the next release.</li>
+<li>Adding large new features here is strictly prohibited. They need to go to the <code>main</code> branch and wait for the next release.</li>
 </ul>
 </li>
 </ol>
@@ -256,10 +256,10 @@ cd ffi
 cargo publish --verbose
 </code></pre>
 </li>
-<li>Send a pull request to merge back the specific release branch to the development branch: <a href="https://github.com/mozilla/glean/compare/master...release-v25.0.0?expand=1">https://github.com/mozilla/glean/compare/master...release-v25.0.0?expand=1</a>
+<li>Send a pull request to merge back the specific release branch to the development branch: <a href="https://github.com/mozilla/glean/compare/main...release-v25.0.0?expand=1">https://github.com/mozilla/glean/compare/main...release-v25.0.0?expand=1</a>
 <ul>
 <li>This is important so that no changes are lost.</li>
-<li>This might have merge conflicts with the <code>master</code> branch, which you need to fix before it is merged.</li>
+<li>This might have merge conflicts with the <code>main</code> branch, which you need to fix before it is merged.</li>
 </ul>
 </li>
 <li>Once the above pull request lands, delete the specific release branch.</li>
@@ -325,10 +325,10 @@ cd ffi
 cargo publish --verbose
 </code></pre>
 </li>
-<li>Send a pull request to merge back the hotfix branch to the development branch: <a href="https://github.com/mozilla/glean/compare/master...hotfix-v25.0.1?expand=1">https://github.com/mozilla/glean/compare/master...hotfix-v25.0.1?expand=1</a>
+<li>Send a pull request to merge back the hotfix branch to the development branch: <a href="https://github.com/mozilla/glean/compare/main...hotfix-v25.0.1?expand=1">https://github.com/mozilla/glean/compare/main...hotfix-v25.0.1?expand=1</a>
 <ul>
 <li>This is important so that no changes are lost.</li>
-<li>This might have merge conflicts with the <code>master</code> branch, which you need to fix before it is merged.</li>
+<li>This might have merge conflicts with the <code>main</code> branch, which you need to fix before it is merged.</li>
 </ul>
 </li>
 <li>Once the above pull request lands, delete the hotfix branch.</li>
@@ -395,10 +395,10 @@ cd ffi
 cargo publish --verbose
 </code></pre>
 </li>
-<li>Send a pull request to merge back any bug fixes to the development branch: <a href="https://github.com/mozilla/glean/compare/master...support/v24.0?expand=1">https://github.com/mozilla/glean/compare/master...support/v24.0?expand=1</a>
+<li>Send a pull request to merge back any bug fixes to the development branch: <a href="https://github.com/mozilla/glean/compare/main...support/v24.0?expand=1">https://github.com/mozilla/glean/compare/main...support/v24.0?expand=1</a>
 <ul>
 <li>This is important so that no changes are lost.</li>
-<li>This might have merge conflicts with the <code>master</code> branch, which you need to fix before it is merged.</li>
+<li>This might have merge conflicts with the <code>main</code> branch, which you need to fix before it is merged.</li>
 </ul>
 </li>
 <li>Once the above pull request lands, delete the support branch.</li>
@@ -423,7 +423,7 @@ Ask in <code>#releaseduty-mobile</code> on Mozilla's internal Slack for assistan
 <p>The Glean version is updated in the <code>mozilla_glean</code> variable in the <a href="https://github.com/mozilla-mobile/android-components/blob/69546999739ab19d21425e9a98e107e438a3f905/buildSrc/src/main/java/Dependencies.kt#L32"><code>buildSrc/src/main/java/Dependencies.kt</code></a> file.</p>
 </li>
 <li>
-<p>The relevant parts of the Glean changelog copied into the top part of the <a href="https://github.com/mozilla-mobile/android-components/blob/master/docs/changelog.md"><code>android-components</code> changelog</a>.
+<p>The relevant parts of the Glean changelog copied into the top part of the <a href="https://github.com/mozilla-mobile/android-components/blob/main/docs/changelog.md"><code>android-components</code> changelog</a>.
 This involves copying the Android-specific changes and the general changes to Glean, but can omit other platform-specific changes.</p>
 </li>
 </ul>

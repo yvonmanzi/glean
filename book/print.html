@@ -194,7 +194,7 @@
 <h4><a class="header" href="#setting-up-the-dependency" id="setting-up-the-dependency">Setting up the dependency</a></h4>
 <p>Glean is published on <a href="https://maven.mozilla.org/">maven.mozilla.org</a>.
 To use it, you need to add the following to your project's top-level build file,
-in the <code>allprojects</code> block (see e.g. <a href="https://github.com/mozilla/glean/blob/master/build.gradle">Glean's own <code>build.gradle</code></a>):</p>
+in the <code>allprojects</code> block (see e.g. <a href="https://github.com/mozilla/glean/blob/main/build.gradle">Glean's own <code>build.gradle</code></a>):</p>
 <pre><code class="language-Groovy">repositories {
     maven {
        url &quot;https://maven.mozilla.org/maven2&quot;
@@ -276,7 +276,7 @@ This is also required for any new metric automatically collected by the Glean SD
 <div data-lang="Kotlin" class="tab">
 <p>In order for the Glean SDK to generate an API for your metrics, two Gradle plugins must be included in your build:</p>
 <ul>
-<li>The <a href="https://github.com/mozilla/glean/tree/master/gradle-plugin/">Glean Gradle plugin</a></li>
+<li>The <a href="https://github.com/mozilla/glean/tree/main/gradle-plugin/">Glean Gradle plugin</a></li>
 <li>JetBrains' <a href="https://github.com/JetBrains/gradle-python-envs/">Python envs plugin</a></li>
 </ul>
 <p>The Glean Gradle plugin is distributed through Mozilla's Maven, so we need to tell your build where to look for it by adding the following to the top of your <code>build.gradle</code>:</p>
@@ -4282,7 +4282,7 @@ basic strategy for instrumenting an Android application with crash telemetry usi
 <p><strong>Note:</strong>  This is a <em>very</em> simple example of instrumenting crashes using the Glean SDK.  There will be challenges to
 using this approach in a production application that should be considered.  For instance, when an app crashes it can be in an
 unknown state and may not be able to do things like upload data to a server.  The recommended way of instrumenting crashes with
-Android Components is called <a href="https://github.com/mozilla-mobile/android-components/tree/master/components/lib/crash">lib-crash</a>, which takes into consideration things like multiple processes and persistence.</p>
+Android Components is called <a href="https://github.com/mozilla-mobile/android-components/tree/HEAD/components/lib/crash">lib-crash</a>, which takes into consideration things like multiple processes and persistence.</p>
 <h2><a class="header" href="#before-you-start" id="before-you-start">Before You Start</a></h2>
 <p>There are a few things that need to be installed in order to proceed, mainly <a href="https://developer.android.com/studio/">Android Studio</a>.  If you include the Android SDK,
 Android Studio can take a little while to download and get installed.  This walk-through assumes some knowledge of Android
@@ -4331,7 +4331,7 @@ crash:
 is important to note here that it has a value of <code>- crash</code>.  This means that the crash event metric will be sent via a custom
 ping named <code>crash</code> (which hasn't been created yet).  Finally, note the <code>extra_keys</code> field which has two keys defined, <code>cause</code>
 and <code>message</code>.  This allows for sending additional information along with the event to be associated with these keys.</p>
-<p><strong>Note:</strong>  For Mozilla applications, a mandatory <a href="https://github.com/mozilla/data-review/blob/master/request.md">data review</a> is required in order to collect information with the Glean SDK.</p>
+<p><strong>Note:</strong>  For Mozilla applications, a mandatory <a href="https://github.com/mozilla/data-review/blob/HEAD/request.md">data review</a> is required in order to collect information with the Glean SDK.</p>
 <h3><a class="header" href="#add-a-custom-ping" id="add-a-custom-ping">Add A Custom Ping</a></h3>
 <p>Define the custom ping that will help control the upload scheduling by creating a <code>pings.yaml</code> file in the same directory as
 the <code>metrics.yaml</code> file.  For more information about adding custom pings, see the section on <a href="user/pings/custom.html">custom pings</a>.<br />
@@ -4355,7 +4355,7 @@ to execute and generate the API files that represent the metric and ping that we
 <p><strong>Note:</strong> If changes to the YAML files aren't showing up in the project, try running the clean task on the project before
 building any time one of the Glean YAML files has been modified.</p>
 <p>It is recommended that Glean be initialized as early in the application startup as possible, which is why it's good to use a
-custom <code>Application</code>, like the Glean Sample App <a href="https://github.com/mozilla/glean/blob/master/samples/android/app/src/main/java/org/mozilla/samples/glean/GleanApplication.kt"><code>GleanApplication.kt</code></a>.</p>
+custom <code>Application</code>, like the Glean Sample App <a href="https://github.com/mozilla/glean/blob/main/samples/android/app/src/main/java/org/mozilla/samples/glean/GleanApplication.kt"><code>GleanApplication.kt</code></a>.</p>
 <p>Initializing Glean in the <code>Application.onCreate()</code> is ideal for this purpose.  Start by adding the import statement to allow
 the usage of the custom ping that was created, adding the following to the top of the file:</p>
 <pre><code class="language-Kotlin">import org.mozilla.gleancrashexample.GleanMetrics.Pings
@@ -4566,7 +4566,7 @@ You can save this task permanently by opening the task dropdown in the toolbar a
 To run a single Swift test, navigate to the file containing the test,
 and click on the arrow in the left margin next to the test.</p>
 <h2><a class="header" href="#testing-in-ci" id="testing-in-ci">Testing in CI</a></h2>
-<p>We run multiple tests on CI for every Pull Request and every commit to the <code>master</code> branch.
+<p>We run multiple tests on CI for every Pull Request and every commit to the <code>main</code> branch.
 These include:</p>
 <ul>
 <li>Full Android tests</li>
@@ -4812,7 +4812,7 @@ git clone https://github.com/mozilla-mobile/android-components
 <p>By default when building Android Components using gradle, the gradle-cargo plugin will compile Glean for every possible platform,
 which might end up in failures.
 You can customize which targets are built in <code>glean/local.properties</code>
-(<a href="https://github.com/ncalexan/rust-android-gradle/blob/master/README.md#specifying-local-targets">more information</a>):</p>
+(<a href="https://github.com/ncalexan/rust-android-gradle/blob/HEAD/README.md#specifying-local-targets">more information</a>):</p>
 <pre><code># For physical devices:
 rust.targets=arm
 
@@ -4850,7 +4850,7 @@ Then you should find that the <code>cargoBuild</code> tasks are invoked as you e
 Other tests like <code>:service-glean:testDebugUnitTest</code> or <code>:support-sync-telemetry:testDebugUnitTest</code> will currently fail, because the JNI libraries are not included.</p>
 <h2><a class="header" href="#notes" id="notes">Notes</a></h2>
 <p>This document is based on the equivalent documentation for application-services:
-<a href="https://github.com/mozilla/application-services/blob/master/docs/howtos/working-with-reference-browser.md">Development with the Reference Browser</a></p>
+<a href="https://github.com/mozilla/application-services/blob/HEAD/docs/howtos/working-with-reference-browser.md">Development with the Reference Browser</a></p>
 <ol>
 <li>Transitive substitutions (as shown above) work but require newer Gradle versions (4.10+).</li>
 </ol>
@@ -4877,7 +4877,7 @@ git clone https://github.com/mozilla-mobile/fenix/
 <p>Inside the <code>glean</code> repository root:</p>
 <ol>
 <li>
-<p>In <a href="https://github.com/mozilla/glean/blob/master/.buildconfig.yml#L1"><code>.buildconfig.yml</code></a>, change
+<p>In <a href="https://github.com/mozilla/glean/blob/main/.buildconfig.yml#L1"><code>.buildconfig.yml</code></a>, change
 <code>libraryVersion</code> to end in <code>-TESTING$N</code><sup class="footnote-reference"><a href="#1">1</a></sup>,
 where <code>$N</code> is some number that you haven't used for this before.</p>
 <p>Example: <code>libraryVersion: 22.0.0-TESTING1</code></p>
@@ -4897,7 +4897,7 @@ This will make the build that's done in the next step much faster.</p>
 <p>Inside the <code>android-components</code> repository root:</p>
 <ol>
 <li>
-<p>In <a href="https://github.com/mozilla-mobile/android-components/blob/master/.buildconfig.yml#L1"><code>.buildconfig.yml</code></a>, change
+<p>In <a href="https://github.com/mozilla-mobile/android-components/blob/HEAD/.buildconfig.yml#L1"><code>.buildconfig.yml</code></a>, change
 <code>componentsVersion</code> to end in <code>-TESTING$N</code><sup class="footnote-reference"><a href="#1">1</a></sup>,
 where <code>$N</code> is some number that you haven't used for this before.</p>
 <p>Example: <code>componentsVersion: 24.0.0-TESTING1</code></p>
@@ -4964,7 +4964,7 @@ These should be understandable to fix, you usually should be able to find a PR w
 </ol>
 <h2><a class="header" href="#notes-1" id="notes-1">Notes</a></h2>
 <p>This document is based on the equivalent documentation for application-services:
-<a href="https://github.com/mozilla/application-services/blob/master/docs/howtos/locally-published-components-in-fenix.md">Using locally-published components in Fenix</a></p>
+<a href="https://github.com/mozilla/application-services/blob/HEAD/docs/howtos/locally-published-components-in-fenix.md">Using locally-published components in Fenix</a></p>
 <hr />
 <div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
 <p>It doesn't have to end with <code>-TESTING$N</code>, it only needs to have the format <code>-someidentifier</code>.
@@ -5021,9 +5021,9 @@ The project directory can be imported and all the build details can be left to t
 <p>Since Glean is consumed through <a href="https://github.com/Carthage/Carthage">Carthage</a>, this can be as simple as modifying the Cartfile for the consuming application.</p>
 <h2><a class="header" href="#building-against-the-latest-glean" id="building-against-the-latest-glean">Building against the latest Glean</a></h2>
 <p>For consuming the latest version of Glean, the Cartfile contents would include the following line:</p>
-<pre><code>github &quot;mozilla/glean&quot; &quot;master&quot;
+<pre><code>github &quot;mozilla/glean&quot; &quot;main&quot;
 </code></pre>
-<p>This will fetch and compile Glean from the <a href="https://github.com/mozilla/glean/">mozilla/glean GitHub</a> repository from the &quot;master&quot; branch.</p>
+<p>This will fetch and compile Glean from the <a href="https://github.com/mozilla/glean/">mozilla/glean GitHub</a> repository from the &quot;main&quot; branch.</p>
 <h2><a class="header" href="#building-against-a-specific-release-of-glean" id="building-against-a-specific-release-of-glean">Building against a specific release of Glean</a></h2>
 <p>For consuming a specific version of Glean, you can specify a branch name, tag name, or commit ID, like this:</p>
 <pre><code>github &quot;mozilla/glean&quot; &quot;v0.0.1&quot;
@@ -5731,7 +5731,7 @@ Copy out the data and convert into language-appropriate types (e.g. convert <cod
 </li>
 </ol>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/dev/ffi/when-to-use-what-in-the-ffi.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#contributing-to-the-glean-sdk" id="contributing-to-the-glean-sdk">Contributing to the Glean SDK</a></h1>
-<p>Anyone is welcome to help with the Glean SDK project. Feel free to get in touch with other community members on <code>chat.mozilla.org</code> 
+<p>Anyone is welcome to help with the Glean SDK project. Feel free to get in touch with other community members on <code>chat.mozilla.org</code>
 or through issues on GitHub or Bugzilla.</p>
 <ul>
 <li>Matrix: <a href="https://chat.mozilla.org/#/room/#glean:mozilla.org">#glean channel on chat.mozilla.org</a></li>
@@ -5752,7 +5752,7 @@ root of your checkout:</p>
 <pre><code>make test-rust
 </code></pre>
 <p>If you plan to work on the Android component bindings, you should also review
-the instructions for <a href="https://github.com/mozilla/glean/blob/master/docs/dev/setup-android-build-environment.md">setting up an Android build environment</a></p>
+the instructions for <a href="dev/android/setup-android-build-environment.html">setting up an Android build environment</a>.</p>
 <p>To run all Kotlin tests:</p>
 <pre><code>make test-kotlin
 </code></pre>
@@ -5792,7 +5792,7 @@ the instructions for <a href="https://github.com/mozilla/glean/blob/master/docs/
 <p>When submitting a PR:</p>
 <ul>
 <li>You agree to license your code under the project's open source license (<a href="https://mozilla.org/MPL/2.0/">MPL 2.0</a>).</li>
-<li>Base your branch off the current <code>master</code> (see below for an example workflow).</li>
+<li>Base your branch off the current <code>main</code>.</li>
 <li>Add both your code and new tests if relevant.</li>
 <li>Please do not include merge commits in pull requests; include only commits with the new relevant code.</li>
 </ul>
@@ -5800,7 +5800,7 @@ the instructions for <a href="https://github.com/mozilla/glean/blob/master/docs/
 <p>This project is production Mozilla code and subject to our
 <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide/Committing_Rules_and_Responsibilities">engineering practices and quality standards</a>.
 Every patch must be peer reviewed by a member of the Glean core team.</p>
-<p>Reviewers are defined in the <a href="https://github.com/mozilla/glean/blob/master/.github/CODEOWNERS">CODEOWNERS</a> file
+<p>Reviewers are defined in the <a href="https://github.com/mozilla/glean/blob/main/.github/CODEOWNERS">CODEOWNERS</a> file
 and are automatically added for every pull request.
 Every pull request needs to be approved by at least one of these people before landing.</p>
 <p>The submitter needs to decide on their own discretion whether the changes require a look from more than a single reviewer or any outside developer.
@@ -5882,15 +5882,15 @@ For some developer workflows, <code>upstream</code> can be the same as <code>ori
 <h2><a class="header" href="#standard-release" id="standard-release">Standard Release</a></h2>
 <p>Releases can only be done by one of the Glean maintainers.</p>
 <ul>
-<li>Main development branch: <code>master</code></li>
+<li>Main development branch: <code>main</code></li>
 <li>Main release branch: <code>release</code></li>
 <li>Specific release branch: <code>release-vX.Y.Z</code></li>
 <li>Hotfix branch: <code>hotfix-X.Y.(Z+1)</code></li>
 </ul>
 <h3><a class="header" href="#create-a-release-branch" id="create-a-release-branch">Create a release branch</a></h3>
 <ol>
-<li>Create a release branch from the <code>master</code> branch:
-<pre><code>git checkout -b release-v25.0.0 master
+<li>Create a release branch from the <code>main</code> branch:
+<pre><code>git checkout -b release-v25.0.0 main
 </code></pre>
 </li>
 <li>Update the changelog .
@@ -5912,7 +5912,7 @@ For some developer workflows, <code>upstream</code> can be the same as <code>ori
 <li>Wait for CI to finish on that branch and ensure it's green: <a href="https://circleci.com/gh/mozilla/glean/tree/release-v25.0.0">https://circleci.com/gh/mozilla/glean/tree/release-v25.0.0</a></li>
 <li>Apply additional commits for bug fixes to this branch.
 <ul>
-<li>Adding large new features here is strictly prohibited. They need to go to the <code>master</code> branch and wait for the next release.</li>
+<li>Adding large new features here is strictly prohibited. They need to go to the <code>main</code> branch and wait for the next release.</li>
 </ul>
 </li>
 </ol>
@@ -5951,10 +5951,10 @@ cd ffi
 cargo publish --verbose
 </code></pre>
 </li>
-<li>Send a pull request to merge back the specific release branch to the development branch: <a href="https://github.com/mozilla/glean/compare/master...release-v25.0.0?expand=1">https://github.com/mozilla/glean/compare/master...release-v25.0.0?expand=1</a>
+<li>Send a pull request to merge back the specific release branch to the development branch: <a href="https://github.com/mozilla/glean/compare/main...release-v25.0.0?expand=1">https://github.com/mozilla/glean/compare/main...release-v25.0.0?expand=1</a>
 <ul>
 <li>This is important so that no changes are lost.</li>
-<li>This might have merge conflicts with the <code>master</code> branch, which you need to fix before it is merged.</li>
+<li>This might have merge conflicts with the <code>main</code> branch, which you need to fix before it is merged.</li>
 </ul>
 </li>
 <li>Once the above pull request lands, delete the specific release branch.</li>
@@ -6020,10 +6020,10 @@ cd ffi
 cargo publish --verbose
 </code></pre>
 </li>
-<li>Send a pull request to merge back the hotfix branch to the development branch: <a href="https://github.com/mozilla/glean/compare/master...hotfix-v25.0.1?expand=1">https://github.com/mozilla/glean/compare/master...hotfix-v25.0.1?expand=1</a>
+<li>Send a pull request to merge back the hotfix branch to the development branch: <a href="https://github.com/mozilla/glean/compare/main...hotfix-v25.0.1?expand=1">https://github.com/mozilla/glean/compare/main...hotfix-v25.0.1?expand=1</a>
 <ul>
 <li>This is important so that no changes are lost.</li>
-<li>This might have merge conflicts with the <code>master</code> branch, which you need to fix before it is merged.</li>
+<li>This might have merge conflicts with the <code>main</code> branch, which you need to fix before it is merged.</li>
 </ul>
 </li>
 <li>Once the above pull request lands, delete the hotfix branch.</li>
@@ -6090,10 +6090,10 @@ cd ffi
 cargo publish --verbose
 </code></pre>
 </li>
-<li>Send a pull request to merge back any bug fixes to the development branch: <a href="https://github.com/mozilla/glean/compare/master...support/v24.0?expand=1">https://github.com/mozilla/glean/compare/master...support/v24.0?expand=1</a>
+<li>Send a pull request to merge back any bug fixes to the development branch: <a href="https://github.com/mozilla/glean/compare/main...support/v24.0?expand=1">https://github.com/mozilla/glean/compare/main...support/v24.0?expand=1</a>
 <ul>
 <li>This is important so that no changes are lost.</li>
-<li>This might have merge conflicts with the <code>master</code> branch, which you need to fix before it is merged.</li>
+<li>This might have merge conflicts with the <code>main</code> branch, which you need to fix before it is merged.</li>
 </ul>
 </li>
 <li>Once the above pull request lands, delete the support branch.</li>
@@ -6118,7 +6118,7 @@ Ask in <code>#releaseduty-mobile</code> on Mozilla's internal Slack for assistan
 <p>The Glean version is updated in the <code>mozilla_glean</code> variable in the <a href="https://github.com/mozilla-mobile/android-components/blob/69546999739ab19d21425e9a98e107e438a3f905/buildSrc/src/main/java/Dependencies.kt#L32"><code>buildSrc/src/main/java/Dependencies.kt</code></a> file.</p>
 </li>
 <li>
-<p>The relevant parts of the Glean changelog copied into the top part of the <a href="https://github.com/mozilla-mobile/android-components/blob/master/docs/changelog.md"><code>android-components</code> changelog</a>.
+<p>The relevant parts of the Glean changelog copied into the top part of the <a href="https://github.com/mozilla-mobile/android-components/blob/main/docs/changelog.md"><code>android-components</code> changelog</a>.
 This involves copying the Android-specific changes and the general changes to Glean, but can omit other platform-specific changes.</p>
 </li>
 </ul>
@@ -6178,7 +6178,7 @@ This <strong>Payload format</strong> chapter describes details of the ping paylo
 This is less relevant for end users of the Glean SDK.</p>
 <h2><a class="header" href="#json-schema" id="json-schema">JSON Schema</a></h2>
 <p>Glean's ping payloads have a formal JSON schema defined in the <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/">mozilla-pipeline-schemas</a> project.
-It is written as a set of <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/master/templates/include/glean">templates</a> that are expanded by the mozilla-pipeline-schemas build infrastructure into a <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/master/schemas/glean/baseline/baseline.1.schema.json">fully expanded schema</a>.</p>
+It is written as a set of <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/HEAD/templates/include/glean">templates</a> that are expanded by the mozilla-pipeline-schemas build infrastructure into a <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/HEAD/schemas/glean/baseline/baseline.1.schema.json">fully expanded schema</a>.</p>
 <h2><a class="header" href="#metric-types" id="metric-types">Metric types</a></h2>
 <h3><a class="header" href="#boolean-1" id="boolean-1">Boolean</a></h3>
 <p>A <a href="dev/core/internal/../../../user/metrics/boolean.html">Boolean</a> is represented by its boolean value.</p>
@@ -6295,7 +6295,7 @@ Each event object has the following keys:</p>
   }
 ]
 </code></pre>
-<p>Also see <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/master/templates/include/glean/event.1.schema.json">the JSON schema for events</a>.</p>
+<p>Also see <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/HEAD/templates/include/glean/event.1.schema.json">the JSON schema for events</a>.</p>
 <p>To avoid losing events when the application is killed by the operating system, events are queued on disk as they are recorded.
 When the application starts up again, there is no good way to determine if the device has rebooted since the last run and therefore any timestamps recorded in the new run could not be guaranteed to be consistent with those recorded in the previous run.
 To get around this, on application startup, any queued events are immediately collected into pings and then cleared.
@@ -6529,7 +6529,7 @@ All the default pings have their scheduling and submission handled by the SDK.</
 <h2><a class="header" href="#this-week-in-glean-twig" id="this-week-in-glean-twig">This Week in Glean (TWiG)</a></h2>
 <p><a href="appendix/twig.html">This Week in Glean</a> is a series of blog posts that the Glean Team at Mozilla is using to try to communicate better about our work.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/appendix/glossary.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
-<p><a href="https://github.com/mozilla/glean/compare/v31.0.2...master">Full changelog</a></p>
+<p><a href="https://github.com/mozilla/glean/compare/v31.0.2...main">Full changelog</a></p>
 <ul>
 <li>General:
 <ul>

@@ -164,7 +164,7 @@ basic strategy for instrumenting an Android application with crash telemetry usi
 <p><strong>Note:</strong>  This is a <em>very</em> simple example of instrumenting crashes using the Glean SDK.  There will be challenges to
 using this approach in a production application that should be considered.  For instance, when an app crashes it can be in an
 unknown state and may not be able to do things like upload data to a server.  The recommended way of instrumenting crashes with
-Android Components is called <a href="https://github.com/mozilla-mobile/android-components/tree/master/components/lib/crash">lib-crash</a>, which takes into consideration things like multiple processes and persistence.</p>
+Android Components is called <a href="https://github.com/mozilla-mobile/android-components/tree/HEAD/components/lib/crash">lib-crash</a>, which takes into consideration things like multiple processes and persistence.</p>
 <h2><a class="header" href="#before-you-start" id="before-you-start">Before You Start</a></h2>
 <p>There are a few things that need to be installed in order to proceed, mainly <a href="https://developer.android.com/studio/">Android Studio</a>.  If you include the Android SDK,
 Android Studio can take a little while to download and get installed.  This walk-through assumes some knowledge of Android
@@ -213,7 +213,7 @@ crash:
 is important to note here that it has a value of <code>- crash</code>.  This means that the crash event metric will be sent via a custom
 ping named <code>crash</code> (which hasn't been created yet).  Finally, note the <code>extra_keys</code> field which has two keys defined, <code>cause</code>
 and <code>message</code>.  This allows for sending additional information along with the event to be associated with these keys.</p>
-<p><strong>Note:</strong>  For Mozilla applications, a mandatory <a href="https://github.com/mozilla/data-review/blob/master/request.md">data review</a> is required in order to collect information with the Glean SDK.</p>
+<p><strong>Note:</strong>  For Mozilla applications, a mandatory <a href="https://github.com/mozilla/data-review/blob/HEAD/request.md">data review</a> is required in order to collect information with the Glean SDK.</p>
 <h3><a class="header" href="#add-a-custom-ping" id="add-a-custom-ping">Add A Custom Ping</a></h3>
 <p>Define the custom ping that will help control the upload scheduling by creating a <code>pings.yaml</code> file in the same directory as
 the <code>metrics.yaml</code> file.  For more information about adding custom pings, see the section on <a href="pings/custom.html">custom pings</a>.<br />
@@ -237,7 +237,7 @@ to execute and generate the API files that represent the metric and ping that we
 <p><strong>Note:</strong> If changes to the YAML files aren't showing up in the project, try running the clean task on the project before
 building any time one of the Glean YAML files has been modified.</p>
 <p>It is recommended that Glean be initialized as early in the application startup as possible, which is why it's good to use a
-custom <code>Application</code>, like the Glean Sample App <a href="https://github.com/mozilla/glean/blob/master/samples/android/app/src/main/java/org/mozilla/samples/glean/GleanApplication.kt"><code>GleanApplication.kt</code></a>.</p>
+custom <code>Application</code>, like the Glean Sample App <a href="https://github.com/mozilla/glean/blob/main/samples/android/app/src/main/java/org/mozilla/samples/glean/GleanApplication.kt"><code>GleanApplication.kt</code></a>.</p>
 <p>Initializing Glean in the <code>Application.onCreate()</code> is ideal for this purpose.  Start by adding the import statement to allow
 the usage of the custom ping that was created, adding the following to the top of the file:</p>
 <pre><code class="language-Kotlin">import org.mozilla.gleancrashexample.GleanMetrics.Pings

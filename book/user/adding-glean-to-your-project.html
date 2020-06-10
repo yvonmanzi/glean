@@ -177,7 +177,7 @@
 <h4><a class="header" href="#setting-up-the-dependency" id="setting-up-the-dependency">Setting up the dependency</a></h4>
 <p>Glean is published on <a href="https://maven.mozilla.org/">maven.mozilla.org</a>.
 To use it, you need to add the following to your project's top-level build file,
-in the <code>allprojects</code> block (see e.g. <a href="https://github.com/mozilla/glean/blob/master/build.gradle">Glean's own <code>build.gradle</code></a>):</p>
+in the <code>allprojects</code> block (see e.g. <a href="https://github.com/mozilla/glean/blob/main/build.gradle">Glean's own <code>build.gradle</code></a>):</p>
 <pre><code class="language-Groovy">repositories {
     maven {
        url &quot;https://maven.mozilla.org/maven2&quot;
@@ -259,7 +259,7 @@ This is also required for any new metric automatically collected by the Glean SD
 <div data-lang="Kotlin" class="tab">
 <p>In order for the Glean SDK to generate an API for your metrics, two Gradle plugins must be included in your build:</p>
 <ul>
-<li>The <a href="https://github.com/mozilla/glean/tree/master/gradle-plugin/">Glean Gradle plugin</a></li>
+<li>The <a href="https://github.com/mozilla/glean/tree/main/gradle-plugin/">Glean Gradle plugin</a></li>
 <li>JetBrains' <a href="https://github.com/JetBrains/gradle-python-envs/">Python envs plugin</a></li>
 </ul>
 <p>The Glean Gradle plugin is distributed through Mozilla's Maven, so we need to tell your build where to look for it by adding the following to the top of your <code>build.gradle</code>:</p>

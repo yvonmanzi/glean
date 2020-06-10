@@ -164,7 +164,7 @@ This <strong>Payload format</strong> chapter describes details of the ping paylo
 This is less relevant for end users of the Glean SDK.</p>
 <h2><a class="header" href="#json-schema" id="json-schema">JSON Schema</a></h2>
 <p>Glean's ping payloads have a formal JSON schema defined in the <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/">mozilla-pipeline-schemas</a> project.
-It is written as a set of <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/master/templates/include/glean">templates</a> that are expanded by the mozilla-pipeline-schemas build infrastructure into a <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/master/schemas/glean/baseline/baseline.1.schema.json">fully expanded schema</a>.</p>
+It is written as a set of <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/HEAD/templates/include/glean">templates</a> that are expanded by the mozilla-pipeline-schemas build infrastructure into a <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/HEAD/schemas/glean/baseline/baseline.1.schema.json">fully expanded schema</a>.</p>
 <h2><a class="header" href="#metric-types" id="metric-types">Metric types</a></h2>
 <h3><a class="header" href="#boolean" id="boolean">Boolean</a></h3>
 <p>A <a href="../../../user/metrics/boolean.html">Boolean</a> is represented by its boolean value.</p>
@@ -281,7 +281,7 @@ Each event object has the following keys:</p>
   }
 ]
 </code></pre>
-<p>Also see <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/master/templates/include/glean/event.1.schema.json">the JSON schema for events</a>.</p>
+<p>Also see <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/HEAD/templates/include/glean/event.1.schema.json">the JSON schema for events</a>.</p>
 <p>To avoid losing events when the application is killed by the operating system, events are queued on disk as they are recorded.
 When the application starts up again, there is no good way to determine if the device has rebooted since the last run and therefore any timestamps recorded in the new run could not be guaranteed to be consistent with those recorded in the previous run.
 To get around this, on application startup, any queued events are immediately collected into pings and then cleared.

@@ -181,7 +181,7 @@ git clone https://github.com/mozilla-mobile/fenix/
 <p>Inside the <code>glean</code> repository root:</p>
 <ol>
 <li>
-<p>In <a href="https://github.com/mozilla/glean/blob/master/.buildconfig.yml#L1"><code>.buildconfig.yml</code></a>, change
+<p>In <a href="https://github.com/mozilla/glean/blob/main/.buildconfig.yml#L1"><code>.buildconfig.yml</code></a>, change
 <code>libraryVersion</code> to end in <code>-TESTING$N</code><sup class="footnote-reference"><a href="#1">1</a></sup>,
 where <code>$N</code> is some number that you haven't used for this before.</p>
 <p>Example: <code>libraryVersion: 22.0.0-TESTING1</code></p>
@@ -201,7 +201,7 @@ This will make the build that's done in the next step much faster.</p>
 <p>Inside the <code>android-components</code> repository root:</p>
 <ol>
 <li>
-<p>In <a href="https://github.com/mozilla-mobile/android-components/blob/master/.buildconfig.yml#L1"><code>.buildconfig.yml</code></a>, change
+<p>In <a href="https://github.com/mozilla-mobile/android-components/blob/HEAD/.buildconfig.yml#L1"><code>.buildconfig.yml</code></a>, change
 <code>componentsVersion</code> to end in <code>-TESTING$N</code><sup class="footnote-reference"><a href="#1">1</a></sup>,
 where <code>$N</code> is some number that you haven't used for this before.</p>
 <p>Example: <code>componentsVersion: 24.0.0-TESTING1</code></p>
@@ -268,7 +268,7 @@ These should be understandable to fix, you usually should be able to find a PR w
 </ol>
 <h2><a class="header" href="#notes" id="notes">Notes</a></h2>
 <p>This document is based on the equivalent documentation for application-services:
-<a href="https://github.com/mozilla/application-services/blob/master/docs/howtos/locally-published-components-in-fenix.md">Using locally-published components in Fenix</a></p>
+<a href="https://github.com/mozilla/application-services/blob/HEAD/docs/howtos/locally-published-components-in-fenix.md">Using locally-published components in Fenix</a></p>
 <hr />
 <div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
 <p>It doesn't have to end with <code>-TESTING$N</code>, it only needs to have the format <code>-someidentifier</code>.

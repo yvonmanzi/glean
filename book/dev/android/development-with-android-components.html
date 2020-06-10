@@ -175,7 +175,7 @@ git clone https://github.com/mozilla-mobile/android-components
 <p>By default when building Android Components using gradle, the gradle-cargo plugin will compile Glean for every possible platform,
 which might end up in failures.
 You can customize which targets are built in <code>glean/local.properties</code>
-(<a href="https://github.com/ncalexan/rust-android-gradle/blob/master/README.md#specifying-local-targets">more information</a>):</p>
+(<a href="https://github.com/ncalexan/rust-android-gradle/blob/HEAD/README.md#specifying-local-targets">more information</a>):</p>
 <pre><code># For physical devices:
 rust.targets=arm
 
@@ -213,7 +213,7 @@ Then you should find that the <code>cargoBuild</code> tasks are invoked as you e
 Other tests like <code>:service-glean:testDebugUnitTest</code> or <code>:support-sync-telemetry:testDebugUnitTest</code> will currently fail, because the JNI libraries are not included.</p>
 <h2><a class="header" href="#notes" id="notes">Notes</a></h2>
 <p>This document is based on the equivalent documentation for application-services:
-<a href="https://github.com/mozilla/application-services/blob/master/docs/howtos/working-with-reference-browser.md">Development with the Reference Browser</a></p>
+<a href="https://github.com/mozilla/application-services/blob/HEAD/docs/howtos/working-with-reference-browser.md">Development with the Reference Browser</a></p>
 <ol>
 <li>Transitive substitutions (as shown above) work but require newer Gradle versions (4.10+).</li>
 </ol>

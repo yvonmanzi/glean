@@ -159,7 +159,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#contributing-to-the-glean-sdk" id="contributing-to-the-glean-sdk">Contributing to the Glean SDK</a></h1>
-<p>Anyone is welcome to help with the Glean SDK project. Feel free to get in touch with other community members on <code>chat.mozilla.org</code> 
+<p>Anyone is welcome to help with the Glean SDK project. Feel free to get in touch with other community members on <code>chat.mozilla.org</code>
 or through issues on GitHub or Bugzilla.</p>
 <ul>
 <li>Matrix: <a href="https://chat.mozilla.org/#/room/#glean:mozilla.org">#glean channel on chat.mozilla.org</a></li>
@@ -180,7 +180,7 @@ root of your checkout:</p>
 <pre><code>make test-rust
 </code></pre>
 <p>If you plan to work on the Android component bindings, you should also review
-the instructions for <a href="https://github.com/mozilla/glean/blob/master/docs/dev/setup-android-build-environment.md">setting up an Android build environment</a></p>
+the instructions for <a href="dev/android/setup-android-build-environment.html">setting up an Android build environment</a>.</p>
 <p>To run all Kotlin tests:</p>
 <pre><code>make test-kotlin
 </code></pre>
@@ -220,7 +220,7 @@ the instructions for <a href="https://github.com/mozilla/glean/blob/master/docs/
 <p>When submitting a PR:</p>
 <ul>
 <li>You agree to license your code under the project's open source license (<a href="https://mozilla.org/MPL/2.0/">MPL 2.0</a>).</li>
-<li>Base your branch off the current <code>master</code> (see below for an example workflow).</li>
+<li>Base your branch off the current <code>main</code>.</li>
 <li>Add both your code and new tests if relevant.</li>
 <li>Please do not include merge commits in pull requests; include only commits with the new relevant code.</li>
 </ul>
@@ -228,7 +228,7 @@ the instructions for <a href="https://github.com/mozilla/glean/blob/master/docs/
 <p>This project is production Mozilla code and subject to our
 <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide/Committing_Rules_and_Responsibilities">engineering practices and quality standards</a>.
 Every patch must be peer reviewed by a member of the Glean core team.</p>
-<p>Reviewers are defined in the <a href="https://github.com/mozilla/glean/blob/master/.github/CODEOWNERS">CODEOWNERS</a> file
+<p>Reviewers are defined in the <a href="https://github.com/mozilla/glean/blob/main/.github/CODEOWNERS">CODEOWNERS</a> file
 and are automatically added for every pull request.
 Every pull request needs to be approved by at least one of these people before landing.</p>
 <p>The submitter needs to decide on their own discretion whether the changes require a look from more than a single reviewer or any outside developer.
