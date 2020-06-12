@@ -159,18 +159,21 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
-<p><a href="https://github.com/mozilla/glean/compare/v31.0.2...main">Full changelog</a></p>
+<p><a href="https://github.com/mozilla/glean/compare/v31.1.0...main">Full changelog</a></p>
+<h1><a class="header" href="#v3110-2020-06-11" id="v3110-2020-06-11">v31.1.0 (2020-06-11)</a></h1>
+<p><a href="https://github.com/mozilla/glean/compare/v31.0.2...v31.1.0">Full changelog</a></p>
 <ul>
-<li>
-<p>General:</p>
+<li>General:
 <ul>
-<li>The <code>regex</code> crate is no longer required, making the Glean binary smaller.</li>
+<li>The <code>regex</code> crate is no longer required, making the Glean binary smaller (<a href="https://github.com/mozilla/glean/pull/949">#949</a>)</li>
+<li>Record upload failures into a new metric (<a href="https://github.com/mozilla/glean/pull/967">#967</a>)</li>
+<li>Log FFI errors as actual errors (<a href="https://github.com/mozilla/glean/pull/935">#935</a>)</li>
+<li>Limit the number of upload retries in all implementations (<a href="https://github.com/mozilla/glean/pull/953">#953</a>, <a href="https://github.com/mozilla/glean/pull/968">#968</a>)</li>
 </ul>
 </li>
-<li>
-<p>Python</p>
+<li>Python
 <ul>
-<li>Additional safety guarantees for applications that use Python <code>threading</code>.</li>
+<li>Additional safety guarantees for applications that use Python <code>threading</code> (<a href="https://github.com/mozilla/glean/pull/962">#962</a>)</li>
 </ul>
 </li>
 </ul>

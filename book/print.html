@@ -4520,7 +4520,7 @@ upgraded.</p>
 <p>The following metrics are added to the ping:</p>
 <table><thead><tr><th>Name</th><th>Type</th><th>Description</th><th>Data reviews</th><th>Extras</th><th>Expiration</th></tr></thead><tbody>
 <tr><td>glean.error.preinit_tasks_overflow</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/counter.html">counter</a></td><td>The number of tasks queued in the pre-initialization buffer. Only sent if the buffer overflows.</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1609482#c3">1</a></td><td></td><td>never</td></tr>
-<tr><td>glean.upload.ping_upload_failure</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/labeled_counters.html">labeled_counter</a></td><td>Counts the number of times pings fail to upload and the reason why they failed.</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1589124#c1">1</a></td><td><ul><li>status_code_4xx</li><li>status_code_5xx</li><li>status_code_unknown</li><li>unrecoverable</li><li>recoverable</li></ul></td><td></td></tr>
+<tr><td>glean.upload.ping_upload_failure</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/labeled_counters.html">labeled_counter</a></td><td>Counts the number of ping upload failures, by type of failure. This includes failures for all ping types, though the counts appear in the next successfully sent <code>metrics</code> ping.</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1589124#c1">1</a></td><td><ul><li>status_code_4xx</li><li>status_code_5xx</li><li>status_code_unknown</li><li>unrecoverable</li><li>recoverable</li></ul></td><td></td></tr>
 <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
 <tr><td>never</td><td></td><td></td><td></td><td></td><td></td></tr>
 </tbody></table>
@@ -6532,18 +6532,21 @@ All the default pings have their scheduling and submission handled by the SDK.</
 <h2><a class="header" href="#this-week-in-glean-twig" id="this-week-in-glean-twig">This Week in Glean (TWiG)</a></h2>
 <p><a href="appendix/twig.html">This Week in Glean</a> is a series of blog posts that the Glean Team at Mozilla is using to try to communicate better about our work.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/appendix/glossary.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
-<p><a href="https://github.com/mozilla/glean/compare/v31.0.2...main">Full changelog</a></p>
+<p><a href="https://github.com/mozilla/glean/compare/v31.1.0...main">Full changelog</a></p>
+<h1><a class="header" href="#v3110-2020-06-11" id="v3110-2020-06-11">v31.1.0 (2020-06-11)</a></h1>
+<p><a href="https://github.com/mozilla/glean/compare/v31.0.2...v31.1.0">Full changelog</a></p>
 <ul>
-<li>
-<p>General:</p>
+<li>General:
 <ul>
-<li>The <code>regex</code> crate is no longer required, making the Glean binary smaller.</li>
+<li>The <code>regex</code> crate is no longer required, making the Glean binary smaller (<a href="https://github.com/mozilla/glean/pull/949">#949</a>)</li>
+<li>Record upload failures into a new metric (<a href="https://github.com/mozilla/glean/pull/967">#967</a>)</li>
+<li>Log FFI errors as actual errors (<a href="https://github.com/mozilla/glean/pull/935">#935</a>)</li>
+<li>Limit the number of upload retries in all implementations (<a href="https://github.com/mozilla/glean/pull/953">#953</a>, <a href="https://github.com/mozilla/glean/pull/968">#968</a>)</li>
 </ul>
 </li>
-<li>
-<p>Python</p>
+<li>Python
 <ul>
-<li>Additional safety guarantees for applications that use Python <code>threading</code>.</li>
+<li>Additional safety guarantees for applications that use Python <code>threading</code> (<a href="https://github.com/mozilla/glean/pull/962">#962</a>)</li>
 </ul>
 </li>
 </ul>
