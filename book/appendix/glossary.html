@@ -195,7 +195,7 @@ They are defined in <a href="https://mozilla.github.io/glean_parser/metrics-yaml
 <p>A ping is an entity used to bundle related metrics.
 The Glean SDK provides default pings and allows for custom ping, see <a href="../user/pings/index.html">Glean Pings</a>.</p>
 <h2><a class="header" href="#submission" id="submission">Submission</a></h2>
-<p>&quot;To submit&quot; means to collect &amp; to upload a ping.</p>
+<p>&quot;To submit&quot; means to collect &amp; to enqueue a ping for uploading.</p>
 <p>The Glean SDK stores locally all the metrics set by it or by its clients.
 Each ping has its own schedule to gather all its locally saved metrics and create a JSON payload with them. This is called &quot;collection&quot;.</p>
 <p>Upon successful collection, the payload is queued for upload, which may not happen immediately or at all (in case network connectivity is not available).</p>

@@ -1081,7 +1081,7 @@ Users can invoke this special activity, at run-time, using the following <a href
 <p>In the above:</p>
 <ul>
 <li>
-<p><code>[applicationId]</code> is the product's application id as defined in the manifest file and/or build script. For the Glean sample application, this is <code>org.mozilla.samples.glean</code> for a release build and <code>org.mozilla.samples.glean.debug</code> for a debug build.</p>
+<p><code>[applicationId]</code> is the product's application id as defined in the manifest file and/or build script. For the Glean sample application, this is <code>org.mozilla.samples.gleancore</code> for a release build and <code>org.mozilla.samples.gleancore.debug</code> for a debug build.</p>
 </li>
 <li>
 <p><code>[extra keys]</code> is a list of extra keys to be passed to the debug activity. See the <a href="https://developer.android.com/studio/command-line/adb#IntentSpec">documentation</a> for the command line switches used to pass the extra keys.
@@ -1097,19 +1097,22 @@ These are the currently supported keys:</p>
 <p><strong>Note:</strong> Due to limitations on Android logcat message size, pings larger than 4KB are broken into multiple log messages when using <code>logPings</code>.</p>
 </blockquote>
 <p>For example, to direct a release build of the Glean sample application to (1) dump pings to logcat, (2) tag the ping with the <code>test-metrics-ping</code> tag, and (3) send the &quot;metrics&quot; ping immediately, the following command can be used:</p>
-<pre><code class="language-shell">adb shell am start -n org.mozilla.samples.glean/mozilla.telemetry.glean.debug.GleanDebugActivity \
+<pre><code class="language-shell">adb shell am start -n org.mozilla.samples.gleancore/mozilla.telemetry.glean.debug.GleanDebugActivity \
   --ez logPings true \
   --es sendPing metrics \
   --es tagPings test-metrics-ping
 </code></pre>
-<p>The <code>logPings</code> command doesn't trigger ping submission and you won't see any output until a ping has been submitted. You can use the <code>sendPing</code> command to force a ping to be sent, but it could be more desirable to trigger the pings submission on their normal schedule. For instance, the <code>baseline</code> and <code>events</code> pings can be triggered by moving the app out of the foreground and the <code>metrics</code> ping can be triggered normally if it is overdue for the current calendar day.</p>
-<p>Note that if no metrics have been collected, then no pings will be sent <em>unless</em> <a href="user/debugging/../pings/custom.html#defining-a-custom-ping"><code>send_if_empty</code> is set on your ping</a>. See the <a href="user/debugging/../pings/index.html">ping documentation</a> for more information on ping scheduling to learn when pings are sent.</p>
+<p>The <code>logPings</code> command doesn't trigger ping submission and you won't see any output until a ping has been sent. You can use the <code>sendPing</code> command to force a ping to be sent, but it could be more desirable to trigger the pings submission on their normal schedule. For instance, the <code>baseline</code> and <code>events</code> pings can be triggered by moving the app out of the foreground and the <code>metrics</code> ping can be triggered normally if it is overdue for the current calendar day.</p>
+<blockquote>
+<p><strong>Note:</strong> The device or emulator must be connected to the internet for this to work. Otherwise the job that sends the pings won't be triggered.</p>
+</blockquote>
+<p>If no metrics have been collected, no pings will be sent <em>unless</em> <a href="user/debugging/../pings/custom.html#defining-a-custom-ping"><code>send_if_empty</code> is set on your ping</a>. See the <a href="user/debugging/../pings/index.html">ping documentation</a> for more information on ping scheduling to learn when pings are sent.</p>
 <p>Options that are set using the <code>adb</code> flags are not immediately reset and will
 persist until the application is closed or manually reset.</p>
 <blockquote>
 <p><strong>Note:</strong> In previous versions of Glean the activity was available with the name <code>mozilla.components.service.glean.debug.GleanDebugActivity</code>.</p>
 <p>If you're debugging an old build, try running:</p>
-<pre><code class="language-shell">adb shell am start -n org.mozilla.samples.glean/mozilla.components.service.glean.debug.GleanDebugActivity \
+<pre><code class="language-shell">adb shell am start -n org.mozilla.samples.gleancore/mozilla.components.service.glean.debug.GleanDebugActivity \
   --ez logPings true \
   --es sendPing metrics \
   --es tagPings test-metrics-ping
@@ -1140,7 +1143,7 @@ You can match for <code>glean</code> using grep:</p>
 Run it like this to filter for an application:</p>
 <pre><code class="language-shell">pidcat [applicationId]
 </code></pre>
-<p>In the above <code>[applicationId]</code> is the product's application id as defined in the manifest file and/or build script. For the Glean sample application, this is <code>org.mozilla.samples.glean</code> for a release build and <code>org.mozilla.samples.glean.debug</code> for a debug build.</p>
+<p>In the above <code>[applicationId]</code> is the product's application id as defined in the manifest file and/or build script. For the Glean sample application, this is <code>org.mozilla.samples.gleancore</code> for a release build and <code>org.mozilla.samples.gleancore.debug</code> for a debug build.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/user/debugging/android.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#debugging-ios-applications-using-the-glean-sdk" id="debugging-ios-applications-using-the-glean-sdk">Debugging iOS applications using the Glean SDK</a></h1>
 <p>For debugging and validation purposes on iOS, Glean makes use of a custom URL scheme which is implemented <em>within the application</em> that is consuming Glean.  Glean provides some convenience functions to facilitate this, but it's up to the consuming application to enable this functionality.  Applications that enable this Glean SDK feature will be able to launch the application from a URL with the Glean debug commands embedded in the URL itself.</p>
 <h3><a class="header" href="#available-commands-and-query-format-1" id="available-commands-and-query-format-1">Available commands and query format</a></h3>
@@ -6539,7 +6542,7 @@ They are defined in <a href="https://mozilla.github.io/glean_parser/metrics-yaml
 <p>A ping is an entity used to bundle related metrics.
 The Glean SDK provides default pings and allows for custom ping, see <a href="appendix/../user/pings/index.html">Glean Pings</a>.</p>
 <h2><a class="header" href="#submission" id="submission">Submission</a></h2>
-<p>&quot;To submit&quot; means to collect &amp; to upload a ping.</p>
+<p>&quot;To submit&quot; means to collect &amp; to enqueue a ping for uploading.</p>
 <p>The Glean SDK stores locally all the metrics set by it or by its clients.
 Each ping has its own schedule to gather all its locally saved metrics and create a JSON payload with them. This is called &quot;collection&quot;.</p>
 <p>Upon successful collection, the payload is queued for upload, which may not happen immediately or at all (in case network connectivity is not available).</p>
@@ -6550,6 +6553,11 @@ All the default pings have their scheduling and submission handled by the SDK.</
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/appendix/glossary.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v31.1.1...main">Full changelog</a></p>
 <ul>
+<li>General
+<ul>
+<li>BUGFIX: Correctly format the date and time in the <code>Date</code> header. </li>
+</ul>
+</li>
 <li>Python
 <ul>
 <li>BUGFIX: Additional time is taken at shutdown to make sure pings are sent and telemetry is recorded. (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1646173">1646173</a>)</li>

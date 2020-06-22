@@ -106,6 +106,33 @@
 <span id="106">106</span>
 <span id="107">107</span>
 <span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -197,11 +224,25 @@
         <span class="ident">gzipper</span>.<span class="ident">finish</span>().<span class="ident">ok</span>()
     }
 
+    <span class="doccomment">/// Creates a formatted date string that can be used with Date headers.</span>
+    <span class="kw">fn</span> <span class="ident">create_date_header_value</span>(<span class="ident">current_time</span>: <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Utc</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+        <span class="comment">// Date headers are required to be in the following format:</span>
+        <span class="comment">//</span>
+        <span class="comment">// &lt;day-name&gt;, &lt;day&gt; &lt;month&gt; &lt;year&gt; &lt;hour&gt;:&lt;minute&gt;:&lt;second&gt; GMT</span>
+        <span class="comment">//</span>
+        <span class="comment">// as documented here:</span>
+        <span class="comment">// https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Date</span>
+        <span class="comment">// Unfortunately we can&#39;t use `current_time.to_rfc2822()` as it</span>
+        <span class="comment">// formats as &quot;Mon, 22 Jun 2020 10:40:34 +0000&quot;, with an ending</span>
+        <span class="comment">// &quot;+0000&quot; instead of &quot;GMT&quot;. That&#39;s why we need to go with manual</span>
+        <span class="comment">// formatting.</span>
+        <span class="ident">current_time</span>.<span class="ident">format</span>(<span class="string">&quot;%a, %d %b %Y %T GMT&quot;</span>).<span class="ident">to_string</span>()
+    }
+
     <span class="doccomment">/// Creates the default request headers.</span>
     <span class="kw">fn</span> <span class="ident">create_request_headers</span>(<span class="ident">is_gzipped</span>: <span class="ident">bool</span>, <span class="ident">body_len</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>, <span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">HashMap</span>::<span class="ident">new</span>();
-        <span class="kw">let</span> <span class="ident">date</span>: <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Utc</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Utc</span>::<span class="ident">now</span>();
-        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Date&quot;</span>, <span class="ident">date</span>.<span class="ident">to_string</span>());
+        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Date&quot;</span>, <span class="self">Self</span>::<span class="ident">create_date_header_value</span>(<span class="ident">Utc</span>::<span class="ident">now</span>()));
         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Client-Type&quot;</span>, <span class="string">&quot;Glean&quot;</span>.<span class="ident">to_string</span>());
         <span class="ident">headers</span>.<span class="ident">insert</span>(
             <span class="string">&quot;Content-Type&quot;</span>,
@@ -213,6 +254,19 @@
         }
         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Client-Version&quot;</span>, <span class="kw">crate</span>::<span class="ident">GLEAN_VERSION</span>.<span class="ident">to_string</span>());
         <span class="ident">headers</span>
+    }
+}
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
+<span class="kw">mod</span> <span class="ident">test</span> {
+    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
+    <span class="kw">use</span> <span class="ident">chrono</span>::<span class="ident">offset</span>::<span class="ident">TimeZone</span>;
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">test_date_header_resolution</span>() {
+        <span class="kw">let</span> <span class="ident">date</span>: <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Utc</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Utc</span>.<span class="ident">ymd</span>(<span class="number">2018</span>, <span class="number">2</span>, <span class="number">25</span>).<span class="ident">and_hms</span>(<span class="number">11</span>, <span class="number">10</span>, <span class="number">37</span>);
+        <span class="kw">let</span> <span class="ident">test_value</span> <span class="op">=</span> <span class="ident">PingRequest</span>::<span class="ident">create_date_header_value</span>(<span class="ident">date</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">&quot;Sun, 25 Feb 2018 11:10:37 GMT&quot;</span>, <span class="ident">test_value</span>);
     }
 }
 </pre></div>
