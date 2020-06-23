@@ -86,29 +86,29 @@ class Glean:
     &#34;&#34;&#34;
 
     # Whether Glean was initialized
-    _initialized = False  # type: bool
+    _initialized: bool = False
 
     # The Configuration that was passed to `initialize`
-    _configuration = None  # type: Configuration
+    _configuration: Configuration
 
     # The directory that Glean stores data in
-    _data_dir = Path()  # type: Path
+    _data_dir: Path = Path()
 
     # Whether Glean &#34;owns&#34; the data directory and should destroy it upon reset.
-    _destroy_data_dir = False  # type: bool
+    _destroy_data_dir: bool = False
 
     # Keep track of this setting before Glean is initialized
-    _upload_enabled = True  # type: bool
+    _upload_enabled: bool = True
 
     # The ping types, so they can be registered prior to Glean initialization,
     # and saved between test runs.
-    _ping_type_queue = set()  # type: Set[PingType]
+    _ping_type_queue: Set[&#34;PingType&#34;] = set()
 
     # The application id to send in the ping.
-    _application_id = None  # type: str
+    _application_id: str
 
     # The version of the application sending Glean data.
-    _application_version = None  # type: str
+    _application_version: str
 
     # A thread lock for Glean operations that need to be synchronized
     _thread_lock = threading.RLock()
@@ -365,8 +365,8 @@ class Glean:
                 ping
         &#34;&#34;&#34;
         if extra is None:
-            keys = []  # type: List[str]
-            values = []  # type: List[str]
+            keys: List[str] = []
+            values: List[str] = []
         else:
             keys, values = zip(*extra.items())  # type: ignore
 
@@ -571,29 +571,29 @@ initialized from the application.</p>
     &#34;&#34;&#34;
 
     # Whether Glean was initialized
-    _initialized = False  # type: bool
+    _initialized: bool = False
 
     # The Configuration that was passed to `initialize`
-    _configuration = None  # type: Configuration
+    _configuration: Configuration
 
     # The directory that Glean stores data in
-    _data_dir = Path()  # type: Path
+    _data_dir: Path = Path()
 
     # Whether Glean &#34;owns&#34; the data directory and should destroy it upon reset.
-    _destroy_data_dir = False  # type: bool
+    _destroy_data_dir: bool = False
 
     # Keep track of this setting before Glean is initialized
-    _upload_enabled = True  # type: bool
+    _upload_enabled: bool = True
 
     # The ping types, so they can be registered prior to Glean initialization,
     # and saved between test runs.
-    _ping_type_queue = set()  # type: Set[PingType]
+    _ping_type_queue: Set[&#34;PingType&#34;] = set()
 
     # The application id to send in the ping.
-    _application_id = None  # type: str
+    _application_id: str
 
     # The version of the application sending Glean data.
-    _application_version = None  # type: str
+    _application_version: str
 
     # A thread lock for Glean operations that need to be synchronized
     _thread_lock = threading.RLock()
@@ -850,8 +850,8 @@ initialized from the application.</p>
                 ping
         &#34;&#34;&#34;
         if extra is None:
-            keys = []  # type: List[str]
-            values = []  # type: List[str]
+            keys: List[str] = []
+            values: List[str] = []
         else:
             keys, values = zip(*extra.items())  # type: ignore
 
@@ -1010,13 +1010,6 @@ initialized from the application.</p>
         if sent_ping:
             PingUploadWorker.process()</code></pre>
 </details>
-<h3>Class variables</h3>
-<dl>
-<dt id="glean.glean.Glean.configuration"><code class="name">var <span class="ident">configuration</span></code></dt>
-<dd>
-<section class="desc"></section>
-</dd>
-</dl>
 <h3>Static methods</h3>
 <dl>
 <dt id="glean.glean.Glean.get_data_dir"><code class="name flex">
@@ -1276,8 +1269,8 @@ def set_experiment_active(
             ping
     &#34;&#34;&#34;
     if extra is None:
-        keys = []  # type: List[str]
-        values = []  # type: List[str]
+        keys: List[str] = []
+        values: List[str] = []
     else:
         keys, values = zip(*extra.items())  # type: ignore
 
@@ -1507,6 +1500,20 @@ def test_is_experiment_active(cls, experiment_id: str) -&gt; bool:
             _ffi.ffi_encode_string(experiment_id)
         )
     )</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="glean.glean.Glean.configuration"><code class="name">var <span class="ident">configuration</span></code></dt>
+<dd>
+<section class="desc"><p>Decorator for creating a property on a class (rather than an instance).</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(self, obj, owner):
+    return self.f(owner)</code></pre>
 </details>
 </dd>
 </dl>

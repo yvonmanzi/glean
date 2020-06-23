@@ -83,7 +83,7 @@ class HttpClientUploader(base_uploader.BaseUploader):
         else:
             # If we don&#39;t know the URL scheme, log an error and mark this as an unrecoverable
             # error, like if it were a malformed URL.
-            log.error(&#34;Unknown URL scheme {}&#34;.format(parsed_url.scheme))
+            log.error(f&#34;Unknown URL scheme {parsed_url.scheme}&#34;)
             return ping_uploader.UnrecoverableFailure()
 
         try:
@@ -92,25 +92,19 @@ class HttpClientUploader(base_uploader.BaseUploader):
             )
             response = conn.getresponse()
         except http.client.InvalidURL as e:
-            log.error(
-                &#34;Could not upload telemetry due to malformed URL: &#39;{}&#39; {}&#34;.format(
-                    url, e
-                )
-            )
+            log.error(f&#34;Could not upload telemetry due to malformed URL: &#39;{url}&#39; {e}&#34;)
             return ping_uploader.UnrecoverableFailure()
         except http.client.HTTPException as e:
-            log.error(
-                &#34;http.client.HTTPException while uploading ping: &#39;{}&#39; {}&#34;.format(url, e)
-            )
+            log.error(f&#34;http.client.HTTPException while uploading ping: &#39;{url}&#39; {e}&#34;)
             return ping_uploader.RecoverableFailure()
         except socket.gaierror as e:
-            log.error(&#34;socket.gaierror while uploading ping: &#39;{}&#39; {}&#34;.format(url, e))
+            log.error(f&#34;socket.gaierror while uploading ping: &#39;{url}&#39; {e}&#34;)
             return ping_uploader.RecoverableFailure()
         except OSError as e:
-            log.error(&#34;OSError while uploading ping: &#39;{}&#39; {}&#34;.format(url, e))
+            log.error(f&#34;OSError while uploading ping: &#39;{url}&#39; {e}&#34;)
             return ping_uploader.RecoverableFailure()
         except Exception as e:
-            log.error(&#34;Unknown Exception while uploading ping: &#39;{}&#39; {}&#34;.format(url, e))
+            log.error(f&#34;Unknown Exception while uploading ping: &#39;{url}&#39; {e}&#34;)
             return ping_uploader.RecoverableFailure()
 
         status_code = response.status
@@ -175,7 +169,7 @@ to the user-provided delegate.</p></section>
         else:
             # If we don&#39;t know the URL scheme, log an error and mark this as an unrecoverable
             # error, like if it were a malformed URL.
-            log.error(&#34;Unknown URL scheme {}&#34;.format(parsed_url.scheme))
+            log.error(f&#34;Unknown URL scheme {parsed_url.scheme}&#34;)
             return ping_uploader.UnrecoverableFailure()
 
         try:
@@ -184,25 +178,19 @@ to the user-provided delegate.</p></section>
             )
             response = conn.getresponse()
         except http.client.InvalidURL as e:
-            log.error(
-                &#34;Could not upload telemetry due to malformed URL: &#39;{}&#39; {}&#34;.format(
-                    url, e
-                )
-            )
+            log.error(f&#34;Could not upload telemetry due to malformed URL: &#39;{url}&#39; {e}&#34;)
             return ping_uploader.UnrecoverableFailure()
         except http.client.HTTPException as e:
-            log.error(
-                &#34;http.client.HTTPException while uploading ping: &#39;{}&#39; {}&#34;.format(url, e)
-            )
+            log.error(f&#34;http.client.HTTPException while uploading ping: &#39;{url}&#39; {e}&#34;)
             return ping_uploader.RecoverableFailure()
         except socket.gaierror as e:
-            log.error(&#34;socket.gaierror while uploading ping: &#39;{}&#39; {}&#34;.format(url, e))
+            log.error(f&#34;socket.gaierror while uploading ping: &#39;{url}&#39; {e}&#34;)
             return ping_uploader.RecoverableFailure()
         except OSError as e:
-            log.error(&#34;OSError while uploading ping: &#39;{}&#39; {}&#34;.format(url, e))
+            log.error(f&#34;OSError while uploading ping: &#39;{url}&#39; {e}&#34;)
             return ping_uploader.RecoverableFailure()
         except Exception as e:
-            log.error(&#34;Unknown Exception while uploading ping: &#39;{}&#39; {}&#34;.format(url, e))
+            log.error(f&#34;Unknown Exception while uploading ping: &#39;{url}&#39; {e}&#34;)
             return ping_uploader.RecoverableFailure()
 
         status_code = response.status
@@ -263,7 +251,7 @@ def upload(
     else:
         # If we don&#39;t know the URL scheme, log an error and mark this as an unrecoverable
         # error, like if it were a malformed URL.
-        log.error(&#34;Unknown URL scheme {}&#34;.format(parsed_url.scheme))
+        log.error(f&#34;Unknown URL scheme {parsed_url.scheme}&#34;)
         return ping_uploader.UnrecoverableFailure()
 
     try:
@@ -272,25 +260,19 @@ def upload(
         )
         response = conn.getresponse()
     except http.client.InvalidURL as e:
-        log.error(
-            &#34;Could not upload telemetry due to malformed URL: &#39;{}&#39; {}&#34;.format(
-                url, e
-            )
-        )
+        log.error(f&#34;Could not upload telemetry due to malformed URL: &#39;{url}&#39; {e}&#34;)
         return ping_uploader.UnrecoverableFailure()
     except http.client.HTTPException as e:
-        log.error(
-            &#34;http.client.HTTPException while uploading ping: &#39;{}&#39; {}&#34;.format(url, e)
-        )
+        log.error(f&#34;http.client.HTTPException while uploading ping: &#39;{url}&#39; {e}&#34;)
         return ping_uploader.RecoverableFailure()
     except socket.gaierror as e:
-        log.error(&#34;socket.gaierror while uploading ping: &#39;{}&#39; {}&#34;.format(url, e))
+        log.error(f&#34;socket.gaierror while uploading ping: &#39;{url}&#39; {e}&#34;)
         return ping_uploader.RecoverableFailure()
     except OSError as e:
-        log.error(&#34;OSError while uploading ping: &#39;{}&#39; {}&#34;.format(url, e))
+        log.error(f&#34;OSError while uploading ping: &#39;{url}&#39; {e}&#34;)
         return ping_uploader.RecoverableFailure()
     except Exception as e:
-        log.error(&#34;Unknown Exception while uploading ping: &#39;{}&#39; {}&#34;.format(url, e))
+        log.error(f&#34;Unknown Exception while uploading ping: &#39;{url}&#39; {e}&#34;)
         return ping_uploader.RecoverableFailure()
 
     status_code = response.status

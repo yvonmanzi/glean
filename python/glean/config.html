@@ -52,7 +52,7 @@ DEFAULT_MAX_EVENTS = 500
 def _get_default_user_agent() -&gt; str:
     import glean
 
-    return &#34;Glean/{} (Python on {})&#34;.format(glean.__version__, sys.platform)
+    return f&#34;Glean/{glean.__version__} (Python on {sys.platform})&#34;
 
 
 class Configuration:
