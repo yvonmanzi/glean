@@ -490,6 +490,9 @@
 <span id="490">490</span>
 <span id="491">491</span>
 <span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -975,7 +978,10 @@
         <span class="comment">// Init the upload manager to perform a synchronous ping directory scan.</span>
         <span class="comment">// Since this method is meant to be called from a process used exclusively</span>
         <span class="comment">// for uploading, this is fine.</span>
-        <span class="kw">let</span> <span class="ident">upload_manager</span> <span class="op">=</span> <span class="ident">PingUploadManager</span>::<span class="ident">new</span>(<span class="ident">data_dir</span>.<span class="ident">to_string_fallible</span>()<span class="question-mark">?</span>, <span class="bool-val">true</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">upload_manager</span> <span class="op">=</span> <span class="ident">PingUploadManager</span>::<span class="ident">new</span>(<span class="ident">data_dir</span>.<span class="ident">to_string_fallible</span>()<span class="question-mark">?</span>, <span class="bool-val">true</span>);
+        <span class="ident">upload_manager</span>.<span class="ident">set_rate_limiter</span>(
+            <span class="comment">/* seconds per interval */</span> <span class="number">60</span>, <span class="comment">/* max tasks per interval */</span> <span class="number">10</span>,
+        );
         <span class="ident">glean_core</span>::<span class="ident">upload</span>::<span class="ident">setup_upload_manager</span>(<span class="ident">upload_manager</span>)<span class="question-mark">?</span>;
         <span class="ident">log</span>::<span class="macro">info</span><span class="macro">!</span>(<span class="string">&quot;Glean initialized in upload-only mode&quot;</span>);
         <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>)
