@@ -6138,12 +6138,7 @@ Therefore, when a new Glean SDK release is made, <code>android-components</code>
 <p>After following one of the above instructions to make a Glean SDK release:</p>
 <ol>
 <li>
-<p>Ensure that CI has completed and the artifacts have published to <a href="https://github.com/mozilla/glean/releases/">the Glean GitHub releases page</a>.</p>
-</li>
-<li>
-<p>Publish Glean to <a href="https://maven.mozilla.org/">Mozilla's Maven repository</a>.
-This is currently a manual step that can only performed by individuals with the necessary credentials.
-Ask in <code>#releaseduty-mobile</code> on Mozilla's internal Slack for assistance.</p>
+<p>Ensure that CI has completed and the artifacts are published on <a href="https://maven.mozilla.org/?prefix=maven2/org/mozilla/telemetry/">Mozilla's Maven repository</a>.</p>
 </li>
 <li>
 <p>Create a pull request against <code>android-components</code> to update the Glean version with the following changes:</p>
@@ -6563,26 +6558,28 @@ All the default pings have their scheduling and submission handled by the SDK.</
 <h2><a class="header" href="#this-week-in-glean-twig" id="this-week-in-glean-twig">This Week in Glean (TWiG)</a></h2>
 <p><a href="appendix/twig.html">This Week in Glean</a> is a series of blog posts that the Glean Team at Mozilla is using to try to communicate better about our work.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/appendix/glossary.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
+<p><a href="https://github.com/mozilla/glean/compare/v31.2.0...main">Full changelog</a></p>
+<h1><a class="header" href="#v3120-2020-06-24" id="v3120-2020-06-24">v31.2.0 (2020-06-24)</a></h1>
+<p><a href="https://github.com/mozilla/glean/compare/v31.1.2...v31.2.0">Full changelog</a></p>
 <ul>
 <li>General
 <ul>
-<li>Add rate limiting capabilities to the upload manager. (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1543612">1543612</a>)</li>
+<li>Add rate limiting capabilities to the upload manager. (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1543612">1543612</a>, <a href="https://github.com/mozilla/glean/pull/974">#974</a>)</li>
 </ul>
 </li>
 <li>Android
 <ul>
-<li>BUGFIX: baseline pings with reason &quot;dirty startup&quot; are no longer sent if Glean did not full initialize in the previous run.</li>
+<li>BUGFIX: baseline pings with reason &quot;dirty startup&quot; are no longer sent if Glean did not full initialize in the previous run (<a href="https://github.com/mozilla/glean/pull/996">#996</a>).</li>
 </ul>
 </li>
 <li>Python
 <ul>
-<li>Support for Python 3.5 was dropped.</li>
+<li>Support for Python 3.5 was dropped (<a href="https://github.com/mozilla/glean/pull/987">#987</a>).</li>
 <li>Python wheels are now shipped with Glean release builds, resulting in much smaller libraries (<a href="https://github.com/mozilla/glean/pull/1002">#1002</a>)</li>
-<li>The Python bindings now use <code>locale.getdefaultlocale()</code> rather than <code>locale.getlocale()</code> to determine the locale.</li>
+<li>The Python bindings now use <code>locale.getdefaultlocale()</code> rather than <code>locale.getlocale()</code> to determine the locale (<a href="https://github.com/mozilla/glean/pull/1004">#1004</a>).</li>
 </ul>
 </li>
 </ul>
-<p><a href="https://github.com/mozilla/glean/compare/v31.1.2...main">Full changelog</a></p>
 <h1><a class="header" href="#v3112-2020-06-23" id="v3112-2020-06-23">v31.1.2 (2020-06-23)</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v31.1.1...v31.1.2">Full changelog</a></p>
 <ul>
