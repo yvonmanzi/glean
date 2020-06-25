@@ -297,6 +297,21 @@ If <code>upload_enabled</code> is false, any persisted metrics, events and pings
 <p>Unlike Android and Swift, the Python bindings do not automatically send any pings.
 See the <a href="pings/custom.html">custom pings documentation</a> about adding custom pings and sending them.</p>
 </div>
+<div data-lang="C#" class="tab">
+<p>The main control for Glean is on the <code>GleanInstance</code> singleton.</p>
+<p>The Glean SDK should be initialized as soon as possible, and importantly, before any other libraries in the application start using Glean.
+Library code should never call <code>Glean.initialize</code>, since it should be called exactly once per application.</p>
+<pre><code class="language-C#">using static Mozilla.Glean.Glean;
+
+GleanInstance.Initialize(
+    applicationId: &quot;my.app.id&quot;,
+    applicationVersion: &quot;0.1.1&quot;,
+    uploadEnabled: true,
+    configuration: new Configuration(),
+    dataDir: gleanDataDir
+    );
+</code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#behavior-when-uninitialized" id="behavior-when-uninitialized">Behavior when uninitialized</a></h2>
@@ -319,6 +334,9 @@ Built-in pings are only available after initialization.</p>
 </div>
 <div data-lang="Python" class="tab">
 <p><code>Glean.set_upload_enabled()</code> should be called in response to the user enabling or disabling telemetry.</p>
+</div>
+<div data-lang="C#" class="tab">
+<p><code>GleanInstance.SetUploadEnabled()</code> should be called in response to the user enabling or disabling telemetry.</p>
 </div>
 </div>
 </div>

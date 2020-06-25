@@ -276,6 +276,9 @@ Create a Run Script in which you specify your shell (ex: <code>/bin/sh</code>), 
 </code></pre>
 <p>If you are not on one of these platforms, you will need to build the Glean Python bindings from source using <a href="user/../dev/python/setting-up-python-build-environment.html">these instructions</a>.</p>
 </div>
+<div data-lang="C#" class="tab">
+<p>TODO. To be implemented in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1643568">bug 1643568</a>.</p>
+</div>
 </div>
 </div>
 <h3><a class="header" href="#adding-new-metrics" id="adding-new-metrics">Adding new metrics</a></h3>
@@ -406,6 +409,9 @@ metrics.your_category.your_metric.set(&quot;value&quot;)
 <pre><code class="language-sh">python3 -m glean_parser translate --help
 </code></pre>
 <p>We recommend integrating this step into your project's documentation build. The details of that integration is left to you, since it depends on the documentation tool being used and how your project is set up.</p>
+</div>
+<div data-lang="C#" class="tab">
+<p>TODO. To be implemented in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1643568">bug 1643568</a>.</p>
 </div>
 </div>
 </div>
@@ -583,6 +589,21 @@ If <code>upload_enabled</code> is false, any persisted metrics, events and pings
 <p>Unlike Android and Swift, the Python bindings do not automatically send any pings.
 See the <a href="user/pings/custom.html">custom pings documentation</a> about adding custom pings and sending them.</p>
 </div>
+<div data-lang="C#" class="tab">
+<p>The main control for Glean is on the <code>GleanInstance</code> singleton.</p>
+<p>The Glean SDK should be initialized as soon as possible, and importantly, before any other libraries in the application start using Glean.
+Library code should never call <code>Glean.initialize</code>, since it should be called exactly once per application.</p>
+<pre><code class="language-C#">using static Mozilla.Glean.Glean;
+
+GleanInstance.Initialize(
+    applicationId: &quot;my.app.id&quot;,
+    applicationVersion: &quot;0.1.1&quot;,
+    uploadEnabled: true,
+    configuration: new Configuration(),
+    dataDir: gleanDataDir
+    );
+</code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#behavior-when-uninitialized" id="behavior-when-uninitialized">Behavior when uninitialized</a></h2>
@@ -605,6 +626,9 @@ Built-in pings are only available after initialization.</p>
 </div>
 <div data-lang="Python" class="tab">
 <p><code>Glean.set_upload_enabled()</code> should be called in response to the user enabling or disabling telemetry.</p>
+</div>
+<div data-lang="C#" class="tab">
+<p><code>GleanInstance.SetUploadEnabled()</code> should be called in response to the user enabling or disabling telemetry.</p>
 </div>
 </div>
 </div>
@@ -791,6 +815,9 @@ For example, the metric defined in the <code>metrics.yaml</code> as:</p>
 <div data-lang="Python" class="tab">
 <p>Category and metric names in the <code>metrics.yaml</code> are in <code>snake_case</code>, which matches the <a href="https://www.python.org/dev/peps/pep-0008/">PEP8</a> standard, so no translation is needed for Python.</p>
 </div>
+<div data-lang="C#" class="tab">
+<p>TODO. To be implemented in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1643568">this bug</a>.</p>
+</div>
 </div>
 </div>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/user/adding-new-metrics.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#metric-parameters" id="metric-parameters">Metric parameters</a></h1>
@@ -952,6 +979,9 @@ This function will return a datatype appropriate to the specific type of the met
 )
 </code></pre>
 </div>
+<div data-lang="Python" class="tab">
+<p>TODO. To be implemented in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1648448">bug 1648448</a>.</p>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#testing-metrics-for-custom-pings" id="testing-metrics-for-custom-pings">Testing metrics for custom pings</a></h2>
@@ -1031,6 +1061,9 @@ assert metrics.url.visit.test_has_value()
 # Retrieve a snapshot of the recorded events
 assert 1 == metrics.url.visit.test_get_value()
 </code></pre>
+</div>
+<div data-lang="Python" class="tab">
+<p>TODO. To be implemented in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1648448">bug 1648448</a>.</p>
 </div>
 </div>
 </div>
@@ -1389,6 +1422,9 @@ assert (
 )
 </code></pre>
 </div>
+<div data-lang="C#" class="tab">
+<p>TODO. To be implemented in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1648412">bug 1648412</a>.</p>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
@@ -1557,6 +1593,20 @@ assert metrics.flags.a11y_enabled.test_has_value()
 assert True is metrics.flags.a11y_enabled.test_get_value()
 </code></pre>
 </div>
+<div data-lang="C#" class="tab">
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.FlagsOuter;
+
+Flags.a11yEnabled.Set(System.IsAccessibilityEnabled());
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.FlagsOuter;
+
+// Was anything recorded?
+Assert.True(Flags.a11yEnabled.TestHasValue());
+// Does it have the expected value?
+Assert.True(Flags.a11yEnabled.TestGetValue());
+</code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits-1" id="limits-1">Limits</a></h2>
@@ -1656,6 +1706,9 @@ assert 0 == metrics.accessibility.features.test_get_num_recorded_errors(
     ErrorType.INVALID_LABEL
 )
 </code></pre>
+</div>
+<div data-lang="C#" class="tab">
+<p>TODO. To be implemented in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1648436">bug 1648436</a>.</p>
 </div>
 </div>
 </div>
@@ -1789,6 +1842,25 @@ assert 1 == metrics.controls.refresh_pressed.test_get_num_recorded_errors(
 )
 </code></pre>
 </div>
+<div data-lang="C#" class="tab">
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.Controls;
+
+Controls.refreshPressed.Add(); // Adds 1 to the counter.
+Controls.refreshPressed.Add(5); // Adds 5 to the counter.
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.Controls;
+
+// Was anything recorded?
+Assert.True(Controls.refreshPressed.TestHasValue());
+// Does the counter have the expected value?
+Assert.Equal(6, Controls.refreshPressed.TestGetValue());
+// Did the counter record an negative value?
+Assert.Equal(
+    1, Controls.refreshPressed.TestGetNumRecordedErrors(ErrorType.InvalidValue)
+);
+</code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits-3" id="limits-3">Limits</a></h2>
@@ -1886,6 +1958,9 @@ assert 0 == metrics.stability.crash_count.test_get_num_recorded_errors(
     ErrorType.INVALID_LABEL
 )
 </code></pre>
+</div>
+<div data-lang="C#" class="tab">
+<p>TODO. To be implemented in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1648437">bug 1648437</a>.</p>
 </div>
 </div>
 </div>
@@ -2032,6 +2107,31 @@ assert 1 == metrics.search_default.name.test_get_num_recorded_errors(
 )
 </code></pre>
 </div>
+<div data-lang="C#" class="tab">
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.SearchDefault;
+
+// Record a value into the metric.
+SearchDefault.name.Set(&quot;duck duck go&quot;);
+// If it changed later, you can record the new value:
+SearchDefault.name.Set(&quot;wikipedia&quot;);
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.SearchDefault;
+
+// Was anything recorded?
+Assert.True(SearchDefault.name.TestHasValue());
+// Does the string metric have the expected value?
+// IMPORTANT: It may have been truncated -- see &quot;Limits&quot; below
+Assert.Equal(&quot;wikipedia&quot;, SearchDefault.name.TestGetValue());
+// Was the string truncated, and an error reported?
+Assert.Equal(
+    1,
+    SearchDefault.name.TestGetNumRecordedErrors(
+        ErrorType.InvalidValue
+    )
+);
+</code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits-5" id="limits-5">Limits</a></h2>
@@ -2118,6 +2218,9 @@ assert 0 == metrics.login.errors_by_stage.test_get_num_recorded_errors(
     ErrorType.INVALID_LABEL
 )
 </code></pre>
+</div>
+<div data-lang="C#" class="tab">
+<p>TODO. To be implemented in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1648438">bug 1648438</a>.</p>
 </div>
 </div>
 </div>
@@ -2241,6 +2344,9 @@ assert 1 == metrics.search.engines.test_get_num_recorded_errors(
     ErrorType.INVALID_VALUE
 )
 </code></pre>
+</div>
+<div data-lang="C#" class="tab">
+<p>TODO. To be implemented in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1648441">bug 1648441</a>.</p>
 </div>
 </div>
 </div>
@@ -2421,6 +2527,10 @@ assert 1 == metrics.auth.local_time.test_get_num_recorded_errors(
 )
 </code></pre>
 </div>
+<div data-lang="C#" class="tab">
+<p>TODO. To be implemented in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1648442">bug 1648442</a>.</p>
+</div>
+</div>
 </div>
 <h2><a class="header" href="#raw-api" id="raw-api">Raw API</a></h2>
 <blockquote>
@@ -2451,6 +2561,9 @@ HistorySync.setRawNanos(duration)
 val duration = SyncResult.status.syncs.took.toLong()
 HistorySync.setRawNanos(duration)
 </code></pre>
+</div>
+<div data-lang="C#" class="tab">
+<p>TODO. To be implemented in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1648442">bug 1648442</a>.</p>
 </div>
 </div>
 </div>
@@ -2677,6 +2790,9 @@ assert 1 == metrics.pages.page_load.test_get_num_recorded_errors(
 )
 </code></pre>
 </div>
+<div data-lang="C#" class="tab">
+<p>TODO. To be implemented in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1648443">bug 1648443</a>.</p>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits-9" id="limits-9">Limits</a></h2>
@@ -2827,6 +2943,9 @@ assert 1 == metrics.memory.heap_allocated.test_get_num_recorded_errors(
 )
 </code></pre>
 </div>
+<div data-lang="C#" class="tab">
+<p>TODO. To be implemented in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1648439">bug 1648439</a>.</p>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits-10" id="limits-10">Limits</a></h2>
@@ -2924,6 +3043,21 @@ metrics.user.client_id.set(uuid.uuid4())
 assert metrics.user.client_id.test_has_value()
 # Was it the expected value?
 assert uuid == metrics.user.client_id.test_get_value()
+</code></pre>
+</div>
+<div data-lang="C#" class="tab">
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.User;
+
+User.clientId.GenerateAndSet(); // Generate a new UUID and record it
+User.clientId.Set(System.Guid.NewGuid()); // Set a UUID explicitly
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.User;
+
+// Was anything recorded?
+Assert.True(User.clientId.TestHasValue());
+// Was it the expected value?
+Assert.Equal(uuid, User.clientId.TestGetValue());
 </code></pre>
 </div>
 </div>
@@ -3059,6 +3193,27 @@ assert 1 == metrics.install.test_get_num_recorded_errors(
 )
 </code></pre>
 </div>
+<div data-lang="C#" class="tab">
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.Install;
+
+// Records &quot;now&quot;
+Install.firstRun.Set();
+// Records a custom datetime
+Install.firstRun.Set(new DateTimeOffset(2018, 2, 25, 11, 10, 0, TimeZone.CurrentTimeZone.BaseUtcOffset));
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.Install;
+
+// Was anything recorded?
+Assert.True(Install.firstRun.TestHasValue());
+// Was it the expected value?
+// NOTE: Datetimes always include a timezone offset from UTC, hence the
+// &quot;-05:00&quot; suffix.
+Assert.Equal(&quot;2019-03-25-05:00&quot;, Install.firstRun.TestGetValueAsString());
+// Was the value invalid?
+Assert.Equal(1, Install.firstRun.TestGetNumRecordedErrors(ErrorType.InvalidValue));
+</code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits-12" id="limits-12">Limits</a></h2>
@@ -3163,6 +3318,9 @@ assert 0 == metrics.views.login_opened.test_get_num_recorded_errors(
     ErrorType.INVALID_VALUE
 )
 </code></pre>
+</div>
+<div data-lang="C#" class="tab">
+<p>TODO. To be implemented in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1648422">bug 1648422</a>.</p>
 </div>
 </div>
 </div>
@@ -3953,6 +4111,23 @@ from pkg_resources import resource_filename
 pings = load_pings(resource_filename(__name__, &quot;pings.yaml&quot;))
 </code></pre>
 </div>
+<div data-lang="C#" class="tab">
+<p>In C#, this object must be registered with Glean from your startup code (such as in your application's <code>Main</code> method or a function called from that method).</p>
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.Pings;
+
+...
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        ...
+        Glean.RegisterPings(Pings);
+        ...
+    }
+}
+</code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#sending-metrics-in-a-custom-ping" id="sending-metrics-in-a-custom-ping">Sending metrics in a custom ping</a></h2>
@@ -3999,6 +4174,14 @@ GleanMetrics.Pings.shared.search.submit(
 pings = load_pings(&quot;pings.yaml&quot;)
 
 pings.search.submit(pings.search_reason_codes.PERFORMED)
+</code></pre>
+</div>
+<div data-lang="C#" class="tab">
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.Pings;
+
+Pings.search.Submit(
+    GleanMetrics.Pings.searchReasonCodes.performed
+);
 </code></pre>
 </div>
 </div>
@@ -4269,6 +4452,9 @@ def test_verify_custom_ping_metrics():
     scheduler.add_some_data()
     scheduler.schedule_ping()
 </code></pre>
+</div>
+<div data-lang="Python" class="tab">
+<p>TODO. To be implemented in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1648446">bug 1648446</a>.</p>
 </div>
 </div>
 </div>
@@ -4674,6 +4860,9 @@ It is installed as part of <a href="dev/python/setting-up-python-build-environme
 <pre><code>make python-docs
 </code></pre>
 <p>The generated documentation is saved in <code>build/docs/python</code>.</p>
+</div>
+<div data-lang="C#" class="tab">
+<p>TODO. To be implemented in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1648410">bug 1648410</a>.</p>
 </div>
 </div>
 </div>

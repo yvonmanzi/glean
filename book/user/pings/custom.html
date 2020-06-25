@@ -240,6 +240,23 @@ from pkg_resources import resource_filename
 pings = load_pings(resource_filename(__name__, &quot;pings.yaml&quot;))
 </code></pre>
 </div>
+<div data-lang="C#" class="tab">
+<p>In C#, this object must be registered with Glean from your startup code (such as in your application's <code>Main</code> method or a function called from that method).</p>
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.Pings;
+
+...
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        ...
+        Glean.RegisterPings(Pings);
+        ...
+    }
+}
+</code></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#sending-metrics-in-a-custom-ping" id="sending-metrics-in-a-custom-ping">Sending metrics in a custom ping</a></h2>
@@ -286,6 +303,14 @@ GleanMetrics.Pings.shared.search.submit(
 pings = load_pings(&quot;pings.yaml&quot;)
 
 pings.search.submit(pings.search_reason_codes.PERFORMED)
+</code></pre>
+</div>
+<div data-lang="C#" class="tab">
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.Pings;
+
+Pings.search.Submit(
+    GleanMetrics.Pings.searchReasonCodes.performed
+);
 </code></pre>
 </div>
 </div>
