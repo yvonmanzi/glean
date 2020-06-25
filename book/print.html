@@ -3414,7 +3414,7 @@ See <a href="user/pings/../experiments-api.html">Using the Experiments API</a> o
 <p>A pre-defined set of headers is additionally sent along with the submitted ping:</p>
 <table><thead><tr><th>Header</th><th>Value</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>Content-Type</code></td><td><code>application/json; charset=utf-8</code></td><td>Describes the data sent to the server</td></tr>
-<tr><td><code>User-Agent</code></td><td>Defaults to e.g. <code>Glean/0.40.0 (Android)</code>, where <code>0.40.0</code> is the Glean SDK version number and <code>Android</code> is the platform name. It can be overridden by user through <a href="user/pings/../../../javadoc/glean/mozilla.telemetry.glean/-configuration/index.html">configuration</a></td><td>Describes the application sending the ping using the Glean SDK</td></tr>
+<tr><td><code>User-Agent</code></td><td>Defaults to e.g. <code>Glean/0.40.0 (Android)</code>, where <code>0.40.0</code> is the Glean SDK version number and <code>Android</code> is the platform name.</td><td>Describes the application sending the ping using the Glean SDK</td></tr>
 <tr><td><code>Date</code></td><td>e.g. <code>Mon, 23 Jan 2019 10:10:10 GMT+00:00</code></td><td>Submission date/time in GMT/UTC+0 offset</td></tr>
 <tr><td><code>X-Client-Type</code></td><td><code>Glean</code></td><td>Custom header to support handling of Glean pings in the legacy pipeline</td></tr>
 <tr><td><code>X-Client-Version</code></td><td>e.g. <code>0.40.0</code></td><td>The Glean SDK version, sent as a custom header to support handling of Glean pings in the legacy pipeline</td></tr>
@@ -6559,6 +6559,13 @@ All the default pings have their scheduling and submission handled by the SDK.</
 <p><a href="appendix/twig.html">This Week in Glean</a> is a series of blog posts that the Glean Team at Mozilla is using to try to communicate better about our work.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/appendix/glossary.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v31.2.0...main">Full changelog</a></p>
+<ul>
+<li>Python
+<ul>
+<li>BUGFIX: Core metrics are now present in every ping, even if submit is called before initialize has a chance to complete. (<a href="https://github.com/mozilla/glean/pull/1012">#1012</a>)</li>
+</ul>
+</li>
+</ul>
 <h1><a class="header" href="#v3120-2020-06-24" id="v3120-2020-06-24">v31.2.0 (2020-06-24)</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v31.1.2...v31.2.0">Full changelog</a></p>
 <ul>

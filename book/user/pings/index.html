@@ -241,7 +241,7 @@ See <a href="../experiments-api.html">Using the Experiments API</a> on how to re
 <p>A pre-defined set of headers is additionally sent along with the submitted ping:</p>
 <table><thead><tr><th>Header</th><th>Value</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>Content-Type</code></td><td><code>application/json; charset=utf-8</code></td><td>Describes the data sent to the server</td></tr>
-<tr><td><code>User-Agent</code></td><td>Defaults to e.g. <code>Glean/0.40.0 (Android)</code>, where <code>0.40.0</code> is the Glean SDK version number and <code>Android</code> is the platform name. It can be overridden by user through <a href="../../../javadoc/glean/mozilla.telemetry.glean/-configuration/index.html">configuration</a></td><td>Describes the application sending the ping using the Glean SDK</td></tr>
+<tr><td><code>User-Agent</code></td><td>Defaults to e.g. <code>Glean/0.40.0 (Android)</code>, where <code>0.40.0</code> is the Glean SDK version number and <code>Android</code> is the platform name.</td><td>Describes the application sending the ping using the Glean SDK</td></tr>
 <tr><td><code>Date</code></td><td>e.g. <code>Mon, 23 Jan 2019 10:10:10 GMT+00:00</code></td><td>Submission date/time in GMT/UTC+0 offset</td></tr>
 <tr><td><code>X-Client-Type</code></td><td><code>Glean</code></td><td>Custom header to support handling of Glean pings in the legacy pipeline</td></tr>
 <tr><td><code>X-Client-Version</code></td><td>e.g. <code>0.40.0</code></td><td>The Glean SDK version, sent as a custom header to support handling of Glean pings in the legacy pipeline</td></tr>

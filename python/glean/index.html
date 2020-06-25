@@ -230,7 +230,7 @@ the <code>pings.yaml</code> file.</dd>
 <dl>
 <dt id="glean.Configuration"><code class="flex name class">
 <span>class <span class="ident">Configuration</span></span>
-<span>(</span><span>server_endpoint='https://incoming.telemetry.mozilla.org', user_agent=None, channel=None, max_events=500, log_pings=False, ping_tag=None, ping_uploader=None, allow_multiprocessing=True)</span>
+<span>(</span><span>server_endpoint='https://incoming.telemetry.mozilla.org', channel=None, max_events=500, log_pings=False, ping_tag=None, ping_uploader=None, allow_multiprocessing=True)</span>
 </code></dt>
 <dd>
 <section class="desc"><p>Configuration values for Glean.</p>
@@ -239,9 +239,6 @@ the <code>pings.yaml</code> file.</dd>
 <dt><strong><code>server_endpoint</code></strong> :&ensp;<code>str</code></dt>
 <dd>Optional. The server pings are sent to.
 Defaults to <code>DEFAULT_TELEMETRY_ENDPOINT</code>.</dd>
-<dt><strong><code>user_agent</code></strong> :&ensp;<code>str</code></dt>
-<dd>Optional. The user agent used when sending pings.
-Defaults to <code>Glean/x.x.x (Python on {sys.platform})</code>.</dd>
 <dt><strong><code>channel</code></strong> :&ensp;<code>str</code></dt>
 <dd>Optional. The release channel the application is on,
 if known.</dd>
@@ -273,7 +270,6 @@ to offload some work (such as ping uploading).</dd>
     def __init__(
         self,
         server_endpoint: str = DEFAULT_TELEMETRY_ENDPOINT,
-        user_agent: Optional[str] = None,
         channel: Optional[str] = None,
         max_events: int = DEFAULT_MAX_EVENTS,
         log_pings: bool = False,
@@ -285,8 +281,6 @@ to offload some work (such as ping uploading).</dd>
         Args:
             server_endpoint (str): Optional. The server pings are sent to.
                 Defaults to `DEFAULT_TELEMETRY_ENDPOINT`.
-            user_agent (str): Optional. The user agent used when sending pings.
-                Defaults to `Glean/x.x.x (Python on {sys.platform})`.
             channel (str): Optional. The release channel the application is on,
                 if known.
             max_events (int): Optional.The number of events to store before
@@ -301,9 +295,6 @@ to offload some work (such as ping uploading).</dd>
                 to offload some work (such as ping uploading).
         &#34;&#34;&#34;
         self._server_endpoint = server_endpoint
-        if user_agent is None:
-            user_agent = _get_default_user_agent()
-        self._user_agent = user_agent
         self._channel = channel
         self._max_events = max_events
         self._log_pings = log_pings
@@ -321,15 +312,6 @@ to offload some work (such as ping uploading).</dd>
     @server_endpoint.setter
     def server_endpoint(self, value: str):
         self._server_endpoint = value
-
-    @property
-    def user_agent(self) -&gt; str:
-        &#34;&#34;&#34;The user agent used when sending pings.&#34;&#34;&#34;
-        return self._user_agent
-
-    @user_agent.setter
-    def user_agent(self, value: str):
-        self._user_agent = value
 
     @property
     def channel(self) -&gt; Optional[str]:
@@ -456,19 +438,6 @@ def ping_uploader(self) -&gt; net.BaseUploader:
 def server_endpoint(self) -&gt; str:
     &#34;&#34;&#34;The server pings are sent to.&#34;&#34;&#34;
     return self._server_endpoint</code></pre>
-</details>
-</dd>
-<dt id="glean.Configuration.user_agent"><code class="name">var <span class="ident">user_agent</span></code></dt>
-<dd>
-<section class="desc"><p>The user agent used when sending pings.</p></section>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@property
-def user_agent(self) -&gt; str:
-    &#34;&#34;&#34;The user agent used when sending pings.&#34;&#34;&#34;
-    return self._user_agent</code></pre>
 </details>
 </dd>
 </dl>
@@ -864,18 +833,20 @@ initialized from the application.</p>
         &#34;&#34;&#34;
         from ._builtins import metrics
 
-        metrics.glean.baseline.locale.set(_util.get_locale_tag())
-        metrics.glean.internal.metrics.os_version.set(platform.release())
-        metrics.glean.internal.metrics.architecture.set(platform.machine())
-        metrics.glean.internal.metrics.locale.set(_util.get_locale_tag())
+        metrics.glean.baseline.locale._set_sync(_util.get_locale_tag())
+        metrics.glean.internal.metrics.os_version._set_sync(platform.release())
+        metrics.glean.internal.metrics.architecture._set_sync(platform.machine())
+        metrics.glean.internal.metrics.locale._set_sync(_util.get_locale_tag())
 
         if cls._configuration.channel is not None:
-            metrics.glean.internal.metrics.app_channel.set(cls._configuration.channel)
+            metrics.glean.internal.metrics.app_channel._set_sync(
+                cls._configuration.channel
+            )
 
-        metrics.glean.internal.metrics.app_build.set(cls._application_id)
+        metrics.glean.internal.metrics.app_build._set_sync(cls._application_id)
 
         if cls._application_version is not None:
-            metrics.glean.internal.metrics.app_display_version.set(
+            metrics.glean.internal.metrics.app_display_version._set_sync(
                 cls._application_version
             )
 
@@ -1488,7 +1459,6 @@ def test_is_experiment_active(cls, experiment_id: str) -&gt; bool:
 <li><code><a title="glean.Configuration.ping_tag" href="#glean.Configuration.ping_tag">ping_tag</a></code></li>
 <li><code><a title="glean.Configuration.ping_uploader" href="#glean.Configuration.ping_uploader">ping_uploader</a></code></li>
 <li><code><a title="glean.Configuration.server_endpoint" href="#glean.Configuration.server_endpoint">server_endpoint</a></code></li>
-<li><code><a title="glean.Configuration.user_agent" href="#glean.Configuration.user_agent">user_agent</a></code></li>
 </ul>
 </li>
 <li>

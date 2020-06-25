@@ -132,7 +132,6 @@
 <span id="132">132</span>
 <span id="133">133</span>
 <span id="134">134</span>
-<span id="135">135</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -167,7 +166,6 @@
     <span class="doccomment">/// Creates a new PingRequest.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Automatically creates the default request headers.</span>
-    <span class="doccomment">/// Clients may add more headers such as `userAgent` to this list.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">document_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">body</span>: <span class="ident">JsonValue</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="comment">// We want uploads to be gzip&#39;d. Instead of doing this for each platform</span>
         <span class="comment">// we have language bindings for, apply compression here.</span>

@@ -34,7 +34,6 @@ Provides an object to pass configuration to Glean.
 &#34;&#34;&#34;
 
 
-import sys
 from typing import Optional
 
 
@@ -49,12 +48,6 @@ DEFAULT_TELEMETRY_ENDPOINT = &#34;https://incoming.telemetry.mozilla.org&#34;
 DEFAULT_MAX_EVENTS = 500
 
 
-def _get_default_user_agent() -&gt; str:
-    import glean
-
-    return f&#34;Glean/{glean.__version__} (Python on {sys.platform})&#34;
-
-
 class Configuration:
     &#34;&#34;&#34;
     Configuration values for Glean.
@@ -63,7 +56,6 @@ class Configuration:
     def __init__(
         self,
         server_endpoint: str = DEFAULT_TELEMETRY_ENDPOINT,
-        user_agent: Optional[str] = None,
         channel: Optional[str] = None,
         max_events: int = DEFAULT_MAX_EVENTS,
         log_pings: bool = False,
@@ -75,8 +67,6 @@ class Configuration:
         Args:
             server_endpoint (str): Optional. The server pings are sent to.
                 Defaults to `DEFAULT_TELEMETRY_ENDPOINT`.
-            user_agent (str): Optional. The user agent used when sending pings.
-                Defaults to `Glean/x.x.x (Python on {sys.platform})`.
             channel (str): Optional. The release channel the application is on,
                 if known.
             max_events (int): Optional.The number of events to store before
@@ -91,9 +81,6 @@ class Configuration:
                 to offload some work (such as ping uploading).
         &#34;&#34;&#34;
         self._server_endpoint = server_endpoint
-        if user_agent is None:
-            user_agent = _get_default_user_agent()
-        self._user_agent = user_agent
         self._channel = channel
         self._max_events = max_events
         self._log_pings = log_pings
@@ -111,15 +98,6 @@ class Configuration:
     @server_endpoint.setter
     def server_endpoint(self, value: str):
         self._server_endpoint = value
-
-    @property
-    def user_agent(self) -&gt; str:
-        &#34;&#34;&#34;The user agent used when sending pings.&#34;&#34;&#34;
-        return self._user_agent
-
-    @user_agent.setter
-    def user_agent(self, value: str):
-        self._user_agent = value
 
     @property
     def channel(self) -&gt; Optional[str]:
@@ -183,7 +161,7 @@ __all__ = [&#34;Configuration&#34;]</code></pre>
 <dl>
 <dt id="glean.config.Configuration"><code class="flex name class">
 <span>class <span class="ident">Configuration</span></span>
-<span>(</span><span>server_endpoint='https://incoming.telemetry.mozilla.org', user_agent=None, channel=None, max_events=500, log_pings=False, ping_tag=None, ping_uploader=None, allow_multiprocessing=True)</span>
+<span>(</span><span>server_endpoint='https://incoming.telemetry.mozilla.org', channel=None, max_events=500, log_pings=False, ping_tag=None, ping_uploader=None, allow_multiprocessing=True)</span>
 </code></dt>
 <dd>
 <section class="desc"><p>Configuration values for Glean.</p>
@@ -192,9 +170,6 @@ __all__ = [&#34;Configuration&#34;]</code></pre>
 <dt><strong><code>server_endpoint</code></strong> :&ensp;<code>str</code></dt>
 <dd>Optional. The server pings are sent to.
 Defaults to <code>DEFAULT_TELEMETRY_ENDPOINT</code>.</dd>
-<dt><strong><code>user_agent</code></strong> :&ensp;<code>str</code></dt>
-<dd>Optional. The user agent used when sending pings.
-Defaults to <code>Glean/x.x.x (Python on {sys.platform})</code>.</dd>
 <dt><strong><code>channel</code></strong> :&ensp;<code>str</code></dt>
 <dd>Optional. The release channel the application is on,
 if known.</dd>
@@ -226,7 +201,6 @@ to offload some work (such as ping uploading).</dd>
     def __init__(
         self,
         server_endpoint: str = DEFAULT_TELEMETRY_ENDPOINT,
-        user_agent: Optional[str] = None,
         channel: Optional[str] = None,
         max_events: int = DEFAULT_MAX_EVENTS,
         log_pings: bool = False,
@@ -238,8 +212,6 @@ to offload some work (such as ping uploading).</dd>
         Args:
             server_endpoint (str): Optional. The server pings are sent to.
                 Defaults to `DEFAULT_TELEMETRY_ENDPOINT`.
-            user_agent (str): Optional. The user agent used when sending pings.
-                Defaults to `Glean/x.x.x (Python on {sys.platform})`.
             channel (str): Optional. The release channel the application is on,
                 if known.
             max_events (int): Optional.The number of events to store before
@@ -254,9 +226,6 @@ to offload some work (such as ping uploading).</dd>
                 to offload some work (such as ping uploading).
         &#34;&#34;&#34;
         self._server_endpoint = server_endpoint
-        if user_agent is None:
-            user_agent = _get_default_user_agent()
-        self._user_agent = user_agent
         self._channel = channel
         self._max_events = max_events
         self._log_pings = log_pings
@@ -274,15 +243,6 @@ to offload some work (such as ping uploading).</dd>
     @server_endpoint.setter
     def server_endpoint(self, value: str):
         self._server_endpoint = value
-
-    @property
-    def user_agent(self) -&gt; str:
-        &#34;&#34;&#34;The user agent used when sending pings.&#34;&#34;&#34;
-        return self._user_agent
-
-    @user_agent.setter
-    def user_agent(self, value: str):
-        self._user_agent = value
 
     @property
     def channel(self) -&gt; Optional[str]:
@@ -411,19 +371,6 @@ def server_endpoint(self) -&gt; str:
     return self._server_endpoint</code></pre>
 </details>
 </dd>
-<dt id="glean.config.Configuration.user_agent"><code class="name">var <span class="ident">user_agent</span></code></dt>
-<dd>
-<section class="desc"><p>The user agent used when sending pings.</p></section>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@property
-def user_agent(self) -&gt; str:
-    &#34;&#34;&#34;The user agent used when sending pings.&#34;&#34;&#34;
-    return self._user_agent</code></pre>
-</details>
-</dd>
 </dl>
 </dd>
 </dl>
@@ -451,7 +398,6 @@ def user_agent(self) -&gt; str:
 <li><code><a title="glean.config.Configuration.ping_tag" href="#glean.config.Configuration.ping_tag">ping_tag</a></code></li>
 <li><code><a title="glean.config.Configuration.ping_uploader" href="#glean.config.Configuration.ping_uploader">ping_uploader</a></code></li>
 <li><code><a title="glean.config.Configuration.server_endpoint" href="#glean.config.Configuration.server_endpoint">server_endpoint</a></code></li>
-<li><code><a title="glean.config.Configuration.user_agent" href="#glean.config.Configuration.user_agent">user_agent</a></code></li>
 </ul>
 </li>
 </ul>
