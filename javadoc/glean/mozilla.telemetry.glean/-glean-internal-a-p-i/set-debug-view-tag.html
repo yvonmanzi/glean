@@ -10,8 +10,10 @@
 <h1>setDebugViewTag</h1>
 <a name="mozilla.telemetry.glean.GleanInternalAPI$setDebugViewTag(kotlin.String)"></a>
 <code><span class="keyword">fun </span><span class="identifier">setDebugViewTag</span><span class="symbol">(</span><span class="identifier" id="mozilla.telemetry.glean.GleanInternalAPI$setDebugViewTag(kotlin.String)/value">value</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
-<p>Set a tag to be applied to headers when uploading pings for debug view.
-This is only meant to be used internally by the <code>GleanDebugActivity</code>.</p>
+<p>Set a tag to be applied to headers when uploading pings for debug view.</p>
+<p>If the tag is invalid it won't be set and this function will return <code>false</code>,
+although if we are not initialized yet, there won't be any validation.</p>
+<p>This is only meant to be used internally by the <code>GleanDebugActivity</code>.</p>
 <h3>Parameters</h3>
 <p><a name="value"></a>
 <code>value</code> - The value of the tag, which must be a valid HTTP header value.</p>
