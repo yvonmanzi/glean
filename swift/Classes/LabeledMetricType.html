@@ -221,6 +221,67 @@ The only difference is that labeled metrics are stored with the special key <cod
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:5Glean17LabeledMetricTypeCyxSScip"></a>
+                    <a name="//apple_ref/swift/Method/subscript(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5Glean17LabeledMetricTypeCyxSScip">subscript(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Get the specific metric for a given label.</p>
+
+<p>If a set of acceptable labels was specified in the metrics.yaml file,
+and the given label is not in the set, it will be recorded under the
+special <code>OTHER_LABEL</code>.</p>
+
+<p>If a set of acceptable labels was not specified in the metrics.yaml file,
+only the first 16 unique labels will be used. After that, any additional
+labels will be recorded under the special <code>OTHER_LABEL</code> label.</p>
+
+<p>Labels must be snake_case and less than 30 characters. If an invalid label
+is used, the metric will be recorded in the special <code>OTHER_LABEL</code> label.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">subscript</span><span class="p">(</span><span class="nv">label</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>label</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The label</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The specific metric for that label</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:5Glean17LabeledMetricTypeC24testGetNumRecordedErrors_8pingNames5Int32VAA05ErrorD0O_SSSgtF"></a>
                     <a name="//apple_ref/swift/Method/testGetNumRecordedErrors(_:pingName:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:5Glean17LabeledMetricTypeC24testGetNumRecordedErrors_8pingNames5Int32VAA05ErrorD0O_SSSgtF">testGetNumRecordedErrors(_:<wbr>pingName:<wbr>)</a>
