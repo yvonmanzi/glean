@@ -173,13 +173,9 @@ Occasionally, the <code>baseline</code> ping may fail to send when going to back
 <p>The baseline ping includes the following fields:</p>
 <table><thead><tr><th>Field name</th><th>Type</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>duration</code></td><td>Timespan</td><td>The duration, in seconds, of the last foreground session. Only available if <code>reason: background</code>. <sup class="footnote-reference"><a href="#1">1</a></sup></td></tr>
-<tr><td><code>locale</code></td><td>String</td><td>The locale of the application. <sup class="footnote-reference"><a href="#2">2</a></sup></td></tr>
 </tbody></table>
 <div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
 <p>See also the <a href="ping-schedules-and-timings.html">ping schedules and timing overview</a> for how the <code>duration</code> metric relates to other sources of timing in the <code>baseline</code> ping.</p>
-</div>
-<div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
-<p>The locale metric in the baseline ping is deprecated. Use <a href="index.html#The-client-info-section"><code>client_info.locale</code></a> instead. </p>
 </div>
 <p>The <code>baseline</code> ping also includes the common <a href="index.html#ping-sections">ping sections</a> found in all pings.</p>
 <h3><a class="header" href="#querying-ping-contents" id="querying-ping-contents">Querying ping contents</a></h3>
@@ -211,9 +207,6 @@ Occasionally, the <code>baseline</code> ping may fail to send when going to back
     &quot;client_id&quot;: &quot;35dab852-74db-43f4-8aa0-88884211e545&quot;
   },
   &quot;metrics&quot;: {
-    &quot;string&quot;: {
-      &quot;glean.baseline.locale&quot;: &quot;en-US&quot;
-    },
     &quot;timespan&quot;: {
       &quot;glean.baseline.duration&quot;: {
         &quot;value&quot;: 52,

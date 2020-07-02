@@ -231,6 +231,10 @@ The <a href="https://github.com/mozilla-mobile/android-components/releases/">and
 </code></pre>
 </div>
 <div data-lang="Swift" class="tab">
+<h4><a class="header" href="#requirements" id="requirements">Requirements</a></h4>
+<ul>
+<li>Python &gt;= 3.6</li>
+</ul>
 <h4><a class="header" href="#setting-up-the-dependency-1" id="setting-up-the-dependency-1">Setting up the dependency</a></h4>
 <p>Glean can be consumed through <a href="https://github.com/Carthage/Carthage">Carthage</a>, a dependency manager for macOS and iOS.
 For consuming the latest version of Glean, add the following line to your <code>Cartfile</code>:</p>
@@ -3635,13 +3639,9 @@ Occasionally, the <code>baseline</code> ping may fail to send when going to back
 <p>The baseline ping includes the following fields:</p>
 <table><thead><tr><th>Field name</th><th>Type</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>duration</code></td><td>Timespan</td><td>The duration, in seconds, of the last foreground session. Only available if <code>reason: background</code>. <sup class="footnote-reference"><a href="#1">1</a></sup></td></tr>
-<tr><td><code>locale</code></td><td>String</td><td>The locale of the application. <sup class="footnote-reference"><a href="#2">2</a></sup></td></tr>
 </tbody></table>
 <div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
 <p>See also the <a href="user/pings/ping-schedules-and-timings.html">ping schedules and timing overview</a> for how the <code>duration</code> metric relates to other sources of timing in the <code>baseline</code> ping.</p>
-</div>
-<div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
-<p>The locale metric in the baseline ping is deprecated. Use <a href="user/pings/index.html#The-client-info-section"><code>client_info.locale</code></a> instead. </p>
 </div>
 <p>The <code>baseline</code> ping also includes the common <a href="user/pings/index.html#ping-sections">ping sections</a> found in all pings.</p>
 <h3><a class="header" href="#querying-ping-contents" id="querying-ping-contents">Querying ping contents</a></h3>
@@ -3673,9 +3673,6 @@ Occasionally, the <code>baseline</code> ping may fail to send when going to back
     &quot;client_id&quot;: &quot;35dab852-74db-43f4-8aa0-88884211e545&quot;
   },
   &quot;metrics&quot;: {
-    &quot;string&quot;: {
-      &quot;glean.baseline.locale&quot;: &quot;en-US&quot;
-    },
     &quot;timespan&quot;: {
       &quot;glean.baseline.duration&quot;: {
         &quot;value&quot;: 52,
@@ -4649,6 +4646,7 @@ This means you might have to go searching through the dependency tree to get a f
 <h2><a class="header" href="#baseline" id="baseline">baseline</a></h2>
 <p>This is a built-in ping that is assembled out of the box by the Glean SDK.</p>
 <p>See the Glean SDK documentation for the <a href="https://mozilla.github.io/glean/book/user/pings/baseline.html"><code>baseline</code> ping</a>.</p>
+<p>This ping is sent if empty.</p>
 <p>This ping includes the <a href="https://mozilla.github.io/glean/book/user/pings/index.html#the-client_info-section">client id</a>.</p>
 <p><strong>Data reviews for this ping:</strong></p>
 <ul>
@@ -4682,7 +4680,6 @@ includes when the application starts.</p>
 <p>The following metrics are added to the ping:</p>
 <table><thead><tr><th>Name</th><th>Type</th><th>Description</th><th>Data reviews</th><th>Extras</th><th>Expiration</th></tr></thead><tbody>
 <tr><td>glean.baseline.duration</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/timespan.html">timespan</a></td><td>The duration of the last foreground session.</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1512938#c3">1</a></td><td></td><td>never</td></tr>
-<tr><td>glean.baseline.locale</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/string.html">string</a></td><td>The locale of the application during initialization (e.g. &quot;es-ES&quot;). If the locale can't be determined on the system, the value is <a href="https://unicode.org/reports/tr35/#Unknown_or_Invalid_Identifiers">&quot;und&quot;</a>, to indicate &quot;undetermined&quot;.</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1512938#c3">1</a></td><td></td><td>never</td></tr>
 </tbody></table>
 <h2><a class="header" href="#deletion-request" id="deletion-request">deletion-request</a></h2>
 <p>This ping is submitted when a user opts out of sending technical and interaction data to Mozilla. This ping is intended to communicate to the Data Pipeline that the user wishes to have their reported Telemetry data deleted. As such it attempts to send itself at the moment the user opts out of data collection.</p>
@@ -6747,6 +6744,9 @@ All the default pings have their scheduling and submission handled by the SDK.</
 <h2><a class="header" href="#this-week-in-glean-twig" id="this-week-in-glean-twig">This Week in Glean (TWiG)</a></h2>
 <p><a href="appendix/twig.html">This Week in Glean</a> is a series of blog posts that the Glean Team at Mozilla is using to try to communicate better about our work.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/appendix/glossary.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
+<ul>
+<li>Remove locale from baseline ping. (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1609968">1609968</a>, <a href="https://github.com/mozilla/glean/pull/1016">#1016</a>)</li>
+</ul>
 <p><a href="https://github.com/mozilla/glean/compare/v31.2.3...main">Full changelog</a></p>
 <h1><a class="header" href="#v3123-2020-06-29" id="v3123-2020-06-29">v31.2.3 (2020-06-29)</a></h1>
 <ul>
