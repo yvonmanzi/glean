@@ -169,6 +169,10 @@
 <span id="169">169</span>
 <span id="170">170</span>
 <span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">OsString</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Display</span>};
@@ -226,6 +230,9 @@
     <span class="doccomment">/// Unknown error</span>
     <span class="ident">Utf8Error</span>,
 
+    <span class="doccomment">/// Glean initialization was attempted with an invalid configuration</span>
+    <span class="ident">InvalidConfig</span>,
+
     <span class="doccomment">/// Glean not initialized</span>
     <span class="ident">NotInitialized</span>,
 
@@ -275,6 +282,7 @@
             <span class="ident">HistogramType</span>(<span class="ident">h</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;HistogramType conversion from {} failed&quot;</span>, <span class="ident">h</span>),
             <span class="ident">OsString</span>(<span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;OsString conversion from {:?} failed&quot;</span>, <span class="ident">s</span>),
             <span class="ident">Utf8Error</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Invalid UTF-8 byte sequence in string&quot;</span>),
+            <span class="ident">InvalidConfig</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Invalid Glean configuration provided&quot;</span>),
             <span class="ident">NotInitialized</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Global Glean object missing&quot;</span>),
             <span class="ident">__NonExhaustive</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Unknown error&quot;</span>),
         }
