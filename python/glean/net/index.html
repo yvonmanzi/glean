@@ -405,7 +405,7 @@ def upload(
         from .. import Glean
 
         return ProcessDispatcher.dispatch(
-            _process, (Glean._data_dir, Glean._configuration)
+            _process, (Glean._data_dir, Glean._application_id, Glean._configuration)
         )
 
     @classmethod

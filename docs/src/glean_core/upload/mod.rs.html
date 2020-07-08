@@ -955,46 +955,6 @@
 <span id="955">955</span>
 <span id="956">956</span>
 <span id="957">957</span>
-<span id="958">958</span>
-<span id="959">959</span>
-<span id="960">960</span>
-<span id="961">961</span>
-<span id="962">962</span>
-<span id="963">963</span>
-<span id="964">964</span>
-<span id="965">965</span>
-<span id="966">966</span>
-<span id="967">967</span>
-<span id="968">968</span>
-<span id="969">969</span>
-<span id="970">970</span>
-<span id="971">971</span>
-<span id="972">972</span>
-<span id="973">973</span>
-<span id="974">974</span>
-<span id="975">975</span>
-<span id="976">976</span>
-<span id="977">977</span>
-<span id="978">978</span>
-<span id="979">979</span>
-<span id="980">980</span>
-<span id="981">981</span>
-<span id="982">982</span>
-<span id="983">983</span>
-<span id="984">984</span>
-<span id="985">985</span>
-<span id="986">986</span>
-<span id="987">987</span>
-<span id="988">988</span>
-<span id="989">989</span>
-<span id="990">990</span>
-<span id="991">991</span>
-<span id="992">992</span>
-<span id="993">993</span>
-<span id="994">994</span>
-<span id="995">995</span>
-<span id="996">996</span>
-<span id="997">997</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -1010,13 +970,10 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">VecDeque</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">PathBuf</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">atomic</span>::{<span class="ident">AtomicBool</span>, <span class="ident">Ordering</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::{<span class="ident">Arc</span>, <span class="ident">Mutex</span>, <span class="ident">RwLock</span>, <span class="ident">RwLockWriteGuard</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::{<span class="ident">Arc</span>, <span class="ident">RwLock</span>, <span class="ident">RwLockWriteGuard</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">thread</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::{<span class="ident">Duration</span>, <span class="ident">Instant</span>};
 
-<span class="kw">use</span> <span class="ident">once_cell</span>::<span class="ident">sync</span>::<span class="ident">OnceCell</span>;
-
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error</span>::<span class="prelude-ty">Result</span>;
 <span class="kw">use</span> <span class="ident">directory</span>::<span class="ident">PingDirectoryManager</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">request</span>::{<span class="ident">HeaderMap</span>, <span class="ident">PingRequest</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">result</span>::{<span class="ident">ffi_upload_result</span>, <span class="ident">UploadResult</span>};
@@ -1024,43 +981,6 @@
 <span class="kw">mod</span> <span class="ident">directory</span>;
 <span class="kw">mod</span> <span class="ident">request</span>;
 <span class="kw">mod</span> <span class="ident">result</span>;
-
-<span class="doccomment">/// A global Glean upload manager instance.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// This is only used by processes who exclusively need to manage</span>
-<span class="doccomment">/// ping upload and do not want to perform a full Glean initialization.</span>
-<span class="kw">static</span> <span class="ident">UPLOAD_MANAGER</span>: <span class="ident">OnceCell</span><span class="op">&lt;</span><span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">PingUploadManager</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">OnceCell</span>::<span class="ident">new</span>();
-
-<span class="doccomment">/// Get a reference to the global Upload Manager object.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">global_upload_manager</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">PingUploadManager</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-    <span class="ident">UPLOAD_MANAGER</span>.<span class="ident">get</span>()
-}
-
-<span class="doccomment">/// Set or replace the global Glean object.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">setup_upload_manager</span>(<span class="ident">upload_manager</span>: <span class="ident">PingUploadManager</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-    <span class="comment">// The `OnceCell` type wrapping our PingUploadManager is thread-safe and can only be set once.</span>
-    <span class="comment">// Therefore even if our check for it being empty succeeds, setting it could fail if a</span>
-    <span class="comment">// concurrent thread is quicker in setting it.</span>
-    <span class="comment">// However this will not cause a bigger problem, as the second `set` operation will just fail.</span>
-    <span class="comment">// We can log it and move on.</span>
-    <span class="comment">//</span>
-    <span class="comment">// For all wrappers this is not a problem, as the uploader object is intialized exactly once on</span>
-    <span class="comment">// calling the FFI `glean_standalone_uploader`.</span>
-    <span class="kw">if</span> <span class="ident">UPLOAD_MANAGER</span>.<span class="ident">get</span>().<span class="ident">is_none</span>() {
-        <span class="kw">if</span> <span class="ident">UPLOAD_MANAGER</span>.<span class="ident">set</span>(<span class="ident">Mutex</span>::<span class="ident">new</span>(<span class="ident">upload_manager</span>)).<span class="ident">is_err</span>() {
-            <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(
-                <span class="string">&quot;Global Upload Manager object is initialized already. This probably happened concurrently.&quot;</span>
-            )
-        }
-    } <span class="kw">else</span> {
-        <span class="comment">// We allow overriding the global upload manager object to support test mode.</span>
-        <span class="comment">// In test mode the upload manager object is fully destroyed and recreated.</span>
-        <span class="comment">// This all happens behind a mutex and is therefore also thread-safe..</span>
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">lock</span> <span class="op">=</span> <span class="ident">UPLOAD_MANAGER</span>.<span class="ident">get</span>().<span class="ident">unwrap</span>().<span class="ident">lock</span>().<span class="ident">unwrap</span>();
-        <span class="kw-2">*</span><span class="ident">lock</span> <span class="op">=</span> <span class="ident">upload_manager</span>;
-    }
-    <span class="prelude-val">Ok</span>(())
-}
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">struct</span> <span class="ident">RateLimiter</span> {
