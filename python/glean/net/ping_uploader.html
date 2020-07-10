@@ -168,6 +168,8 @@ __all__ = [
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="glean.net.ping_uploader.UploadResult" href="#glean.net.ping_uploader.UploadResult">UploadResult</a></li>
+<li>typing.Protocol</li>
+<li>typing.Generic</li>
 </ul>
 <h3>Methods</h3>
 <dl>
@@ -191,7 +193,31 @@ __all__ = [
 <span>(</span><span>*args, **kwargs)</span>
 </code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>Base class for protocol classes.</p>
+<p>Protocol classes are defined as::</p>
+<pre><code>class Proto(Protocol):
+    def meth(self) -&gt; int:
+        ...
+</code></pre>
+<p>Such classes are primarily used with static type checkers that recognize
+structural subtyping (static duck-typing), for example::</p>
+<pre><code>class C:
+    def meth(self) -&gt; int:
+        return 0
+
+def func(x: Proto) -&gt; int:
+    return x.meth()
+
+func(C())  # Passes static type check
+</code></pre>
+<p>See PEP 544 for details. Protocol classes decorated with
+@typing.runtime_checkable act as simple-minded runtime protocols that check
+only the presence of given attributes, ignoring their type signatures.
+Protocol classes can be generic, they are defined as::</p>
+<pre><code>class GenProto(Protocol[T]):
+    def meth(self) -&gt; T:
+        ...
+</code></pre></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -215,6 +241,11 @@ __all__ = [
         &#34;&#34;&#34;
         pass</code></pre>
 </details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>typing.Protocol</li>
+<li>typing.Generic</li>
+</ul>
 <h3>Subclasses</h3>
 <ul class="hlist">
 <li><a title="glean.net.base_uploader.BaseUploader" href="base_uploader.html#glean.net.base_uploader.BaseUploader">BaseUploader</a></li>
@@ -294,6 +325,8 @@ The upload should be retried at a later time.</p></section>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="glean.net.ping_uploader.UploadResult" href="#glean.net.ping_uploader.UploadResult">UploadResult</a></li>
+<li>typing.Protocol</li>
+<li>typing.Generic</li>
 </ul>
 <h3>Methods</h3>
 <dl>
@@ -338,6 +371,8 @@ The ping data is removed afterwards.</p></section>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="glean.net.ping_uploader.UploadResult" href="#glean.net.ping_uploader.UploadResult">UploadResult</a></li>
+<li>typing.Protocol</li>
+<li>typing.Generic</li>
 </ul>
 <h3>Methods</h3>
 <dl>
@@ -377,6 +412,11 @@ The ping data is removed afterwards.</p></section>
     def to_ffi(self) -&gt; int:
         return _UPLOAD_RESULT_UNRECOVERABLE</code></pre>
 </details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>typing.Protocol</li>
+<li>typing.Generic</li>
+</ul>
 <h3>Subclasses</h3>
 <ul class="hlist">
 <li><a title="glean.net.ping_uploader.HttpResponse" href="#glean.net.ping_uploader.HttpResponse">HttpResponse</a></li>

@@ -132,6 +132,8 @@ to the user-provided delegate.</p></section>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="glean.net.ping_uploader.PingUploader" href="ping_uploader.html#glean.net.ping_uploader.PingUploader">PingUploader</a></li>
+<li>typing.Protocol</li>
+<li>typing.Generic</li>
 </ul>
 <h3>Subclasses</h3>
 <ul class="hlist">
@@ -285,6 +287,8 @@ to the user-provided delegate.</p></section>
 <ul class="hlist">
 <li><a title="glean.net.base_uploader.BaseUploader" href="base_uploader.html#glean.net.base_uploader.BaseUploader">BaseUploader</a></li>
 <li><a title="glean.net.ping_uploader.PingUploader" href="ping_uploader.html#glean.net.ping_uploader.PingUploader">PingUploader</a></li>
+<li>typing.Protocol</li>
+<li>typing.Generic</li>
 </ul>
 <h3>Static methods</h3>
 <dl>
@@ -460,7 +464,31 @@ def process(cls):
 <span>(</span><span>*args, **kwargs)</span>
 </code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>Base class for protocol classes.</p>
+<p>Protocol classes are defined as::</p>
+<pre><code>class Proto(Protocol):
+    def meth(self) -&gt; int:
+        ...
+</code></pre>
+<p>Such classes are primarily used with static type checkers that recognize
+structural subtyping (static duck-typing), for example::</p>
+<pre><code>class C:
+    def meth(self) -&gt; int:
+        return 0
+
+def func(x: Proto) -&gt; int:
+    return x.meth()
+
+func(C())  # Passes static type check
+</code></pre>
+<p>See PEP 544 for details. Protocol classes decorated with
+@typing.runtime_checkable act as simple-minded runtime protocols that check
+only the presence of given attributes, ignoring their type signatures.
+Protocol classes can be generic, they are defined as::</p>
+<pre><code>class GenProto(Protocol[T]):
+    def meth(self) -&gt; T:
+        ...
+</code></pre></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -484,6 +512,11 @@ def process(cls):
         &#34;&#34;&#34;
         pass</code></pre>
 </details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>typing.Protocol</li>
+<li>typing.Generic</li>
+</ul>
 <h3>Subclasses</h3>
 <ul class="hlist">
 <li><a title="glean.net.base_uploader.BaseUploader" href="base_uploader.html#glean.net.base_uploader.BaseUploader">BaseUploader</a></li>

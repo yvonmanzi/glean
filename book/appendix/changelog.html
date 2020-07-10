@@ -159,23 +159,29 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
+<p><a href="https://github.com/mozilla/glean/compare/v31.2.3...main">Full changelog</a></p>
 <ul>
 <li>General
 <ul>
 <li>Remove locale from baseline ping. (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1609968">1609968</a>, <a href="https://github.com/mozilla/glean/pull/1016">#1016</a>)</li>
 <li>Persist X-Debug-ID header on store ping. (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1605097">1605097</a>, <a href="https://github.com/mozilla/glean/pull/1042">#1042</a>)</li>
-<li>BUGFIX: raise an error if Glean is initialized with an empty string as the <code>application_id</code>.</li>
+<li>BUGFIX: raise an error if Glean is initialized with an empty string as the <code>application_id</code> (<a href="https://github.com/mozilla/glean/pull/1043">#1043</a>).</li>
 </ul>
 </li>
 <li>Python
 <ul>
-<li>BUGFIX: correctly set the <code>app_build</code> metric to the newly provided <code>application_build_id</code> initialization option.</li>
-<li>The Python bindings now report networking errors in the <code>glean.upload.ping_upload_failure</code> metric (like all the other bindings).</li>
+<li>BUGFIX: correctly set the <code>app_build</code> metric to the newly provided <code>application_build_id</code> initialization option (<a href="https://github.com/mozilla/glean/pull/1031">#1031</a>).</li>
+<li>The Python bindings now report networking errors in the <code>glean.upload.ping_upload_failure</code> metric (like all the other bindings) (<a href="https://github.com/mozilla/glean/pull/1039">#1039</a>).</li>
+</ul>
+</li>
+<li>iOS
+<ul>
+<li>BUGFIX: Make <code>LabeledMetric</code> subscript public, so consuming applications can actually access it (<a href="https://github.com/mozilla/glean/pull/1027">#1027</a>)</li>
 </ul>
 </li>
 </ul>
-<p><a href="https://github.com/mozilla/glean/compare/v31.2.3...main">Full changelog</a></p>
 <h1><a class="header" href="#v3123-2020-06-29" id="v3123-2020-06-29">v31.2.3 (2020-06-29)</a></h1>
+<p><a href="https://github.com/mozilla/glean/compare/v31.2.2...v31.2.3">Full changelog</a></p>
 <ul>
 <li>General
 <ul>
@@ -184,7 +190,6 @@
 </ul>
 </li>
 </ul>
-<p><a href="https://github.com/mozilla/glean/compare/v31.2.2...v31.2.3">Full changelog</a></p>
 <h1><a class="header" href="#v3122-2020-06-26" id="v3122-2020-06-26">v31.2.2 (2020-06-26)</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v31.2.1...v31.2.2">Full changelog</a></p>
 <ul>
