@@ -164,6 +164,63 @@ Network stacks vastly differ between platforms, applications and operating syste
 The Glean SDK leverages the available platform capabilities to implement any network communication.</p>
 <p>Glean core controls all upload and coordinates the platform side with its own internals.
 All language bindings implement ping uploading around a common API and protocol.</p>
+<h2><a class="header" href="#the-upload-module-in-the-language-bindings" id="the-upload-module-in-the-language-bindings">The upload module in the language bindings</a></h2>
+<pre class="mermaid">classDiagram
+    class UploadResult {
+        ~ToFFI()* int
+    }
+
+    class HttpResponse {
+        int statusCode
+        ~ToFFI() int
+    }
+
+    class UnrecoverableFailure {
+        ~ToFFI() int
+    }
+
+    class RecoverableFailure {
+        ~ToFFI() int
+    }
+
+    class PingUploader {
+        <<interface>>
+        +Upload() UploadResult
+    }
+
+    class BaseUploader {
+        +BaseUploader(PingUploader)
+        ~TriggerUploads()
+        ~CancelUploads()
+    }
+
+    class HttpUploader {
+        +Upload() UploadResult
+    }
+
+    UploadResult <|-- HttpResponse
+    UploadResult <|-- UnrecoverableFailure
+    UploadResult <|-- RecoverableFailure
+    PingUploader <|-- HttpUploader
+    PingUploader o-- BaseUploader
+
+</pre>
+<h3><a class="header" href="#pinguploader" id="pinguploader"><code>PingUploader</code></a></h3>
+<p>The <code>PingUploader</code> interface describes the contract between the <code>BaseUploader</code> and the SDK or user-provided upload modules.</p>
+<h3><a class="header" href="#baseuploader" id="baseuploader"><code>BaseUploader</code></a></h3>
+<p>The <code>BaseUploader</code> component is responsible for interfacing with the lower level <code>get_upload_task</code> calls and dealing with the logic in a platform-coherent way.</p>
+<ul>
+<li>Every Glean instance will always have a single <code>BaseUploader</code> instance.</li>
+<li>The <code>BaseUploader</code> is fed, at Glean initialization, with an instance of an implementation of the <code>PingUploader</code> interface.</li>
+<li>Whenever <code>BaseUploader</code> thinks it should perform an upload, it will call the provided instance of the <code>PingUploader</code> interface and call <code>upload</code> with the data it's getting from the glean-core/FFI.</li>
+<li>Any throttling happens at this layer: the core will orchestrate the throttling, while this layer will be responsible to abide to what the core is telling it to do.</li>
+<li>Any logic for aborting uploads or triggering uploads is provided by this object.</li>
+</ul>
+<h3><a class="header" href="#httpclientuploader" id="httpclientuploader"><code>HttpClientUploader</code></a></h3>
+<p>The <code>HttpClientUploader</code> is the default SDK-provided HTTP uploader. It acts as an adapter between the platform-specific upload library and the Glean upload APIs.</p>
+<blockquote>
+<p>Note that most of the languages have now diverged, due to the many iterations, from this design. For example, in Kotlin, the <a href="https://searchfox.org/glean/source/glean-core/android/src/main/java/mozilla/telemetry/glean/net/BaseUploader.kt"><code>BaseUploader</code> is mostly empty</a> and its functionalities are spread in the <a href="https://searchfox.org/glean/source/glean-core/android/src/main/java/mozilla/telemetry/glean/scheduler/PingUploadWorker.kt"><code>PingUploadWorker</code></a>.</p>
+</blockquote>
 <h2><a class="header" href="#upload-task-api" id="upload-task-api">Upload task API</a></h2>
 <p>The following diagram visualizes the communication between Glean core (the Rust crate),
 a Glean language binding (e.g. the Kotlin or Swift implementation) and a Glean end point server.</p>
