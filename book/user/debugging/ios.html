@@ -158,7 +158,15 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#debugging-ios-applications-using-the-glean-sdk" id="debugging-ios-applications-using-the-glean-sdk">Debugging iOS applications using the Glean SDK</a></h1>
+                        <h1><a class="header" href="#enabling-debugging-features-in-ios-through-environment-variables" id="enabling-debugging-features-in-ios-through-environment-variables">Enabling debugging features in iOS through environment variables</a></h1>
+<p>Debugging features in iOS can be enabled using environment variables.
+For more information on the available features accessible through this method
+and how to enable them, see <a href="./index.html">Enabling debugging features through environment variables</a>.</p>
+<p>These environment variables must be set on the device that is running the application.</p>
+<blockquote>
+<p><strong>Note</strong> To set environment variables to the process running your app in an iOS device or emulator you need to edit the scheme for your app. In the Xcode IDE, you can use the shortcut <code>Cmd + &lt;</code> to open the scheme editor popup. The environment variables editor is under the <code>Arguments</code> tab on this popup.</p>
+</blockquote>
+<h1><a class="header" href="#debugging-ios-applications-using-the-glean-sdk" id="debugging-ios-applications-using-the-glean-sdk">Debugging iOS applications using the Glean SDK</a></h1>
 <p>For debugging and validation purposes on iOS, Glean makes use of a custom URL scheme which is implemented <em>within the application</em> that is consuming Glean.  Glean provides some convenience functions to facilitate this, but it's up to the consuming application to enable this functionality.  Applications that enable this Glean SDK feature will be able to launch the application from a URL with the Glean debug commands embedded in the URL itself.</p>
 <h3><a class="header" href="#available-commands-and-query-format" id="available-commands-and-query-format">Available commands and query format</a></h3>
 <p>There are 3 available commands that you can use with the Glean SDK debug tools</p>

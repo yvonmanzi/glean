@@ -230,7 +230,7 @@ the <code>pings.yaml</code> file.</dd>
 <dl>
 <dt id="glean.Configuration"><code class="flex name class">
 <span>class <span class="ident">Configuration</span></span>
-<span>(</span><span>server_endpoint='https://incoming.telemetry.mozilla.org', channel=None, max_events=500, log_pings=False, ping_tag=None, ping_uploader=None, allow_multiprocessing=True)</span>
+<span>(</span><span>server_endpoint='https://incoming.telemetry.mozilla.org', channel=None, max_events=500, ping_tag=None, ping_uploader=None, allow_multiprocessing=True)</span>
 </code></dt>
 <dd>
 <section class="desc"><p>Configuration values for Glean.</p>
@@ -245,9 +245,6 @@ if known.</dd>
 <dt><strong><code>max_events</code></strong> :&ensp;<code>int</code></dt>
 <dd>Optional.The number of events to store before
 force-sending. Defaults to <code>DEFAULT_MAX_EVENTS</code>.</dd>
-<dt><strong><code>log_pings</code></strong> :&ensp;<code>bool</code></dt>
-<dd>Optional. Whether to log ping contents to the
-console. Defaults to <code>False</code>.</dd>
 <dt><strong><code>ping_tag</code></strong> :&ensp;<code>str</code></dt>
 <dd>Optional. String tag to be applied to headers when
 uploading pings for debug view.</dd>
@@ -272,7 +269,6 @@ to offload some work (such as ping uploading).</dd>
         server_endpoint: str = DEFAULT_TELEMETRY_ENDPOINT,
         channel: Optional[str] = None,
         max_events: int = DEFAULT_MAX_EVENTS,
-        log_pings: bool = False,
         ping_tag: Optional[str] = None,
         ping_uploader: Optional[net.BaseUploader] = None,
         allow_multiprocessing: bool = True,
@@ -285,8 +281,6 @@ to offload some work (such as ping uploading).</dd>
                 if known.
             max_events (int): Optional.The number of events to store before
                 force-sending. Defaults to `DEFAULT_MAX_EVENTS`.
-            log_pings (bool): Optional. Whether to log ping contents to the
-                console. Defaults to `False`.
             ping_tag (str): Optional. String tag to be applied to headers when
                 uploading pings for debug view.
             ping_uploader (glean.net.BaseUploader): Optional. The ping uploader
@@ -297,7 +291,6 @@ to offload some work (such as ping uploading).</dd>
         self._server_endpoint = server_endpoint
         self._channel = channel
         self._max_events = max_events
-        self._log_pings = log_pings
         self._ping_tag = ping_tag
         if ping_uploader is None:
             ping_uploader = net.HttpClientUploader()
@@ -334,15 +327,6 @@ to offload some work (such as ping uploading).</dd>
     # max_events can&#39;t be changed after Glean is initialized
 
     @property
-    def log_pings(self) -&gt; bool:
-        &#34;&#34;&#34;Whether to log ping contents to the console.&#34;&#34;&#34;
-        return self._log_pings
-
-    @log_pings.setter
-    def log_pings(self, value: bool):
-        self._log_pings = value
-
-    @property
     def ping_tag(self) -&gt; Optional[str]:
         &#34;&#34;&#34;String tag to be applied to headers when uploading pings for debug view.&#34;&#34;&#34;
         return self._ping_tag
@@ -373,19 +357,6 @@ to offload some work (such as ping uploading).</dd>
 def channel(self) -&gt; Optional[str]:
     &#34;&#34;&#34;The release channel the application is on, if known.&#34;&#34;&#34;
     return self._channel</code></pre>
-</details>
-</dd>
-<dt id="glean.Configuration.log_pings"><code class="name">var <span class="ident">log_pings</span></code></dt>
-<dd>
-<section class="desc"><p>Whether to log ping contents to the console.</p></section>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@property
-def log_pings(self) -&gt; bool:
-    &#34;&#34;&#34;Whether to log ping contents to the console.&#34;&#34;&#34;
-    return self._log_pings</code></pre>
 </details>
 </dd>
 <dt id="glean.Configuration.max_events"><code class="name">var <span class="ident">max_events</span></code></dt>
@@ -1493,9 +1464,8 @@ def test_is_experiment_active(cls, experiment_id: str) -&gt; bool:
 <ul>
 <li>
 <h4><code><a title="glean.Configuration" href="#glean.Configuration">Configuration</a></code></h4>
-<ul class="two-column">
+<ul class="">
 <li><code><a title="glean.Configuration.channel" href="#glean.Configuration.channel">channel</a></code></li>
-<li><code><a title="glean.Configuration.log_pings" href="#glean.Configuration.log_pings">log_pings</a></code></li>
 <li><code><a title="glean.Configuration.max_events" href="#glean.Configuration.max_events">max_events</a></code></li>
 <li><code><a title="glean.Configuration.ping_tag" href="#glean.Configuration.ping_tag">ping_tag</a></code></li>
 <li><code><a title="glean.Configuration.ping_uploader" href="#glean.Configuration.ping_uploader">ping_uploader</a></code></li>

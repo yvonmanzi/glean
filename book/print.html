@@ -1082,11 +1082,24 @@ assert 1 == metrics.url.visit.test_get_value()
 <h3><a class="header" href="#available-commands-and-query-format" id="available-commands-and-query-format">Available commands and query format</a></h3>
 <p>There are 3 available commands that you can use with the Glean SDK debug tools</p>
 <ul>
-<li><code>logPings</code>: This is either true or false and will cause pings that are submitted to also be echoed to the device's log</li>
+<li><code>logPings</code>: This is either true or false and will cause pings that are submitted to also be echoed to the device's log.</li>
 <li><code>tagPings</code>: This command will tag outgoing pings with the provided value, in order to identify them in the Glean Debug View. Tags need to be string with upper and lower case letters, numbers and dashes, with a max length of 20 characters.</li>
 <li><code>sendPing</code>: This command expects a string name of a ping to force immediate collection and submission of.</li>
 </ul>
 <p>Different platforms have different ways to send these commands.</p>
+<h3><a class="header" href="#enabling-debugging-features-through-environment-variables" id="enabling-debugging-features-through-environment-variables">Enabling debugging features through environment variables</a></h3>
+<p>Some of the debugging features described above may also be enabled using environment variables:</p>
+<ul>
+<li><code>logPings</code>: May be set by the <code>GLEAN_LOG_PINGS</code> environment variable. The accepted values are
+<code>true</code> or <code>false</code>. Any other value will be ignored.</li>
+<li><code>tagPings</code>: May be set by the <code>GLEAN_DEBUG_VIEW_TAG</code> environment variable. Any valid HTTP header value maybe set here
+(e.g. any value that matches the regex <code>[a-zA-Z0-9-]{1,20}</code>). Invalid values will be ignored.</li>
+</ul>
+<p>These variables must be set at runtime, not at compile time. They will be checked upon Glean initialization.</p>
+<p>Enabling debugging features using environment variables is available for all supported platforms.</p>
+<blockquote>
+<p><strong>Note</strong> Although it is technically possible to use the environment variables described here to enable debugging features in Android. The Glean team is not currently aware of a proper way to set environment variables in Android devices or emulators.</p>
+</blockquote>
 <h3><a class="header" href="#important-considerations-when-using-glean-sdk-debug-tools" id="important-considerations-when-using-glean-sdk-debug-tools">Important considerations when using Glean SDK debug tools</a></h3>
 <ul>
 <li>
@@ -1190,7 +1203,15 @@ Run it like this to filter for an application:</p>
 <pre><code class="language-shell">pidcat [applicationId]
 </code></pre>
 <p>In the above <code>[applicationId]</code> is the product's application id as defined in the manifest file and/or build script. For the Glean sample application, this is <code>org.mozilla.samples.gleancore</code> for a release build and <code>org.mozilla.samples.gleancore.debug</code> for a debug build.</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/user/debugging/android.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#debugging-ios-applications-using-the-glean-sdk" id="debugging-ios-applications-using-the-glean-sdk">Debugging iOS applications using the Glean SDK</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/user/debugging/android.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#enabling-debugging-features-in-ios-through-environment-variables" id="enabling-debugging-features-in-ios-through-environment-variables">Enabling debugging features in iOS through environment variables</a></h1>
+<p>Debugging features in iOS can be enabled using environment variables.
+For more information on the available features accessible through this method
+and how to enable them, see <a href="user/debugging/./index.html">Enabling debugging features through environment variables</a>.</p>
+<p>These environment variables must be set on the device that is running the application.</p>
+<blockquote>
+<p><strong>Note</strong> To set environment variables to the process running your app in an iOS device or emulator you need to edit the scheme for your app. In the Xcode IDE, you can use the shortcut <code>Cmd + &lt;</code> to open the scheme editor popup. The environment variables editor is under the <code>Arguments</code> tab on this popup.</p>
+</blockquote>
+<h1><a class="header" href="#debugging-ios-applications-using-the-glean-sdk" id="debugging-ios-applications-using-the-glean-sdk">Debugging iOS applications using the Glean SDK</a></h1>
 <p>For debugging and validation purposes on iOS, Glean makes use of a custom URL scheme which is implemented <em>within the application</em> that is consuming Glean.  Glean provides some convenience functions to facilitate this, but it's up to the consuming application to enable this functionality.  Applications that enable this Glean SDK feature will be able to launch the application from a URL with the Glean debug commands embedded in the URL itself.</p>
 <h3><a class="header" href="#available-commands-and-query-format-1" id="available-commands-and-query-format-1">Available commands and query format</a></h3>
 <p>There are 3 available commands that you can use with the Glean SDK debug tools</p>
@@ -1274,29 +1295,19 @@ Run it like this to filter for an application:</p>
 </blockquote>
 <p>You can refer to <a href="https://developer.apple.com/library/archive/qa/qa1747/_index.html">this Apple technical Q&amp;A</a> for more information about debugging deployed iOS apps.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/user/debugging/ios.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#debugging-python-applications-using-the-glean-sdk" id="debugging-python-applications-using-the-glean-sdk">Debugging Python applications using the Glean SDK</a></h1>
-<p>Glean provides a couple of configuration flags to assist with debugging Python applications.</p>
-<h2><a class="header" href="#tagging-pings" id="tagging-pings">Tagging pings</a></h2>
-<p>The <code>Glean.configuration.ping_tag</code> property can be used to add a special flag to the HTTP header so that the ping will end up in the <a href="user/debugging/./debug-ping-view.html">Glean Debug View</a>.</p>
-<p>You can set it after <code>Glean.initialize</code> is called:</p>
-<pre><code class="language-py">from Glean import Glean, Configuration
-Glean.initialize(
-    application_id=&quot;my-app-id&quot;,
-    application_version=&quot;0.1.0&quot;,
-    upload_enabled=True,
-)
-
-# ...
-
-Glean.configuration.ping_tag = &quot;my-ping-tag&quot;
-</code></pre>
-<p>After doing so, something like <code>pings.custom_ping.submit()</code> will send the custom ping to the Glean Debug View.</p>
+<p>Debugging features in Python can be enabled using environment variables.
+For more information on the available features and how to enable them,
+see <a href="user/debugging/./index.html">Enabling debugging features through environment variables</a>.</p>
+<h2><a class="header" href="#sending-pings" id="sending-pings">Sending pings</a></h2>
+<p>Unlike other platforms, Python doesn't expose convenience methods to send pings on demand.</p>
+<p>In case that is necessary, calling the <code>submit</code> function for a given ping,
+such as <code>pings.custom_ping.submit()</code>, will send it.</p>
 <h2><a class="header" href="#logging-pings" id="logging-pings">Logging pings</a></h2>
-<p>If the <code>Glean.configuration.log_pings</code> property is set to <code>True</code>, pings are
-logged to the console on <code>DEBUG</code> level whenever they are submitted. You can set
-this property in a similar way as the <code>ping_tag</code> property above.</p>
+<p>If the <code>GLEAN_LOG_PINGS</code> environment variable is set to <code>true</code>, pings are
+logged to the console on <code>DEBUG</code> level whenever they are submitted.</p>
 <p>Make sure that when you configure logging in your application, you set the
 level for the <code>glean</code> logger to <code>DEBUG</code> or higher. Otherwise pings won't be
-logged even if <code>log_pings</code> is set to <code>True</code>.</p>
+logged even if <code>GLEAN_LOG_PINGS</code> is set to <code>true</code>.</p>
 <p>You can set the logging level for Glean to <code>DEBUG</code> as follows:</p>
 <pre><code class="language-python">import logging
 
@@ -6801,6 +6812,13 @@ All the default pings have their scheduling and submission handled by the SDK.</
 <h2><a class="header" href="#this-week-in-glean-twig" id="this-week-in-glean-twig">This Week in Glean (TWiG)</a></h2>
 <p><a href="appendix/twig.html">This Week in Glean</a> is a series of blog posts that the Glean Team at Mozilla is using to try to communicate better about our work.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/appendix/glossary.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
+<ul>
+<li>General
+<ul>
+<li>Enable debugging features through environment variables. (<a href="https://github.com/mozilla/glean/pull/1058">#1058</a>)</li>
+</ul>
+</li>
+</ul>
 <p><a href="https://github.com/mozilla/glean/compare/v31.3.0...main">Full changelog</a></p>
 <h1><a class="header" href="#v3130-2020-07-10" id="v3130-2020-07-10">v31.3.0 (2020-07-10)</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v31.2.3...v31.3.0">Full changelog</a></p>
