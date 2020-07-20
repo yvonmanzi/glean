@@ -6814,17 +6814,18 @@ All the default pings have their scheduling and submission handled by the SDK.</
 <h2><a class="header" href="#this-week-in-glean-twig" id="this-week-in-glean-twig">This Week in Glean (TWiG)</a></h2>
 <p><a href="appendix/twig.html">This Week in Glean</a> is a series of blog posts that the Glean Team at Mozilla is using to try to communicate better about our work.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/appendix/glossary.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
-<p><a href="https://github.com/mozilla/glean/compare/v31.4.0...main">Full changelog</a></p>
+<p><a href="https://github.com/mozilla/glean/compare/v31.4.1...main">Full changelog</a></p>
+<h1><a class="header" href="#v3141-2020-07-20" id="v3141-2020-07-20">v31.4.1 (2020-07-20)</a></h1>
+<p><a href="https://github.com/mozilla/glean/compare/v31.4.0...v31.4.1">Full changelog</a></p>
 <ul>
 <li>General
 <ul>
 <li>BUGFIX: fix <code>int32</code> to <code>ErrorType</code> mapping. The <code>InvalidOverflow</code> had a value mismatch between glean-core and the bindings. This would only be a problem in unit tests. (<a href="https://github.com/mozilla/glean/pull/1063">#1063</a>)</li>
-<li>Implement a JWE metric type (<a href="https://github.com/mozilla/glean/pull/1062">#1062</a>).</li>
-<li>Enable propagating options to the main product Activity when using the <code>GleanDebugActivity</code>.</li>
 </ul>
 </li>
 <li>Android
 <ul>
+<li>Enable propagating options to the main product Activity when using the <code>GleanDebugActivity</code>.</li>
 <li>BUGFIX: Fix the metrics ping collection for startup pings such as <code>reason=upgrade</code> to occur in the same thread/task as Glean initialize. Otherwise, it gets collected after the application lifetime metrics are cleared such as experiments that should be in the ping. (<a href="https://github.com/mozilla/glean/pull/1069">#1069</a>)</li>
 </ul>
 </li>
