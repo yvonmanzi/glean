@@ -182,6 +182,8 @@ These are the currently supported keys:</p>
 <tr><td><code>sendPing</code></td><td>string (<code>--es</code>)</td><td>Sends the ping with the given name immediately</td></tr>
 <tr><td><code>tagPings</code></td><td>string (<code>--es</code>)</td><td>Tags all outgoing pings as debug pings to make them available for real-time validation, on the <a href="./debug-ping-view.html">Glean Debug View</a>. The value must match the pattern <code>[a-zA-Z0-9-]{1,20}</code></td></tr>
 </tbody></table>
+<p>All <a href="https://developer.android.com/studio/command-line/adb#am">the options</a> provided to start the activity are passed over to the main activity for the application to process.
+This is useful if SDK users wants to debug telemetry while providing additional options to the product to enable specific behaviors.</p>
 <blockquote>
 <p><strong>Note:</strong> Due to limitations on Android logcat message size, pings larger than 4KB are broken into multiple log messages when using <code>logPings</code>.</p>
 </blockquote>
