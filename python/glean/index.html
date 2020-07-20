@@ -230,7 +230,7 @@ the <code>pings.yaml</code> file.</dd>
 <dl>
 <dt id="glean.Configuration"><code class="flex name class">
 <span>class <span class="ident">Configuration</span></span>
-<span>(</span><span>server_endpoint='https://incoming.telemetry.mozilla.org', channel=None, max_events=500, ping_tag=None, ping_uploader=None, allow_multiprocessing=True)</span>
+<span>(</span><span>server_endpoint=None, channel=None, max_events=500, ping_tag=None, ping_uploader=None, allow_multiprocessing=True)</span>
 </code></dt>
 <dd>
 <section class="desc"><p>Configuration values for Glean.</p>
@@ -266,7 +266,7 @@ to offload some work (such as ping uploading).</dd>
 
     def __init__(
         self,
-        server_endpoint: str = DEFAULT_TELEMETRY_ENDPOINT,
+        server_endpoint: str = None,
         channel: Optional[str] = None,
         max_events: int = DEFAULT_MAX_EVENTS,
         ping_tag: Optional[str] = None,
@@ -288,6 +288,8 @@ to offload some work (such as ping uploading).</dd>
             allow_multiprocessing (bool): When True (default), use a subprocess
                 to offload some work (such as ping uploading).
         &#34;&#34;&#34;
+        if server_endpoint is None:
+            server_endpoint = DEFAULT_TELEMETRY_ENDPOINT
         self._server_endpoint = server_endpoint
         self._channel = channel
         self._max_events = max_events
