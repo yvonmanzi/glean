@@ -184,7 +184,7 @@ All language bindings implement ping uploading around a common API and protocol.
     }
 
     class PingUploader {
-        <<interface>>
+        &lt;&lt;interface&gt;&gt;
         +Upload() UploadResult
     }
 
@@ -198,10 +198,10 @@ All language bindings implement ping uploading around a common API and protocol.
         +Upload() UploadResult
     }
 
-    UploadResult <|-- HttpResponse
-    UploadResult <|-- UnrecoverableFailure
-    UploadResult <|-- RecoverableFailure
-    PingUploader <|-- HttpUploader
+    UploadResult &lt;|-- HttpResponse
+    UploadResult &lt;|-- UnrecoverableFailure
+    UploadResult &lt;|-- RecoverableFailure
+    PingUploader &lt;|-- HttpUploader
     PingUploader o-- BaseUploader
 
 </pre>
@@ -229,13 +229,13 @@ a Glean language binding (e.g. the Kotlin or Swift implementation) and a Glean e
     participant Glean wrapper
     participant Server
 
-    Glean wrapper->>Glean core: get_upload_task()
-    Glean core->>Glean wrapper: Task::Upload(PingRequest)
-    Glean wrapper-->>Server: POST /submit/{task.id}
-    Server-->>Glean wrapper: 200 OK
-    Glean wrapper->>Glean core: upload_response(200)
-    Glean wrapper->>Glean core: get_upload_task()
-    Glean core->>Glean wrapper: Task::Done
+    Glean wrapper-&gt;&gt;Glean core: get_upload_task()
+    Glean core-&gt;&gt;Glean wrapper: Task::Upload(PingRequest)
+    Glean wrapper--&gt;&gt;Server: POST /submit/{task.id}
+    Server--&gt;&gt;Glean wrapper: 200 OK
+    Glean wrapper-&gt;&gt;Glean core: upload_response(200)
+    Glean wrapper-&gt;&gt;Glean core: get_upload_task()
+    Glean core-&gt;&gt;Glean wrapper: Task::Done
 </pre>
 <p>Glean core will take care of file management, cleanup, rescheduling and rate limiting<sup class="footnote-reference"><a href="#1">1</a></sup>.</p>
 <blockquote>
@@ -284,7 +284,7 @@ extern &quot;C&quot; fn glean_process_ping_upload_response(task: *mut FfiPingUpl
 </div>
 </div>
 </div>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/master/docs/dev/core/internal/upload.md">Edit this file on GitHub.</a></footer>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/dev/core/internal/upload.md">Edit this file on GitHub.</a></footer>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
