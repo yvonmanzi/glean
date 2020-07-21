@@ -164,6 +164,7 @@
 <li>General
 <ul>
 <li>Implement ping tagging (i.e. the <code>X-Source-Tags</code> header) (<a href="https://github.com/mozilla/glean/pull/1074">#1074</a>). Note that this is not yet implemented for iOS.</li>
+<li>String values that are too long now record <code>invalid_overflow</code> rather than <code>invalid_value</code> through the Glean error reporting mechanism. This affects the string, event and string list metrics.</li>
 </ul>
 </li>
 <li>Python

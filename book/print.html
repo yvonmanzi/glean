@@ -2172,7 +2172,7 @@ Assert.Equal(
 </ul>
 <h2><a class="header" href="#recorded-errors-4" id="recorded-errors-4">Recorded errors</a></h2>
 <ul>
-<li><code>invalid_value</code>: if the string is too long</li>
+<li><code>invalid_overflow</code>: if the string is too long. (Prior to Glean TODO, this recorded an <code>invalid_value</code>).</li>
 </ul>
 <h2><a class="header" href="#reference-5" id="reference-5">Reference</a></h2>
 <ul>
@@ -2389,7 +2389,7 @@ assert 1 == metrics.search.engines.test_get_num_recorded_errors(
 <h2><a class="header" href="#recorded-errors-6" id="recorded-errors-6">Recorded errors</a></h2>
 <ul>
 <li>
-<p><code>invalid_value</code>: if the string is too long</p>
+<p><code>invalid_overflow</code>: if the string is too long. (Prior to Glean TODO, this recorded an <code>invalid_value</code>).</p>
 </li>
 <li>
 <p><code>invalid_value</code>: if the list is too long</p>
@@ -3368,7 +3368,7 @@ assert 0 == metrics.views.login_opened.test_get_num_recorded_errors(
 </ul>
 <h2><a class="header" href="#recorded-errors-12" id="recorded-errors-12">Recorded errors</a></h2>
 <ul>
-<li><code>invalid_value</code>: if any of the values in the <code>extras</code> object are greater than 50 bytes in length.</li>
+<li><code>invalid_overflow</code>: if any of the values in the <code>extras</code> object are greater than 50 bytes in length.  (Prior to Glean TODO, this recorded an <code>invalid_value</code>).</li>
 </ul>
 <h2><a class="header" href="#reference-13" id="reference-13">Reference</a></h2>
 <ul>
@@ -6827,6 +6827,7 @@ All the default pings have their scheduling and submission handled by the SDK.</
 <li>General
 <ul>
 <li>Implement ping tagging (i.e. the <code>X-Source-Tags</code> header) (<a href="https://github.com/mozilla/glean/pull/1074">#1074</a>). Note that this is not yet implemented for iOS.</li>
+<li>String values that are too long now record <code>invalid_overflow</code> rather than <code>invalid_value</code> through the Glean error reporting mechanism. This affects the string, event and string list metrics.</li>
 </ul>
 </li>
 <li>Python
