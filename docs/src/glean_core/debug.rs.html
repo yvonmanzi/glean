@@ -213,6 +213,108 @@
 <span id="213">213</span>
 <span id="214">214</span>
 <span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -234,6 +336,10 @@
 <span class="doccomment">//!         allowing these tagged pings to be sent to the [&quot;Ping Debug Viewer&quot;](https://mozilla.github.io/glean/book/dev/core/internal/debug-pings.html).</span>
 <span class="doccomment">//!         This may be set by calling glean.set_debug_view_tag(value: &amp;str)</span>
 <span class="doccomment">//!         or by setting the environment variable GLEAN_DEBUG_VIEW_TAG=&lt;some tag&gt;;</span>
+<span class="doccomment">//! * **Source tagging** - Adding the X-Source-Tags header to every ping request,</span>
+<span class="doccomment">//!         allowing pings to be tagged with custom labels.</span>
+<span class="doccomment">//!         This may be set by calling glean.set_source_tags(value: Vec&lt;String&gt;)</span>
+<span class="doccomment">//!         or by setting the environment variable GLEAN_SOURCE_TAGS=&lt;some, tags&gt;;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Bindings may implement other debugging features, e.g. sending pings on demand.</span>
 
@@ -241,21 +347,40 @@
 
 <span class="kw">const</span> <span class="ident">GLEAN_LOG_PINGS</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;GLEAN_LOG_PINGS&quot;</span>;
 <span class="kw">const</span> <span class="ident">GLEAN_DEBUG_VIEW_TAG</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;GLEAN_DEBUG_VIEW_TAG&quot;</span>;
+<span class="kw">const</span> <span class="ident">GLEAN_SOURCE_TAGS</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;GLEAN_SOURCE_TAGS&quot;</span>;
+<span class="kw">const</span> <span class="ident">GLEAN_MAX_SOURCE_TAGS</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">5</span>;
 
 <span class="doccomment">/// A representation of all of Glean&#39;s debug options.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">DebugOptions</span> {
     <span class="doccomment">/// Option to log the payload of pings that are successfully assembled into a ping request.</span>
     <span class="kw">pub</span> <span class="ident">log_pings</span>: <span class="ident">DebugOption</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Option to add the X-Debug-ID header to every ping request.</span>
     <span class="kw">pub</span> <span class="ident">debug_view_tag</span>: <span class="ident">DebugOption</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Option to add the X-Source-Tags header to ping requests. This will allow the data</span>
+    <span class="doccomment">/// consumers to classify data depending on the applied tags.</span>
+    <span class="kw">pub</span> <span class="ident">source_tags</span>: <span class="ident">DebugOption</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+}
+
+<span class="kw">impl</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">DebugOptions</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fmt</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="ident">fmt</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;DebugOptions&quot;</span>)
+            .<span class="ident">field</span>(<span class="string">&quot;log_pings&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">log_pings</span>.<span class="ident">get</span>())
+            .<span class="ident">field</span>(<span class="string">&quot;debug_view_tag&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">debug_view_tag</span>.<span class="ident">get</span>())
+            .<span class="ident">field</span>(<span class="string">&quot;source_tags&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">source_tags</span>.<span class="ident">get</span>())
+            .<span class="ident">finish</span>()
+    }
 }
 
 <span class="kw">impl</span> <span class="ident">DebugOptions</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
-            <span class="ident">log_pings</span>: <span class="ident">DebugOption</span>::<span class="ident">new</span>(<span class="ident">GLEAN_LOG_PINGS</span>, <span class="prelude-val">None</span>),
-            <span class="ident">debug_view_tag</span>: <span class="ident">DebugOption</span>::<span class="ident">new</span>(<span class="ident">GLEAN_DEBUG_VIEW_TAG</span>, <span class="prelude-val">Some</span>(<span class="ident">validate_debug_view_tag</span>)),
+            <span class="ident">log_pings</span>: <span class="ident">DebugOption</span>::<span class="ident">new</span>(<span class="ident">GLEAN_LOG_PINGS</span>, <span class="ident">get_bool_from_str</span>, <span class="prelude-val">None</span>),
+            <span class="ident">debug_view_tag</span>: <span class="ident">DebugOption</span>::<span class="ident">new</span>(<span class="ident">GLEAN_DEBUG_VIEW_TAG</span>, <span class="prelude-val">Some</span>, <span class="prelude-val">Some</span>(<span class="ident">validate_tag</span>)),
+            <span class="ident">source_tags</span>: <span class="ident">DebugOption</span>::<span class="ident">new</span>(
+                <span class="ident">GLEAN_SOURCE_TAGS</span>,
+                <span class="ident">tokenize_string</span>,
+                <span class="prelude-val">Some</span>(<span class="ident">validate_source_tags</span>),
+            ),
         }
     }
 }
@@ -263,27 +388,32 @@
 <span class="doccomment">/// A representation of a debug option,</span>
 <span class="doccomment">/// where the value can be set programmatically or come from an environment variable.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">DebugOption</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span> <span class="op">=</span> <span class="kw">fn</span>(<span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">DebugOption</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">E</span> <span class="op">=</span> <span class="kw">fn</span>(<span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">V</span> <span class="op">=</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span><span class="op">&gt;</span> {
     <span class="doccomment">/// The name of the environment variable related to this debug option.</span>
     <span class="ident">env</span>: <span class="ident">String</span>,
     <span class="doccomment">/// The actual value of this option.</span>
     <span class="ident">value</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Optional function to validade the value parsed from the environment</span>
+    <span class="doccomment">/// Function to extract the data of type `T` from a `String`, used when</span>
+    <span class="doccomment">/// extracting data from the environment.</span>
+    <span class="ident">extraction</span>: <span class="ident">E</span>,
+    <span class="doccomment">/// Optional function to validate the value parsed from the environment</span>
     <span class="doccomment">/// or passed to the `set` function.</span>
-    <span class="ident">validation</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>,
+    <span class="ident">validation</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="ident">DebugOption</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">E</span>, <span class="ident">V</span><span class="op">&gt;</span> <span class="ident">DebugOption</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">E</span>, <span class="ident">V</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">FromStr</span>,
-    <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
+    <span class="ident">T</span>: <span class="ident">Clone</span>,
+    <span class="ident">E</span>: <span class="ident">Fn</span>(<span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
+    <span class="ident">V</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>,
 {
     <span class="doccomment">/// Create a new debug option,</span>
     <span class="doccomment">/// tries to get the initial value of the option from the environment.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">env</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">validation</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">env</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">extraction</span>: <span class="ident">E</span>, <span class="ident">validation</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">option</span> <span class="op">=</span> <span class="self">Self</span> {
             <span class="ident">env</span>: <span class="ident">env</span>.<span class="ident">into</span>(),
             <span class="ident">value</span>: <span class="prelude-val">None</span>,
+            <span class="ident">extraction</span>,
             <span class="ident">validation</span>,
         };
 
@@ -291,21 +421,22 @@
         <span class="ident">option</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">validate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">validate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">f</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">validation</span>.<span class="ident">as_ref</span>() {
             <span class="ident">f</span>(<span class="ident">value</span>)
         } <span class="kw">else</span> {
-            <span class="prelude-val">Some</span>(<span class="ident">value</span>)
+            <span class="bool-val">true</span>
         }
     }
 
     <span class="kw">fn</span> <span class="ident">set_from_env</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="kw">let</span> <span class="ident">extract</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">extraction</span>;
         <span class="kw">match</span> <span class="ident">env</span>::<span class="ident">var</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">env</span>) {
-            <span class="prelude-val">Ok</span>(<span class="ident">env_value</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">T</span>::<span class="ident">from_str</span>(<span class="kw-2">&amp;</span><span class="ident">env_value</span>) {
-                <span class="prelude-val">Ok</span>(<span class="ident">v</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="prelude-val">Ok</span>(<span class="ident">env_value</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">extract</span>(<span class="ident">env_value</span>.<span class="ident">clone</span>()) {
+                <span class="prelude-val">Some</span>(<span class="ident">v</span>) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="self">self</span>.<span class="ident">set</span>(<span class="ident">v</span>);
                 }
-                <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(
                         <span class="string">&quot;Unable to parse debug option {}={} into {}. Ignoring.&quot;</span>,
                         <span class="self">self</span>.<span class="ident">env</span>,
@@ -328,10 +459,10 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Validates the value in case a validation function is available.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">let</span> <span class="ident">validated</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">validate</span>(<span class="ident">value</span>);
-        <span class="kw">if</span> <span class="ident">validated</span>.<span class="ident">is_some</span>() {
+        <span class="kw">let</span> <span class="ident">validated</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">validate</span>(<span class="kw-2">&amp;</span><span class="ident">value</span>);
+        <span class="kw">if</span> <span class="ident">validated</span> {
             <span class="ident">log</span>::<span class="macro">info</span><span class="macro">!</span>(<span class="string">&quot;Setting the debug option {}.&quot;</span>, <span class="self">self</span>.<span class="ident">env</span>);
-            <span class="self">self</span>.<span class="ident">value</span> <span class="op">=</span> <span class="ident">validated</span>;
+            <span class="self">self</span>.<span class="ident">value</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">value</span>);
             <span class="kw">return</span> <span class="bool-val">true</span>;
         }
         <span class="ident">log</span>::<span class="macro">info</span><span class="macro">!</span>(<span class="string">&quot;Invalid value for debug option {}.&quot;</span>, <span class="self">self</span>.<span class="ident">env</span>);
@@ -344,17 +475,31 @@
     }
 }
 
-<span class="doccomment">/// The debug view tag is the value for the `X-Debug-ID` header of tagged ping requests,</span>
-<span class="doccomment">/// thus is it must be a valid header value.</span>
+<span class="kw">fn</span> <span class="ident">get_bool_from_str</span>(<span class="ident">value</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">FromStr</span>::<span class="ident">from_str</span>(<span class="kw-2">&amp;</span><span class="ident">value</span>).<span class="ident">ok</span>()
+}
+
+<span class="kw">fn</span> <span class="ident">tokenize_string</span>(<span class="ident">value</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">trimmed</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">trim</span>();
+    <span class="kw">if</span> <span class="ident">trimmed</span>.<span class="ident">is_empty</span>() {
+        <span class="kw">return</span> <span class="prelude-val">None</span>;
+    }
+
+    <span class="prelude-val">Some</span>(<span class="ident">trimmed</span>.<span class="ident">split</span>(<span class="string">&#39;,&#39;</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">trim</span>().<span class="ident">to_string</span>()).<span class="ident">collect</span>())
+}
+
+<span class="doccomment">/// A tag is the value used in both the `X-Debug-ID` and `X-Source-Tags` headers</span>
+<span class="doccomment">/// of tagged ping requests, thus is it must be a valid header value.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// In other words, it must match the regex: &quot;[a-zA-Z0-9-]{1,20}&quot;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The regex crate isn&#39;t used here because it adds to the binary size,</span>
 <span class="doccomment">/// and the Glean SDK doesn&#39;t use regular expressions anywhere else.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">validate_debug_view_tag</span>(<span class="ident">value</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">ptr_arg</span>)]</span>
+<span class="kw">fn</span> <span class="ident">validate_tag</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
     <span class="kw">if</span> <span class="ident">value</span>.<span class="ident">is_empty</span>() {
-        <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;Debug view tag must have at least one character.&quot;</span>);
-        <span class="kw">return</span> <span class="prelude-val">None</span>;
+        <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;A tag must have at least one character.&quot;</span>);
+        <span class="kw">return</span> <span class="bool-val">false</span>;
     }
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">chars</span>();
@@ -363,21 +508,48 @@
     <span class="kw">loop</span> {
         <span class="kw">match</span> <span class="ident">iter</span>.<span class="ident">next</span>() {
             <span class="comment">// We are done, so the whole expression is valid.</span>
-            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">value</span>),
+            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="bool-val">true</span>,
             <span class="comment">// Valid characters.</span>
             <span class="prelude-val">Some</span>(<span class="string">&#39;-&#39;</span>) <span class="op">|</span> <span class="prelude-val">Some</span>(<span class="string">&#39;a&#39;</span>..<span class="op">=</span><span class="string">&#39;z&#39;</span>) <span class="op">|</span> <span class="prelude-val">Some</span>(<span class="string">&#39;A&#39;</span>..<span class="op">=</span><span class="string">&#39;Z&#39;</span>) <span class="op">|</span> <span class="prelude-val">Some</span>(<span class="string">&#39;0&#39;</span>..<span class="op">=</span><span class="string">&#39;9&#39;</span>) <span class="op">=</span><span class="op">&gt;</span> (),
             <span class="comment">// An invalid character</span>
             <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;Invalid character &#39;{}&#39; in debug view tag.&quot;</span>, <span class="ident">c</span>);
-                <span class="kw">return</span> <span class="prelude-val">None</span>;
+                <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;Invalid character &#39;{}&#39; in the tag.&quot;</span>, <span class="ident">c</span>);
+                <span class="kw">return</span> <span class="bool-val">false</span>;
             }
         }
         <span class="ident">count</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
         <span class="kw">if</span> <span class="ident">count</span> <span class="op">=</span><span class="op">=</span> <span class="number">20</span> {
-            <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;Debug view tag cannot exceed 20 characters&quot;</span>);
-            <span class="kw">return</span> <span class="prelude-val">None</span>;
+            <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;A tag cannot exceed 20 characters.&quot;</span>);
+            <span class="kw">return</span> <span class="bool-val">false</span>;
         }
     }
+}
+
+<span class="doccomment">/// Validate the list of source tags.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This builds upon the existing `validate_tag` function, since all the</span>
+<span class="doccomment">/// tags should respect the same rules to make the pipeline happy.</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">ptr_arg</span>)]</span>
+<span class="kw">fn</span> <span class="ident">validate_source_tags</span>(<span class="ident">tags</span>: <span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">if</span> <span class="ident">tags</span>.<span class="ident">is_empty</span>() {
+        <span class="kw">return</span> <span class="bool-val">false</span>;
+    }
+
+    <span class="kw">if</span> <span class="ident">tags</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="ident">GLEAN_MAX_SOURCE_TAGS</span> {
+        <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(
+            <span class="string">&quot;A list of tags cannot contain more than {} elements.&quot;</span>,
+            <span class="ident">GLEAN_MAX_SOURCE_TAGS</span>
+        );
+        <span class="kw">return</span> <span class="bool-val">false</span>;
+    }
+
+    <span class="comment">// Filter out tags starting with &quot;glean&quot;. They are reserved.</span>
+    <span class="kw">if</span> <span class="ident">tags</span>.<span class="ident">iter</span>().<span class="ident">any</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">starts_with</span>(<span class="string">&quot;glean&quot;</span>)) {
+        <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;Tags starting with `glean` are reserved and must not be used.&quot;</span>);
+        <span class="kw">return</span> <span class="bool-val">false</span>;
+    }
+
+    <span class="ident">tags</span>.<span class="ident">iter</span>().<span class="ident">all</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">validate_tag</span>(<span class="kw-2">&amp;</span><span class="ident">x</span>))
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
@@ -388,23 +560,21 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">debug_option_is_correctly_loaded_from_env</span>() {
         <span class="ident">env</span>::<span class="ident">set_var</span>(<span class="string">&quot;GLEAN_TEST_1&quot;</span>, <span class="string">&quot;test&quot;</span>);
-        <span class="kw">let</span> <span class="ident">option</span>: <span class="ident">DebugOption</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">DebugOption</span>::<span class="ident">new</span>(<span class="string">&quot;GLEAN_TEST_1&quot;</span>, <span class="prelude-val">None</span>);
+        <span class="kw">let</span> <span class="ident">option</span>: <span class="ident">DebugOption</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">DebugOption</span>::<span class="ident">new</span>(<span class="string">&quot;GLEAN_TEST_1&quot;</span>, <span class="prelude-val">Some</span>, <span class="prelude-val">None</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">option</span>.<span class="ident">get</span>().<span class="ident">unwrap</span>(), <span class="string">&quot;test&quot;</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">debug_option_is_correctly_validated_when_necessary</span>() {
-        <span class="kw">fn</span> <span class="ident">validate</span>(<span class="ident">value</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
-            <span class="kw">if</span> <span class="ident">value</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;test&quot;</span> {
-                <span class="prelude-val">Some</span>(<span class="ident">value</span>)
-            } <span class="kw">else</span> {
-                <span class="prelude-val">None</span>
-            }
+        <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">ptr_arg</span>)]</span>
+        <span class="kw">fn</span> <span class="ident">validate</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+            <span class="ident">value</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;test&quot;</span>
         }
 
         <span class="comment">// Invalid values from the env are not set</span>
         <span class="ident">env</span>::<span class="ident">set_var</span>(<span class="string">&quot;GLEAN_TEST_2&quot;</span>, <span class="string">&quot;invalid&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">option</span>: <span class="ident">DebugOption</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">DebugOption</span>::<span class="ident">new</span>(<span class="string">&quot;GLEAN_TEST_2&quot;</span>, <span class="prelude-val">Some</span>(<span class="ident">validate</span>));
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">option</span>: <span class="ident">DebugOption</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span>
+            <span class="ident">DebugOption</span>::<span class="ident">new</span>(<span class="string">&quot;GLEAN_TEST_2&quot;</span>, <span class="prelude-val">Some</span>, <span class="prelude-val">Some</span>(<span class="ident">validate</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">option</span>.<span class="ident">get</span>().<span class="ident">is_none</span>());
 
         <span class="comment">// Valid values are set using the `set` function</span>
@@ -417,16 +587,50 @@
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">validates_debug_view_tag_correctly</span>() {
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">validate_debug_view_tag</span>(<span class="string">&quot;valid-value&quot;</span>.<span class="ident">to_string</span>()).<span class="ident">is_some</span>());
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">validate_debug_view_tag</span>(<span class="string">&quot;-also-valid-value&quot;</span>.<span class="ident">to_string</span>()).<span class="ident">is_some</span>());
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">validate_debug_view_tag</span>(<span class="string">&quot;invalid_value&quot;</span>.<span class="ident">to_string</span>()).<span class="ident">is_none</span>());
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">validate_debug_view_tag</span>(<span class="string">&quot;invalid value&quot;</span>.<span class="ident">to_string</span>()).<span class="ident">is_none</span>());
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">validate_debug_view_tag</span>(<span class="string">&quot;!nv@lid-val*e&quot;</span>.<span class="ident">to_string</span>()).<span class="ident">is_none</span>());
-        <span class="macro">assert</span><span class="macro">!</span>(
-            <span class="ident">validate_debug_view_tag</span>(<span class="string">&quot;invalid-value-because-way-too-long&quot;</span>.<span class="ident">to_string</span>()).<span class="ident">is_none</span>()
+    <span class="kw">fn</span> <span class="ident">tokenize_string_splits_correctly</span>() {
+        <span class="comment">// Valid list is properly tokenized and spaces are trimmed.</span>
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            <span class="prelude-val">Some</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;test1&quot;</span>.<span class="ident">to_string</span>(), <span class="string">&quot;test2&quot;</span>.<span class="ident">to_string</span>()]),
+            <span class="ident">tokenize_string</span>(<span class="string">&quot;    test1,        test2  &quot;</span>.<span class="ident">to_string</span>())
         );
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">validate_debug_view_tag</span>(<span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>()).<span class="ident">is_none</span>());
+
+        <span class="comment">// Empty strings return no item.</span>
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">None</span>, <span class="ident">tokenize_string</span>(<span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>()));
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">validates_tag_correctly</span>() {
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">validate_tag</span>(<span class="kw-2">&amp;</span><span class="string">&quot;valid-value&quot;</span>.<span class="ident">to_string</span>()));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">validate_tag</span>(<span class="kw-2">&amp;</span><span class="string">&quot;-also-valid-value&quot;</span>.<span class="ident">to_string</span>()));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">validate_tag</span>(<span class="kw-2">&amp;</span><span class="string">&quot;invalid_value&quot;</span>.<span class="ident">to_string</span>()));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">validate_tag</span>(<span class="kw-2">&amp;</span><span class="string">&quot;invalid value&quot;</span>.<span class="ident">to_string</span>()));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">validate_tag</span>(<span class="kw-2">&amp;</span><span class="string">&quot;!nv@lid-val*e&quot;</span>.<span class="ident">to_string</span>()));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">validate_tag</span>(
+            <span class="kw-2">&amp;</span><span class="string">&quot;invalid-value-because-way-too-long&quot;</span>.<span class="ident">to_string</span>()
+        ));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">validate_tag</span>(<span class="kw-2">&amp;</span><span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>()));
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">validates_source_tags_correctly</span>() {
+        <span class="comment">// Empty tags.</span>
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">validate_source_tags</span>(<span class="kw-2">&amp;</span><span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>()]));
+        <span class="comment">// Too many tags.</span>
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">validate_source_tags</span>(<span class="kw-2">&amp;</span><span class="macro">vec</span><span class="macro">!</span>[
+            <span class="string">&quot;1&quot;</span>.<span class="ident">to_string</span>(),
+            <span class="string">&quot;2&quot;</span>.<span class="ident">to_string</span>(),
+            <span class="string">&quot;3&quot;</span>.<span class="ident">to_string</span>(),
+            <span class="string">&quot;4&quot;</span>.<span class="ident">to_string</span>(),
+            <span class="string">&quot;5&quot;</span>.<span class="ident">to_string</span>(),
+            <span class="string">&quot;6&quot;</span>.<span class="ident">to_string</span>()
+        ]));
+        <span class="comment">// Invalid tags.</span>
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">validate_source_tags</span>(<span class="kw-2">&amp;</span><span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;!nv@lid-val*e&quot;</span>.<span class="ident">to_string</span>()]));
+        <span class="comment">// Entries starting with &#39;glean&#39; are filtered out.</span>
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">validate_source_tags</span>(<span class="kw-2">&amp;</span><span class="macro">vec</span><span class="macro">!</span>[
+            <span class="string">&quot;glean-test1&quot;</span>.<span class="ident">to_string</span>(),
+            <span class="string">&quot;test2&quot;</span>.<span class="ident">to_string</span>()
+        ]));
     }
 }
 </pre></div>

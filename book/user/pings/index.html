@@ -245,6 +245,8 @@ See <a href="../experiments-api.html">Using the Experiments API</a> on how to re
 <tr><td><code>Date</code></td><td>e.g. <code>Mon, 23 Jan 2019 10:10:10 GMT+00:00</code></td><td>Submission date/time in GMT/UTC+0 offset</td></tr>
 <tr><td><code>X-Client-Type</code></td><td><code>Glean</code></td><td>Custom header to support handling of Glean pings in the legacy pipeline</td></tr>
 <tr><td><code>X-Client-Version</code></td><td>e.g. <code>0.40.0</code></td><td>The Glean SDK version, sent as a custom header to support handling of Glean pings in the legacy pipeline</td></tr>
+<tr><td><code>X-Debug-ID</code></td><td><em>Optional</em>, e.g. <code>test-tag</code></td><td>Debug header attached to Glean pings when using the <a href="../../user/debugging/index.html">debug tools</a></td></tr>
+<tr><td><code>X-Source-Tags</code></td><td><em>Optional</em>, e.g. <code>automation, perf</code></td><td>A list of tags to associate with the ping, useful for clustering pings at analysis time, for example to tell data generated from CI from other data.</td></tr>
 </tbody></table>
 <h2><a class="header" href="#defining-foreground-and-background-state" id="defining-foreground-and-background-state">Defining foreground and background state</a></h2>
 <p>These docs refer to application 'foreground' and 'background' state in several places.</p>

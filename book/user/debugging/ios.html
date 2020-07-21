@@ -172,7 +172,7 @@ and how to enable them, see <a href="./index.html">Enabling debugging features t
 <p>There are 3 available commands that you can use with the Glean SDK debug tools</p>
 <ul>
 <li><code>logPings</code>: This is either true or false and will cause pings that are submitted to also be echoed to the device's log</li>
-<li><code>tagPings</code>: This command will tag outgoing pings with the provided value, in order to identify them in the Glean Debug View. Tags need to be string with upper and lower case letters, numbers and dashes, with a max length of 20 characters.</li>
+<li><code>debugViewTag</code>: This command will tag outgoing pings with the provided value, in order to identify them in the Glean Debug View. Tags need to be string with upper and lower case letters, numbers and dashes, with a max length of 20 characters. <strong>Important</strong>: in older versions of the Glean SDK, this was named <code>tagPings</code>.</li>
 <li><code>sendPing</code>: This command expects a string name of a ping to force immediate collection and submission of.</li>
 </ul>
 <p>The structure of the custom URL uses the following format:</p>
@@ -224,7 +224,7 @@ and how to enable them, see <a href="./index.html">Enabling debugging features t
 <h4><a class="header" href="#using-a-web-browser" id="using-a-web-browser">Using a web browser</a></h4>
 <p>Perhaps the simplest way to invoke the Glean SDK debug functionality is to open a web browser and type/paste the custom URL into the address bar.  This is especially useful on an actual device because there isn't a good way to launch from the command line and process the URL for an actual device.</p>
 <p>Using the glean-sample-app as an example: to activate ping logging, tag the pings to go to the Glean Debug View, and force the <code>events</code> ping to be sent, enter the following URL in a web browser on the iOS device:</p>
-<pre><code class="language-shell">glean-sample-app://glean?logPings=true&amp;tagPings=My-ping-tag&amp;sendPing=events
+<pre><code class="language-shell">glean-sample-app://glean?logPings=true&amp;debugViewTag=My-ping-tag&amp;sendPing=events
 </code></pre>
 <p>This should cause iOS to prompt you with a dialog asking if you want to open the URL in the Glean Sample App, and if you select &quot;Okay&quot; then it will launch (or resume if it's already running) the application with the indicated commands and parameters and immediately force the collection and submission of the events ping.</p>
 <blockquote>
@@ -233,7 +233,7 @@ and how to enable them, see <a href="./index.html">Enabling debugging features t
 <p>It is also possible to encode the URL into a 2D barcode or QR code and launch the app via the camera app.  After scanning the encoded URL, the dialog prompting to launch the app should appear as if the URL were entered into the browser address bar.</p>
 <h4><a class="header" href="#using-the-command-line" id="using-the-command-line">Using the command line</a></h4>
 <p>This method is useful for testing via the Simulator, which typically requires a Mac with Xcode installed, including the Xcode command line tools.  In order to perform the same command as above with using the browser to input the URL, you can use the following command in the command line terminal of the Mac:</p>
-<pre><code class="language-shell">xcrun simctl openurl booted &quot;glean-sample-app://glean?logPings=true&amp;tagPings=My-ping-tag&amp;sendPing=events&quot;
+<pre><code class="language-shell">xcrun simctl openurl booted &quot;glean-sample-app://glean?logPings=true&amp;debugViewTag=My-ping-tag&amp;sendPing=events&quot;
 </code></pre>
 <p>This will launch the simulator and again prompt the user with a dialog box asking if you want to open the URL in the Glean Sample App (or whichever app you are instrumenting and testing).</p>
 <h3><a class="header" href="#glean-log-messages" id="glean-log-messages">Glean log messages</a></h3>
