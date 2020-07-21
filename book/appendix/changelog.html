@@ -161,9 +161,19 @@
                         <h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v31.4.1...main">Full changelog</a></p>
 <ul>
+<li>General
+<ul>
+<li>Implement ping tagging (i.e. the <code>X-Source-Tags</code> header) (<a href="https://github.com/mozilla/glean/pull/1074">#1074</a>). Note that this is not yet implemented for iOS.</li>
+</ul>
+</li>
 <li>Python
 <ul>
 <li>The Python unit tests no longer send telemetry to the production telemetry endpoint.</li>
+</ul>
+</li>
+<li>Android
+<ul>
+<li>Allow defining which <code>Activity</code> to run next when using the <code>GleanDebugActivity</code>.</li>
 </ul>
 </li>
 </ul>

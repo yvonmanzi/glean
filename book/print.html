@@ -279,6 +279,7 @@ Create a Run Script in which you specify your shell (ex: <code>/bin/sh</code>), 
 <pre><code class="language-bash">$ python -m pip install glean_sdk
 </code></pre>
 <p>If you are not on one of these platforms, you will need to build the Glean Python bindings from source using <a href="user/../dev/python/setting-up-python-build-environment.html">these instructions</a>.</p>
+<p>The Python Glean bindings make extensive use of type annotations to catch type related errors at build time. We highly recommend adding <a href="https://mypy-lang.org">mypy</a> to your continuous integration workflow to catch errors related to type mismatches early.</p>
 </div>
 <div data-lang="C#" class="tab">
 <p>TODO. To be implemented in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1643568">bug 1643568</a>.</p>
@@ -1155,6 +1156,7 @@ These are the currently supported keys:</p>
 <tr><td><code>sendPing</code></td><td>string (<code>--es</code>)</td><td>Sends the ping with the given name immediately</td></tr>
 <tr><td><code>debugViewTag</code></td><td>string (<code>--es</code>)</td><td>Tags all outgoing pings as debug pings to make them available for real-time validation, on the <a href="user/debugging/./debug-ping-view.html">Glean Debug View</a>. The value must match the pattern <code>[a-zA-Z0-9-]{1,20}</code>. <strong>Important</strong>: in older versions of the Glean SDK, this was named <code>tagPings</code></td></tr>
 <tr><td><code>sourceTags</code></td><td>string array (<code>--esa</code>)</td><td>Tags outgoing pings with a maximum of 5 comma-separated tags. The tags must match the pattern <code>[a-zA-Z0-9-]{1,20}</code>. The <code>automation</code> tag is meant for tagging pings generated on automation: such pings will be specially handled on the pipeline (i.e. discarded from <a href="https://docs.telemetry.mozilla.org/cookbooks/bigquery/querying.html#table-layout-and-naming">non-live views</a>). Tags starting with <code>glean</code> are reserved for future use. Subsequent calls of this overwrite any previously stored tag</td></tr>
+<tr><td><code>startNext</code></td><td>string (<code>--es</code>)</td><td>The name of the Android <code>Activity</code>, as defined in the product manifest file, to start right after the <code>GleanDebugActivity</code> completes. All the options provided are propagated to this next activity as well. When omitted, the default launcher activity for the product is started instead.</td></tr>
 </tbody></table>
 <p>All <a href="https://developer.android.com/studio/command-line/adb#am">the options</a> provided to start the activity are passed over to the main activity for the application to process.
 This is useful if SDK users wants to debug telemetry while providing additional options to the product to enable specific behaviors.</p>
@@ -6822,9 +6824,19 @@ All the default pings have their scheduling and submission handled by the SDK.</
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/appendix/glossary.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v31.4.1...main">Full changelog</a></p>
 <ul>
+<li>General
+<ul>
+<li>Implement ping tagging (i.e. the <code>X-Source-Tags</code> header) (<a href="https://github.com/mozilla/glean/pull/1074">#1074</a>). Note that this is not yet implemented for iOS.</li>
+</ul>
+</li>
 <li>Python
 <ul>
 <li>The Python unit tests no longer send telemetry to the production telemetry endpoint.</li>
+</ul>
+</li>
+<li>Android
+<ul>
+<li>Allow defining which <code>Activity</code> to run next when using the <code>GleanDebugActivity</code>.</li>
 </ul>
 </li>
 </ul>

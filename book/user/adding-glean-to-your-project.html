@@ -246,6 +246,7 @@ Create a Run Script in which you specify your shell (ex: <code>/bin/sh</code>), 
 <pre><code class="language-bash">$ python -m pip install glean_sdk
 </code></pre>
 <p>If you are not on one of these platforms, you will need to build the Glean Python bindings from source using <a href="../dev/python/setting-up-python-build-environment.html">these instructions</a>.</p>
+<p>The Python Glean bindings make extensive use of type annotations to catch type related errors at build time. We highly recommend adding <a href="https://mypy-lang.org">mypy</a> to your continuous integration workflow to catch errors related to type mismatches early.</p>
 </div>
 <div data-lang="C#" class="tab">
 <p>TODO. To be implemented in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1643568">bug 1643568</a>.</p>
