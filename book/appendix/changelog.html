@@ -170,6 +170,7 @@
 <li>Python
 <ul>
 <li>The Python unit tests no longer send telemetry to the production telemetry endpoint.</li>
+<li>BUGFIX: If an <code>application_version</code> isn't provided to <code>Glean.initialize</code>, the <code>client_info.app_display_version</code> metric is set to <code>&quot;Unknown&quot;</code>, rather than resulting in invalid pings.</li>
 </ul>
 </li>
 <li>Android
