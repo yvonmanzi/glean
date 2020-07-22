@@ -165,6 +165,7 @@
 <ul>
 <li>Implement ping tagging (i.e. the <code>X-Source-Tags</code> header) (<a href="https://github.com/mozilla/glean/pull/1074">#1074</a>). Note that this is not yet implemented for iOS.</li>
 <li>String values that are too long now record <code>invalid_overflow</code> rather than <code>invalid_value</code> through the Glean error reporting mechanism. This affects the string, event and string list metrics.</li>
+<li><code>metrics.yaml</code> files now support a <code>data_sensitivity</code> field to all metrics for specifying the type of data collected in the field.</li>
 </ul>
 </li>
 <li>Python
@@ -176,6 +177,16 @@
 <li>Android
 <ul>
 <li>Allow defining which <code>Activity</code> to run next when using the <code>GleanDebugActivity</code>.</li>
+</ul>
+</li>
+<li>iOS
+<ul>
+<li>BUGFIX: The memory unit is now correctly set on the <code>MemoryDistribution</code> metric type in Swift in generated metrics code.</li>
+</ul>
+</li>
+<li>C#
+<ul>
+<li>Metrics can now be generated from the <code>metrics.yaml</code> files.</li>
 </ul>
 </li>
 </ul>
