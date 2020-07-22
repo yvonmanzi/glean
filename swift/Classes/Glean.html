@@ -17,7 +17,7 @@
     <a title="Glean Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Glean Docs</a> (100% documented)</p>
+        <p><a href="../index.html">Glean Docs</a> (99% documented)</p>
         <p class="header-right"><a href="https://github.com/mozilla/glean"><img src="../img/gh.png"/>View on GitHub</a></p>
         <p class="header-right">
           <form role="search" action="../search.json">
@@ -175,9 +175,7 @@
 
                 </div>
               </div>
-            <p>The main Glean API.</p>
-
-<p>This is exposed through the global <code><a href="../Classes/Glean.html#/s:5GleanAAC6sharedABvpZ">Glean.shared</a></code> object.</p>
+            <p>Undocumented</p>
 
           </section>
           <section class="section task-group-section">
@@ -197,8 +195,7 @@
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>The main Glean object.</p>
-<pre class="highlight swift"><code><span class="kt">Glean</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">setUploadEnabled</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-<span class="kt">Glean</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">initialize</span><span class="p">()</span>
+<pre class="highlight swift"><code><span class="kt">Glean</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">initialize</span><span class="p">(</span><span class="nv">uploadEnabled</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
 </code></pre>
 
                       </div>
@@ -352,12 +349,19 @@ is uploaded.</p>
                       <div class="abstract">
                         <p>Get whether or not Glean is allowed to record and upload data.</p>
 
+<p>Caution: the result is only correct if Glean is already initialized.</p>
+
+<p><strong>THIS METHOD IS DEPRECATED.</strong>
+Applications should not rely on Glean&rsquo;s internal state.
+Upload enabled status should be tracked by the application and communicated to Glean if it changes.</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getUploadEnabled</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"Upload enabled should be tracked by the application and communicated to Glean if it changes"</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">getUploadEnabled</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>

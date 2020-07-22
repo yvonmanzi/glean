@@ -9,7 +9,13 @@
 <br/>
 <h1>getUploadEnabled</h1>
 <a name="mozilla.telemetry.glean.GleanInternalAPI$getUploadEnabled()"></a>
-<code><span class="keyword">fun </span><span class="identifier">getUploadEnabled</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<code><span class="keyword">fun </span><s><span class="identifier">getUploadEnabled</span></s><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code><br/>
+<strong>Deprecated:</strong> Upload enabled should be tracked by the application and communicated to Glean if it changes<br/>
+<br/>
 <p>Get whether or not Glean is allowed to record and upload data.</p>
+<p>Caution: the result is only correct if Glean is already initialized.</p>
+<p><strong>THIS METHOD IS DEPRECATED.</strong>
+Applications should not rely on Glean's internal state.
+Upload enabled status should be tracked by the application and communicated to Glean if it changes.</p>
 </BODY>
 </HTML>

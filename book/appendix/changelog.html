@@ -164,6 +164,14 @@
 <li>General
 <ul>
 <li>Implement JWE metric type (<a href="https://github.com/mozilla/glean/pull/1073">#1073</a>, <a href="https://github.com/mozilla/glean/pull/1062">#1062</a>).</li>
+<li>DEPRECATION: <code>getUploadEnabled</code> is deprecated (respectively <code>get_upload_enabled</code> in Python) (<a href="https://github.com/mozilla/glean/pull/1046">#1046</a>)
+<ul>
+<li>Due to Glean's asynchronous initialization the return value can be incorrect.
+Applications should not rely on Glean's internal state.
+Upload enabled status should be tracked by the application and communicated to Glean if it changes.
+Note: The method was removed from the C# and Python implementation.</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
