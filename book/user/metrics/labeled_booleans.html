@@ -239,7 +239,22 @@ assert 0 == metrics.accessibility.features.test_get_num_recorded_errors(
 </code></pre>
 </div>
 <div data-lang="C#" class="tab">
-<p>TODO. To be implemented in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1648436">bug 1648436</a>.</p>
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.Accessibility;
+
+Accessibility.features[&quot;screen_reader&quot;].Set(isScreenReaderEnabled());
+Accessibility.features[&quot;high_contrast&quot;].Set(isHighContrastEnabled());
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.Accessibility;
+// Was anything recorded?
+Assert.True(Accessibility.features[&quot;screen_reader&quot;].TestHasValue());
+Assert.True(Accessibility.features[&quot;high_contrast&quot;].TestHasValue());
+// Do the booleans have the expected values?
+Assert.Equal(true, Accessibility.features[&quot;screen_reader&quot;].TestGetValue());
+Assert.Equal(false, Accessibility.features[&quot;high_contrast&quot;].TestGetValue());
+// Did we record any invalid labels?
+Assert.Equal(0, Accessibility.features.TestGetNumRecordedErrors(ErrorType.InvalidLabel));
+</code></pre>
 </div>
 </div>
 </div>

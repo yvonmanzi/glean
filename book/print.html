@@ -1745,7 +1745,22 @@ assert 0 == metrics.accessibility.features.test_get_num_recorded_errors(
 </code></pre>
 </div>
 <div data-lang="C#" class="tab">
-<p>TODO. To be implemented in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1648436">bug 1648436</a>.</p>
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.Accessibility;
+
+Accessibility.features[&quot;screen_reader&quot;].Set(isScreenReaderEnabled());
+Accessibility.features[&quot;high_contrast&quot;].Set(isHighContrastEnabled());
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.Accessibility;
+// Was anything recorded?
+Assert.True(Accessibility.features[&quot;screen_reader&quot;].TestHasValue());
+Assert.True(Accessibility.features[&quot;high_contrast&quot;].TestHasValue());
+// Do the booleans have the expected values?
+Assert.Equal(true, Accessibility.features[&quot;screen_reader&quot;].TestGetValue());
+Assert.Equal(false, Accessibility.features[&quot;high_contrast&quot;].TestGetValue());
+// Did we record any invalid labels?
+Assert.Equal(0, Accessibility.features.TestGetNumRecordedErrors(ErrorType.InvalidLabel));
+</code></pre>
 </div>
 </div>
 </div>
@@ -2484,7 +2499,19 @@ assert 0 == metrics.login.errors_by_stage.test_get_num_recorded_errors(
 </code></pre>
 </div>
 <div data-lang="C#" class="tab">
-<p>TODO. To be implemented in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1648438">bug 1648438</a>.</p>
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.Login;
+
+Login.errorsByStage[&quot;server_auth&quot;].Set(&quot;Invalid password&quot;);
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.Login;
+
+// Was anything recorded?
+Assert.True(Login.errorsByStage[&quot;server_auth&quot;].TestHasValue());
+
+// Were there any invalid labels?
+Assert.Equal(0, Login.errorsByStage.TestGetNumRecordedErrors(ErrorType.InvalidLabel));
+</code></pre>
 </div>
 </div>
 </div>
@@ -7098,6 +7125,13 @@ All the default pings have their scheduling and submission handled by the SDK.</
 <p><a href="appendix/twig.html">This Week in Glean</a> is a series of blog posts that the Glean Team at Mozilla is using to try to communicate better about our work.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/appendix/glossary.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v31.6.0...main">Full changelog</a></p>
+<ul>
+<li>C#
+<ul>
+<li>Add support for Labeled Strings and Labeled Booleans.</li>
+</ul>
+</li>
+</ul>
 <h1><a class="header" href="#v3160-2020-07-24" id="v3160-2020-07-24">v31.6.0 (2020-07-24)</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v31.5.0...v31.6.0">Full changelog</a></p>
 <ul>
