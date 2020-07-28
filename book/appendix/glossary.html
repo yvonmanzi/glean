@@ -199,8 +199,12 @@ The Glean SDK provides default pings and allows for custom ping, see <a href="..
 <p>The Glean SDK stores locally all the metrics set by it or by its clients.
 Each ping has its own schedule to gather all its locally saved metrics and create a JSON payload with them. This is called &quot;collection&quot;.</p>
 <p>Upon successful collection, the payload is queued for upload, which may not happen immediately or at all (in case network connectivity is not available).</p>
-<p>Unless the user has defined their own custom pings, they don’t need to worry too much about submitting pings.
-All the default pings have their scheduling and submission handled by the SDK.</p>
+<p>Unless the user has defined their own custom pings, they don’t need to worry too much about submitting pings.</p>
+<p>All the default pings have their scheduling and submission handled by the SDK.</p>
+<h2><a class="header" href="#measurement-window" id="measurement-window">Measurement window</a></h2>
+<p>The measurement window of a ping is the time frame in which metrics are being actively gathered for it.</p>
+<p>The measurement window start time is the moment the previous ping is submitted. In the absence of a previous ping, this time will be the time the application process started.</p>
+<p>The measurement window end time is the moment the current ping gets submitted. Any new metric recorded after submission will be part of the next ping, so this pings measurement window is over.</p>
 <h2><a class="header" href="#this-week-in-glean-twig" id="this-week-in-glean-twig">This Week in Glean (TWiG)</a></h2>
 <p><a href="twig.html">This Week in Glean</a> is a series of blog posts that the Glean Team at Mozilla is using to try to communicate better about our work.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/appendix/glossary.md">Edit this file on GitHub.</a></footer>
