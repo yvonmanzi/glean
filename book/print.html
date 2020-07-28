@@ -2012,7 +2012,21 @@ assert 0 == metrics.stability.crash_count.test_get_num_recorded_errors(
 </code></pre>
 </div>
 <div data-lang="C#" class="tab">
-<p>TODO. To be implemented in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1648437">bug 1648437</a>.</p>
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.Stability;
+Stability.crashCount[&quot;uncaught_exception&quot;].Add(); // Adds 1 to the &quot;uncaught_exception&quot; counter.
+Stability.crashCount[&quot;native_code_crash&quot;].Add(3); // Adds 3 to the &quot;native_code_crash&quot; counter.
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.Stability;
+// Was anything recorded?
+Assert.True(Stability.crashCount[&quot;uncaught_exception&quot;].TestHasValue());
+Assert.True(Stability.crashCount[&quot;native_code_crash&quot;].TestHasValue());
+// Do the counters have the expected values?
+Assert.Equal(1, Stability.crashCount[&quot;uncaught_exception&quot;].TestGetValue());
+Assert.Equal(3, Stability.crashCount[&quot;native_code_crash&quot;].TestGetValue());
+// Were there any invalid labels?
+Assert.Equal(0, Stability.crashCount.TestGetNumRecordedErrors(ErrorType.InvalidLabel));
+</code></pre>
 </div>
 </div>
 </div>
@@ -7132,6 +7146,7 @@ All the default pings have their scheduling and submission handled by the SDK.</
 <li>C#
 <ul>
 <li>Add support for Labeled Strings and Labeled Booleans.</li>
+<li>Add support for the Counter metric type and Labeled Counter.</li>
 </ul>
 </li>
 </ul>
