@@ -263,6 +263,32 @@
 <span id="263">263</span>
 <span id="264">264</span>
 <span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -277,6 +303,7 @@
 <span class="kw">use</span> <span class="ident">serde_json</span>::{<span class="self">self</span>, <span class="ident">Value</span> <span class="kw">as</span> <span class="ident">JsonValue</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error</span>::{<span class="ident">ErrorKind</span>, <span class="prelude-ty">Result</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">system</span>;
 
 <span class="doccomment">/// A representation for request headers.</span>
@@ -326,11 +353,12 @@
     <span class="ident">path</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="ident">body</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="ident">headers</span>: <span class="ident">HeaderMap</span>,
+    <span class="ident">body_max_size</span>: <span class="ident">usize</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Builder</span> {
     <span class="doccomment">/// Creates a new builder for a PingRequest.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">language_binding_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">language_binding_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">body_max_size</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">HashMap</span>::<span class="ident">new</span>();
         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Date&quot;</span>.<span class="ident">to_string</span>(), <span class="ident">create_date_header_value</span>(<span class="ident">Utc</span>::<span class="ident">now</span>()));
         <span class="ident">headers</span>.<span class="ident">insert</span>(
@@ -352,6 +380,7 @@
             <span class="ident">path</span>: <span class="prelude-val">None</span>,
             <span class="ident">body</span>: <span class="prelude-val">None</span>,
             <span class="ident">headers</span>,
+            <span class="ident">body_max_size</span>,
         }
     }
 
@@ -421,19 +450,25 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This method will panic if any of the required fields are missing:</span>
     <span class="doccomment">/// `document_id`, `path` and `body`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PingRequest</span> {
-        <span class="ident">PingRequest</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PingRequest</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="self">self</span>
+            .<span class="ident">body</span>
+            .<span class="ident">expect</span>(<span class="string">&quot;body must be set before attempting to build PingRequest&quot;</span>);
+
+        <span class="kw">if</span> <span class="ident">body</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">body_max_size</span> {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ErrorKind</span>::<span class="ident">PingBodyOverflow</span>(<span class="ident">body</span>.<span class="ident">len</span>()).<span class="ident">into</span>());
+        }
+
+        <span class="prelude-val">Ok</span>(<span class="ident">PingRequest</span> {
             <span class="ident">document_id</span>: <span class="self">self</span>
                 .<span class="ident">document_id</span>
                 .<span class="ident">expect</span>(<span class="string">&quot;document_id must be set before attempting to build PingRequest&quot;</span>),
             <span class="ident">path</span>: <span class="self">self</span>
                 .<span class="ident">path</span>
                 .<span class="ident">expect</span>(<span class="string">&quot;path must be set before attempting to build PingRequest&quot;</span>),
-            <span class="ident">body</span>: <span class="self">self</span>
-                .<span class="ident">body</span>
-                .<span class="ident">expect</span>(<span class="string">&quot;body must be set before attempting to build PingRequest&quot;</span>),
+            <span class="ident">body</span>,
             <span class="ident">headers</span>: <span class="self">self</span>.<span class="ident">headers</span>,
-        }
+        })
     }
 }
 
@@ -460,8 +495,9 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `language_binding_name` - The name of the language used by the binding that instantiated this Glean instance.</span>
     <span class="doccomment">///                             This is used to build the User-Agent header value.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">builder</span>(<span class="ident">language_binding_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Builder</span> {
-        <span class="ident">Builder</span>::<span class="ident">new</span>(<span class="ident">language_binding_name</span>)
+    <span class="doccomment">/// * `body_max_size` - The maximum size in bytes the compressed ping body may have to be eligible for upload.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">builder</span>(<span class="ident">language_binding_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">body_max_size</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Builder</span> {
+        <span class="ident">Builder</span>::<span class="ident">new</span>(<span class="ident">language_binding_name</span>, <span class="ident">body_max_size</span>)
     }
 
     <span class="doccomment">/// Verifies if current request is for a deletion-request ping.</span>
@@ -511,11 +547,12 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">correctly_builds_ping_request</span>() {
-        <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="ident">PingRequest</span>::<span class="ident">builder</span>(<span class="comment">/* language_binding_name */</span> <span class="string">&quot;Rust&quot;</span>)
+        <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="ident">PingRequest</span>::<span class="ident">builder</span>(<span class="comment">/* language_binding_name */</span> <span class="string">&quot;Rust&quot;</span>, <span class="number">1024</span> <span class="op">*</span> <span class="number">1024</span>)
             .<span class="ident">document_id</span>(<span class="string">&quot;woop&quot;</span>)
             .<span class="ident">path</span>(<span class="string">&quot;/random/path/doesnt/matter&quot;</span>)
             .<span class="ident">body</span>(<span class="string">&quot;{}&quot;</span>)
-            .<span class="ident">build</span>();
+            .<span class="ident">build</span>()
+            .<span class="ident">unwrap</span>();
 
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">request</span>.<span class="ident">document_id</span>, <span class="string">&quot;woop&quot;</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">request</span>.<span class="ident">path</span>, <span class="string">&quot;/random/path/doesnt/matter&quot;</span>);
@@ -527,6 +564,21 @@
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">request</span>.<span class="ident">headers</span>.<span class="ident">contains_key</span>(<span class="string">&quot;X-Client-Type&quot;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">request</span>.<span class="ident">headers</span>.<span class="ident">contains_key</span>(<span class="string">&quot;X-Client-Version&quot;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">request</span>.<span class="ident">headers</span>.<span class="ident">contains_key</span>(<span class="string">&quot;Content-Length&quot;</span>));
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">errors_when_request_body_exceeds_max_size</span>() {
+        <span class="comment">// Create a new builder with an arbitrarily small value,</span>
+        <span class="comment">// se we can test that the builder errors when body max size exceeds the expected.</span>
+        <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="ident">Builder</span>::<span class="ident">new</span>(
+            <span class="comment">/* language_binding_name */</span> <span class="string">&quot;Rust&quot;</span>, <span class="comment">/* body_max_size */</span> <span class="number">1</span>,
+        )
+        .<span class="ident">document_id</span>(<span class="string">&quot;woop&quot;</span>)
+        .<span class="ident">path</span>(<span class="string">&quot;/random/path/doesnt/matter&quot;</span>)
+        .<span class="ident">body</span>(<span class="string">&quot;{}&quot;</span>)
+        .<span class="ident">build</span>();
+
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">request</span>.<span class="ident">is_err</span>());
     }
 }
 </pre></div>

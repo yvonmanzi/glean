@@ -386,7 +386,7 @@
 
 <span class="doccomment">/// A representation of the data extracted from a ping file,</span>
 <span class="doccomment">/// this will contain the document_id, path, JSON encoded body of a ping and the persisted headers.</span>
-<span class="kw">type</span> <span class="ident">PingPayload</span> <span class="op">=</span> (<span class="ident">String</span>, <span class="ident">String</span>, <span class="ident">String</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HeaderMap</span><span class="op">&gt;</span>);
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">PingPayload</span> <span class="op">=</span> (<span class="ident">String</span>, <span class="ident">String</span>, <span class="ident">String</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HeaderMap</span><span class="op">&gt;</span>);
 
 <span class="doccomment">/// Get the file name from a path as a &amp;str.</span>
 <span class="doccomment">///</span>

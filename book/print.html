@@ -166,7 +166,7 @@
 <p>To contact us you can:</p>
 <ul>
 <li>Find us in the <a href="https://chat.mozilla.org/#/room/#glean:mozilla.org">#glean channel on chat.mozilla.org</a>.</li>
-<li>To report issues or request changes, file a bug in <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&amp;component=Glean%3A%20SDK">Bugzilla in Data Platform &amp; Tools :: Glean: SDK</a>.</li>
+<li>To report issues or request changes, file a bug in <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Data+Platform+and+Tools&amp;component=Glean%3A+SDK&amp;priority=P3&amp;status_whiteboard=%5Btelemetry%3Aglean-rs%3Am%3F%5D">Bugzilla in Data Platform &amp; Tools :: Glean: SDK</a>.</li>
 <li>Send an email to <em>glean-team@mozilla.com</em>.</li>
 <li>The Glean SDK team is: <em>:janerik</em>, <em>:dexter</em>, <em>:travis</em>, <em>:mdroettboom</em>, <em>:gfritzsche</em>, <em>:chutten</em>, <em>:brizental</em>.</li>
 </ul>
@@ -1114,39 +1114,36 @@ assert 1 == metrics.url.visit.test_get_value()
 <li><a href="user/debugging/python.html">Debugging Python applications using the Glean SDK</a></li>
 </ol>
 <h2><a class="header" href="#general-debugging-information" id="general-debugging-information">General debugging information</a></h2>
-<h3><a class="header" href="#available-commands-and-query-format" id="available-commands-and-query-format">Available commands and query format</a></h3>
-<p>There are 4 available commands that you can use with the Glean SDK debug tools:</p>
+<h3><a class="header" href="#available-debugging-features" id="available-debugging-features">Available debugging features</a></h3>
+<p>The Glean SDK has 4 available debugging features:</p>
 <ul>
-<li><code>logPings</code>: This is either true or false and will cause pings that are submitted to also be echoed to the device's log.</li>
-<li><code>debugViewTag</code>: This command will tag outgoing pings with the provided value, in order to identify them in the Glean Debug View. Tags need to be string with upper and lower case letters, numbers and dashes, with a max length of 20 characters.</li>
-<li><code>sendPing</code>: This command expects a string name of a ping to force immediate collection and submission of.</li>
-<li><code>sourceTags</code>: Tags outgoing pings with a maximum of 5, comma-separated, tags.</li>
+<li><code>logPings</code>: This is either <code>true</code> or <code>false</code> and will cause all subsequent pings that are submitted, to also be echoed to the device's log. Once enabled, the only way to disable this feature is to restart or manually reset the application.</li>
+<li><code>debugViewTag</code>: This will tag all subsequent outgoing pings with the provided value, in order to identify them in the Glean Debug View. Once enabled, the only way to disable this feature is to restart or manually reset the application.</li>
+<li><code>sourceTags</code>: This will tag all subsequent outgoing pings with a maximum of 5 comma-separated tags. Once enabled, the only way to disable this feature is to restart or manually reset the application.</li>
+<li><code>sendPing</code>: This expects the name of a ping and forces its immediate collection and submission. <em>This feature is only available for Android and iOS</em>.</li>
 </ul>
-<p>Different platforms have different ways to send these commands.</p>
+<p>Different platforms may have different ways to enable these features.</p>
 <h3><a class="header" href="#enabling-debugging-features-through-environment-variables" id="enabling-debugging-features-through-environment-variables">Enabling debugging features through environment variables</a></h3>
-<p>Some of the debugging features described above may also be enabled using environment variables:</p>
+<p>Some of the debugging features described above may be enabled using environment variables:</p>
 <ul>
-<li><code>logPings</code>: May be set by the <code>GLEAN_LOG_PINGS</code> environment variable. The accepted values are
-<code>true</code> or <code>false</code>. Any other value will be ignored.</li>
-<li><code>debugViewTag</code>: May be set by the <code>GLEAN_DEBUG_VIEW_TAG</code> environment variable. Any valid HTTP header value maybe set here
-(e.g. any value that matches the regex <code>[a-zA-Z0-9-]{1,20}</code>). Invalid values will be ignored.</li>
-<li><code>sourceTags</code>: May be set by the <code>GLEAN_SOURCE_TAGS</code> environment variable. A comma-separated list of valid HTTP header values may be set here
-(e.g. any value that matches the regex <code>[a-zA-Z0-9-]{1,20}</code>). Invalid values will be ignored.</li>
+<li><code>logPings</code>: May be set by the <code>GLEAN_LOG_PINGS</code> environment variable. The accepted values are <code>true</code> or <code>false</code>. Any other value will be ignored.</li>
+<li><code>debugViewTag</code>: May be set by the <code>GLEAN_DEBUG_VIEW_TAG</code> environment variable. Any valid HTTP header value is expected here (e.g. any value that matches the regex <code>[a-zA-Z0-9-]{1,20}</code>). Invalid values will be ignored.</li>
+<li><code>sourceTags</code>: May be set by the <code>GLEAN_SOURCE_TAGS</code> environment variable. A comma-separated list of valid HTTP header values is expected here (e.g. any value that matches the regex <code>[a-zA-Z0-9-]{1,20}</code>). Invalid values will be ignored.</li>
 </ul>
 <p>These variables must be set at runtime, not at compile time. They will be checked upon Glean initialization.</p>
 <p>Enabling debugging features using environment variables is available for all supported platforms.</p>
 <blockquote>
-<p><strong>Note</strong> Although it is technically possible to use the environment variables described here to enable debugging features in Android. The Glean team is not currently aware of a proper way to set environment variables in Android devices or emulators.</p>
+<p><strong>Note</strong> Although it is technically possible to use the environment variables described here to enable debugging features in Android, the Glean team is not currently aware of a proper way to set environment variables in Android devices or emulators.</p>
 </blockquote>
-<h3><a class="header" href="#important-considerations-when-using-glean-sdk-debug-tools" id="important-considerations-when-using-glean-sdk-debug-tools">Important considerations when using Glean SDK debug tools</a></h3>
+<h3><a class="header" href="#important-considerations-when-using-glean-sdk-debug-features" id="important-considerations-when-using-glean-sdk-debug-features">Important considerations when using Glean SDK debug features</a></h3>
 <ul>
 <li>
-<p>Options that are set using the flags are not immediately reset and will persist until the application is closed or manually reset.</p>
+<p>Enabled features will persist until the application is closed or manually reset. When enabled by environment variables, the variables need to be cleared upon resetting for the feature to be disabled.</p>
 </li>
 <li>
 <p>There are a couple different ways in which to send pings using the Glean SDK debug tools.</p>
 <ol>
-<li>You can tag pings using the debug tools and trigger them manually using the UI.  This should always produce a ping with all required fields.</li>
+<li>You can tag pings using the debug tools and trigger them manually using the UI. This should always produce a ping with all required fields.</li>
 <li>You can tag <em>and</em> send pings using the debug tools.  This has the side effect of potentially sending a ping which does not include all fields because <code>sendPing</code> triggers pings to be sent before certain application behaviors can occur which would record that information.  For example, <code>duration</code> is not calculated or included in a baseline ping sent with <code>sendPing</code> because it forces the ping to be sent before the <code>duration</code> metric has been recorded.  Keep in mind that there may be nothing to send, in which case no ping is generated.</li>
 <li>You can trigger a command while the instrumented application is still running.  This is useful for toggling commands or for triggering pings that have schedules that are difficult to trigger manually.  This is especially useful if you need to trigger a ping submission after some activity within the application, such as with the metrics ping.</li>
 </ol>
@@ -1255,7 +1252,7 @@ and how to enable them, see <a href="user/debugging/./index.html">Enabling debug
 </blockquote>
 <h1><a class="header" href="#debugging-ios-applications-using-the-glean-sdk" id="debugging-ios-applications-using-the-glean-sdk">Debugging iOS applications using the Glean SDK</a></h1>
 <p>For debugging and validation purposes on iOS, the Glean SDK makes use of a custom URL scheme which is implemented <em>within the application</em> that is consuming the Glean SDK.  The Glean SDK provides some convenience functions to facilitate this, but it's up to the consuming application to enable this functionality.  Applications that enable this Glean SDK feature will be able to launch the application from a URL with the Glean debug commands embedded in the URL itself.</p>
-<h3><a class="header" href="#available-commands-and-query-format-1" id="available-commands-and-query-format-1">Available commands and query format</a></h3>
+<h3><a class="header" href="#available-commands-and-query-format" id="available-commands-and-query-format">Available commands and query format</a></h3>
 <p>There are 4 available commands that you can use with the Glean SDK debug tools</p>
 <ul>
 <li><code>logPings</code>: This is either true or false and will cause pings that are submitted to also be echoed to the device's log</li>
@@ -3915,9 +3912,6 @@ See <a href="user/pings/../experiments-api.html">Using the Experiments API</a> o
 </code></pre>
 <h2><a class="header" href="#ping-submission" id="ping-submission">Ping submission</a></h2>
 <p>The pings that the Glean SDK generates are submitted to the Mozilla servers at specific paths, in order to provide additional metadata without the need to unpack the ping payload.</p>
-<blockquote>
-<p><strong>Note</strong>: To keep resource usage in check, the Glean SDK allows only up to 10 ping submissions every 60 seconds. There are no exposed methods to change these rate limiting defaults yet, follow <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1647630">Bug 1647630</a> for updates.</p>
-</blockquote>
 <p>A typical submission URL looks like</p>
 <p><code>&quot;&lt;server-address&gt;/submit/&lt;application-id&gt;/&lt;doc-type&gt;/&lt;glean-schema-version&gt;/&lt;document-id&gt;&quot;</code></p>
 <p>where:</p>
@@ -3927,6 +3921,12 @@ See <a href="user/pings/../experiments-api.html">Using the Experiments API</a> o
 <li><code>&lt;doc-type&gt;</code>: the name of the ping; this can be one of the pings available out of the box with the Glean SDK, or a custom ping;</li>
 <li><code>&lt;glean-schema-version&gt;</code>: the version of the Glean ping schema;</li>
 <li><code>&lt;document-id&gt;</code>: a unique identifier for this ping.</li>
+</ul>
+<h3><a class="header" href="#limitations" id="limitations">Limitations</a></h3>
+<p>To keep resource usage in check, the Glean SDK enforces some limitations on the pings it will upload and in the amount of uploads allowed per a given time interval.</p>
+<ul>
+<li><strong>Rate limiting</strong>: only up to 10 ping submissions every 60 seconds are allowed. There are no exposed methods to change these rate limiting defaults yet, follow <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1647630">Bug 1647630</a> for updates.</li>
+<li><strong>Request body size limiting</strong>: the body of a ping request may have up to 1MB. Pings that exceed this size are discarded and don't get uploaded. Size and number of discarded pings are recorded on the internal Glean metric <a href="user/pings/../collected-metrics/metrics.html#metrics-1"><code>glean.upload.discarded_exceeding_pings_size</code></a>.</li>
 </ul>
 <h3><a class="header" href="#submitted-headers" id="submitted-headers">Submitted headers</a></h3>
 <p>A pre-defined set of headers is additionally sent along with the submitted ping:</p>
@@ -4997,7 +4997,7 @@ This means you might have to go searching through the dependency tree to get a f
 <p>The following metrics are added to the ping:</p>
 <table><thead><tr><th>Name</th><th>Type</th><th>Description</th><th>Data reviews</th><th>Extras</th><th>Expiration</th><th><a href="https://wiki.mozilla.org/Firefox/Data_Collection">Data Sensitivity</a></th></tr></thead><tbody>
 <tr><td>glean.error.invalid_label</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/labeled_counters.html">labeled_counter</a></td><td>Counts the number of times a metric was set with an invalid label. The labels are the <code>category.name</code> identifier of the metric.</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1499761#c5">1</a></td><td></td><td>never</td><td>1</td></tr>
-<tr><td>glean.error.invalid_overflow</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/labeled_counters.html">labeled_counter</a></td><td>Counts the number of times a metric was set a value that overflew. The labels are the <code>category.name</code> identifier of the metric.</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1591912#c3">1</a></td><td></td><td>never</td><td>1</td></tr>
+<tr><td>glean.error.invalid_overflow</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/labeled_counters.html">labeled_counter</a></td><td>Counts the number of times a metric was set a value that overflowed. The labels are the <code>category.name</code> identifier of the metric.</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1591912#c3">1</a></td><td></td><td>never</td><td>1</td></tr>
 <tr><td>glean.error.invalid_state</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/labeled_counters.html">labeled_counter</a></td><td>Counts the number of times a timing metric was used incorrectly. The labels are the <code>category.name</code> identifier of the metric.</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1499761#c5">1</a></td><td></td><td>never</td><td>1</td></tr>
 <tr><td>glean.error.invalid_value</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/labeled_counters.html">labeled_counter</a></td><td>Counts the number of times a metric was set to an invalid value. The labels are the <code>category.name</code> identifier of the metric.</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1499761#c5">1</a></td><td></td><td>never</td><td>1</td></tr>
 </tbody></table>
@@ -5093,6 +5093,7 @@ upgraded.</p>
 <p>The following metrics are added to the ping:</p>
 <table><thead><tr><th>Name</th><th>Type</th><th>Description</th><th>Data reviews</th><th>Extras</th><th>Expiration</th><th><a href="https://wiki.mozilla.org/Firefox/Data_Collection">Data Sensitivity</a></th></tr></thead><tbody>
 <tr><td>glean.error.preinit_tasks_overflow</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/counter.html">counter</a></td><td>The number of tasks queued in the pre-initialization buffer. Only sent if the buffer overflows.</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1609482#c3">1</a></td><td></td><td>never</td><td>1</td></tr>
+<tr><td>glean.upload.discarded_exceeding_pings_size</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/memory_distribution.html">memory_distribution</a></td><td>The size of pings that exceeded the maximum ping size allowed for upload.</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1597761#c10">1</a></td><td></td><td>never</td><td>1</td></tr>
 <tr><td>glean.upload.ping_upload_failure</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/labeled_counters.html">labeled_counter</a></td><td>Counts the number of ping upload failures, by type of failure. This includes failures for all ping types, though the counts appear in the next successfully sent <code>metrics</code> ping.</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1589124#c1">1</a></td><td><ul><li>status_code_4xx</li><li>status_code_5xx</li><li>status_code_unknown</li><li>unrecoverable</li><li>recoverable</li></ul></td><td></td><td></td></tr>
 <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
 <tr><td>never</td><td>1</td><td></td><td></td><td></td><td></td><td></td></tr>
@@ -7172,6 +7173,16 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/appendix/glossary.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v31.6.0...main">Full changelog</a></p>
 <ul>
+<li>General
+<ul>
+<li>Limit ping request body size to 1MB. (<a href="https://github.com/mozilla/glean/pull/1098">#1098</a>)</li>
+</ul>
+</li>
+<li>iOS
+<ul>
+<li>Implement ping tagging (i.e. the <code>X-Source-Tags</code> header) through custom URL (<a href="https://github.com/mozilla/glean/pull/1100">#1100</a>).</li>
+</ul>
+</li>
 <li>C#
 <ul>
 <li>Add support for Labeled Strings and Labeled Booleans.</li>
