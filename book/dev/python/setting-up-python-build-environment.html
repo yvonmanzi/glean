@@ -230,18 +230,10 @@ pip install -r requirements_dev.txt
 <pre><code class="language-bash">  $ make test-python PYTEST_ARGS=&quot;-s --pdb&quot;
 </code></pre>
 <h2><a class="header" href="#viewing-logging-output" id="viewing-logging-output">Viewing logging output</a></h2>
-<p>The Glean Python bindings have two sources of log messages: those that come from Python and those that come from Rust.</p>
-<h3><a class="header" href="#python-log-messages" id="python-log-messages">Python log messages</a></h3>
-<p>Python log messages are emitted using the Python standard library's <a href="https://docs.python.org/3/library/logging.html"><code>logging</code> module</a>.
+<p>Log messages (whether originating in Python or Rust) are emitted using the Python standard library's <a href="https://docs.python.org/3/library/logging.html"><code>logging</code> module</a>.
 This module provides a lot of possibilities for customization, but the easiest way to control the log level globally is with <a href="https://docs.python.org/3/library/logging.html#logging.basicConfig"><code>logging.basicConfig</code></a>:</p>
 <pre><code class="language-python">import logging
 logging.basicConfig(level=logging.DEBUG)
-</code></pre>
-<h3><a class="header" href="#rust-log-messages" id="rust-log-messages">Rust log messages</a></h3>
-<p>Rust log messages are emitted using <a href="https://docs.rs/env_logger/latest/env_logger/"><code>env_logger</code></a>.
-The log level can be controlled with the <code>RUST_LOG</code> environment variable:</p>
-<pre><code class="language-python">import os
-os.environ[&quot;RUST_LOG&quot;] = &quot;glean_core=DEBUG&quot;
 </code></pre>
 <h2><a class="header" href="#linting-formatting-and-type-checking" id="linting-formatting-and-type-checking">Linting, formatting and type checking</a></h2>
 <p>The Glean Python bindings use the following tools:</p>

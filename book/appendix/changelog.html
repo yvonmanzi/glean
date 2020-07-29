@@ -180,6 +180,7 @@
 <li>Python
 <ul>
 <li><strong>Breaking change:</strong> <code>data_dir</code> must always be passed to <code>Glean.initialize</code>. Prior to this, a missing value would store Glean data in a temporary directory.</li>
+<li>Logging messages from the Rust core are now sent through Python's standard library <code>logging</code> module. Therefore all logging in a Python application can be controlled through the <code>logging</code> module interface.</li>
 </ul>
 </li>
 </ul>
