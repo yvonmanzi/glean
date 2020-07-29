@@ -426,7 +426,8 @@ initialized from the application.</p>
 <pre><code>&gt;&gt;&gt; Glean.initialize(
 ...     application_id="my-app",
 ...     application_version="0.0.0",
-...     upload_enabled=True
+...     upload_enabled=True,
+...     data_dir: Path.home() / ".glean"
 ... )
 </code></pre></section>
 <details class="source">
@@ -443,7 +444,8 @@ initialized from the application.</p>
     &gt;&gt;&gt; Glean.initialize(
     ...     application_id=&#34;my-app&#34;,
     ...     application_version=&#34;0.0.0&#34;,
-    ...     upload_enabled=True
+    ...     upload_enabled=True,
+    ...     data_dir: Path.home() / &#34;.glean&#34;
     ... )
     &#34;&#34;&#34;
 
@@ -489,7 +491,7 @@ initialized from the application.</p>
         application_version: str,
         upload_enabled: bool,
         configuration: Optional[Configuration] = None,
-        data_dir: Optional[Path] = None,
+        data_dir: Path = None,
         application_build_id: Optional[str] = None,
     ) -&gt; None:
         &#34;&#34;&#34;
@@ -511,8 +513,7 @@ initialized from the application.</p>
                 (except first_run_date) are cleared.
             configuration (glean.config.Configuration): (optional) An object with
                 global settings.
-            data_dir (pathlib.Path): (optional) The path to the Glean data
-                directory. If not provided, uses a temporary directory.
+            data_dir (pathlib.Path): The path to the Glean data directory.
             application_build_id (str): (optional) The build identifier generated
                 by the CI system (e.g. &#34;1234/A&#34;).
         &#34;&#34;&#34;
@@ -526,11 +527,9 @@ initialized from the application.</p>
                 configuration = Configuration()
 
             if data_dir is None:
-                data_dir = Path(tempfile.TemporaryDirectory().name)
-                cls._destroy_data_dir = True
-            else:
-                cls._destroy_data_dir = False
+                raise TypeError(&#34;data_dir must be provided&#34;)
             cls._data_dir = data_dir
+            cls._destroy_data_dir = False
 
             cls._configuration = configuration
             cls._application_id = application_id
@@ -600,6 +599,33 @@ initialized from the application.</p>
             # have a lifecycle.
 
         cls._init_finished = True
+
+    @classmethod
+    def _initialize_with_tempdir_for_testing(
+        cls,
+        application_id: str,
+        application_version: str,
+        upload_enabled: bool,
+        configuration: Optional[Configuration] = None,
+        application_build_id: Optional[str] = None,
+    ) -&gt; None:
+        &#34;&#34;&#34;
+        Initialize Glean to use a temporary data directory. Use for internal
+        unit testing only.
+
+        The temporary directory will be destroyed when Glean is initialized
+        again or at process shutdown.
+        &#34;&#34;&#34;
+        actual_data_dir = Path(tempfile.TemporaryDirectory().name)
+        cls.initialize(
+            application_id,
+            application_version,
+            upload_enabled,
+            configuration=configuration,
+            data_dir=actual_data_dir,
+            application_build_id=application_build_id,
+        )
+        cls._destroy_data_dir = True
 
     @_util.classproperty
     def configuration(cls) -&gt; Configuration:
@@ -963,8 +989,7 @@ disabled, all persisted metrics, events and queued pings
 <dd>(optional) An object with
 global settings.</dd>
 <dt><strong><code>data_dir</code></strong> :&ensp;<code>pathlib.Path</code></dt>
-<dd>(optional) The path to the Glean data
-directory. If not provided, uses a temporary directory.</dd>
+<dd>The path to the Glean data directory.</dd>
 <dt><strong><code>application_build_id</code></strong> :&ensp;<code>str</code></dt>
 <dd>(optional) The build identifier generated
 by the CI system (e.g. "1234/A").</dd>
@@ -980,7 +1005,7 @@ def initialize(
     application_version: str,
     upload_enabled: bool,
     configuration: Optional[Configuration] = None,
-    data_dir: Optional[Path] = None,
+    data_dir: Path = None,
     application_build_id: Optional[str] = None,
 ) -&gt; None:
     &#34;&#34;&#34;
@@ -1002,8 +1027,7 @@ def initialize(
             (except first_run_date) are cleared.
         configuration (glean.config.Configuration): (optional) An object with
             global settings.
-        data_dir (pathlib.Path): (optional) The path to the Glean data
-            directory. If not provided, uses a temporary directory.
+        data_dir (pathlib.Path): The path to the Glean data directory.
         application_build_id (str): (optional) The build identifier generated
             by the CI system (e.g. &#34;1234/A&#34;).
     &#34;&#34;&#34;
@@ -1017,11 +1041,9 @@ def initialize(
             configuration = Configuration()
 
         if data_dir is None:
-            data_dir = Path(tempfile.TemporaryDirectory().name)
-            cls._destroy_data_dir = True
-        else:
-            cls._destroy_data_dir = False
+            raise TypeError(&#34;data_dir must be provided&#34;)
         cls._data_dir = data_dir
+        cls._destroy_data_dir = False
 
         cls._configuration = configuration
         cls._application_id = application_id

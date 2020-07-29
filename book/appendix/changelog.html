@@ -177,6 +177,11 @@
 <li>Add support for the Counter metric type and Labeled Counter.</li>
 </ul>
 </li>
+<li>Python
+<ul>
+<li><strong>Breaking change:</strong> <code>data_dir</code> must always be passed to <code>Glean.initialize</code>. Prior to this, a missing value would store Glean data in a temporary directory.</li>
+</ul>
+</li>
 </ul>
 <h1><a class="header" href="#v3160-2020-07-24" id="v3160-2020-07-24">v31.6.0 (2020-07-24)</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v31.5.0...v31.6.0">Full changelog</a></p>
