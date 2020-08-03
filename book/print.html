@@ -1167,11 +1167,6 @@ updating the pages automatically. Pings are retained for 3 weeks.</p>
 <p>The Glean SDK exports the <code>GleanDebugActivity</code> that can be used to toggle debugging features on or off.
 Users can invoke this special activity, at run-time, using the following <a href="https://developer.android.com/studio/command-line/adb"><code>adb</code></a> command:</p>
 <p><code>adb shell am start -n [applicationId]/mozilla.telemetry.glean.debug.GleanDebugActivity [extra keys]</code></p>
-<blockquote>
-<p><strong>Note:</strong> In previous versions of Glean the activity was available with the name <code>mozilla.components.service.glean.debug.GleanDebugActivity</code>.</p>
-<p>If you're debugging an old build, try running:
-<code>adb shell am start -n [applicationId]/mozilla.components.service.glean.debug.GleanDebugActivity [extra keys]</code></p>
-</blockquote>
 <p>In the above:</p>
 <ul>
 <li>
@@ -1207,15 +1202,6 @@ This is useful if SDK users wants to debug telemetry while providing additional 
 <p>If no metrics have been collected, no pings will be sent <em>unless</em> <a href="user/debugging/../pings/custom.html#defining-a-custom-ping"><code>send_if_empty</code> is set on your ping</a>. See the <a href="user/debugging/../pings/index.html">ping documentation</a> for more information on ping scheduling to learn when pings are sent.</p>
 <p>Options that are set using the <code>adb</code> flags are not immediately reset and will
 persist until the application is closed or manually reset.</p>
-<blockquote>
-<p><strong>Note:</strong> In previous versions of Glean the activity was available with the name <code>mozilla.components.service.glean.debug.GleanDebugActivity</code>.</p>
-<p>If you're debugging an old build, try running:</p>
-<pre><code class="language-shell">adb shell am start -n org.mozilla.samples.gleancore/mozilla.components.service.glean.debug.GleanDebugActivity \
-  --ez logPings true \
-  --es sendPing metrics \
-  --es debugViewTag test-metrics-ping
-</code></pre>
-</blockquote>
 <h3><a class="header" href="#glean-sdk-log-messages-1" id="glean-sdk-log-messages-1">Glean SDK Log messages</a></h3>
 <p>When running a Glean SDK-powered app in the Android emulator or on a device connected to your computer via cable, there are several ways to read the log output.</p>
 <h4><a class="header" href="#android-studio" id="android-studio">Android Studio</a></h4>
@@ -7188,7 +7174,9 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 <h2><a class="header" href="#this-week-in-glean-twig" id="this-week-in-glean-twig">This Week in Glean (TWiG)</a></h2>
 <p><a href="appendix/twig.html">This Week in Glean</a> is a series of blog posts that the Glean Team at Mozilla is using to try to communicate better about our work.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/appendix/glossary.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
-<p><a href="https://github.com/mozilla/glean/compare/v31.6.0...main">Full changelog</a></p>
+<p><a href="https://github.com/mozilla/glean/compare/v32.0.0...main">Full changelog</a></p>
+<h1><a class="header" href="#v3200-2020-08-03" id="v3200-2020-08-03">v32.0.0 (2020-08-03)</a></h1>
+<p><a href="https://github.com/mozilla/glean/compare/v31.6.0...v32.0.0">Full changelog</a></p>
 <ul>
 <li>General
 <ul>

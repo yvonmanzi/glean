@@ -162,11 +162,6 @@
 <p>The Glean SDK exports the <code>GleanDebugActivity</code> that can be used to toggle debugging features on or off.
 Users can invoke this special activity, at run-time, using the following <a href="https://developer.android.com/studio/command-line/adb"><code>adb</code></a> command:</p>
 <p><code>adb shell am start -n [applicationId]/mozilla.telemetry.glean.debug.GleanDebugActivity [extra keys]</code></p>
-<blockquote>
-<p><strong>Note:</strong> In previous versions of Glean the activity was available with the name <code>mozilla.components.service.glean.debug.GleanDebugActivity</code>.</p>
-<p>If you're debugging an old build, try running:
-<code>adb shell am start -n [applicationId]/mozilla.components.service.glean.debug.GleanDebugActivity [extra keys]</code></p>
-</blockquote>
 <p>In the above:</p>
 <ul>
 <li>
@@ -202,15 +197,6 @@ This is useful if SDK users wants to debug telemetry while providing additional 
 <p>If no metrics have been collected, no pings will be sent <em>unless</em> <a href="../pings/custom.html#defining-a-custom-ping"><code>send_if_empty</code> is set on your ping</a>. See the <a href="../pings/index.html">ping documentation</a> for more information on ping scheduling to learn when pings are sent.</p>
 <p>Options that are set using the <code>adb</code> flags are not immediately reset and will
 persist until the application is closed or manually reset.</p>
-<blockquote>
-<p><strong>Note:</strong> In previous versions of Glean the activity was available with the name <code>mozilla.components.service.glean.debug.GleanDebugActivity</code>.</p>
-<p>If you're debugging an old build, try running:</p>
-<pre><code class="language-shell">adb shell am start -n org.mozilla.samples.gleancore/mozilla.components.service.glean.debug.GleanDebugActivity \
-  --ez logPings true \
-  --es sendPing metrics \
-  --es debugViewTag test-metrics-ping
-</code></pre>
-</blockquote>
 <h3><a class="header" href="#glean-sdk-log-messages" id="glean-sdk-log-messages">Glean SDK Log messages</a></h3>
 <p>When running a Glean SDK-powered app in the Android emulator or on a device connected to your computer via cable, there are several ways to read the log output.</p>
 <h4><a class="header" href="#android-studio" id="android-studio">Android Studio</a></h4>
