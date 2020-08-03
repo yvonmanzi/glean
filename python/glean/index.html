@@ -31,7 +31,14 @@
 
 &#34;&#34;&#34;Top-level package for Glean SDK.&#34;&#34;&#34;
 
+
+import warnings
+
+
 from pkg_resources import get_distribution, DistributionNotFound
+
+
+import glean_parser  # type: ignore
 
 
 from .glean import Glean
@@ -48,6 +55,17 @@ except DistributionNotFound:  # pragma: no cover
 
 __author__ = &#34;The Glean Team&#34;
 __email__ = &#34;glean-team@mozilla.com&#34;
+
+
+GLEAN_PARSER_VERSION = &#34;1.28.1&#34;
+
+
+if glean_parser.__version__ != GLEAN_PARSER_VERSION:
+    warnings.warn(
+        f&#34;glean_sdk expected glean_parser v{GLEAN_PARSER_VERSION}, &#34;
+        f&#34;found v{glean_parser.__version__}&#34;,
+        Warning,
+    )
 
 
 __all__ = [
