@@ -3301,7 +3301,32 @@ assert 1 == metrics.memory.heap_allocated.test_get_num_recorded_errors(
 </code></pre>
 </div>
 <div data-lang="C#" class="tab">
-<p>TODO. To be implemented in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1648439">bug 1648439</a>.</p>
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.Memory;
+
+fun allocateMemory(ulong nbytes) {
+    // ...
+    Memory.heapAllocated.Accumulate(nbytes / 1024);
+}
+</code></pre>
+<p>There are test APIs available too.  For convenience, properties <code>Sum</code> and <code>Count</code> are exposed to facilitate validating that data was recorded correctly.</p>
+<p>Continuing the <code>heapAllocated</code> example above, at this point the metric should have a <code>Sum == 11</code> and a <code>Count == 2</code>:</p>
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.Memory;
+
+// Was anything recorded?
+Assert.True(Memory.heapAllocated.TestHasValue());
+
+// Get snapshot
+var snapshot = Memory.heapAllocated.TestGetValue();
+
+// Does the sum have the expected value?
+Assert.Equal(11, snapshot.Sum);
+
+// Usually you don't know the exact memory values, but how many should have been recorded.
+Assert.Equal(2L, snapshot.Count);
+
+// Did this record a negative value?
+Assert.Equal(1, Memory.heapAllocated.TestGetNumRecordedErrors(ErrorType.InvalidValue));
+</code></pre>
 </div>
 </div>
 </div>
@@ -7179,6 +7204,7 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 <ul>
 <li>Add support for Labeled Strings and Labeled Booleans.</li>
 <li>Add support for the Counter metric type and Labeled Counter.</li>
+<li>Add support for the <code>MemoryDistributionMetricType</code>.</li>
 </ul>
 </li>
 <li>Python
