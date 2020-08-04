@@ -419,7 +419,35 @@ metrics.your_category.your_metric.set(&quot;value&quot;)
 <p>We recommend integrating this step into your project's documentation build. The details of that integration is left to you, since it depends on the documentation tool being used and how your project is set up.</p>
 </div>
 <div data-lang="C#" class="tab">
-<p>TODO. To be implemented in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1643568">bug 1643568</a>.</p>
+<p>A new build target needs to be added to the project <code>csproj</code> file in order to generate the metrics and pings APIs from the registry files (e.g. <code>metrics.yaml</code>, <code>pings.yaml</code>).</p>
+<pre><code class="language-xml">&lt;Project&gt;
+  &lt;!-- ... other directives ... --&gt;
+
+  &lt;Target Name=&quot;GleanIntegration&quot; BeforeTargets=&quot;CoreCompile&quot;&gt;
+    &lt;ItemGroup&gt;
+      &lt;!--
+        Note that the two files are not required: Glean will work just fine
+        with just the 'metrics.yaml'. A 'pings.yaml' is only required if custom
+        pings are defined.
+        Please also note that more than one metrics file can be added.
+      --&gt;
+      &lt;GleanRegistryFiles Include=&quot;metrics.yaml&quot; /&gt;
+      &lt;GleanRegistryFiles Include=&quot;pings.yaml&quot; /&gt;
+    &lt;/ItemGroup&gt;
+    &lt;!-- This is what actually runs the parser. --&gt;
+    &lt;GleanParser RegistryFiles=&quot;@(GleanRegistryFiles)&quot; OutputPath=&quot;$(IntermediateOutputPath)Glean&quot; Namespace=&quot;csharp.GleanMetrics&quot; /&gt;
+
+    &lt;!--
+      And this adds the generated files to the project, so that they can be found by
+      the compiler and Intellisense.
+    --&gt;
+    &lt;ItemGroup&gt;
+      &lt;Compile Include=&quot;$(IntermediateOutputPath)Glean\**\*.cs&quot; /&gt;
+    &lt;/ItemGroup&gt;
+  &lt;/Target&gt;
+&lt;/Project&gt;
+</code></pre>
+<p>This is using the Python 3 interpreter found in <code>PATH</code> under the hood. The <code>GLEAN_PYTHON</code> environment variable can be used to provide the location of the Python 3 interpreter.</p>
 </div>
 </div>
 </div>
@@ -7211,9 +7239,20 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/appendix/glossary.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v32.0.0...main">Full changelog</a></p>
 <ul>
+<li>General
+<ul>
+<li>Update <code>glean_parser</code> to <code>v1.28.3</code>
+<ul>
+<li>BUGFIX: Generate valid C# code when using Labeled metric types.</li>
+<li>BUGFIX: Support <code>HashSet</code> and <code>Dictionary</code> in the C# generated code.</li>
+</ul>
+</li>
+</ul>
+</li>
 <li>C#
 <ul>
 <li>Add support for the String List metric type.</li>
+<li>Enable generating the C# APIs using the glean_parser.</li>
 </ul>
 </li>
 </ul>
