@@ -409,6 +409,8 @@ metrics = load_metrics(resource_filename(__name__, &quot;metrics.yaml&quot;))
 # Use a metric on the returned object
 metrics.your_category.your_metric.set(&quot;value&quot;)
 </code></pre>
+<h3><a class="header" href="#automation-steps" id="automation-steps">Automation steps</a></h3>
+<h4><a class="header" href="#documentation" id="documentation">Documentation</a></h4>
 <p>The documentation for your application or library's metrics and pings are written in <code>metrics.yaml</code> and <code>pings.yaml</code>. However, you should also provide human-readable markdown files based on this information, and this is a requirement for Mozilla projects using the Glean SDK. For other languages and platforms, this transformation is done automatically as part of the build. However, for Python the integration to automatically generate docs is an additional step.</p>
 <p>The Glean SDK provides a commandline tool for automatically generating markdown documentation from your <code>metrics.yaml</code> and <code>pings.yaml</code> files. To perform that translation, run <code>glean_parser</code>'s <code>translate</code> command:</p>
 <pre><code class="language-sh">python3 -m glean_parser translate -f markdown -o docs metrics.yaml pings.yaml
@@ -417,6 +419,11 @@ metrics.your_category.your_metric.set(&quot;value&quot;)
 <pre><code class="language-sh">python3 -m glean_parser translate --help
 </code></pre>
 <p>We recommend integrating this step into your project's documentation build. The details of that integration is left to you, since it depends on the documentation tool being used and how your project is set up.</p>
+<h4><a class="header" href="#metrics-linting" id="metrics-linting">Metrics linting</a></h4>
+<p>Glean includes a &quot;linter&quot; for <code>metrics.yaml</code> and <code>pings.yaml</code> files called the <code>glinter</code> that catches a number of common mistakes in these files.</p>
+<p>As part of your continuous integration, you should run the following on your <code>metrics.yaml</code> and <code>pings.yaml</code> files:</p>
+<pre><code class="language-sh">python3 -m glean_parser glinter metrics.yaml pings.yaml
+</code></pre>
 </div>
 <div data-lang="C#" class="tab">
 <p>A new build target needs to be added to the project <code>csproj</code> file in order to generate the metrics and pings APIs from the registry files (e.g. <code>metrics.yaml</code>, <code>pings.yaml</code>).</p>
@@ -7268,6 +7275,7 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 </ul>
 </li>
 <li><code>kebab-case</code> ping names are now converted to <code>snake_case</code> so they are available on the object returned by <code>load_pings</code>.</li>
+<li>For performance reasons, the <code>glinter</code> is no longer run as part of <code>glean.load_metrics()</code>. We recommend running <code>glinter</code> as part of your project's continuous integration instead.</li>
 </ul>
 </li>
 </ul>
