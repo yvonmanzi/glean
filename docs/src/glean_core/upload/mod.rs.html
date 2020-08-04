@@ -1055,6 +1055,88 @@
 <span id="1055">1055</span>
 <span id="1056">1056</span>
 <span id="1057">1057</span>
+<span id="1058">1058</span>
+<span id="1059">1059</span>
+<span id="1060">1060</span>
+<span id="1061">1061</span>
+<span id="1062">1062</span>
+<span id="1063">1063</span>
+<span id="1064">1064</span>
+<span id="1065">1065</span>
+<span id="1066">1066</span>
+<span id="1067">1067</span>
+<span id="1068">1068</span>
+<span id="1069">1069</span>
+<span id="1070">1070</span>
+<span id="1071">1071</span>
+<span id="1072">1072</span>
+<span id="1073">1073</span>
+<span id="1074">1074</span>
+<span id="1075">1075</span>
+<span id="1076">1076</span>
+<span id="1077">1077</span>
+<span id="1078">1078</span>
+<span id="1079">1079</span>
+<span id="1080">1080</span>
+<span id="1081">1081</span>
+<span id="1082">1082</span>
+<span id="1083">1083</span>
+<span id="1084">1084</span>
+<span id="1085">1085</span>
+<span id="1086">1086</span>
+<span id="1087">1087</span>
+<span id="1088">1088</span>
+<span id="1089">1089</span>
+<span id="1090">1090</span>
+<span id="1091">1091</span>
+<span id="1092">1092</span>
+<span id="1093">1093</span>
+<span id="1094">1094</span>
+<span id="1095">1095</span>
+<span id="1096">1096</span>
+<span id="1097">1097</span>
+<span id="1098">1098</span>
+<span id="1099">1099</span>
+<span id="1100">1100</span>
+<span id="1101">1101</span>
+<span id="1102">1102</span>
+<span id="1103">1103</span>
+<span id="1104">1104</span>
+<span id="1105">1105</span>
+<span id="1106">1106</span>
+<span id="1107">1107</span>
+<span id="1108">1108</span>
+<span id="1109">1109</span>
+<span id="1110">1110</span>
+<span id="1111">1111</span>
+<span id="1112">1112</span>
+<span id="1113">1113</span>
+<span id="1114">1114</span>
+<span id="1115">1115</span>
+<span id="1116">1116</span>
+<span id="1117">1117</span>
+<span id="1118">1118</span>
+<span id="1119">1119</span>
+<span id="1120">1120</span>
+<span id="1121">1121</span>
+<span id="1122">1122</span>
+<span id="1123">1123</span>
+<span id="1124">1124</span>
+<span id="1125">1125</span>
+<span id="1126">1126</span>
+<span id="1127">1127</span>
+<span id="1128">1128</span>
+<span id="1129">1129</span>
+<span id="1130">1130</span>
+<span id="1131">1131</span>
+<span id="1132">1132</span>
+<span id="1133">1133</span>
+<span id="1134">1134</span>
+<span id="1135">1135</span>
+<span id="1136">1136</span>
+<span id="1137">1137</span>
+<span id="1138">1138</span>
+<span id="1139">1139</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -1069,7 +1151,7 @@
 
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">VecDeque</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">PathBuf</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">atomic</span>::{<span class="ident">AtomicBool</span>, <span class="ident">Ordering</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">atomic</span>::{<span class="ident">AtomicBool</span>, <span class="ident">AtomicU32</span>, <span class="ident">Ordering</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::{<span class="ident">Arc</span>, <span class="ident">RwLock</span>, <span class="ident">RwLockWriteGuard</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">thread</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::{<span class="ident">Duration</span>, <span class="ident">Instant</span>};
@@ -1083,6 +1165,11 @@
 <span class="kw">mod</span> <span class="ident">directory</span>;
 <span class="kw">mod</span> <span class="ident">request</span>;
 <span class="kw">mod</span> <span class="ident">result</span>;
+
+<span class="doccomment">/// The maximum recoverable failures allowed per uploading window.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Limiting this is necessary to avoid infinite loops on requesting upload tasks.</span>
+<span class="kw">const</span> <span class="ident">MAX_RECOVERABLE_FAILURES_PER_UPLOADING_WINDOW</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="number">3</span>;
 
 <span class="comment">// The maximum size in bytes a ping body may have to be eligible for upload.</span>
 <span class="kw">const</span> <span class="ident">PING_BODY_MAX_SIZE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">1024</span> <span class="op">*</span> <span class="number">1024</span>; <span class="comment">// 1 MB</span>
@@ -1170,7 +1257,16 @@
     <span class="doccomment">/// A flag signaling that the pending pings directories are not done being processed,</span>
     <span class="doccomment">/// thus the requester should wait and come back later.</span>
     <span class="ident">Wait</span>,
-    <span class="doccomment">/// A flag signaling that the pending pings queue is empty and requester is done.</span>
+    <span class="doccomment">/// A flag signaling that requester doesn&#39;t need to request any more upload tasks at this moment.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// There are two possibilities for this scenario:</span>
+    <span class="doccomment">/// * Pending pings queue is empty, no more pings to request;</span>
+    <span class="doccomment">/// * Requester has reported more than MAX_RECOVERABLE_FAILURES_PER_UPLOADING_WINDOW</span>
+    <span class="doccomment">///   recoverable upload failures on the same uploading window[1]</span>
+    <span class="doccomment">///   and should stop requesting at this moment.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [1]: An &quot;uploading window&quot; starts when a requester gets a new `PingUploadTask::Upload(PingRequest)`</span>
+    <span class="doccomment">///      response and finishes when they finally get a `PingUploadTask::Done` or `PingUploadTask::Wait` response.</span>
     <span class="ident">Done</span>,
 }
 
@@ -1185,6 +1281,8 @@
     <span class="ident">processed_pending_pings</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">AtomicBool</span><span class="op">&gt;</span>,
     <span class="doccomment">/// A vector to store the pending pings processed off-thread.</span>
     <span class="ident">pending_pings</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">RwLock</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">PingPayload</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// The number of upload failures for the current uploading window.</span>
+    <span class="ident">recoverable_failure_count</span>: <span class="ident">AtomicU32</span>,
     <span class="doccomment">/// A ping counter to help rate limit the ping uploads.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// To keep resource usage in check,</span>
@@ -1245,9 +1343,10 @@
 
         <span class="self">Self</span> {
             <span class="ident">queue</span>,
+            <span class="ident">directory_manager</span>,
             <span class="ident">processed_pending_pings</span>,
             <span class="ident">pending_pings</span>,
-            <span class="ident">directory_manager</span>,
+            <span class="ident">recoverable_failure_count</span>: <span class="ident">AtomicU32</span>::<span class="ident">new</span>(<span class="number">0</span>),
             <span class="ident">rate_limiter</span>: <span class="prelude-val">None</span>,
             <span class="ident">language_binding_name</span>: <span class="ident">language_binding_name</span>.<span class="ident">into</span>(),
             <span class="ident">upload_metrics</span>: <span class="ident">UploadMetrics</span>::<span class="ident">new</span>(),
@@ -1258,11 +1357,12 @@
         <span class="self">self</span>.<span class="ident">processed_pending_pings</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">SeqCst</span>)
     }
 
-    <span class="doccomment">/// Checks if a ping with a certain `document_id` is already enqueued.</span>
-    <span class="kw">fn</span> <span class="ident">is_enqueued</span>(<span class="ident">queue</span>: <span class="kw-2">&amp;</span><span class="ident">VecDeque</span><span class="op">&lt;</span><span class="ident">PingRequest</span><span class="op">&gt;</span>, <span class="ident">document_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="ident">queue</span>
-            .<span class="ident">iter</span>()
-            .<span class="ident">any</span>(<span class="op">|</span><span class="ident">request</span><span class="op">|</span> <span class="ident">request</span>.<span class="ident">document_id</span> <span class="op">=</span><span class="op">=</span> <span class="ident">document_id</span>)
+    <span class="kw">fn</span> <span class="ident">recoverable_failure_count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+        <span class="self">self</span>.<span class="ident">recoverable_failure_count</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">SeqCst</span>)
+    }
+
+    <span class="kw">fn</span> <span class="ident">reset_recoverable_failure_count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">recoverable_failure_count</span>.<span class="ident">store</span>(<span class="number">0</span>, <span class="ident">Ordering</span>::<span class="ident">SeqCst</span>);
     }
 
     <span class="doccomment">/// Attempts to build a ping request from a ping file payload.</span>
@@ -1319,7 +1419,10 @@
             .<span class="ident">expect</span>(<span class="string">&quot;Can&#39;t write to pending pings queue.&quot;</span>);
 
         <span class="comment">// Checks if a ping with this `document_id` is already enqueued.</span>
-        <span class="kw">if</span> <span class="self">Self</span>::<span class="ident">is_enqueued</span>(<span class="kw-2">&amp;</span><span class="ident">queue</span>, <span class="kw-2">&amp;</span><span class="ident">document_id</span>) {
+        <span class="kw">if</span> <span class="ident">queue</span>
+            .<span class="ident">iter</span>()
+            .<span class="ident">any</span>(<span class="op">|</span><span class="ident">request</span><span class="op">|</span> <span class="ident">request</span>.<span class="ident">document_id</span> <span class="op">=</span><span class="op">=</span> <span class="ident">document_id</span>)
+        {
             <span class="ident">log</span>::<span class="macro">trace</span><span class="macro">!</span>(
                 <span class="string">&quot;Attempted to enqueue a duplicate ping {} at {}.&quot;</span>,
                 <span class="ident">document_id</span>,
@@ -1384,17 +1487,7 @@
         <span class="ident">queue</span>
     }
 
-    <span class="doccomment">/// Gets the next `PingUploadTask`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `glean` - The Glean object holding the database.</span>
-    <span class="doccomment">/// * `log_ping` - Whether to log the ping before returning.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Return value</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// `PingUploadTask` - see [`PingUploadTask`](enum.PingUploadTask.html) for more information.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_upload_task</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">log_ping</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PingUploadTask</span> {
+    <span class="kw">fn</span> <span class="ident">get_upload_task_internal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">log_ping</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PingUploadTask</span> {
         <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">has_processed_pings_dir</span>() {
             <span class="ident">log</span>::<span class="macro">info</span><span class="macro">!</span>(
                 <span class="string">&quot;Tried getting an upload task, but processing is ongoing. Will come back later.&quot;</span>
@@ -1408,6 +1501,14 @@
             .<span class="ident">expect</span>(<span class="string">&quot;Can&#39;t write to pending pings cache.&quot;</span>);
         <span class="kw">for</span> (<span class="ident">document_id</span>, <span class="ident">path</span>, <span class="ident">body</span>, <span class="ident">headers</span>) <span class="kw">in</span> <span class="ident">pending_pings</span>.<span class="ident">drain</span>(..) {
             <span class="self">self</span>.<span class="ident">enqueue_ping</span>(<span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="ident">document_id</span>, <span class="kw-2">&amp;</span><span class="ident">path</span>, <span class="kw-2">&amp;</span><span class="ident">body</span>, <span class="ident">headers</span>);
+        }
+
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">recoverable_failure_count</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="ident">MAX_RECOVERABLE_FAILURES_PER_UPLOADING_WINDOW</span> {
+            <span class="ident">log</span>::<span class="macro">warn</span><span class="macro">!</span>(
+                <span class="string">&quot;Reached maximum recoverable failures for the current uploading window. You are done.&quot;</span>
+            );
+
+            <span class="kw">return</span> <span class="ident">PingUploadTask</span>::<span class="ident">Done</span>;
         }
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">queue</span> <span class="op">=</span> <span class="self">self</span>
@@ -1449,6 +1550,25 @@
                 <span class="ident">PingUploadTask</span>::<span class="ident">Done</span>
             }
         }
+    }
+
+    <span class="doccomment">/// Gets the next `PingUploadTask`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ## Arguments</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `glean` - The Glean object holding the database.</span>
+    <span class="doccomment">/// * `log_ping` - Whether to log the ping before returning.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Return value</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// `PingUploadTask` - see [`PingUploadTask`](enum.PingUploadTask.html) for more information.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_upload_task</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">log_ping</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PingUploadTask</span> {
+        <span class="kw">let</span> <span class="ident">task</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_upload_task_internal</span>(<span class="ident">glean</span>, <span class="ident">log_ping</span>);
+        <span class="kw">if</span> <span class="ident">task</span> <span class="op">=</span><span class="op">=</span> <span class="ident">PingUploadTask</span>::<span class="ident">Done</span> <span class="op">|</span><span class="op">|</span> <span class="ident">task</span> <span class="op">=</span><span class="op">=</span> <span class="ident">PingUploadTask</span>::<span class="ident">Wait</span> {
+            <span class="self">self</span>.<span class="ident">reset_recoverable_failure_count</span>()
+        }
+
+        <span class="ident">task</span>
     }
 
     <span class="doccomment">/// Processes the response from an attempt to upload a ping.</span>
@@ -1524,6 +1644,8 @@
                     <span class="ident">status</span>
                 );
                 <span class="self">self</span>.<span class="ident">enqueue_ping_from_file</span>(<span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="ident">document_id</span>);
+                <span class="self">self</span>.<span class="ident">recoverable_failure_count</span>
+                    .<span class="ident">fetch_add</span>(<span class="number">1</span>, <span class="ident">Ordering</span>::<span class="ident">SeqCst</span>);
             }
         };
     }
@@ -2111,6 +2233,48 @@
             <span class="ident">upload_manager</span>.<span class="ident">get_upload_task</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="bool-val">false</span>),
             <span class="ident">PingUploadTask</span>::<span class="ident">Done</span>
         );
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">maximum_of_recoverable_errors_is_enforced_for_uploading_window</span>() {
+        <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">glean</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">new_glean</span>(<span class="prelude-val">None</span>);
+
+        <span class="comment">// Wait for processing of pending pings directory to finish.</span>
+        <span class="kw">while</span> <span class="ident">glean</span>.<span class="ident">get_upload_task</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">PingUploadTask</span>::<span class="ident">Wait</span> {
+            <span class="ident">thread</span>::<span class="ident">sleep</span>(<span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">10</span>));
+        }
+
+        <span class="comment">// Register a ping for testing</span>
+        <span class="kw">let</span> <span class="ident">ping_type</span> <span class="op">=</span> <span class="ident">PingType</span>::<span class="ident">new</span>(<span class="string">&quot;test&quot;</span>, <span class="bool-val">true</span>, <span class="comment">/* send_if_empty */</span> <span class="bool-val">true</span>, <span class="macro">vec</span><span class="macro">!</span>[]);
+        <span class="ident">glean</span>.<span class="ident">register_ping_type</span>(<span class="kw-2">&amp;</span><span class="ident">ping_type</span>);
+
+        <span class="comment">// Submit the ping multiple times</span>
+        <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="number">5</span>;
+        <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">n</span> {
+            <span class="ident">glean</span>.<span class="ident">submit_ping</span>(<span class="kw-2">&amp;</span><span class="ident">ping_type</span>, <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+        }
+
+        <span class="comment">// Return the max recoverable error failures in a row</span>
+        <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">MAX_RECOVERABLE_FAILURES_PER_UPLOADING_WINDOW</span> {
+            <span class="kw">match</span> <span class="ident">glean</span>.<span class="ident">get_upload_task</span>() {
+                <span class="ident">PingUploadTask</span>::<span class="ident">Upload</span>(<span class="ident">req</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident">glean</span>.<span class="ident">process_ping_upload_response</span>(<span class="kw-2">&amp;</span><span class="ident">req</span>.<span class="ident">document_id</span>, <span class="ident">RecoverableFailure</span>)
+                }
+                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Expected upload manager to return the next request!&quot;</span>),
+            }
+        }
+
+        <span class="comment">// Verify that after returning the max amount of recoverable failures,</span>
+        <span class="comment">// we are done even though we haven&#39;t gotten all the enqueued requests.</span>
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">glean</span>.<span class="ident">get_upload_task</span>(), <span class="ident">PingUploadTask</span>::<span class="ident">Done</span>);
+
+        <span class="comment">// Verify all requests are returned when we try again.</span>
+        <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">n</span> {
+            <span class="kw">match</span> <span class="ident">glean</span>.<span class="ident">get_upload_task</span>() {
+                <span class="ident">PingUploadTask</span>::<span class="ident">Upload</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {}
+                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Expected upload manager to return the next request!&quot;</span>),
+            }
+        }
     }
 }
 </pre></div>
