@@ -7391,6 +7391,11 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 <li>For performance reasons, the <code>glinter</code> is no longer run as part of <code>glean.load_metrics()</code>. We recommend running <code>glinter</code> as part of your project's continuous integration instead.</li>
 </ul>
 </li>
+<li>Android
+<ul>
+<li>Fix a startup crash on some Android 8 (SDK=25) devices, due to a <a href="https://issuetracker.google.com/issues/110848122#comment17">bug in the Java compiler</a>.</li>
+</ul>
+</li>
 </ul>
 <h1><a class="header" href="#v3200-2020-08-03" id="v3200-2020-08-03">v32.0.0 (2020-08-03)</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v31.6.0...v32.0.0">Full changelog</a></p>
