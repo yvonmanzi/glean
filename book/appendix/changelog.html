@@ -193,6 +193,7 @@
 </li>
 <li><code>kebab-case</code> ping names are now converted to <code>snake_case</code> so they are available on the object returned by <code>load_pings</code>.</li>
 <li>For performance reasons, the <code>glinter</code> is no longer run as part of <code>glean.load_metrics()</code>. We recommend running <code>glinter</code> as part of your project's continuous integration instead.</li>
+<li>A <code>measure</code> context manager for conveniently measuring runtimes has been added to <code>TimespanMetricType</code> and <code>TimingDistributionMetricType</code>.</li>
 </ul>
 </li>
 <li>Android

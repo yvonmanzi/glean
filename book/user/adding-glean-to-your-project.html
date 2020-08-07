@@ -159,15 +159,27 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#adding-glean-to-your-project" id="adding-glean-to-your-project">Adding Glean to your project</a></h1>
-<h2><a class="header" href="#before-using-glean" id="before-using-glean">Before using Glean</a></h2>
+<h2><a class="header" href="#glean-integration-checklist" id="glean-integration-checklist">Glean integration checklist</a></h2>
+<p>The Glean integration checklist can help to ensure your Glean SDK-using product is meeting all of the recommended guidelines.</p>
 <p>Products (applications or libraries) using the Glean SDK to collect telemetry <strong>must</strong>:</p>
-<ul>
-<li>add documentation for any new metrics collected to its repository (see <a href="collected-metrics/metrics.html">an example</a>);</li>
-<li>include the markdown-formatted documentation generated from the <code>metrics.yaml</code> and <code>pings.yaml</code> files in the project's documentation;</li>
-<li>go through data review for the newly collected data by following <a href="https://wiki.mozilla.org/Firefox/Data_Collection">this process</a>;</li>
-<li>provide a way for users to turn data collection off (e.g. providing settings to control
-<code>Glean.setUploadEnabled()</code>).</li>
-</ul>
+<ol>
+<li>
+<p><a href="#integrating-with-your-project">Integrate the Glean SDK into the build system</a>. Since the Glean SDK does some code generation for your metrics at build time, this requires a few more steps than just adding a library.</p>
+</li>
+<li>
+<p>Include the markdown-formatted documentation generated from the <code>metrics.yaml</code> and <code>pings.yaml</code> files in the project's documentation.</p>
+</li>
+<li>
+<p>Go through <a href="https://wiki.mozilla.org/Firefox/Data_Collection">data review process</a> for all newly collected data.</p>
+</li>
+<li>
+<p>Ensure that telemetry coming from automated testing or continuous integration is either not sent to the telemetry server or <a href="debugging/index.html#available-debugging-features">tagged with the <code>automation</code> tag using the <code>sourceTag</code> feature</a>.</p>
+</li>
+</ol>
+<p>Additionally, applications (but not libraries) <strong>must</strong>:</p>
+<ol start="5">
+<li>Provide a way for users to turn data collection off (e.g. providing settings to control <code>Glean.setUploadEnabled()</code>). The exact method used is application-specific.</li>
+</ol>
 <h2><a class="header" href="#usage" id="usage">Usage</a></h2>
 <h3><a class="header" href="#integrating-with-your-project" id="integrating-with-your-project">Integrating with your project</a></h3>
 <div class="tabs">

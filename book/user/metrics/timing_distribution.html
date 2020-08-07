@@ -317,6 +317,10 @@ class PageHandler:
         # ...
         metrics.pages.page_load.stop_and_accumulate(self.timer_id)
 </code></pre>
+<p>The Python bindings also have a context manager for measuring time:</p>
+<pre><code class="language-Python">with metrics.pages.page_load.measure():
+    # Load a page ...
+</code></pre>
 <p>There are test APIs available too.  For convenience, properties <code>sum</code> and <code>count</code> are exposed to facilitate validating that data was recorded correctly.</p>
 <p>Continuing the <code>page_load</code> example above, at this point the metric should have a <code>sum == 11</code> and a <code>count == 2</code>:</p>
 <pre><code class="language-Python"># Was anything recorded?

@@ -3645,6 +3645,37 @@ previously registered in the metrics.yaml file.</p>
         def cancel():
             _ffi.lib.glean_timespan_cancel(self._handle)
 
+    class _TimespanContextManager:
+        &#34;&#34;&#34;
+        A context manager for recording timings. Used by the `measure` method.
+        &#34;&#34;&#34;
+
+        def __init__(self, timespan: &#34;TimespanMetricType&#34;):
+            self._timespan = timespan
+
+        def __enter__(self) -&gt; None:
+            self._timespan.start()
+
+        def __exit__(self, type, value, tb) -&gt; None:
+            if tb is None:
+                self._timespan.stop()
+            else:
+                self._timespan.cancel()
+
+    def measure(self) -&gt; &#34;_TimespanContextManager&#34;:
+        &#34;&#34;&#34;
+        Provides a context manager for measuring the time it takes to execute
+        snippets of code in a `with` statement.
+
+        If the contents of the `with` statement raise an exception, the timing
+        is not recorded.
+
+        Usage:
+            with metrics.perf.timer.measure():
+                # ... do something that takes time ...
+        &#34;&#34;&#34;
+        return self._TimespanContextManager(self)
+
     def set_raw_nanos(self, elapsed_nanos: int) -&gt; None:
         &#34;&#34;&#34;
         Explicitly set the timespan value, in nanoseconds.
@@ -3749,6 +3780,36 @@ previously registered in the metrics.yaml file.</p>
     @Dispatcher.launch
     def cancel():
         _ffi.lib.glean_timespan_cancel(self._handle)</code></pre>
+</details>
+</dd>
+<dt id="glean.metrics.TimespanMetricType.measure"><code class="name flex">
+<span>def <span class="ident">measure</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Provides a context manager for measuring the time it takes to execute
+snippets of code in a <code>with</code> statement.</p>
+<p>If the contents of the <code>with</code> statement raise an exception, the timing
+is not recorded.</p>
+<h2 id="usage">Usage</h2>
+<p>with metrics.perf.timer.measure():
+# &hellip; do something that takes time &hellip;</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def measure(self) -&gt; &#34;_TimespanContextManager&#34;:
+    &#34;&#34;&#34;
+    Provides a context manager for measuring the time it takes to execute
+    snippets of code in a `with` statement.
+
+    If the contents of the `with` statement raise an exception, the timing
+    is not recorded.
+
+    Usage:
+        with metrics.perf.timer.measure():
+            # ... do something that takes time ...
+    &#34;&#34;&#34;
+    return self._TimespanContextManager(self)</code></pre>
 </details>
 </dd>
 <dt id="glean.metrics.TimespanMetricType.set_raw_nanos"><code class="name flex">
@@ -4122,6 +4183,37 @@ previously registered in the metrics.yaml file.</p></section>
 
             _ffi.lib.glean_timing_distribution_cancel(self._handle, corrected_timer_id)
 
+    class _TimingDistributionContextManager:
+        &#34;&#34;&#34;
+        A context manager for recording timings. Used by the `measure` method.
+        &#34;&#34;&#34;
+
+        def __init__(self, timing_distribution: &#34;TimingDistributionMetricType&#34;):
+            self._timing_distribution = timing_distribution
+
+        def __enter__(self) -&gt; None:
+            self._timer_id = self._timing_distribution.start()
+
+        def __exit__(self, type, value, tb) -&gt; None:
+            if tb is None:
+                self._timing_distribution.stop_and_accumulate(self._timer_id)
+            else:
+                self._timing_distribution.cancel(self._timer_id)
+
+    def measure(self) -&gt; &#34;_TimingDistributionContextManager&#34;:
+        &#34;&#34;&#34;
+        Provides a context manager for measuring the time it takes to execute
+        snippets of code in a `with` statement.
+
+        If the contents of the `with` statement raise an exception, the timing
+        is not recorded.
+
+        Usage:
+            with metrics.perf.timer.measure():
+                # ... do something that takes time ...
+        &#34;&#34;&#34;
+        return self._TimingDistributionContextManager(self)
+
     def test_has_value(self, ping_name: Optional[str] = None) -&gt; bool:
         &#34;&#34;&#34;
         Tests whether a value is stored for the metric for testing purposes
@@ -4236,6 +4328,36 @@ the same timing distribution metric.</dd>
             corrected_timer_id = timer_id
 
         _ffi.lib.glean_timing_distribution_cancel(self._handle, corrected_timer_id)</code></pre>
+</details>
+</dd>
+<dt id="glean.metrics.TimingDistributionMetricType.measure"><code class="name flex">
+<span>def <span class="ident">measure</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Provides a context manager for measuring the time it takes to execute
+snippets of code in a <code>with</code> statement.</p>
+<p>If the contents of the <code>with</code> statement raise an exception, the timing
+is not recorded.</p>
+<h2 id="usage">Usage</h2>
+<p>with metrics.perf.timer.measure():
+# &hellip; do something that takes time &hellip;</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def measure(self) -&gt; &#34;_TimingDistributionContextManager&#34;:
+    &#34;&#34;&#34;
+    Provides a context manager for measuring the time it takes to execute
+    snippets of code in a `with` statement.
+
+    If the contents of the `with` statement raise an exception, the timing
+    is not recorded.
+
+    Usage:
+        with metrics.perf.timer.measure():
+            # ... do something that takes time ...
+    &#34;&#34;&#34;
+    return self._TimingDistributionContextManager(self)</code></pre>
 </details>
 </dd>
 <dt id="glean.metrics.TimingDistributionMetricType.start"><code class="name flex">
@@ -4986,6 +5108,7 @@ of the ping to retrieve the metric for.</dd>
 <h4><code><a title="glean.metrics.TimespanMetricType" href="#glean.metrics.TimespanMetricType">TimespanMetricType</a></code></h4>
 <ul class="">
 <li><code><a title="glean.metrics.TimespanMetricType.cancel" href="#glean.metrics.TimespanMetricType.cancel">cancel</a></code></li>
+<li><code><a title="glean.metrics.TimespanMetricType.measure" href="#glean.metrics.TimespanMetricType.measure">measure</a></code></li>
 <li><code><a title="glean.metrics.TimespanMetricType.set_raw_nanos" href="#glean.metrics.TimespanMetricType.set_raw_nanos">set_raw_nanos</a></code></li>
 <li><code><a title="glean.metrics.TimespanMetricType.start" href="#glean.metrics.TimespanMetricType.start">start</a></code></li>
 <li><code><a title="glean.metrics.TimespanMetricType.stop" href="#glean.metrics.TimespanMetricType.stop">stop</a></code></li>
@@ -4998,6 +5121,7 @@ of the ping to retrieve the metric for.</dd>
 <h4><code><a title="glean.metrics.TimingDistributionMetricType" href="#glean.metrics.TimingDistributionMetricType">TimingDistributionMetricType</a></code></h4>
 <ul class="">
 <li><code><a title="glean.metrics.TimingDistributionMetricType.cancel" href="#glean.metrics.TimingDistributionMetricType.cancel">cancel</a></code></li>
+<li><code><a title="glean.metrics.TimingDistributionMetricType.measure" href="#glean.metrics.TimingDistributionMetricType.measure">measure</a></code></li>
 <li><code><a title="glean.metrics.TimingDistributionMetricType.start" href="#glean.metrics.TimingDistributionMetricType.start">start</a></code></li>
 <li><code><a title="glean.metrics.TimingDistributionMetricType.stop_and_accumulate" href="#glean.metrics.TimingDistributionMetricType.stop_and_accumulate">stop_and_accumulate</a></code></li>
 <li><code><a title="glean.metrics.TimingDistributionMetricType.test_get_num_recorded_errors" href="#glean.metrics.TimingDistributionMetricType.test_get_num_recorded_errors">test_get_num_recorded_errors</a></code></li>
