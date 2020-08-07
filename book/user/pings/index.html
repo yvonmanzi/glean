@@ -235,10 +235,13 @@ See <a href="../experiments-api.html">Using the Experiments API</a> on how to re
 <li><code>&lt;document-id&gt;</code>: a unique identifier for this ping.</li>
 </ul>
 <h3><a class="header" href="#limitations" id="limitations">Limitations</a></h3>
-<p>To keep resource usage in check, the Glean SDK enforces some limitations on the pings it will upload and in the amount of uploads allowed per a given time interval.</p>
+<p>To keep resource usage in check, the Glean SDK enforces some limitations on ping uploading and ping storage.</p>
 <ul>
 <li><strong>Rate limiting</strong>: only up to 10 ping submissions every 60 seconds are allowed. There are no exposed methods to change these rate limiting defaults yet, follow <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1647630">Bug 1647630</a> for updates.</li>
 <li><strong>Request body size limiting</strong>: the body of a ping request may have up to 1MB. Pings that exceed this size are discarded and don't get uploaded. Size and number of discarded pings are recorded on the internal Glean metric <a href="../collected-metrics/metrics.html#metrics-1"><code>glean.upload.discarded_exceeding_pings_size</code></a>.</li>
+<li><strong>Storage quota</strong>: Pending pings are stored on disk. The storage directory is scanned every time Glean is initialized and upon scanning Glean checks its size. If this directory exceeds a size of 10MB, pings are deleted to get the directory back to an accepted size. Pings are deleted oldest first, until the directory size is below the quota.
+The number of deleted pings due to exceeding storage quota is recorded on the metric <a href="../collected-metrics/metrics.html#metrics-1"><code>glean.upload.deleted_pings_after_quota_hit</code></a> and the size of the pending pings directory is recorded (regardless on whether quota has been reached) on the metric <a href="../collected-metrics/metrics.html#metrics-1"><code>glean.upload.pending_pings_directory_size</code></a>
+<strong>Note</strong> Deletion request pings are stored in a different directory, are not subject to this limitation and never get deleted.</li>
 </ul>
 <h3><a class="header" href="#submitted-headers" id="submitted-headers">Submitted headers</a></h3>
 <p>A pre-defined set of headers is additionally sent along with the submitted ping:</p>

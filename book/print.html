@@ -4068,10 +4068,13 @@ See <a href="user/pings/../experiments-api.html">Using the Experiments API</a> o
 <li><code>&lt;document-id&gt;</code>: a unique identifier for this ping.</li>
 </ul>
 <h3><a class="header" href="#limitations" id="limitations">Limitations</a></h3>
-<p>To keep resource usage in check, the Glean SDK enforces some limitations on the pings it will upload and in the amount of uploads allowed per a given time interval.</p>
+<p>To keep resource usage in check, the Glean SDK enforces some limitations on ping uploading and ping storage.</p>
 <ul>
 <li><strong>Rate limiting</strong>: only up to 10 ping submissions every 60 seconds are allowed. There are no exposed methods to change these rate limiting defaults yet, follow <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1647630">Bug 1647630</a> for updates.</li>
 <li><strong>Request body size limiting</strong>: the body of a ping request may have up to 1MB. Pings that exceed this size are discarded and don't get uploaded. Size and number of discarded pings are recorded on the internal Glean metric <a href="user/pings/../collected-metrics/metrics.html#metrics-1"><code>glean.upload.discarded_exceeding_pings_size</code></a>.</li>
+<li><strong>Storage quota</strong>: Pending pings are stored on disk. The storage directory is scanned every time Glean is initialized and upon scanning Glean checks its size. If this directory exceeds a size of 10MB, pings are deleted to get the directory back to an accepted size. Pings are deleted oldest first, until the directory size is below the quota.
+The number of deleted pings due to exceeding storage quota is recorded on the metric <a href="user/pings/../collected-metrics/metrics.html#metrics-1"><code>glean.upload.deleted_pings_after_quota_hit</code></a> and the size of the pending pings directory is recorded (regardless on whether quota has been reached) on the metric <a href="user/pings/../collected-metrics/metrics.html#metrics-1"><code>glean.upload.pending_pings_directory_size</code></a>
+<strong>Note</strong> Deletion request pings are stored in a different directory, are not subject to this limitation and never get deleted.</li>
 </ul>
 <h3><a class="header" href="#submitted-headers" id="submitted-headers">Submitted headers</a></h3>
 <p>A pre-defined set of headers is additionally sent along with the submitted ping:</p>
@@ -5296,7 +5299,9 @@ upgraded.</p>
 <p>The following metrics are added to the ping:</p>
 <table><thead><tr><th>Name</th><th>Type</th><th>Description</th><th>Data reviews</th><th>Extras</th><th>Expiration</th><th><a href="https://wiki.mozilla.org/Firefox/Data_Collection">Data Sensitivity</a></th></tr></thead><tbody>
 <tr><td>glean.error.preinit_tasks_overflow</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/counter.html">counter</a></td><td>The number of tasks queued in the pre-initialization buffer. Only sent if the buffer overflows.</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1609482#c3">1</a></td><td></td><td>never</td><td>1</td></tr>
+<tr><td>glean.upload.deleted_pings_after_quota_hit</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/counter.html">counter</a></td><td>The number of pings deleted after the quota for the size of the pending pings directory is hit. Since quota is only calculated for the pending pings directory, and deletion request ping live in a different directory, deletion request pings are never deleted.</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1601550#c3">1</a></td><td></td><td>never</td><td>1</td></tr>
 <tr><td>glean.upload.discarded_exceeding_pings_size</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/memory_distribution.html">memory_distribution</a></td><td>The size of pings that exceeded the maximum ping size allowed for upload.</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1597761#c10">1</a></td><td></td><td>never</td><td>1</td></tr>
+<tr><td>glean.upload.pending_pings_directory_size</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/memory_distribution.html">memory_distribution</a></td><td>The size of the pending pings directory upon initialization of Glean. This does not include the size of the deletion request pings directory.</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1601550#c3">1</a></td><td></td><td>never</td><td>1</td></tr>
 <tr><td>glean.upload.ping_upload_failure</td><td><a href="https://mozilla.github.io/glean/book/user/metrics/labeled_counters.html">labeled_counter</a></td><td>Counts the number of ping upload failures, by type of failure. This includes failures for all ping types, though the counts appear in the next successfully sent <code>metrics</code> ping.</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1589124#c1">1</a></td><td><ul><li>status_code_4xx</li><li>status_code_5xx</li><li>status_code_unknown</li><li>unrecoverable</li><li>recoverable</li></ul></td><td></td><td></td></tr>
 <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
 <tr><td>never</td><td>1</td><td></td><td></td><td></td><td></td><td></td></tr>
@@ -7390,6 +7395,7 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 <li>BUGFIX: Support <code>HashSet</code> and <code>Dictionary</code> in the C# generated code.</li>
 </ul>
 </li>
+<li>Add a 10MB quota to the pending pings storage. (<a href="https://github.com/mozilla/glean/pull/1110">#1100</a>)</li>
 </ul>
 </li>
 <li>C#
