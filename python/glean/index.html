@@ -243,7 +243,7 @@ the <code>pings.yaml</code> file.</dd>
 <dl>
 <dt id="glean.Configuration"><code class="flex name class">
 <span>class <span class="ident">Configuration</span></span>
-<span>(</span><span>server_endpoint=None, channel=None, max_events=500, ping_tag=None, ping_uploader=None, allow_multiprocessing=True)</span>
+<span>(</span><span>server_endpoint=None, channel=None, max_events=500, ping_uploader=None, allow_multiprocessing=True)</span>
 </code></dt>
 <dd>
 <section class="desc"><p>Configuration values for Glean.</p>
@@ -258,9 +258,6 @@ if known.</dd>
 <dt><strong><code>max_events</code></strong> :&ensp;<code>int</code></dt>
 <dd>Optional.The number of events to store before
 force-sending. Defaults to <code>DEFAULT_MAX_EVENTS</code>.</dd>
-<dt><strong><code>ping_tag</code></strong> :&ensp;<code>str</code></dt>
-<dd>Optional. String tag to be applied to headers when
-uploading pings for debug view.</dd>
 <dt><strong><code>ping_uploader</code></strong> :&ensp;<a title="glean.net.BaseUploader" href="net/index.html#glean.net.BaseUploader"><code>BaseUploader</code></a></dt>
 <dd>Optional. The ping uploader
 implementation. Defaults to <a title="glean.net.HttpClientUploader" href="net/index.html#glean.net.HttpClientUploader"><code>HttpClientUploader</code></a>.</dd>
@@ -282,7 +279,6 @@ to offload some work (such as ping uploading).</dd>
         server_endpoint: str = None,
         channel: Optional[str] = None,
         max_events: int = DEFAULT_MAX_EVENTS,
-        ping_tag: Optional[str] = None,
         ping_uploader: Optional[net.BaseUploader] = None,
         allow_multiprocessing: bool = True,
     ):
@@ -294,8 +290,6 @@ to offload some work (such as ping uploading).</dd>
                 if known.
             max_events (int): Optional.The number of events to store before
                 force-sending. Defaults to `DEFAULT_MAX_EVENTS`.
-            ping_tag (str): Optional. String tag to be applied to headers when
-                uploading pings for debug view.
             ping_uploader (glean.net.BaseUploader): Optional. The ping uploader
                 implementation. Defaults to `glean.net.HttpClientUploader`.
             allow_multiprocessing (bool): When True (default), use a subprocess
@@ -306,7 +300,6 @@ to offload some work (such as ping uploading).</dd>
         self._server_endpoint = server_endpoint
         self._channel = channel
         self._max_events = max_events
-        self._ping_tag = ping_tag
         if ping_uploader is None:
             ping_uploader = net.HttpClientUploader()
         self._ping_uploader = ping_uploader
@@ -340,15 +333,6 @@ to offload some work (such as ping uploading).</dd>
         return self._max_events
 
     # max_events can&#39;t be changed after Glean is initialized
-
-    @property
-    def ping_tag(self) -&gt; Optional[str]:
-        &#34;&#34;&#34;String tag to be applied to headers when uploading pings for debug view.&#34;&#34;&#34;
-        return self._ping_tag
-
-    @ping_tag.setter
-    def ping_tag(self, value: str):
-        self._ping_tag = value
 
     @property
     def ping_uploader(self) -&gt; net.BaseUploader:
@@ -385,19 +369,6 @@ def channel(self) -&gt; Optional[str]:
 def max_events(self) -&gt; int:
     &#34;&#34;&#34;The number of events to store before force-sending.&#34;&#34;&#34;
     return self._max_events</code></pre>
-</details>
-</dd>
-<dt id="glean.Configuration.ping_tag"><code class="name">var <span class="ident">ping_tag</span></code></dt>
-<dd>
-<section class="desc"><p>String tag to be applied to headers when uploading pings for debug view.</p></section>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@property
-def ping_tag(self) -&gt; Optional[str]:
-    &#34;&#34;&#34;String tag to be applied to headers when uploading pings for debug view.&#34;&#34;&#34;
-    return self._ping_tag</code></pre>
 </details>
 </dd>
 <dt id="glean.Configuration.ping_uploader"><code class="name">var <span class="ident">ping_uploader</span></code></dt>
@@ -1501,7 +1472,6 @@ def test_is_experiment_active(cls, experiment_id: str) -&gt; bool:
 <ul class="">
 <li><code><a title="glean.Configuration.channel" href="#glean.Configuration.channel">channel</a></code></li>
 <li><code><a title="glean.Configuration.max_events" href="#glean.Configuration.max_events">max_events</a></code></li>
-<li><code><a title="glean.Configuration.ping_tag" href="#glean.Configuration.ping_tag">ping_tag</a></code></li>
 <li><code><a title="glean.Configuration.ping_uploader" href="#glean.Configuration.ping_uploader">ping_uploader</a></code></li>
 <li><code><a title="glean.Configuration.server_endpoint" href="#glean.Configuration.server_endpoint">server_endpoint</a></code></li>
 </ul>

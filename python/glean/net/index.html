@@ -122,8 +122,6 @@ to the user-provided delegate.</p></section>
         Returns:
             result (UploadResult): the status code of the upload response.
         &#34;&#34;&#34;
-        if config.ping_tag is not None:
-            headers.append((&#34;X-Debug-ID&#34;, config.ping_tag))
 
         return self.upload(
             url=config.server_endpoint + path, data=data, headers=headers,
@@ -192,8 +190,6 @@ to the user-provided delegate.</p></section>
     Returns:
         result (UploadResult): the status code of the upload response.
     &#34;&#34;&#34;
-    if config.ping_tag is not None:
-        headers.append((&#34;X-Debug-ID&#34;, config.ping_tag))
 
     return self.upload(
         url=config.server_endpoint + path, data=data, headers=headers,
