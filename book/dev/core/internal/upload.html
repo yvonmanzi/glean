@@ -238,9 +238,9 @@ a Glean language binding (e.g. the Kotlin or Swift implementation) and a Glean e
     Glean core-&gt;&gt;Glean wrapper: Task::Done
 </pre>
 <p>Glean core will take care of file management, cleanup, rescheduling and rate limiting<sup class="footnote-reference"><a href="#1">1</a></sup>.</p>
-<blockquote>
-<p><sup class="footnote-reference"><a href="#1">1</a></sup> Rate limiting is achieved by limiting the amount of times a language binding is allowed to get a <code>Task::Upload(PingRequest)</code> from <code>get_upload_task</code> in a given time interval. Currently, the default limit is for a maximum of 10 upload tasks every 60 seconds and there are no exposed methods that allow changing this default (follow <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1647630">Bug 1647630</a> for updates). If the caller has reached the maximum tasks for the current interval, they will get a <code>Task::Wait</code> regardless if there are other <code>Task::Upload(PingRequest)</code>s queued.</p>
-</blockquote>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>Rate limiting is achieved by limiting the amount of times a language binding is allowed to get a <code>Task::Upload(PingRequest)</code> from <code>get_upload_task</code> in a given time interval. Currently, the default limit is for a maximum of 10 upload tasks every 60 seconds and there are no exposed methods that allow changing this default (follow <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1647630">Bug 1647630</a> for updates). If the caller has reached the maximum tasks for the current interval, they will get a <code>Task::Wait</code> regardless if there are other <code>Task::Upload(PingRequest)</code>s queued.</p>
+</div>
 <h2><a class="header" href="#available-apis" id="available-apis">Available APIs</a></h2>
 <div class="tabs">
 <div class="tabbar"></div>

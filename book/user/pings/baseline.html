@@ -165,8 +165,8 @@
 <p><strong>Note:</strong> As the <code>baseline</code> ping was specifically designed for mobile operating systems, it is not sent when using the Glean Python bindings.</p>
 </blockquote>
 <h2><a class="header" href="#scheduling" id="scheduling">Scheduling</a></h2>
-<p>The <code>baseline</code> ping is automatically submitted with a <code>reason: foreground</code> when the application is moved to the <a href="index.html#defining-background-state">foreground</a>.  These baseline pings do not contain <code>duration</code>.</p>
-<p>The <code>baseline</code> ping is automatically submitted with a <code>reason: background</code> when the application is moved to the <a href="index.html#defining-background-state">background</a>.
+<p>The <code>baseline</code> ping is automatically submitted with a <code>reason: foreground</code> when the application is moved to the <a href="index.html#defining-foreground-and-background-state">foreground</a>.  These baseline pings do not contain <code>duration</code>.</p>
+<p>The <code>baseline</code> ping is automatically submitted with a <code>reason: background</code> when the application is moved to the <a href="index.html#defining-foreground-and-background-state">background</a>.
 Occasionally, the <code>baseline</code> ping may fail to send when going to background (e.g. the process is killed quickly).  In that case, it will be submitted at startup with a <code>reason: dirty_startup</code>, if the previous session was not cleanly closed. This only happens from the second start onward.</p>
 <p>See also the <a href="ping-schedules-and-timings.html">ping schedules and timing overview</a>.</p>
 <h2><a class="header" href="#contents" id="contents">Contents</a></h2>

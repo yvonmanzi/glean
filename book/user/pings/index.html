@@ -173,10 +173,10 @@
 <p>There are two standard metadata sections that are added to most pings, in addition to their core metrics and events content (which are described in <a href="../adding-new-metrics.html">Adding new metrics</a>).</p>
 <ul>
 <li>
-<p>The <a href="#The-ping_info-section"><code>ping_info</code> section</a> contains core metadata that is included in <strong>every</strong> ping.</p>
+<p>The <a href="#the-ping_info-section"><code>ping_info</code> section</a> contains core metadata that is included in <strong>every</strong> ping.</p>
 </li>
 <li>
-<p>The <a href="#The-client_info-section"><code>client_info</code> section</a> contains information that identifies the client.
+<p>The <a href="#the-client_info-section"><code>client_info</code> section</a> contains information that identifies the client.
 It is included in most pings (including all built-in pings), but may be excluded from pings where we don't want to connect client information with the other metrics in the ping.</p>
 </li>
 </ul>
@@ -211,7 +211,7 @@ Optional fields are marked accordingly.</p>
 </tbody></table>
 <p>All the metrics surviving application restarts (e.g. <code>client_id</code>, ...) are removed once the application using the Glean SDK is uninstalled.</p>
 <h3><a class="header" href="#the-experiments-object" id="the-experiments-object">The <code>experiments</code> object</a></h3>
-<p>This object (included in the <a href="#The-ping_info-section"><code>ping_info</code> section</a>) contains experiments keyed by the experiment <code>id</code>. Each listed experiment contains the <code>branch</code> the client is enrolled in and may contain a string to string map with additional data in the <code>extra</code> key. Both the <code>id</code> and <code>branch</code> are truncated to 30 characters.
+<p>This object (included in the <a href="#the-ping_info-section"><code>ping_info</code> section</a>) contains experiments keyed by the experiment <code>id</code>. Each listed experiment contains the <code>branch</code> the client is enrolled in and may contain a string to string map with additional data in the <code>extra</code> key. Both the <code>id</code> and <code>branch</code> are truncated to 30 characters.
 See <a href="../experiments-api.html">Using the Experiments API</a> on how to record experiments data.</p>
 <pre><code class="language-json">{
   &quot;&lt;id&gt;&quot;: {

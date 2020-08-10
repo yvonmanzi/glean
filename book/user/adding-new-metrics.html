@@ -162,7 +162,7 @@
 <p>When adding a new metric, the workflow is:</p>
 <ul>
 <li>Consider the question you are trying to answer with this data, and choose the <a href="metrics/index.html">metric type</a> and parameters to use.</li>
-<li>Add a new entry to <a href="#The-metricsyaml-file"><code>metrics.yaml</code></a>.</li>
+<li>Add a new entry to <a href="#adding-the-metric-to-the-metricsyaml-file"><code>metrics.yaml</code></a>.</li>
 <li>Add code to your project to record into the metric by calling the Glean SDK.</li>
 </ul>
 <blockquote>
@@ -179,7 +179,7 @@
 <p>If you need to store multiple string values in a metric, use a <a href="metrics/string_list.html">string list metric</a>. For example, you may want to record the list of other Mozilla products installed on the device.</p>
 <!-- TODO: If you do know the list of values you might store and you just want to record their presence, consider using a [labeled boolean](metrics/labeled_boolean.html) instead. -->
 <!-- If you have a related set of metrics that you want to record strings for, and you don't know the things the strings relate to at build time, use a [labeled string metric](metrics/labeled_strings.html). -->
-<p>For all of the metric types in this section that measure single values, it is especially important to consider how the lifetime of the value relates to the ping it is being sent in. Since these metrics don't perform any aggregation on the client side, when a ping containing the metric is submitted, it will contain only the &quot;last known&quot; value for the metric, potentially resulting in <strong>data loss</strong>.  There is further discussion of <a href="#When-should-Glean-automatically-reset-the-measurement">metric lifetimes</a> below.</p>
+<p>For all of the metric types in this section that measure single values, it is especially important to consider how the lifetime of the value relates to the ping it is being sent in. Since these metrics don't perform any aggregation on the client side, when a ping containing the metric is submitted, it will contain only the &quot;last known&quot; value for the metric, potentially resulting in <strong>data loss</strong>.  There is further discussion of <a href="#when-should-the-glean-sdk-automatically-clear-the-measurement">metric lifetimes</a> below.</p>
 <h3><a class="header" href="#are-you-counting-things" id="are-you-counting-things">Are you counting things?</a></h3>
 <p>If you want to know how many times something happened, use a <a href="metrics/counter.html">counter metric</a>.  If you are counting a group of related things, or you don't know what all of the things to count are at build time, use a <a href="metrics/labeled_counters.html">labeled counter metric</a>.</p>
 <p>If you need to know when the things being counted happened relative to other things, consider using an <a href="metrics/event.html">event</a>.</p>

@@ -306,7 +306,7 @@ Create a Run Script in which you specify your shell (ex: <code>/bin/sh</code>), 
 <p>To learn more, see <a href="user/adding-new-metrics.html">adding new metrics</a>.
 See the <a href="user/metric-parameters.html">metric parameters</a> documentation which provides reference information about the contents of that file.</p>
 <blockquote>
-<p><strong>Important</strong>: as stated <a href="user/adding-glean-to-your-project.html#before-using-glean">before</a>, any new data collection requires documentation and data-review.
+<p><strong>Important</strong>: as stated <a href="user/adding-glean-to-your-project.html#glean-integration-checklist">before</a>, any new data collection requires documentation and data-review.
 This is also required for any new metric automatically collected by the Glean SDK.</p>
 </blockquote>
 <div class="tabs">
@@ -476,7 +476,7 @@ metrics.your_category.your_metric.set(&quot;value&quot;)
 <h3><a class="header" href="#adding-custom-pings" id="adding-custom-pings">Adding custom pings</a></h3>
 <p>Please refer to the <a href="user/pings/custom.html">custom pings documentation</a>.</p>
 <blockquote>
-<p><strong>Important</strong>: as stated <a href="user/adding-glean-to-your-project.html#before-using-glean">before</a>, any new data collection requires documentation and data-review.
+<p><strong>Important</strong>: as stated <a href="user/adding-glean-to-your-project.html#glean-integration-checklist">before</a>, any new data collection requires documentation and data-review.
 This is also required for any new metric automatically collected by the Glean SDK.</p>
 </blockquote>
 <h3><a class="header" href="#parallelism" id="parallelism">Parallelism</a></h3>
@@ -707,7 +707,7 @@ When re-enabling, core Glean metrics will be recomputed at that time.</p>
 <p>When adding a new metric, the workflow is:</p>
 <ul>
 <li>Consider the question you are trying to answer with this data, and choose the <a href="user/metrics/index.html">metric type</a> and parameters to use.</li>
-<li>Add a new entry to <a href="user/adding-new-metrics.html#The-metricsyaml-file"><code>metrics.yaml</code></a>.</li>
+<li>Add a new entry to <a href="user/adding-new-metrics.html#adding-the-metric-to-the-metricsyaml-file"><code>metrics.yaml</code></a>.</li>
 <li>Add code to your project to record into the metric by calling the Glean SDK.</li>
 </ul>
 <blockquote>
@@ -724,7 +724,7 @@ When re-enabling, core Glean metrics will be recomputed at that time.</p>
 <p>If you need to store multiple string values in a metric, use a <a href="user/metrics/string_list.html">string list metric</a>. For example, you may want to record the list of other Mozilla products installed on the device.</p>
 <!-- TODO: If you do know the list of values you might store and you just want to record their presence, consider using a [labeled boolean](metrics/labeled_boolean.html) instead. -->
 <!-- If you have a related set of metrics that you want to record strings for, and you don't know the things the strings relate to at build time, use a [labeled string metric](metrics/labeled_strings.html). -->
-<p>For all of the metric types in this section that measure single values, it is especially important to consider how the lifetime of the value relates to the ping it is being sent in. Since these metrics don't perform any aggregation on the client side, when a ping containing the metric is submitted, it will contain only the &quot;last known&quot; value for the metric, potentially resulting in <strong>data loss</strong>.  There is further discussion of <a href="user/adding-new-metrics.html#When-should-Glean-automatically-reset-the-measurement">metric lifetimes</a> below.</p>
+<p>For all of the metric types in this section that measure single values, it is especially important to consider how the lifetime of the value relates to the ping it is being sent in. Since these metrics don't perform any aggregation on the client side, when a ping containing the metric is submitted, it will contain only the &quot;last known&quot; value for the metric, potentially resulting in <strong>data loss</strong>.  There is further discussion of <a href="user/adding-new-metrics.html#when-should-the-glean-sdk-automatically-clear-the-measurement">metric lifetimes</a> below.</p>
 <h3><a class="header" href="#are-you-counting-things" id="are-you-counting-things">Are you counting things?</a></h3>
 <p>If you want to know how many times something happened, use a <a href="user/metrics/counter.html">counter metric</a>.  If you are counting a group of related things, or you don't know what all of the things to count are at build time, use a <a href="user/metrics/labeled_counters.html">labeled counter metric</a>.</p>
 <p>If you need to know when the things being counted happened relative to other things, consider using an <a href="user/metrics/event.html">event</a>.</p>
@@ -1555,7 +1555,7 @@ Assert.Equal(
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/experiments-api.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#metrics" id="metrics">Metrics</a></h1>
 <blockquote>
-<p><strong>Not sure which metric type to use?</strong> These docs contain a <a href="user/metrics/../adding-new-metrics.html#Choosing-a-metric-type">series of questions</a> that can help. Reference information about each metric type is linked below.</p>
+<p><strong>Not sure which metric type to use?</strong> These docs contain a <a href="user/metrics/../adding-new-metrics.html#choosing-a-metric-type">series of questions</a> that can help. Reference information about each metric type is linked below.</p>
 </blockquote>
 <p>There are different metrics to choose from, depending on what you want to achieve:</p>
 <ul>
@@ -4029,10 +4029,10 @@ assertEquals(1, Gfx.displayWidth.testGetNumRecordedErrors(ErrorType.InvalidValue
 <p>There are two standard metadata sections that are added to most pings, in addition to their core metrics and events content (which are described in <a href="user/pings/../adding-new-metrics.html">Adding new metrics</a>).</p>
 <ul>
 <li>
-<p>The <a href="user/pings/index.html#The-ping_info-section"><code>ping_info</code> section</a> contains core metadata that is included in <strong>every</strong> ping.</p>
+<p>The <a href="user/pings/index.html#the-ping_info-section"><code>ping_info</code> section</a> contains core metadata that is included in <strong>every</strong> ping.</p>
 </li>
 <li>
-<p>The <a href="user/pings/index.html#The-client_info-section"><code>client_info</code> section</a> contains information that identifies the client.
+<p>The <a href="user/pings/index.html#the-client_info-section"><code>client_info</code> section</a> contains information that identifies the client.
 It is included in most pings (including all built-in pings), but may be excluded from pings where we don't want to connect client information with the other metrics in the ping.</p>
 </li>
 </ul>
@@ -4067,7 +4067,7 @@ Optional fields are marked accordingly.</p>
 </tbody></table>
 <p>All the metrics surviving application restarts (e.g. <code>client_id</code>, ...) are removed once the application using the Glean SDK is uninstalled.</p>
 <h3><a class="header" href="#the-experiments-object" id="the-experiments-object">The <code>experiments</code> object</a></h3>
-<p>This object (included in the <a href="user/pings/index.html#The-ping_info-section"><code>ping_info</code> section</a>) contains experiments keyed by the experiment <code>id</code>. Each listed experiment contains the <code>branch</code> the client is enrolled in and may contain a string to string map with additional data in the <code>extra</code> key. Both the <code>id</code> and <code>branch</code> are truncated to 30 characters.
+<p>This object (included in the <a href="user/pings/index.html#the-ping_info-section"><code>ping_info</code> section</a>) contains experiments keyed by the experiment <code>id</code>. Each listed experiment contains the <code>branch</code> the client is enrolled in and may contain a string to string map with additional data in the <code>extra</code> key. Both the <code>id</code> and <code>branch</code> are truncated to 30 characters.
 See <a href="user/pings/../experiments-api.html">Using the Experiments API</a> on how to record experiments data.</p>
 <pre><code class="language-json">{
   &quot;&lt;id&gt;&quot;: {
@@ -4160,8 +4160,8 @@ means.</p>
 <p><strong>Note:</strong> As the <code>baseline</code> ping was specifically designed for mobile operating systems, it is not sent when using the Glean Python bindings.</p>
 </blockquote>
 <h2><a class="header" href="#scheduling" id="scheduling">Scheduling</a></h2>
-<p>The <code>baseline</code> ping is automatically submitted with a <code>reason: foreground</code> when the application is moved to the <a href="user/pings/index.html#defining-background-state">foreground</a>.  These baseline pings do not contain <code>duration</code>.</p>
-<p>The <code>baseline</code> ping is automatically submitted with a <code>reason: background</code> when the application is moved to the <a href="user/pings/index.html#defining-background-state">background</a>.
+<p>The <code>baseline</code> ping is automatically submitted with a <code>reason: foreground</code> when the application is moved to the <a href="user/pings/index.html#defining-foreground-and-background-state">foreground</a>.  These baseline pings do not contain <code>duration</code>.</p>
+<p>The <code>baseline</code> ping is automatically submitted with a <code>reason: background</code> when the application is moved to the <a href="user/pings/index.html#defining-foreground-and-background-state">background</a>.
 Occasionally, the <code>baseline</code> ping may fail to send when going to background (e.g. the process is killed quickly).  In that case, it will be submitted at startup with a <code>reason: dirty_startup</code>, if the previous session was not cleanly closed. This only happens from the second start onward.</p>
 <p>See also the <a href="user/pings/ping-schedules-and-timings.html">ping schedules and timing overview</a>.</p>
 <h2><a class="header" href="#contents" id="contents">Contents</a></h2>
@@ -4474,7 +4474,7 @@ If the application crashes, an <code>events</code> ping is generated next time t
 <p>The <code>events</code> ping is collected under the following circumstances:</p>
 <ol>
 <li>
-<p>Normally, it is collected when the application goes into the <a href="user/pings/index.html#defining-background-state">background</a>, if there are any recorded events to send.</p>
+<p>Normally, it is collected when the application goes into the <a href="user/pings/index.html#defining-foreground-and-background-state">background</a>, if there are any recorded events to send.</p>
 </li>
 <li>
 <p>When the queue of events exceeds <code>Glean.configuration.maxEvents</code> (default 500).</p>
@@ -4567,11 +4567,11 @@ and hyphens and a maximum of 30 characters.</p>
 <ul>
 <li><code>description</code> (required): A textual description describing the purpose of the ping. It may contain <a href="https://www.markdownguide.org/basic-syntax/">markdown syntax</a>.</li>
 <li><code>include_client_id</code> (required): A boolean indicating whether to include the
-<code>client_id</code> in the <a href="user/pings/index.html#The-client_info-section"><code>client_info</code> section</a>).</li>
+<code>client_id</code> in the <a href="user/pings/index.html#the-client_info-section"><code>client_info</code> section</a>).</li>
 <li><code>send_if_empty</code> (optional, default: false): A boolean indicating if the ping is sent if it contains no metric data.</li>
 <li><code>reasons</code> (optional, default: <code>{}</code>): The reasons that this ping may be sent. The keys are the reason codes, and the values are a textual description of each reason. The ping payload will (optionally) contain one of these reasons in the <code>ping_info.reason</code> field.</li>
 </ul>
-<p>In addition to these parameters, pings also support the parameters related to data review and expiration defined in <a href="user/pings/../adding-new-metrics.html#common-metric-parameters">common metric parameters</a>: <code>description</code>, <code>notification_emails</code>, <code>bugs</code>, and <code>data_reviews</code>.</p>
+<p>In addition to these parameters, pings also support the parameters related to data review and expiration defined in <a href="user/pings/../metric-parameters.html">common metric parameters</a>: <code>description</code>, <code>notification_emails</code>, <code>bugs</code>, and <code>data_reviews</code>.</p>
 <p>For example, to define a custom ping called <code>search</code> specifically for search information:</p>
 <pre><code class="language-YAML"># Required to indicate this is a `pings.yaml` file
 $schema: moz://mozilla.org/schemas/glean/pings/1-0-0
@@ -6981,7 +6981,7 @@ There are a couple of exceptions to this:</p>
 </li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/dev/core/internal/clearing.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#payload-format" id="payload-format">Payload format</a></h1>
-<p>The main sections of a Glean ping are described in <a href="dev/core/internal/../../../user/pings/index.html#Ping-sections">Ping Sections</a>.
+<p>The main sections of a Glean ping are described in <a href="dev/core/internal/../../../user/pings/index.html#ping-sections">Ping Sections</a>.
 This <strong>Payload format</strong> chapter describes details of the ping payload that are relevant for decoding Glean pings in the pipeline.
 This is less relevant for end users of the Glean SDK.</p>
 <h2><a class="header" href="#json-schema" id="json-schema">JSON Schema</a></h2>
@@ -7112,7 +7112,7 @@ Each event object has the following keys:</p>
 <p>To avoid losing events when the application is killed by the operating system, events are queued on disk as they are recorded.
 When the application starts up again, there is no good way to determine if the device has rebooted since the last run and therefore any timestamps recorded in the new run could not be guaranteed to be consistent with those recorded in the previous run.
 To get around this, on application startup, any queued events are immediately collected into pings and then cleared.
-These &quot;startup-triggered pings&quot; are likely to have a very short duration, as recorded in <code>ping_info.start_time</code> and <code>ping_info.end_time</code> (see <a href="dev/core/internal/../../../user/pings/index.html#The-ping_info-section">the <code>ping_info</code> section</a>).
+These &quot;startup-triggered pings&quot; are likely to have a very short duration, as recorded in <code>ping_info.start_time</code> and <code>ping_info.end_time</code> (see <a href="dev/core/internal/../../../user/pings/index.html#the-ping_info-section">the <code>ping_info</code> section</a>).
 The maximum timestamp of the events in these pings are quite likely to exceed the duration of the ping, but this is to be expected.</p>
 <h3><a class="header" href="#custom-distribution-1" id="custom-distribution-1">Custom Distribution</a></h3>
 <p>A <a href="dev/core/internal/../../../user/metrics/custom_distribution.html">Custom distribution</a> is represented as an object with the following fields.</p>
@@ -7281,9 +7281,9 @@ a Glean language binding (e.g. the Kotlin or Swift implementation) and a Glean e
     Glean core-&gt;&gt;Glean wrapper: Task::Done
 </pre>
 <p>Glean core will take care of file management, cleanup, rescheduling and rate limiting<sup class="footnote-reference"><a href="#1">1</a></sup>.</p>
-<blockquote>
-<p><sup class="footnote-reference"><a href="#1">1</a></sup> Rate limiting is achieved by limiting the amount of times a language binding is allowed to get a <code>Task::Upload(PingRequest)</code> from <code>get_upload_task</code> in a given time interval. Currently, the default limit is for a maximum of 10 upload tasks every 60 seconds and there are no exposed methods that allow changing this default (follow <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1647630">Bug 1647630</a> for updates). If the caller has reached the maximum tasks for the current interval, they will get a <code>Task::Wait</code> regardless if there are other <code>Task::Upload(PingRequest)</code>s queued.</p>
-</blockquote>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>Rate limiting is achieved by limiting the amount of times a language binding is allowed to get a <code>Task::Upload(PingRequest)</code> from <code>get_upload_task</code> in a given time interval. Currently, the default limit is for a maximum of 10 upload tasks every 60 seconds and there are no exposed methods that allow changing this default (follow <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1647630">Bug 1647630</a> for updates). If the caller has reached the maximum tasks for the current interval, they will get a <code>Task::Wait</code> regardless if there are other <code>Task::Upload(PingRequest)</code>s queued.</p>
+</div>
 <h2><a class="header" href="#available-apis" id="available-apis">Available APIs</a></h2>
 <div class="tabs">
 <div class="tabbar"></div>

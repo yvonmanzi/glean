@@ -170,11 +170,11 @@ and hyphens and a maximum of 30 characters.</p>
 <ul>
 <li><code>description</code> (required): A textual description describing the purpose of the ping. It may contain <a href="https://www.markdownguide.org/basic-syntax/">markdown syntax</a>.</li>
 <li><code>include_client_id</code> (required): A boolean indicating whether to include the
-<code>client_id</code> in the <a href="index.html#The-client_info-section"><code>client_info</code> section</a>).</li>
+<code>client_id</code> in the <a href="index.html#the-client_info-section"><code>client_info</code> section</a>).</li>
 <li><code>send_if_empty</code> (optional, default: false): A boolean indicating if the ping is sent if it contains no metric data.</li>
 <li><code>reasons</code> (optional, default: <code>{}</code>): The reasons that this ping may be sent. The keys are the reason codes, and the values are a textual description of each reason. The ping payload will (optionally) contain one of these reasons in the <code>ping_info.reason</code> field.</li>
 </ul>
-<p>In addition to these parameters, pings also support the parameters related to data review and expiration defined in <a href="../adding-new-metrics.html#common-metric-parameters">common metric parameters</a>: <code>description</code>, <code>notification_emails</code>, <code>bugs</code>, and <code>data_reviews</code>.</p>
+<p>In addition to these parameters, pings also support the parameters related to data review and expiration defined in <a href="../metric-parameters.html">common metric parameters</a>: <code>description</code>, <code>notification_emails</code>, <code>bugs</code>, and <code>data_reviews</code>.</p>
 <p>For example, to define a custom ping called <code>search</code> specifically for search information:</p>
 <pre><code class="language-YAML"># Required to indicate this is a `pings.yaml` file
 $schema: moz://mozilla.org/schemas/glean/pings/1-0-0
