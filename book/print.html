@@ -7403,11 +7403,10 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 <h2><a class="header" href="#this-week-in-glean-twig" id="this-week-in-glean-twig">This Week in Glean (TWiG)</a></h2>
 <p><a href="appendix/twig.html">This Week in Glean</a> is a series of blog posts that the Glean Team at Mozilla is using to try to communicate better about our work.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/appendix/glossary.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
-<p><a href="https://github.com/mozilla/glean/compare/v32.0.0...main">Full changelog</a></p>
+<p><a href="https://github.com/mozilla/glean/compare/v32.1.0...main">Full changelog</a></p>
 <ul>
 <li>General
 <ul>
-<li>The upload rate limiter has been changed from 10 pings per minute to 15 pings per minute.</li>
 <li>Move logic to limit the number of retries on ping uploading &quot;recoverable failures&quot; to glean-core. (<a href="https://github.com/mozilla/glean/pull/1120">#1120</a>)
 <ul>
 <li>The functionality to limit the number of retries in these cases was introduced to the Glean SDK in <code>v31.1.0</code>. The work done now was to move that logic to the glean-core in order to avoid code duplication throughout the language bindings.</li>
@@ -7451,6 +7450,15 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 <li>iOS
 <ul>
 <li>Changed logging to use <a href="https://developer.apple.com/documentation/os/logging"><code>OSLog</code></a> rather than a mix of <code>NSLog</code> and <code>print</code>. (<a href="https://github.com/mozilla/glean/pull/1133">#1133</a>)</li>
+</ul>
+</li>
+</ul>
+<h1><a class="header" href="#v3210-2020-08-17" id="v3210-2020-08-17">v32.1.0 (2020-08-17)</a></h1>
+<p><a href="https://github.com/mozilla/glean/compare/v32.0.0...v32.1.0">Full changelog</a></p>
+<ul>
+<li>General
+<ul>
+<li>The upload rate limiter has been changed from 10 pings per minute to 15 pings per minute.</li>
 </ul>
 </li>
 </ul>
