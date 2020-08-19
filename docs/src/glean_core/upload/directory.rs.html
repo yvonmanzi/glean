@@ -406,6 +406,15 @@
 <span id="406">406</span>
 <span id="407">407</span>
 <span id="408">408</span>
+<span id="409">409</span>
+<span id="410">410</span>
+<span id="411">411</span>
+<span id="412">412</span>
+<span id="413">413</span>
+<span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -630,12 +639,21 @@
                         <span class="kw">return</span> <span class="prelude-val">None</span>;
                     }
                     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">data</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">process_file</span>(<span class="ident">file_name</span>) {
-                        <span class="comment">// This may panic in case the path does not exist</span>
-                        <span class="comment">// or the user does not have permissions to read the file.</span>
-                        <span class="comment">// Both are extremely unlike so we can panic! here if that happens.</span>
-                        <span class="kw">let</span> <span class="ident">metadata</span> <span class="op">=</span> <span class="ident">fs</span>::<span class="ident">metadata</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>).<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
-                            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unable to read metadata for file: {}&quot;</span>, <span class="ident">path</span>.<span class="ident">display</span>())
-                        });
+                        <span class="kw">let</span> <span class="ident">metadata</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">fs</span>::<span class="ident">metadata</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>) {
+                            <span class="prelude-val">Ok</span>(<span class="ident">metadata</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">metadata</span>,
+                            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                <span class="comment">// There&#39;s a rare case where this races against a parallel deletion</span>
+                                <span class="comment">// of all pending ping files.</span>
+                                <span class="comment">// This could therefore fail, in which case we don&#39;t care about the</span>
+                                <span class="comment">// result and can ignore the ping, it&#39;s already been deleted.</span>
+                                <span class="ident">log</span>::<span class="macro">warn</span><span class="macro">!</span>(
+                                    <span class="string">&quot;Unable to read metadata for file: {}, error: {:?}&quot;</span>,
+                                    <span class="ident">path</span>.<span class="ident">display</span>(),
+                                    <span class="ident">e</span>
+                                );
+                                <span class="kw">return</span> <span class="prelude-val">None</span>;
+                            }
+                        };
                         <span class="kw">return</span> <span class="prelude-val">Some</span>((<span class="ident">metadata</span>, <span class="ident">data</span>));
                     }
                 };
