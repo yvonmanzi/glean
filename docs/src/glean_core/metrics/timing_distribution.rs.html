@@ -396,6 +396,7 @@
 <span id="396">396</span>
 <span id="397">397</span>
 <span id="398">398</span>
+<span id="399">399</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -421,9 +422,9 @@
 <span class="comment">// It is automatically adjusted based on the `time_unit` parameter</span>
 <span class="comment">// so that:</span>
 <span class="comment">//</span>
-<span class="comment">// - `nanosecond`: 10 minutes</span>
-<span class="comment">// - `microsecond`: ~6.94 days</span>
-<span class="comment">// - `millisecond`: ~19 years</span>
+<span class="comment">// - `nanosecond` - 10 minutes</span>
+<span class="comment">// - `microsecond` - ~6.94 days</span>
+<span class="comment">// - `millisecond` - ~19 years</span>
 <span class="kw">const</span> <span class="ident">MAX_SAMPLE_TIME</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">1000</span> <span class="op">*</span> <span class="number">1000</span> <span class="op">*</span> <span class="number">1000</span> <span class="op">*</span> <span class="number">60</span> <span class="op">*</span> <span class="number">10</span>;
 
 <span class="doccomment">/// Identifier for a running timer.</span>
@@ -522,7 +523,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">TimingDistributionMetric</span> {
-    <span class="doccomment">/// Create a new timing distribution metric.</span>
+    <span class="doccomment">/// Creates a new timing distribution metric.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">meta</span>: <span class="ident">CommonMetricData</span>, <span class="ident">time_unit</span>: <span class="ident">TimeUnit</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">meta</span>,
@@ -531,28 +532,29 @@
         }
     }
 
-    <span class="doccomment">/// Start tracking time for the provided metric.</span>
+    <span class="doccomment">/// Starts tracking time for the provided metric.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This records an error if it’s already tracking time (i.e. start was already</span>
     <span class="doccomment">/// called with no corresponding [stop]): in that case the original</span>
     <span class="doccomment">/// start time will be preserved.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Arguments</span>
+    <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `start_time` - Timestamp in nanoseconds.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Return value</span>
+    <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a unique `TimerId` for the new timer.</span>
+    <span class="doccomment">/// A unique `TimerId` for the new timer.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_start</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">start_time</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TimerId</span> {
         <span class="self">self</span>.<span class="ident">timings</span>.<span class="ident">set_start</span>(<span class="ident">start_time</span>)
     }
 
-    <span class="doccomment">/// Stop tracking time for the provided metric and associated timer id.</span>
-    <span class="doccomment">/// Add a count to the corresponding bucket in the timing distribution.</span>
+    <span class="doccomment">/// Stops tracking time for the provided metric and associated timer id.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Adds a count to the corresponding bucket in the timing distribution.</span>
     <span class="doccomment">/// This will record an error if no `start` was called.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Arguments</span>
+    <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `id` - The `TimerId` to associate with this timing. This allows</span>
     <span class="doccomment">///   for concurrent timing of events associated with different ids to the</span>
@@ -605,10 +607,10 @@
             });
     }
 
-    <span class="doccomment">/// Abort a previous `set_start` call. No error is recorded if no `set_start`</span>
+    <span class="doccomment">/// Aborts a previous `set_start` call. No error is recorded if no `set_start`</span>
     <span class="doccomment">/// was called.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Arguments</span>
+    <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `id` - The `TimerId` to associate with this timing. This allows</span>
     <span class="doccomment">///   for concurrent timing of events associated with different ids to the</span>
@@ -630,7 +632,7 @@
     <span class="doccomment">/// method was called on is using [TimeUnit.Second], then `samples` are assumed</span>
     <span class="doccomment">/// to be in that unit).</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Arguments</span>
+    <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `samples` - The vector holding the samples to be recorded by the metric.</span>
     <span class="doccomment">///</span>
@@ -702,7 +704,7 @@
 
     <span class="doccomment">/// **Test-only API (exported for FFI purposes).**</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Get the currently stored value as an integer.</span>
+    <span class="doccomment">/// Gets the currently stored value as an integer.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This doesn&#39;t clear the stored value.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_get_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">DistributionData</span><span class="op">&gt;</span> {
@@ -718,7 +720,7 @@
 
     <span class="doccomment">/// **Test-only API (exported for FFI purposes).**</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Get the currently-stored histogram as a JSON String of the serialized value.</span>
+    <span class="doccomment">/// Gets the currently-stored histogram as a JSON String of the serialized value.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This doesn&#39;t clear the stored value.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_get_value_as_json_string</span>(

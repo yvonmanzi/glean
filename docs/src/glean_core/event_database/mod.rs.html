@@ -451,6 +451,7 @@
 <span id="451">451</span>
 <span id="452">452</span>
 <span id="453">453</span>
+<span id="454">454</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -533,12 +534,12 @@
 }
 
 <span class="kw">impl</span> <span class="ident">EventDatabase</span> {
-    <span class="doccomment">/// Create a new event database.</span>
+    <span class="doccomment">/// Creates a new event database.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `data_path` - The directory to store events in. A new directory</span>
-    <span class="doccomment">///   `events` will be created inside of this directory.</span>
+    <span class="doccomment">/// * `events` - will be created inside of this directory.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">data_path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">Path</span>::<span class="ident">new</span>(<span class="ident">data_path</span>).<span class="ident">join</span>(<span class="string">&quot;events&quot;</span>);
         <span class="ident">create_dir_all</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>)<span class="question-mark">?</span>;
@@ -550,8 +551,9 @@
         })
     }
 
-    <span class="doccomment">/// Initialize events storage after Glean is fully initialized and ready to</span>
-    <span class="doccomment">/// send pings. This must be called once on application startup, e.g. from</span>
+    <span class="doccomment">/// Initializes events storage after Glean is fully initialized and ready to send pings.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This must be called once on application startup, e.g. from</span>
     <span class="doccomment">/// [Glean.initialize], but after we are ready to send pings, since this</span>
     <span class="doccomment">/// could potentially collect and send pings.</span>
     <span class="doccomment">///</span>
@@ -567,9 +569,9 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `glean` - The Glean instance.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// # Return value</span>
+    <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// `true` if at least one ping was generated, `false` otherwise.</span>
+    <span class="doccomment">/// Whether at least one ping was generated.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">flush_pending_events_on_startup</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">load_events_from_disk</span>() {
             <span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">send_all_events</span>(<span class="ident">glean</span>),
@@ -622,7 +624,7 @@
         <span class="ident">ping_sent</span>
     }
 
-    <span class="doccomment">/// Record an event in the desired stores.</span>
+    <span class="doccomment">/// Records an event in the desired stores.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
@@ -696,7 +698,7 @@
         }
     }
 
-    <span class="doccomment">/// Get a snapshot of the stored event data as a JsonValue.</span>
+    <span class="doccomment">/// Gets a snapshot of the stored event data as a JsonValue.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
@@ -705,7 +707,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// The an array of events, JSON encoded, if any.</span>
+    <span class="doccomment">/// A array of events, JSON encoded, if any. Otherwise `None`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">snapshot_as_json</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">store_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">clear_store</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">JsonValue</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">db</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">event_stores</span>.<span class="ident">write</span>().<span class="ident">unwrap</span>(); <span class="comment">// safe unwrap, only error case is poisoning</span>
@@ -749,7 +751,7 @@
         <span class="ident">result</span>
     }
 
-    <span class="doccomment">/// Clear all stored events, both in memory and on-disk.</span>
+    <span class="doccomment">/// Clears all stored events, both in memory and on-disk.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clear_all</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="comment">// safe unwrap, only error case is poisoning</span>
         <span class="self">self</span>.<span class="ident">event_stores</span>.<span class="ident">write</span>().<span class="ident">unwrap</span>().<span class="ident">clear</span>();
@@ -764,7 +766,7 @@
 
     <span class="doccomment">/// **Test-only API (exported for FFI purposes).**</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Return whether there are any events currently stored for the given even</span>
+    <span class="doccomment">/// Returns whether there are any events currently stored for the given even</span>
     <span class="doccomment">/// metric.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This doesn&#39;t clear the stored value.</span>
@@ -780,7 +782,7 @@
 
     <span class="doccomment">/// **Test-only API (exported for FFI purposes).**</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Get the vector of currently stored events for the given event metric in</span>
+    <span class="doccomment">/// Gets the vector of currently stored events for the given event metric in</span>
     <span class="doccomment">/// the given store.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This doesn&#39;t clear the stored value.</span>

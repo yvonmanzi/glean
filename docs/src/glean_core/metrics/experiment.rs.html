@@ -286,6 +286,8 @@
 <span id="286">286</span>
 <span id="287">287</span>
 <span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -324,10 +326,12 @@
 }
 
 <span class="kw">impl</span> <span class="ident">RecordedExperimentData</span> {
-    <span class="comment">// For JSON, we don&#39;t want to include {&quot;extra&quot;: null} -- we just want to skip</span>
-    <span class="comment">// extra entirely. Unfortunately, we can&#39;t use a serde field annotation for this,</span>
-    <span class="comment">// since that would break bincode serialization, which doesn&#39;t support skipping</span>
-    <span class="comment">// fields. Therefore, we use a custom serialization function just for JSON here.</span>
+    <span class="doccomment">/// Gets the recorded experiment data as a JSON value.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// For JSON, we don&#39;t want to include `{&quot;extra&quot;: null}` -- we just want to skip</span>
+    <span class="doccomment">/// `extra` entirely. Unfortunately, we can&#39;t use a serde field annotation for this,</span>
+    <span class="doccomment">/// since that would break bincode serialization, which doesn&#39;t support skipping</span>
+    <span class="doccomment">/// fields. Therefore, we use a custom serialization function just for JSON here.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_json</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">JsonValue</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">JsonMap</span>::<span class="ident">new</span>();
         <span class="ident">value</span>.<span class="ident">insert</span>(<span class="string">&quot;branch&quot;</span>.<span class="ident">to_string</span>(), <span class="macro">json</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">branch</span>));
@@ -358,9 +362,9 @@
 }
 
 <span class="kw">impl</span> <span class="ident">ExperimentMetric</span> {
-    <span class="doccomment">/// Create a new experiment metric.</span>
+    <span class="doccomment">/// Creates a new experiment metric.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Arguments</span>
+    <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `id` - the id of the experiment. Please note that this will be</span>
     <span class="doccomment">///          truncated to `MAX_EXPERIMENTS_IDS_LEN`, if needed.</span>
@@ -405,9 +409,9 @@
         <span class="ident">new_experiment</span>
     }
 
-    <span class="doccomment">/// Record an experiment as active.</span>
+    <span class="doccomment">/// Records an experiment as active.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Arguments</span>
+    <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `glean` - The Glean instance this metric belongs to.</span>
     <span class="doccomment">/// * `branch` -  the active branch of the experiment. Please note that this will be</span>
@@ -482,9 +486,9 @@
         <span class="ident">glean</span>.<span class="ident">storage</span>().<span class="ident">record</span>(<span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta</span>, <span class="kw-2">&amp;</span><span class="ident">value</span>)
     }
 
-    <span class="doccomment">/// Record an experiment as inactive.</span>
+    <span class="doccomment">/// Records an experiment as inactive.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Arguments</span>
+    <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `glean` - The Glean instance this metric belongs to.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_inactive</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>) {
@@ -503,7 +507,7 @@
 
     <span class="doccomment">/// **Test-only API (exported for FFI purposes).**</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Get the currently stored experiment data as a JSON representation of</span>
+    <span class="doccomment">/// Gets the currently stored experiment data as a JSON representation of</span>
     <span class="doccomment">/// the RecordedExperimentData.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This doesn&#39;t clear the stored value.</span>

@@ -444,7 +444,7 @@
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Consume the builder and create a PingRequest.</span>
+    <span class="doccomment">/// Consumes the builder and create a PingRequest.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Panics</span>
     <span class="doccomment">///</span>
@@ -491,7 +491,7 @@
 <span class="kw">impl</span> <span class="ident">PingRequest</span> {
     <span class="doccomment">/// Creates a new builder-style structure to help build a PingRequest.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Arguments</span>
+    <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `language_binding_name` - The name of the language used by the binding that instantiated this Glean instance.</span>
     <span class="doccomment">///                             This is used to build the User-Agent header value.</span>
@@ -510,7 +510,7 @@
             .<span class="ident">unwrap_or</span>(<span class="bool-val">false</span>)
     }
 
-    <span class="doccomment">/// Decompress and pretty-format the ping payload</span>
+    <span class="doccomment">/// Decompresses and pretty-format the ping payload</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Should be used for logging when required.</span>
     <span class="doccomment">/// This decompresses the payload in memory.</span>

@@ -250,7 +250,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Histogram</span><span class="op">&lt;</span><span class="ident">PrecomputedLinear</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Create a histogram with `bucket_count` linear buckets in the range `min` to `max`.</span>
+    <span class="doccomment">/// Creates a histogram with `bucket_count` linear buckets in the range `min` to `max`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">linear</span>(<span class="ident">min</span>: <span class="ident">u64</span>, <span class="ident">max</span>: <span class="ident">u64</span>, <span class="ident">bucket_count</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Histogram</span><span class="op">&lt;</span><span class="ident">PrecomputedLinear</span><span class="op">&gt;</span> {
         <span class="ident">Histogram</span> {
             <span class="ident">values</span>: <span class="ident">HashMap</span>::<span class="ident">new</span>(),

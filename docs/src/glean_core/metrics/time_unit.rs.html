@@ -114,6 +114,7 @@
 <span id="114">114</span>
 <span id="115">115</span>
 <span id="116">116</span>
+<span id="117">117</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -149,8 +150,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">TimeUnit</span> {
-    <span class="doccomment">/// How to format the given TimeUnit, truncating</span>
-    <span class="doccomment">/// the time if needed.</span>
+    <span class="doccomment">/// Formats the given time unit, truncating the time if needed.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">format_pattern</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
         <span class="kw">use</span> <span class="ident">TimeUnit</span>::<span class="kw-2">*</span>;
         <span class="kw">match</span> <span class="self">self</span> {
@@ -164,13 +164,13 @@
         }
     }
 
-    <span class="doccomment">/// Convert a duration to the requested time unit.</span>
+    <span class="doccomment">/// Converts a duration to the requested time unit.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Arguments</span>
+    <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `duration` - the duration to convert.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Return value</span>
+    <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// The integer representation of the converted duration.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">duration_convert</span>(<span class="self">self</span>, <span class="ident">duration</span>: <span class="ident">Duration</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
@@ -186,13 +186,13 @@
         }
     }
 
-    <span class="doccomment">/// Convert a duration in the given unit to nanoseconds.</span>
+    <span class="doccomment">/// Converts a duration in the given unit to nanoseconds.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Arguments</span>
+    <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `duration` - the duration to convert.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Return value</span>
+    <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// The integer representation of the nanosecond duration.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_nanos</span>(<span class="self">self</span>, <span class="ident">duration</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
@@ -211,10 +211,12 @@
     }
 }
 
-<span class="doccomment">/// Trait implementation for converting an integer value</span>
-<span class="doccomment">/// to a TimeUnit. This is used in the FFI code. Please</span>
-<span class="doccomment">/// note that values should match the ordering of the platform</span>
-<span class="doccomment">/// specific side of things (e.g. Kotlin implementation).</span>
+<span class="doccomment">/// Trait implementation for converting an integer value to a TimeUnit.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This is used in the FFI code.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Please note that values should match the ordering of the</span>
+<span class="doccomment">/// platform specific side of things (e.g. Kotlin implementation).</span>
 <span class="kw">impl</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TimeUnit</span> {
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">Error</span>;
 

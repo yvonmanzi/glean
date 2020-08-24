@@ -245,7 +245,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Histogram</span><span class="op">&lt;</span><span class="ident">Functional</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Create a histogram with functional buckets.</span>
+    <span class="doccomment">/// Creates a histogram with functional buckets.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">functional</span>(<span class="ident">log_base</span>: <span class="ident">f64</span>, <span class="ident">buckets_per_magnitude</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Histogram</span><span class="op">&lt;</span><span class="ident">Functional</span><span class="op">&gt;</span> {
         <span class="ident">Histogram</span> {
             <span class="ident">values</span>: <span class="ident">HashMap</span>::<span class="ident">new</span>(),
@@ -255,7 +255,7 @@
         }
     }
 
-    <span class="doccomment">/// Get a snapshot of all contiguous values.</span>
+    <span class="doccomment">/// Gets a snapshot of all contiguous values.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// **Caution** This is a more specific implementation of `snapshot_values` on functional</span>
     <span class="doccomment">/// histograms. `snapshot_values` cannot be used with those, due to buckets not being</span>

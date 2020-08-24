@@ -389,7 +389,6 @@
 <span id="389">389</span>
 <span id="390">390</span>
 <span id="391">391</span>
-<span id="392">392</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -435,12 +434,12 @@
 }
 
 <span class="kw">impl</span> <span class="ident">PingMaker</span> {
-    <span class="doccomment">/// Create a new PingMaker.</span>
+    <span class="doccomment">/// Creates a new PingMaker.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>
     }
 
-    <span class="doccomment">/// Get, and then increment, the sequence number for a given ping.</span>
+    <span class="doccomment">/// Gets, and then increments, the sequence number for a given ping.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This is crate-internal exclusively for enabling the migration tests.</span>
     <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn</span> <span class="ident">get_ping_seq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
@@ -469,7 +468,7 @@
         <span class="ident">current_seq</span> <span class="kw">as</span> <span class="ident">usize</span>
     }
 
-    <span class="doccomment">/// Get the formatted start and end times for this ping and update for the next ping.</span>
+    <span class="doccomment">/// Gets the formatted start and end times for this ping and update for the next ping.</span>
     <span class="kw">fn</span> <span class="ident">get_start_end_times</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">String</span>, <span class="ident">String</span>) {
         <span class="kw">let</span> <span class="ident">time_unit</span> <span class="op">=</span> <span class="ident">TimeUnit</span>::<span class="ident">Minute</span>;
 
@@ -556,13 +555,13 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Currently the only type of metadata we need to persist is the value of the `X-Debug-ID` header.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Arguments</span>
+    <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `glean` - the Glean instance to collect metadata from.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Return value</span>
+    <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a JSON object representing the metadata that needs to be persisted with this ping.</span>
+    <span class="doccomment">/// A JSON object representing the metadata that needs to be persisted with this ping.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// The structure of the metadata json is:</span>
     <span class="doccomment">///</span>
@@ -606,17 +605,17 @@
         }
     }
 
-    <span class="doccomment">/// Collect a snapshot for the given ping from storage and attach required meta information.</span>
+    <span class="doccomment">/// Collects a snapshot for the given ping from storage and attach required meta information.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Arguments</span>
+    <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `glean` - the Glean instance to collect data from.</span>
     <span class="doccomment">/// * `ping` - the ping to collect for.</span>
     <span class="doccomment">/// * `reason` - an optional reason code to include in the ping.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Return value</span>
+    <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a fully assembled JSON representation of the ping payload.</span>
+    <span class="doccomment">/// A fully assembled JSON representation of the ping payload.</span>
     <span class="doccomment">/// If there is no data stored for the ping, `None` is returned.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">collect</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -655,18 +654,17 @@
         <span class="prelude-val">Some</span>(<span class="ident">json</span>)
     }
 
-    <span class="doccomment">/// Collect a snapshot for the given ping from storage and attach required meta information,</span>
-    <span class="doccomment">/// returning it as a string containing JSON.</span>
+    <span class="doccomment">/// Collects a snapshot for the given ping from storage and attach required meta information.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Arguments</span>
+    <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `glean` - the Glean instance to collect data from.</span>
     <span class="doccomment">/// * `ping` - the ping to collect for.</span>
     <span class="doccomment">/// * `reason` - an optional reason code to include in the ping.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Return value</span>
+    <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a fully assembled ping payload in a string encoded as JSON.</span>
+    <span class="doccomment">/// A fully assembled ping payload in a string encoded as JSON.</span>
     <span class="doccomment">/// If there is no data stored for the ping, `None` is returned.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">collect_string</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -678,7 +676,7 @@
             .<span class="ident">map</span>(<span class="op">|</span><span class="ident">ping</span><span class="op">|</span> ::<span class="ident">serde_json</span>::<span class="ident">to_string_pretty</span>(<span class="kw-2">&amp;</span><span class="ident">ping</span>).<span class="ident">unwrap</span>())
     }
 
-    <span class="doccomment">/// Get path to a directory for ping storage.</span>
+    <span class="doccomment">/// Gets the path to a directory for ping storage.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// The directory will be created inside the `data_path`.</span>
     <span class="doccomment">/// The `pings` directory (and its parents) is created if it does not exist.</span>
@@ -695,7 +693,7 @@
         <span class="prelude-val">Ok</span>(<span class="ident">pings_dir</span>)
     }
 
-    <span class="doccomment">/// Get path to a directory for temporary storage.</span>
+    <span class="doccomment">/// Gets path to a directory for temporary storage.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// The directory will be created inside the `data_path`.</span>
     <span class="doccomment">/// The `tmp` directory (and its parents) is created if it does not exist.</span>
@@ -705,7 +703,7 @@
         <span class="prelude-val">Ok</span>(<span class="ident">pings_dir</span>)
     }
 
-    <span class="doccomment">/// Store a ping to disk in the pings directory.</span>
+    <span class="doccomment">/// Stores a ping to disk in the pings directory.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">store_ping</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>,
@@ -748,7 +746,7 @@
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="doccomment">/// Clear any pending pings in the queue.</span>
+    <span class="doccomment">/// Clears any pending pings in the queue.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clear_pending_pings</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">data_path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">pings_dir</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_pings_dir</span>(<span class="ident">data_path</span>, <span class="prelude-val">None</span>)<span class="question-mark">?</span>;
 

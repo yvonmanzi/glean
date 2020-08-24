@@ -693,14 +693,14 @@
 }
 
 <span class="kw">impl</span> <span class="ident">JweMetric</span> {
-    <span class="doccomment">/// Create a new JWE metric.</span>
+    <span class="doccomment">/// Creates a new JWE metric.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">meta</span>: <span class="ident">CommonMetricData</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> { <span class="ident">meta</span> }
     }
 
-    <span class="doccomment">/// Set to the specified JWE value.</span>
+    <span class="doccomment">/// Sets to the specified JWE value.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Arguments</span>
+    <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `glean` - the Glean instance this metric belongs to.</span>
     <span class="doccomment">/// * `value` - the [`compact representation`](https://tools.ietf.org/html/rfc7516#appendix-A.2.7) of a JWE value.</span>
@@ -718,9 +718,9 @@
         };
     }
 
-    <span class="doccomment">/// Build a JWE value from its elements and set to it.</span>
+    <span class="doccomment">/// Builds a JWE value from its elements and set to it.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Arguments</span>
+    <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `glean` - the Glean instance this metric belongs to.</span>
     <span class="doccomment">/// * `header` - the JWE Protected Header element.</span>
@@ -751,7 +751,7 @@
 
     <span class="doccomment">/// **Test-only API (exported for FFI purposes).**</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Get the currently stored value as a string.</span>
+    <span class="doccomment">/// Gets the currently stored value as a string.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This doesn&#39;t clear the stored value.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_get_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">storage_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
@@ -767,7 +767,7 @@
 
     <span class="doccomment">/// **Test-only API (exported for FFI purposes).**</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Get the currently stored JWE as a JSON String of the serialized value.</span>
+    <span class="doccomment">/// Gets the currently stored JWE as a JSON String of the serialized value.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This doesn&#39;t clear the stored value.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_get_value_as_json_string</span>(
