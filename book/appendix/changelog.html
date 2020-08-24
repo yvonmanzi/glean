@@ -159,7 +159,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
-<p><a href="https://github.com/mozilla/glean/compare/v32.1.0...main">Full changelog</a></p>
+<p><a href="https://github.com/mozilla/glean/compare/v32.1.1...main">Full changelog</a></p>
 <ul>
 <li>General
 <ul>
@@ -206,6 +206,16 @@
 <li>iOS
 <ul>
 <li>Changed logging to use <a href="https://developer.apple.com/documentation/os/logging"><code>OSLog</code></a> rather than a mix of <code>NSLog</code> and <code>print</code>. (<a href="https://github.com/mozilla/glean/pull/1133">#1133</a>)</li>
+</ul>
+</li>
+</ul>
+<h1><a class="header" href="#v3211-2020-08-24" id="v3211-2020-08-24">v32.1.1 (2020-08-24)</a></h1>
+<p><a href="https://github.com/mozilla/glean/compare/v32.1.0...v32.1.1">Full changelog</a></p>
+<ul>
+<li>Android
+<ul>
+<li>Support installing glean_parser in offline mode (<a href="https://github.com/mozilla/glean/pull/1065">#1065</a>).</li>
+<li>Fix a startup crash on some Android 8 (SDK=25) devices, due to a <a href="https://issuetracker.google.com/issues/110848122#comment17">bug in the Java compiler</a> (<a href="https://github.com/mozilla/glean/pull/1135">#1135</a>).</li>
 </ul>
 </li>
 </ul>

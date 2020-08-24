@@ -5215,10 +5215,10 @@ To override this, <code>ext.gleanYamlFiles</code> may be set to a list of explic
 <p>To build a Glean-using application in offline mode, do the following:</p>
 <ul>
 <li>
-<p>Install Python 3.6 or later and ensure it's on the <code>PATH</code>. </p>
+<p>Install Python 3.6 or later and ensure it's on the <code>PATH</code>.</p>
 <ul>
 <li>
-<p>On Linux, installing Python from your Linux distribution's package manager is usually sufficient. </p>
+<p>On Linux, installing Python from your Linux distribution's package manager is usually sufficient.</p>
 </li>
 <li>
 <p>On macOS, installing Python from <a href="https://brew.sh/"><code>homebrew</code></a> is known to work, but other package managers may also work.</p>
@@ -7778,7 +7778,7 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 <h2><a class="header" href="#this-week-in-glean-twig" id="this-week-in-glean-twig">This Week in Glean (TWiG)</a></h2>
 <p><a href="appendix/twig.html">This Week in Glean</a> is a series of blog posts that the Glean Team at Mozilla is using to try to communicate better about our work.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/appendix/glossary.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
-<p><a href="https://github.com/mozilla/glean/compare/v32.1.0...main">Full changelog</a></p>
+<p><a href="https://github.com/mozilla/glean/compare/v32.1.1...main">Full changelog</a></p>
 <ul>
 <li>General
 <ul>
@@ -7825,6 +7825,16 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 <li>iOS
 <ul>
 <li>Changed logging to use <a href="https://developer.apple.com/documentation/os/logging"><code>OSLog</code></a> rather than a mix of <code>NSLog</code> and <code>print</code>. (<a href="https://github.com/mozilla/glean/pull/1133">#1133</a>)</li>
+</ul>
+</li>
+</ul>
+<h1><a class="header" href="#v3211-2020-08-24" id="v3211-2020-08-24">v32.1.1 (2020-08-24)</a></h1>
+<p><a href="https://github.com/mozilla/glean/compare/v32.1.0...v32.1.1">Full changelog</a></p>
+<ul>
+<li>Android
+<ul>
+<li>Support installing glean_parser in offline mode (<a href="https://github.com/mozilla/glean/pull/1065">#1065</a>).</li>
+<li>Fix a startup crash on some Android 8 (SDK=25) devices, due to a <a href="https://issuetracker.google.com/issues/110848122#comment17">bug in the Java compiler</a> (<a href="https://github.com/mozilla/glean/pull/1135">#1135</a>).</li>
 </ul>
 </li>
 </ul>
