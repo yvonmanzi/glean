@@ -95,13 +95,13 @@ class HttpClientUploader(base_uploader.BaseUploader):
             log.error(f&#34;Could not upload telemetry due to malformed URL: &#39;{url}&#39; {e}&#34;)
             return ping_uploader.UnrecoverableFailure()
         except http.client.HTTPException as e:
-            log.error(f&#34;http.client.HTTPException while uploading ping: &#39;{url}&#39; {e}&#34;)
+            log.debug(f&#34;http.client.HTTPException while uploading ping: &#39;{url}&#39; {e}&#34;)
             return ping_uploader.RecoverableFailure()
         except socket.gaierror as e:
-            log.error(f&#34;socket.gaierror while uploading ping: &#39;{url}&#39; {e}&#34;)
+            log.debug(f&#34;socket.gaierror while uploading ping: &#39;{url}&#39; {e}&#34;)
             return ping_uploader.RecoverableFailure()
         except OSError as e:
-            log.error(f&#34;OSError while uploading ping: &#39;{url}&#39; {e}&#34;)
+            log.debug(f&#34;OSError while uploading ping: &#39;{url}&#39; {e}&#34;)
             return ping_uploader.RecoverableFailure()
         except Exception as e:
             log.error(f&#34;Unknown Exception while uploading ping: &#39;{url}&#39; {e}&#34;)
@@ -181,13 +181,13 @@ to the user-provided delegate.</p></section>
             log.error(f&#34;Could not upload telemetry due to malformed URL: &#39;{url}&#39; {e}&#34;)
             return ping_uploader.UnrecoverableFailure()
         except http.client.HTTPException as e:
-            log.error(f&#34;http.client.HTTPException while uploading ping: &#39;{url}&#39; {e}&#34;)
+            log.debug(f&#34;http.client.HTTPException while uploading ping: &#39;{url}&#39; {e}&#34;)
             return ping_uploader.RecoverableFailure()
         except socket.gaierror as e:
-            log.error(f&#34;socket.gaierror while uploading ping: &#39;{url}&#39; {e}&#34;)
+            log.debug(f&#34;socket.gaierror while uploading ping: &#39;{url}&#39; {e}&#34;)
             return ping_uploader.RecoverableFailure()
         except OSError as e:
-            log.error(f&#34;OSError while uploading ping: &#39;{url}&#39; {e}&#34;)
+            log.debug(f&#34;OSError while uploading ping: &#39;{url}&#39; {e}&#34;)
             return ping_uploader.RecoverableFailure()
         except Exception as e:
             log.error(f&#34;Unknown Exception while uploading ping: &#39;{url}&#39; {e}&#34;)
@@ -265,13 +265,13 @@ def upload(
         log.error(f&#34;Could not upload telemetry due to malformed URL: &#39;{url}&#39; {e}&#34;)
         return ping_uploader.UnrecoverableFailure()
     except http.client.HTTPException as e:
-        log.error(f&#34;http.client.HTTPException while uploading ping: &#39;{url}&#39; {e}&#34;)
+        log.debug(f&#34;http.client.HTTPException while uploading ping: &#39;{url}&#39; {e}&#34;)
         return ping_uploader.RecoverableFailure()
     except socket.gaierror as e:
-        log.error(f&#34;socket.gaierror while uploading ping: &#39;{url}&#39; {e}&#34;)
+        log.debug(f&#34;socket.gaierror while uploading ping: &#39;{url}&#39; {e}&#34;)
         return ping_uploader.RecoverableFailure()
     except OSError as e:
-        log.error(f&#34;OSError while uploading ping: &#39;{url}&#39; {e}&#34;)
+        log.debug(f&#34;OSError while uploading ping: &#39;{url}&#39; {e}&#34;)
         return ping_uploader.RecoverableFailure()
     except Exception as e:
         log.error(f&#34;Unknown Exception while uploading ping: &#39;{url}&#39; {e}&#34;)

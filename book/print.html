@@ -7815,6 +7815,7 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 <li><code>kebab-case</code> ping names are now converted to <code>snake_case</code> so they are available on the object returned by <code>load_pings</code>.</li>
 <li>For performance reasons, the <code>glinter</code> is no longer run as part of <code>glean.load_metrics()</code>. We recommend running <code>glinter</code> as part of your project's continuous integration instead.</li>
 <li>A <code>measure</code> context manager for conveniently measuring runtimes has been added to <code>TimespanMetricType</code> and <code>TimingDistributionMetricType</code>.</li>
+<li>Networking errors have changed from <code>ERROR</code> level to <code>DEBUG</code> level so they aren't displayed by default.</li>
 </ul>
 </li>
 <li>Android
