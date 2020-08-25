@@ -7778,7 +7778,9 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 <h2><a class="header" href="#this-week-in-glean-twig" id="this-week-in-glean-twig">This Week in Glean (TWiG)</a></h2>
 <p><a href="appendix/twig.html">This Week in Glean</a> is a series of blog posts that the Glean Team at Mozilla is using to try to communicate better about our work.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/appendix/glossary.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
-<p><a href="https://github.com/mozilla/glean/compare/v32.1.1...main">Full changelog</a></p>
+<p><a href="https://github.com/mozilla/glean/compare/v32.2.0...main">Full changelog</a></p>
+<h1><a class="header" href="#v3220-2020-08-25" id="v3220-2020-08-25">v32.2.0 (2020-08-25)</a></h1>
+<p><a href="https://github.com/mozilla/glean/compare/v32.1.1...v32.2.0">Full changelog</a></p>
 <ul>
 <li>General
 <ul>
@@ -7798,29 +7800,24 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 </li>
 <li>C#
 <ul>
-<li>Add support for the String List metric type.</li>
-<li>Enable generating the C# APIs using the glean_parser.</li>
-<li>Add support for the <code>EventMetricType</code> in C#.</li>
-<li>Add support for the <code>TimingDistributionMetricType</code> in C#.</li>
-<li>Implement the experiments API in C#.</li>
+<li>Add support for the String List metric type (<a href="https://github.com/mozilla/glean/pull/1108">#1108</a>).</li>
+<li>Enable generating the C# APIs using the glean_parser (<a href="https://github.com/mozilla/glean/pull/1092">#1092</a>).</li>
+<li>Add support for the <code>EventMetricType</code> in C# (<a href="https://github.com/mozilla/glean/pull/1129">#1129</a>).</li>
+<li>Add support for the <code>TimingDistributionMetricType</code> in C# (<a href="https://github.com/mozilla/glean/pull/1131">#1131</a>).</li>
+<li>Implement the experiments API in C# (<a href="https://github.com/mozilla/glean/pull/1145">#1145</a>).</li>
 </ul>
 </li>
 <li>Python
 <ul>
-<li>BUGFIX: Limit the number of retries for 5xx server errors on ping uploads. (<a href="https://github.com/mozilla/glean/pull/1120">#1120</a>)
+<li>BUGFIX: Limit the number of retries for 5xx server errors on ping uploads (<a href="https://github.com/mozilla/glean/pull/1120">#1120</a>).
 <ul>
 <li>This kinds of failures yield a &quot;recoverable error&quot;, which means the ping gets re-enqueued. That can cause infinite loops on the ping upload worker. For python we were incorrectly only limiting the number of retries for I/O errors, another type of &quot;recoverable error&quot;.</li>
 </ul>
 </li>
-<li><code>kebab-case</code> ping names are now converted to <code>snake_case</code> so they are available on the object returned by <code>load_pings</code>.</li>
-<li>For performance reasons, the <code>glinter</code> is no longer run as part of <code>glean.load_metrics()</code>. We recommend running <code>glinter</code> as part of your project's continuous integration instead.</li>
-<li>A <code>measure</code> context manager for conveniently measuring runtimes has been added to <code>TimespanMetricType</code> and <code>TimingDistributionMetricType</code>.</li>
-<li>Networking errors have changed from <code>ERROR</code> level to <code>DEBUG</code> level so they aren't displayed by default.</li>
-</ul>
-</li>
-<li>Android
-<ul>
-<li>Fix a startup crash on some Android 8 (SDK=25) devices, due to a <a href="https://issuetracker.google.com/issues/110848122#comment17">bug in the Java compiler</a>.</li>
+<li><code>kebab-case</code> ping names are now converted to <code>snake_case</code> so they are available on the object returned by <code>load_pings</code> (<a href="https://github.com/mozilla/glean/pull/1122">#1122</a>).</li>
+<li>For performance reasons, the <code>glinter</code> is no longer run as part of <code>glean.load_metrics()</code>. We recommend running <code>glinter</code> as part of your project's continuous integration instead (<a href="https://github.com/mozilla/glean/pull/1124">#1124</a>).</li>
+<li>A <code>measure</code> context manager for conveniently measuring runtimes has been added to <code>TimespanMetricType</code> and <code>TimingDistributionMetricType</code> (<a href="https://github.com/mozilla/glean/pull/1126">#1126</a>).</li>
+<li>Networking errors have changed from <code>ERROR</code> level to <code>DEBUG</code> level so they aren't displayed by default (<a href="https://github.com/mozilla/glean/pull/1166">#1166</a>).</li>
 </ul>
 </li>
 <li>iOS
