@@ -3,21 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.7.2" />
+<meta name="generator" content="pdoc 0.8.4" />
 <title>glean API documentation</title>
 <meta name="description" content="Top-level package for Glean SDK." />
-<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
-<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
-<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
-<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
 <style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
 </head>
 <body>
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>glean</code></h1>
+<h1 class="title">Package <code>glean</code></h1>
 </header>
 <section id="section-intro">
 <p>Top-level package for Glean SDK.</p>
@@ -76,7 +78,12 @@ __all__ = [
     &#34;Configuration&#34;,
     &#34;load_metrics&#34;,
     &#34;load_pings&#34;,
-]</code></pre>
+]
+
+
+# Tell pdoc3 to ignore the libglean_ffi.so, which is a Rust shared library, not
+# a Python extension module.
+__pdoc__ = {&#34;libglean_ffi&#34;: False}</code></pre>
 </details>
 </section>
 <section>
@@ -84,23 +91,23 @@ __all__ = [
 <dl>
 <dt><code class="name"><a title="glean.config" href="config.html">glean.config</a></code></dt>
 <dd>
-<section class="desc"><p>Provides an object to pass configuration to Glean.</p></section>
+<div class="desc"><p>Provides an object to pass configuration to Glean.</p></div>
 </dd>
 <dt><code class="name"><a title="glean.glean" href="glean.html">glean.glean</a></code></dt>
 <dd>
-<section class="desc"><p>The main Glean general API.</p></section>
+<div class="desc"><p>The main Glean general API.</p></div>
 </dd>
 <dt><code class="name"><a title="glean.metrics" href="metrics/index.html">glean.metrics</a></code></dt>
 <dd>
-<section class="desc"><p>This module contains all of the metric types.</p></section>
+<div class="desc"><p>This module contains all of the metric types.</p></div>
 </dd>
 <dt><code class="name"><a title="glean.net" href="net/index.html">glean.net</a></code></dt>
 <dd>
-<section class="desc"><p>Network functionality for Glean.</p></section>
+<div class="desc"><p>Network functionality for Glean.</p></div>
 </dd>
 <dt><code class="name"><a title="glean.testing" href="testing/index.html">glean.testing</a></code></dt>
 <dd>
-<section class="desc"><p>Utilities for writing unit tests involving Glean.</p></section>
+<div class="desc"><p>Utilities for writing unit tests involving Glean.</p></div>
 </dd>
 </dl>
 </section>
@@ -110,29 +117,26 @@ __all__ = [
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="glean.load_metrics"><code class="name flex">
-<span>def <span class="ident">load_metrics</span></span>(<span>filepath, config={})</span>
+<span>def <span class="ident">load_metrics</span></span>(<span>filepath: Union[str, pathlib.Path, List[Union[str, pathlib.Path]]], config: dict = {}) ‑> Any</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Load metrics from a <code>metrics.yaml</code> file.</p>
+<div class="desc"><p>Load metrics from a <code>metrics.yaml</code> file.</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>filepath</code></strong> :&ensp;<code>Path</code></dt>
 <dd>The path to the file, or a list of paths, to load.</dd>
-<dt><strong><a title="glean.config" href="config.html"><code>glean.config</code></a></strong> :&ensp;<code>dict</code></dt>
+<dt><strong><code>config</code></strong> :&ensp;<code>dict</code></dt>
 <dd>A dictionary of options that change parsing behavior.
 These are documented in glean_parser:
 <a href="https://mozilla.github.io/glean_parser/glean_parser.html#glean_parser.parser.parse_objects">https://mozilla.github.io/glean_parser/glean_parser.html#glean_parser.parser.parse_objects</a></dd>
 </dl>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><a title="glean.metrics" href="metrics/index.html"><code>glean.metrics</code></a></strong> :&ensp;<code>object</code></dt>
-<dd>An object containing a tree of metrics, as defined in
-the <code>metrics.yaml</code> file.</dd>
-</dl>
+<p>metrics (object): An object containing a tree of metrics, as defined in
+the <code>metrics.yaml</code> file.</p>
 <h2 id="example">Example</h2>
-<pre><code>&gt;&gt;&gt; metrics = load_metrics("metrics.yaml")
-&gt;&gt;&gt; metrics.category.name.set("value")
-</code></pre></section>
+<pre><code class="python">&gt;&gt;&gt; metrics = load_metrics(&quot;metrics.yaml&quot;)
+&gt;&gt;&gt; metrics.category.name.set(&quot;value&quot;)
+</code></pre></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -186,29 +190,26 @@ the <code>metrics.yaml</code> file.</dd>
 </details>
 </dd>
 <dt id="glean.load_pings"><code class="name flex">
-<span>def <span class="ident">load_pings</span></span>(<span>filepath, config={})</span>
+<span>def <span class="ident">load_pings</span></span>(<span>filepath: Union[str, pathlib.Path, List[Union[str, pathlib.Path]]], config: dict = {}) ‑> Any</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Load pings from a <code>pings.yaml</code> file.</p>
+<div class="desc"><p>Load pings from a <code>pings.yaml</code> file.</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>filepath</code></strong> :&ensp;<code>Path</code></dt>
 <dd>The path to the file, or a list of paths, to load.</dd>
-<dt><strong><a title="glean.config" href="config.html"><code>glean.config</code></a></strong> :&ensp;<code>dict</code></dt>
+<dt><strong><code>config</code></strong> :&ensp;<code>dict</code></dt>
 <dd>A dictionary of options that change parsing behavior.
 These are documented in glean_parser:
 <a href="https://mozilla.github.io/glean_parser/glean_parser.html#glean_parser.parser.parse_objects">https://mozilla.github.io/glean_parser/glean_parser.html#glean_parser.parser.parse_objects</a></dd>
 </dl>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>pings</code></strong> :&ensp;<code>object</code></dt>
-<dd>An object where the attributes are pings, as defined in
-the <code>pings.yaml</code> file.</dd>
-</dl>
+<p>pings (object): An object where the attributes are pings, as defined in
+the <code>pings.yaml</code> file.</p>
 <h2 id="example">Example</h2>
-<pre><code>&gt;&gt;&gt; pings = load_pings("pings.yaml")
+<pre><code class="python">&gt;&gt;&gt; pings = load_pings(&quot;pings.yaml&quot;)
 &gt;&gt;&gt; pings.baseline.submit()
-</code></pre></section>
+</code></pre></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -243,10 +244,10 @@ the <code>pings.yaml</code> file.</dd>
 <dl>
 <dt id="glean.Configuration"><code class="flex name class">
 <span>class <span class="ident">Configuration</span></span>
-<span>(</span><span>server_endpoint=None, channel=None, max_events=500, ping_uploader=None, allow_multiprocessing=True)</span>
+<span>(</span><span>server_endpoint: str = None, channel: Union[str, NoneType] = None, max_events: int = 500, ping_uploader: Union[<a title="glean.net.base_uploader.BaseUploader" href="net/base_uploader.html#glean.net.base_uploader.BaseUploader">BaseUploader</a>, NoneType] = None, allow_multiprocessing: bool = True)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Configuration values for Glean.</p>
+<div class="desc"><p>Configuration values for Glean.</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>server_endpoint</code></strong> :&ensp;<code>str</code></dt>
@@ -258,13 +259,13 @@ if known.</dd>
 <dt><strong><code>max_events</code></strong> :&ensp;<code>int</code></dt>
 <dd>Optional.The number of events to store before
 force-sending. Defaults to <code>DEFAULT_MAX_EVENTS</code>.</dd>
-<dt><strong><code>ping_uploader</code></strong> :&ensp;<a title="glean.net.BaseUploader" href="net/index.html#glean.net.BaseUploader"><code>BaseUploader</code></a></dt>
+<dt><strong><code>ping_uploader</code></strong> :&ensp;<code><a title="glean.net.BaseUploader" href="net/index.html#glean.net.BaseUploader">BaseUploader</a></code></dt>
 <dd>Optional. The ping uploader
-implementation. Defaults to <a title="glean.net.HttpClientUploader" href="net/index.html#glean.net.HttpClientUploader"><code>HttpClientUploader</code></a>.</dd>
+implementation. Defaults to <code><a title="glean.net.HttpClientUploader" href="net/index.html#glean.net.HttpClientUploader">HttpClientUploader</a></code>.</dd>
 <dt><strong><code>allow_multiprocessing</code></strong> :&ensp;<code>bool</code></dt>
 <dd>When True (default), use a subprocess
 to offload some work (such as ping uploading).</dd>
-</dl></section>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -345,9 +346,9 @@ to offload some work (such as ping uploading).</dd>
 </details>
 <h3>Instance variables</h3>
 <dl>
-<dt id="glean.Configuration.channel"><code class="name">var <span class="ident">channel</span></code></dt>
+<dt id="glean.Configuration.channel"><code class="name">var <span class="ident">channel</span> : Union[str, NoneType]</code></dt>
 <dd>
-<section class="desc"><p>The release channel the application is on, if known.</p></section>
+<div class="desc"><p>The release channel the application is on, if known.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -358,9 +359,9 @@ def channel(self) -&gt; Optional[str]:
     return self._channel</code></pre>
 </details>
 </dd>
-<dt id="glean.Configuration.max_events"><code class="name">var <span class="ident">max_events</span></code></dt>
+<dt id="glean.Configuration.max_events"><code class="name">var <span class="ident">max_events</span> : int</code></dt>
 <dd>
-<section class="desc"><p>The number of events to store before force-sending.</p></section>
+<div class="desc"><p>The number of events to store before force-sending.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -371,9 +372,9 @@ def max_events(self) -&gt; int:
     return self._max_events</code></pre>
 </details>
 </dd>
-<dt id="glean.Configuration.ping_uploader"><code class="name">var <span class="ident">ping_uploader</span></code></dt>
+<dt id="glean.Configuration.ping_uploader"><code class="name">var <span class="ident">ping_uploader</span> : <a title="glean.net.base_uploader.BaseUploader" href="net/base_uploader.html#glean.net.base_uploader.BaseUploader">BaseUploader</a></code></dt>
 <dd>
-<section class="desc"><p>The ping uploader implementation.</p></section>
+<div class="desc"><p>The ping uploader implementation.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -384,9 +385,9 @@ def ping_uploader(self) -&gt; net.BaseUploader:
     return self._ping_uploader</code></pre>
 </details>
 </dd>
-<dt id="glean.Configuration.server_endpoint"><code class="name">var <span class="ident">server_endpoint</span></code></dt>
+<dt id="glean.Configuration.server_endpoint"><code class="name">var <span class="ident">server_endpoint</span> : str</code></dt>
 <dd>
-<section class="desc"><p>The server pings are sent to.</p></section>
+<div class="desc"><p>The server pings are sent to.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -401,19 +402,18 @@ def server_endpoint(self) -&gt; str:
 </dd>
 <dt id="glean.Glean"><code class="flex name class">
 <span>class <span class="ident">Glean</span></span>
-<span>(</span><span>*args, **kwargs)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>The main Glean API.</p>
+<div class="desc"><p>The main Glean API.</p>
 <p>Before any data collection can take place, the Glean SDK <strong>must</strong> be
 initialized from the application.</p>
-<pre><code>&gt;&gt;&gt; Glean.initialize(
-...     application_id="my-app",
-...     application_version="0.0.0",
+<pre><code class="python">&gt;&gt;&gt; Glean.initialize(
+...     application_id=&quot;my-app&quot;,
+...     application_version=&quot;0.0.0&quot;,
 ...     upload_enabled=True,
-...     data_dir: Path.home() / ".glean"
+...     data_dir: Path.home() / &quot;.glean&quot;
 ... )
-</code></pre></section>
+</code></pre></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -931,10 +931,10 @@ initialized from the application.</p>
 <h3>Static methods</h3>
 <dl>
 <dt id="glean.Glean.get_data_dir"><code class="name flex">
-<span>def <span class="ident">get_data_dir</span></span>(<span>)</span>
+<span>def <span class="ident">get_data_dir</span></span>(<span>) ‑> pathlib.Path</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Get the data directory for Glean.</p></section>
+<div class="desc"><p>Get the data directory for Glean.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -948,10 +948,10 @@ def get_data_dir(cls) -&gt; Path:
 </details>
 </dd>
 <dt id="glean.Glean.initialize"><code class="name flex">
-<span>def <span class="ident">initialize</span></span>(<span>application_id, application_version, upload_enabled, configuration=None, data_dir=None, application_build_id=None)</span>
+<span>def <span class="ident">initialize</span></span>(<span>application_id: str, application_version: str, upload_enabled: bool, configuration: Union[<a title="glean.config.Configuration" href="config.html#glean.config.Configuration">Configuration</a>, NoneType] = None, data_dir: pathlib.Path = None, application_build_id: Union[str, NoneType] = None) ‑> NoneType</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Initialize the Glean SDK.</p>
+<div class="desc"><p>Initialize the Glean SDK.</p>
 <p>This should only be initialized once by the application, and not by
 libraries using the Glean SDK. A message is logged to error and no
 changes are made to the state if initialize is called a more than
@@ -969,7 +969,7 @@ meaningful.</dd>
 <dd>Controls whether telemetry is enabled. If
 disabled, all persisted metrics, events and queued pings
 (except first_run_date) are cleared.</dd>
-<dt><strong><code>configuration</code></strong> :&ensp;<a title="glean.config.Configuration" href="config.html#glean.config.Configuration"><code>Configuration</code></a></dt>
+<dt><strong><code>configuration</code></strong> :&ensp;<code><a title="glean.config.Configuration" href="config.html#glean.config.Configuration">Configuration</a></code></dt>
 <dd>(optional) An object with
 global settings.</dd>
 <dt><strong><code>data_dir</code></strong> :&ensp;<code>pathlib.Path</code></dt>
@@ -977,7 +977,7 @@ global settings.</dd>
 <dt><strong><code>application_build_id</code></strong> :&ensp;<code>str</code></dt>
 <dd>(optional) The build identifier generated
 by the CI system (e.g. "1234/A").</dd>
-</dl></section>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1100,10 +1100,10 @@ def initialize(
 </details>
 </dd>
 <dt id="glean.Glean.is_initialized"><code class="name flex">
-<span>def <span class="ident">is_initialized</span></span>(<span>)</span>
+<span>def <span class="ident">is_initialized</span></span>(<span>) ‑> bool</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Returns True if the Glean SDK has been initialized.</p></section>
+<div class="desc"><p>Returns True if the Glean SDK has been initialized.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1117,10 +1117,10 @@ def is_initialized(cls) -&gt; bool:
 </details>
 </dd>
 <dt id="glean.Glean.register_ping_type"><code class="name flex">
-<span>def <span class="ident">register_ping_type</span></span>(<span>ping)</span>
+<span>def <span class="ident">register_ping_type</span></span>(<span>ping: PingType)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Register the ping type in the registry.</p></section>
+<div class="desc"><p>Register the ping type in the registry.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1142,10 +1142,10 @@ def register_ping_type(cls, ping: &#34;PingType&#34;) -&gt; None:
 </details>
 </dd>
 <dt id="glean.Glean.set_experiment_active"><code class="name flex">
-<span>def <span class="ident">set_experiment_active</span></span>(<span>experiment_id, branch, extra=None)</span>
+<span>def <span class="ident">set_experiment_active</span></span>(<span>experiment_id: str, branch: str, extra: Union[Dict[str, str], NoneType] = None) ‑> NoneType</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Indicate that an experiment is running. Glean will then add an
+<div class="desc"><p>Indicate that an experiment is running. Glean will then add an
 experiment annotation to the environment which is sent with pings. This
 information is not persisted between runs.</p>
 <h2 id="args">Args</h2>
@@ -1157,7 +1157,7 @@ bytes)</dd>
 <dd>The experiment branch (maximum 100 bytes)</dd>
 </dl>
 <p>extra (dict of str -&gt; str): Optional metadata to output with the
-ping</p></section>
+ping</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1196,15 +1196,15 @@ def set_experiment_active(
 </details>
 </dd>
 <dt id="glean.Glean.set_experiment_inactive"><code class="name flex">
-<span>def <span class="ident">set_experiment_inactive</span></span>(<span>experiment_id)</span>
+<span>def <span class="ident">set_experiment_inactive</span></span>(<span>experiment_id: str) ‑> NoneType</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Indicate that the experiment is no longer running.</p>
+<div class="desc"><p>Indicate that the experiment is no longer running.</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>experiment_id</code></strong> :&ensp;<code>str</code></dt>
 <dd>The id of the experiment to deactivate.</dd>
-</dl></section>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1226,10 +1226,10 @@ def set_experiment_inactive(cls, experiment_id: str) -&gt; None:
 </details>
 </dd>
 <dt id="glean.Glean.set_upload_enabled"><code class="name flex">
-<span>def <span class="ident">set_upload_enabled</span></span>(<span>enabled)</span>
+<span>def <span class="ident">set_upload_enabled</span></span>(<span>enabled: bool) ‑> NoneType</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Enable or disable Glean collection and upload.</p>
+<div class="desc"><p>Enable or disable Glean collection and upload.</p>
 <p>Metric collection is enabled by default.</p>
 <p>When uploading is disabled, metrics aren't recorded at all and no data
 is uploaded.</p>
@@ -1239,7 +1239,7 @@ is uploaded.</p>
 <dl>
 <dt><strong><code>enabled</code></strong> :&ensp;<code>bool</code></dt>
 <dd>When True, enable metric collection.</dd>
-</dl></section>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1291,17 +1291,17 @@ def set_upload_enabled(cls, enabled: bool) -&gt; None:
 </details>
 </dd>
 <dt id="glean.Glean.test_collect"><code class="name flex">
-<span>def <span class="ident">test_collect</span></span>(<span>ping, reason=None)</span>
+<span>def <span class="ident">test_collect</span></span>(<span>ping: PingType, reason: Union[str, NoneType] = None) ‑> str</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Collect a ping and return as a string.</p>
+<div class="desc"><p>Collect a ping and return as a string.</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>ping</code></strong></dt>
 <dd>The PingType to submit</dd>
 <dt><strong><code>reason</code></strong> :&ensp;<code>str</code>, optional</dt>
 <dd>The reason code to record in the ping.</dd>
-</dl></section>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1323,21 +1323,18 @@ def test_collect(cls, ping: &#34;PingType&#34;, reason: Optional[str] = None) -&
 </details>
 </dd>
 <dt id="glean.Glean.test_get_experiment_data"><code class="name flex">
-<span>def <span class="ident">test_get_experiment_data</span></span>(<span>experiment_id)</span>
+<span>def <span class="ident">test_get_experiment_data</span></span>(<span>experiment_id: str) ‑> 'RecordedExperimentData'</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Returns the stored data for the requested active experiment, for testing purposes only.</p>
+<div class="desc"><p>Returns the stored data for the requested active experiment, for testing purposes only.</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>experiment_id</code></strong> :&ensp;<code>str</code></dt>
 <dd>The id of the experiment to look for.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>experiment_data</code></strong> :&ensp;<code>RecordedExperimentData</code></dt>
-<dd>The data associated with
-the experiment.</dd>
-</dl></section>
+<p>experiment_data (RecordedExperimentData): The data associated with
+the experiment.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1368,10 +1365,10 @@ def test_get_experiment_data(cls, experiment_id: str) -&gt; &#34;RecordedExperim
 </details>
 </dd>
 <dt id="glean.Glean.test_has_ping_type"><code class="name flex">
-<span>def <span class="ident">test_has_ping_type</span></span>(<span>ping_name)</span>
+<span>def <span class="ident">test_has_ping_type</span></span>(<span>ping_name: str) ‑> bool</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Returns True if a ping by this name is in the ping registry.</p></section>
+<div class="desc"><p>Returns True if a ping by this name is in the ping registry.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1387,21 +1384,18 @@ def test_has_ping_type(cls, ping_name: str) -&gt; bool:
 </details>
 </dd>
 <dt id="glean.Glean.test_is_experiment_active"><code class="name flex">
-<span>def <span class="ident">test_is_experiment_active</span></span>(<span>experiment_id)</span>
+<span>def <span class="ident">test_is_experiment_active</span></span>(<span>experiment_id: str) ‑> bool</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Tests whether an experiment is active, for testing purposes only.</p>
+<div class="desc"><p>Tests whether an experiment is active, for testing purposes only.</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>experiment_id</code></strong> :&ensp;<code>str</code></dt>
 <dd>The id of the experiment to look for.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>is_active</code></strong> :&ensp;<code>bool</code></dt>
-<dd>If the experiement is active and reported in
-pings.</dd>
-</dl></section>
+<p>is_active (bool): If the experiement is active and reported in
+pings.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1430,7 +1424,7 @@ def test_is_experiment_active(cls, experiment_id: str) -&gt; bool:
 <dl>
 <dt id="glean.Glean.configuration"><code class="name">var <span class="ident">configuration</span></code></dt>
 <dd>
-<section class="desc"><p>Decorator for creating a property on a class (rather than an instance).</p></section>
+<div class="desc"><p>Decorator for creating a property on a class (rather than an instance).</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1499,9 +1493,7 @@ def test_is_experiment_active(cls, experiment_id: str) -&gt; bool:
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.2</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.4</a>.</p>
 </footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad()</script>
 </body>
 </html>
