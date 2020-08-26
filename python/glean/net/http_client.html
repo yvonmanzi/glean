@@ -90,7 +90,10 @@ class HttpClientUploader(base_uploader.BaseUploader):
 
         try:
             conn.request(
-                &#34;POST&#34;, parsed_url.path, body=data, headers=dict(headers),
+                &#34;POST&#34;,
+                parsed_url.path,
+                body=data,
+                headers=dict(headers),
             )
             response = conn.getresponse()
         except http.client.InvalidURL as e:
@@ -176,7 +179,10 @@ to the user-provided delegate.</p></div>
 
         try:
             conn.request(
-                &#34;POST&#34;, parsed_url.path, body=data, headers=dict(headers),
+                &#34;POST&#34;,
+                parsed_url.path,
+                body=data,
+                headers=dict(headers),
             )
             response = conn.getresponse()
         except http.client.InvalidURL as e:
@@ -260,7 +266,10 @@ def upload(
 
     try:
         conn.request(
-            &#34;POST&#34;, parsed_url.path, body=data, headers=dict(headers),
+            &#34;POST&#34;,
+            parsed_url.path,
+            body=data,
+            headers=dict(headers),
         )
         response = conn.getresponse()
     except http.client.InvalidURL as e:

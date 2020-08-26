@@ -170,7 +170,9 @@ class StringMetricType:
             ping_name = self._send_in_pings[0]
 
         return _ffi.lib.glean_string_test_get_num_recorded_errors(
-            self._handle, error_type.value, _ffi.ffi_encode_string(ping_name),
+            self._handle,
+            error_type.value,
+            _ffi.ffi_encode_string(ping_name),
         )
 
 
@@ -330,7 +332,9 @@ enforced.</p></div>
             ping_name = self._send_in_pings[0]
 
         return _ffi.lib.glean_string_test_get_num_recorded_errors(
-            self._handle, error_type.value, _ffi.ffi_encode_string(ping_name),
+            self._handle,
+            error_type.value,
+            _ffi.ffi_encode_string(ping_name),
         )</code></pre>
 </details>
 <h3>Methods</h3>
@@ -405,7 +409,9 @@ the given error type.</p></div>
         ping_name = self._send_in_pings[0]
 
     return _ffi.lib.glean_string_test_get_num_recorded_errors(
-        self._handle, error_type.value, _ffi.ffi_encode_string(ping_name),
+        self._handle,
+        error_type.value,
+        _ffi.ffi_encode_string(ping_name),
     )</code></pre>
 </details>
 </dd>

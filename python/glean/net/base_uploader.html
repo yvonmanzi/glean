@@ -81,7 +81,9 @@ class BaseUploader(ping_uploader.PingUploader):
         &#34;&#34;&#34;
 
         return self.upload(
-            url=config.server_endpoint + path, data=data, headers=headers,
+            url=config.server_endpoint + path,
+            data=data,
+            headers=headers,
         )
 
 
@@ -139,7 +141,9 @@ to the user-provided delegate.</p></div>
         &#34;&#34;&#34;
 
         return self.upload(
-            url=config.server_endpoint + path, data=data, headers=headers,
+            url=config.server_endpoint + path,
+            data=data,
+            headers=headers,
         )</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -204,7 +208,9 @@ to the user-provided delegate.</p></div>
     &#34;&#34;&#34;
 
     return self.upload(
-        url=config.server_endpoint + path, data=data, headers=headers,
+        url=config.server_endpoint + path,
+        data=data,
+        headers=headers,
     )</code></pre>
 </details>
 </dd>
