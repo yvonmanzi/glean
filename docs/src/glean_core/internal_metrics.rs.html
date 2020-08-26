@@ -111,6 +111,29 @@
 <span id="111">111</span>
 <span id="112">112</span>
 <span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -222,6 +245,29 @@
                 <span class="ident">disabled</span>: <span class="bool-val">false</span>,
                 <span class="ident">dynamic_label</span>: <span class="prelude-val">None</span>,
             }),
+        }
+    }
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">DatabaseMetrics</span> {
+    <span class="kw">pub</span> <span class="ident">size</span>: <span class="ident">MemoryDistributionMetric</span>,
+}
+
+<span class="kw">impl</span> <span class="ident">DatabaseMetrics</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DatabaseMetrics</span> {
+        <span class="ident">DatabaseMetrics</span> {
+            <span class="ident">size</span>: <span class="ident">MemoryDistributionMetric</span>::<span class="ident">new</span>(
+                <span class="ident">CommonMetricData</span> {
+                    <span class="ident">name</span>: <span class="string">&quot;size&quot;</span>.<span class="ident">into</span>(),
+                    <span class="ident">category</span>: <span class="string">&quot;glean.database&quot;</span>.<span class="ident">into</span>(),
+                    <span class="ident">send_in_pings</span>: <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;metrics&quot;</span>.<span class="ident">into</span>()],
+                    <span class="ident">lifetime</span>: <span class="ident">Lifetime</span>::<span class="ident">Ping</span>,
+                    <span class="ident">disabled</span>: <span class="bool-val">false</span>,
+                    <span class="ident">dynamic_label</span>: <span class="prelude-val">None</span>,
+                },
+                <span class="ident">MemoryUnit</span>::<span class="ident">Byte</span>,
+            ),
         }
     }
 }
