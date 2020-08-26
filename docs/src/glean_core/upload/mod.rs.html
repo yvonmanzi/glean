@@ -1258,6 +1258,65 @@
 <span id="1258">1258</span>
 <span id="1259">1259</span>
 <span id="1260">1260</span>
+<span id="1261">1261</span>
+<span id="1262">1262</span>
+<span id="1263">1263</span>
+<span id="1264">1264</span>
+<span id="1265">1265</span>
+<span id="1266">1266</span>
+<span id="1267">1267</span>
+<span id="1268">1268</span>
+<span id="1269">1269</span>
+<span id="1270">1270</span>
+<span id="1271">1271</span>
+<span id="1272">1272</span>
+<span id="1273">1273</span>
+<span id="1274">1274</span>
+<span id="1275">1275</span>
+<span id="1276">1276</span>
+<span id="1277">1277</span>
+<span id="1278">1278</span>
+<span id="1279">1279</span>
+<span id="1280">1280</span>
+<span id="1281">1281</span>
+<span id="1282">1282</span>
+<span id="1283">1283</span>
+<span id="1284">1284</span>
+<span id="1285">1285</span>
+<span id="1286">1286</span>
+<span id="1287">1287</span>
+<span id="1288">1288</span>
+<span id="1289">1289</span>
+<span id="1290">1290</span>
+<span id="1291">1291</span>
+<span id="1292">1292</span>
+<span id="1293">1293</span>
+<span id="1294">1294</span>
+<span id="1295">1295</span>
+<span id="1296">1296</span>
+<span id="1297">1297</span>
+<span id="1298">1298</span>
+<span id="1299">1299</span>
+<span id="1300">1300</span>
+<span id="1301">1301</span>
+<span id="1302">1302</span>
+<span id="1303">1303</span>
+<span id="1304">1304</span>
+<span id="1305">1305</span>
+<span id="1306">1306</span>
+<span id="1307">1307</span>
+<span id="1308">1308</span>
+<span id="1309">1309</span>
+<span id="1310">1310</span>
+<span id="1311">1311</span>
+<span id="1312">1312</span>
+<span id="1313">1313</span>
+<span id="1314">1314</span>
+<span id="1315">1315</span>
+<span id="1316">1316</span>
+<span id="1317">1317</span>
+<span id="1318">1318</span>
+<span id="1319">1319</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -1291,6 +1350,9 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Limiting this is necessary to avoid infinite loops on requesting upload tasks.</span>
 <span class="kw">const</span> <span class="ident">MAX_RECOVERABLE_FAILURES_PER_UPLOADING_WINDOW</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="number">3</span>;
+
+<span class="doccomment">/// The maximum PingUploadTask::Wait allowed in a row.</span>
+<span class="kw">const</span> <span class="ident">MAX_WAIT_ATTEMPTS</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="number">3</span>;
 
 <span class="comment">// The maximum size in bytes a ping body may have to be eligible for upload.</span>
 <span class="kw">const</span> <span class="ident">PING_BODY_MAX_SIZE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">1024</span> <span class="op">*</span> <span class="number">1024</span>; <span class="comment">// 1 MB</span>
@@ -1388,8 +1450,9 @@
     <span class="ident">Wait</span>,
     <span class="doccomment">/// A flag signaling that requester doesn&#39;t need to request any more upload tasks at this moment.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// There are two possibilities for this scenario:</span>
+    <span class="doccomment">/// There are three possibilities for this scenario:</span>
     <span class="doccomment">/// * Pending pings queue is empty, no more pings to request;</span>
+    <span class="doccomment">/// * Requester has gotten more than MAX_WAIT_ATTEMPTS (3, by default) `PingUploadTask::Wait` responses in a row;</span>
     <span class="doccomment">/// * Requester has reported more than MAX_RECOVERABLE_FAILURES_PER_UPLOADING_WINDOW</span>
     <span class="doccomment">///   recoverable upload failures on the same uploading window[1]</span>
     <span class="doccomment">///   and should stop requesting at this moment.</span>
@@ -1412,6 +1475,8 @@
     <span class="ident">cached_pings</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">RwLock</span><span class="op">&lt;</span><span class="ident">PingPayloadsByDirectory</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="doccomment">/// The number of upload failures for the current uploading window.</span>
     <span class="ident">recoverable_failure_count</span>: <span class="ident">AtomicU32</span>,
+    <span class="doccomment">/// The number or times in a row a user has received a `PingUploadTask::Wait` response.</span>
+    <span class="ident">wait_attempt_count</span>: <span class="ident">AtomicU32</span>,
     <span class="doccomment">/// A ping counter to help rate limit the ping uploads.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// To keep resource usage in check,</span>
@@ -1476,13 +1541,14 @@
             <span class="ident">processed_pending_pings</span>,
             <span class="ident">cached_pings</span>,
             <span class="ident">recoverable_failure_count</span>: <span class="ident">AtomicU32</span>::<span class="ident">new</span>(<span class="number">0</span>),
+            <span class="ident">wait_attempt_count</span>: <span class="ident">AtomicU32</span>::<span class="ident">new</span>(<span class="number">0</span>),
             <span class="ident">rate_limiter</span>: <span class="prelude-val">None</span>,
             <span class="ident">language_binding_name</span>: <span class="ident">language_binding_name</span>.<span class="ident">into</span>(),
             <span class="ident">upload_metrics</span>: <span class="ident">UploadMetrics</span>::<span class="ident">new</span>(),
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">has_processed_pings_dir</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">processed_pending_pings</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">processed_pending_pings</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">SeqCst</span>)
     }
 
@@ -1490,8 +1556,8 @@
         <span class="self">self</span>.<span class="ident">recoverable_failure_count</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">SeqCst</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">reset_recoverable_failure_count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="self">self</span>.<span class="ident">recoverable_failure_count</span>.<span class="ident">store</span>(<span class="number">0</span>, <span class="ident">Ordering</span>::<span class="ident">SeqCst</span>);
+    <span class="kw">fn</span> <span class="ident">wait_attempt_count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+        <span class="self">self</span>.<span class="ident">wait_attempt_count</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">SeqCst</span>)
     }
 
     <span class="doccomment">/// Attempts to build a ping request from a ping file payload.</span>
@@ -1589,49 +1655,51 @@
             .<span class="ident">write</span>()
             .<span class="ident">expect</span>(<span class="string">&quot;Can&#39;t write to pending pings cache.&quot;</span>);
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pending_pings_directory_size</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">0</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">deleting</span> <span class="op">=</span> <span class="bool-val">false</span>;
-        <span class="comment">// The pending pings vector is sorted by date in ascending order (oldest -&gt; newest).</span>
-        <span class="comment">// We need to calculate the size of the pending pings directory</span>
-        <span class="comment">// and delete the **oldest** pings in case quota is reached.</span>
-        <span class="comment">// Thus, we reverse the order of the pending pings vector,</span>
-        <span class="comment">// so that we iterate in descending order (newest -&gt; oldest).</span>
-        <span class="ident">cached_pings</span>.<span class="ident">pending_pings</span>.<span class="ident">reverse</span>();
-        <span class="ident">cached_pings</span>.<span class="ident">pending_pings</span>.<span class="ident">retain</span>(<span class="op">|</span>(<span class="ident">file_size</span>, (<span class="ident">document_id</span>, <span class="kw">_</span>, <span class="kw">_</span>, <span class="kw">_</span>))<span class="op">|</span> {
-            <span class="ident">pending_pings_directory_size</span> <span class="op">+</span><span class="op">=</span> <span class="ident">file_size</span>;
-            <span class="kw">if</span> <span class="ident">pending_pings_directory_size</span> <span class="op">&gt;</span> <span class="ident">quota</span> {
-                <span class="ident">log</span>::<span class="macro">warn</span><span class="macro">!</span>(
-                    <span class="string">&quot;Pending pings directory has reached the size quota of {} bytes, outstanding pings will be deleted.&quot;</span>,
-                    <span class="ident">PENDING_PINGS_DIRECTORY_QUOTA</span>
-                );
-                <span class="ident">deleting</span> <span class="op">=</span> <span class="bool-val">true</span>;
+        <span class="kw">if</span> <span class="ident">cached_pings</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="number">0</span> {
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pending_pings_directory_size</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">0</span>;
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">deleting</span> <span class="op">=</span> <span class="bool-val">false</span>;
+            <span class="comment">// The pending pings vector is sorted by date in ascending order (oldest -&gt; newest).</span>
+            <span class="comment">// We need to calculate the size of the pending pings directory</span>
+            <span class="comment">// and delete the **oldest** pings in case quota is reached.</span>
+            <span class="comment">// Thus, we reverse the order of the pending pings vector,</span>
+            <span class="comment">// so that we iterate in descending order (newest -&gt; oldest).</span>
+            <span class="ident">cached_pings</span>.<span class="ident">pending_pings</span>.<span class="ident">reverse</span>();
+            <span class="ident">cached_pings</span>.<span class="ident">pending_pings</span>.<span class="ident">retain</span>(<span class="op">|</span>(<span class="ident">file_size</span>, (<span class="ident">document_id</span>, <span class="kw">_</span>, <span class="kw">_</span>, <span class="kw">_</span>))<span class="op">|</span> {
+                <span class="ident">pending_pings_directory_size</span> <span class="op">+</span><span class="op">=</span> <span class="ident">file_size</span>;
+                <span class="kw">if</span> <span class="ident">pending_pings_directory_size</span> <span class="op">&gt;</span> <span class="ident">quota</span> {
+                    <span class="ident">log</span>::<span class="macro">warn</span><span class="macro">!</span>(
+                        <span class="string">&quot;Pending pings directory has reached the size quota of {} bytes, outstanding pings will be deleted.&quot;</span>,
+                        <span class="ident">PENDING_PINGS_DIRECTORY_QUOTA</span>
+                    );
+                    <span class="ident">deleting</span> <span class="op">=</span> <span class="bool-val">true</span>;
+                }
+
+                <span class="kw">if</span> <span class="ident">deleting</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="self">self</span>.<span class="ident">directory_manager</span>.<span class="ident">delete_file</span>(<span class="kw-2">&amp;</span><span class="ident">document_id</span>) {
+                    <span class="self">self</span>.<span class="ident">upload_metrics</span>
+                        .<span class="ident">deleted_pings_after_quota_hit</span>
+                        .<span class="ident">add</span>(<span class="ident">glean</span>, <span class="number">1</span>);
+                    <span class="kw">return</span> <span class="bool-val">false</span>;
+                }
+
+                <span class="bool-val">true</span>
+            });
+            <span class="comment">// After calculating the size of the pending pings directory,</span>
+            <span class="comment">// we record the calculated number and reverse the pings array back for enqueueing.</span>
+            <span class="ident">cached_pings</span>.<span class="ident">pending_pings</span>.<span class="ident">reverse</span>();
+            <span class="self">self</span>.<span class="ident">upload_metrics</span>
+                .<span class="ident">pending_pings_directory_size</span>
+                .<span class="ident">accumulate</span>(<span class="ident">glean</span>, <span class="ident">pending_pings_directory_size</span> <span class="kw">as</span> <span class="ident">u64</span>);
+
+            <span class="comment">// Enqueue the remaining pending pings and</span>
+            <span class="comment">// enqueue all deletion-request pings.</span>
+            <span class="kw">let</span> <span class="ident">deletion_request_pings</span> <span class="op">=</span> <span class="ident">cached_pings</span>.<span class="ident">deletion_request_pings</span>.<span class="ident">drain</span>(..);
+            <span class="kw">for</span> (<span class="kw">_</span>, (<span class="ident">document_id</span>, <span class="ident">path</span>, <span class="ident">body</span>, <span class="ident">headers</span>)) <span class="kw">in</span> <span class="ident">deletion_request_pings</span> {
+                <span class="self">self</span>.<span class="ident">enqueue_ping</span>(<span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="ident">document_id</span>, <span class="kw-2">&amp;</span><span class="ident">path</span>, <span class="kw-2">&amp;</span><span class="ident">body</span>, <span class="ident">headers</span>);
             }
-
-            <span class="kw">if</span> <span class="ident">deleting</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="self">self</span>.<span class="ident">directory_manager</span>.<span class="ident">delete_file</span>(<span class="kw-2">&amp;</span><span class="ident">document_id</span>) {
-                <span class="self">self</span>.<span class="ident">upload_metrics</span>
-                    .<span class="ident">deleted_pings_after_quota_hit</span>
-                    .<span class="ident">add</span>(<span class="ident">glean</span>, <span class="number">1</span>);
-                <span class="kw">return</span> <span class="bool-val">false</span>;
+            <span class="kw">let</span> <span class="ident">pending_pings</span> <span class="op">=</span> <span class="ident">cached_pings</span>.<span class="ident">pending_pings</span>.<span class="ident">drain</span>(..);
+            <span class="kw">for</span> (<span class="kw">_</span>, (<span class="ident">document_id</span>, <span class="ident">path</span>, <span class="ident">body</span>, <span class="ident">headers</span>)) <span class="kw">in</span> <span class="ident">pending_pings</span> {
+                <span class="self">self</span>.<span class="ident">enqueue_ping</span>(<span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="ident">document_id</span>, <span class="kw-2">&amp;</span><span class="ident">path</span>, <span class="kw-2">&amp;</span><span class="ident">body</span>, <span class="ident">headers</span>);
             }
-
-            <span class="bool-val">true</span>
-        });
-        <span class="comment">// After calculating the size of the pending pings directory,</span>
-        <span class="comment">// we record the calculated number and reverse the pings array back for enqueueing.</span>
-        <span class="ident">cached_pings</span>.<span class="ident">pending_pings</span>.<span class="ident">reverse</span>();
-        <span class="self">self</span>.<span class="ident">upload_metrics</span>
-            .<span class="ident">pending_pings_directory_size</span>
-            .<span class="ident">accumulate</span>(<span class="ident">glean</span>, <span class="ident">pending_pings_directory_size</span> <span class="kw">as</span> <span class="ident">u64</span>);
-
-        <span class="comment">// Enqueue the remaining pending pings and</span>
-        <span class="comment">// enqueue all deletion-request pings.</span>
-        <span class="kw">let</span> <span class="ident">deletion_request_pings</span> <span class="op">=</span> <span class="ident">cached_pings</span>.<span class="ident">deletion_request_pings</span>.<span class="ident">drain</span>(..);
-        <span class="kw">for</span> (<span class="kw">_</span>, (<span class="ident">document_id</span>, <span class="ident">path</span>, <span class="ident">body</span>, <span class="ident">headers</span>)) <span class="kw">in</span> <span class="ident">deletion_request_pings</span> {
-            <span class="self">self</span>.<span class="ident">enqueue_ping</span>(<span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="ident">document_id</span>, <span class="kw-2">&amp;</span><span class="ident">path</span>, <span class="kw-2">&amp;</span><span class="ident">body</span>, <span class="ident">headers</span>);
-        }
-        <span class="kw">let</span> <span class="ident">pending_pings</span> <span class="op">=</span> <span class="ident">cached_pings</span>.<span class="ident">pending_pings</span>.<span class="ident">drain</span>(..);
-        <span class="kw">for</span> (<span class="kw">_</span>, (<span class="ident">document_id</span>, <span class="ident">path</span>, <span class="ident">body</span>, <span class="ident">headers</span>)) <span class="kw">in</span> <span class="ident">pending_pings</span> {
-            <span class="self">self</span>.<span class="ident">enqueue_ping</span>(<span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="ident">document_id</span>, <span class="kw-2">&amp;</span><span class="ident">path</span>, <span class="kw-2">&amp;</span><span class="ident">body</span>, <span class="ident">headers</span>);
         }
     }
 
@@ -1687,19 +1755,33 @@
     }
 
     <span class="kw">fn</span> <span class="ident">get_upload_task_internal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">log_ping</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PingUploadTask</span> {
-        <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">has_processed_pings_dir</span>() {
+        <span class="comment">// Helper to decide whether to return PingUploadTask::Wait or PingUploadTask::Done.</span>
+        <span class="comment">//</span>
+        <span class="comment">// We want to limit the amount of PingUploadTask::Wait returned in a row,</span>
+        <span class="comment">// in case we reach MAX_WAIT_ATTEMPTS we want to actually return PingUploadTask::Done.</span>
+        <span class="kw">let</span> <span class="ident">wait_or_done</span> <span class="op">=</span> <span class="op">|</span><span class="op">|</span> {
+            <span class="self">self</span>.<span class="ident">wait_attempt_count</span>.<span class="ident">fetch_add</span>(<span class="number">1</span>, <span class="ident">Ordering</span>::<span class="ident">SeqCst</span>);
+            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">wait_attempt_count</span>() <span class="op">&gt;</span> <span class="ident">MAX_WAIT_ATTEMPTS</span> {
+                <span class="ident">PingUploadTask</span>::<span class="ident">Done</span>
+            } <span class="kw">else</span> {
+                <span class="ident">PingUploadTask</span>::<span class="ident">Wait</span>
+            }
+        };
+
+        <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">processed_pending_pings</span>() {
             <span class="ident">log</span>::<span class="macro">info</span><span class="macro">!</span>(
                 <span class="string">&quot;Tried getting an upload task, but processing is ongoing. Will come back later.&quot;</span>
             );
-            <span class="kw">return</span> <span class="ident">PingUploadTask</span>::<span class="ident">Wait</span>;
+            <span class="kw">return</span> <span class="ident">wait_or_done</span>();
         }
+
+        <span class="comment">// This is a no-op in case there are no cached pings.</span>
         <span class="self">self</span>.<span class="ident">enqueue_cached_pings</span>(<span class="ident">glean</span>, <span class="ident">PENDING_PINGS_DIRECTORY_QUOTA</span>);
 
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">recoverable_failure_count</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="ident">MAX_RECOVERABLE_FAILURES_PER_UPLOADING_WINDOW</span> {
             <span class="ident">log</span>::<span class="macro">warn</span><span class="macro">!</span>(
                 <span class="string">&quot;Reached maximum recoverable failures for the current uploading window. You are done.&quot;</span>
             );
-
             <span class="kw">return</span> <span class="ident">PingUploadTask</span>::<span class="ident">Done</span>;
         }
 
@@ -1717,7 +1799,7 @@
                         <span class="ident">log</span>::<span class="macro">info</span><span class="macro">!</span>(
                             <span class="string">&quot;Tried getting an upload task, but we are throttled at the moment.&quot;</span>
                         );
-                        <span class="kw">return</span> <span class="ident">PingUploadTask</span>::<span class="ident">Wait</span>;
+                        <span class="kw">return</span> <span class="ident">wait_or_done</span>();
                     }
                 }
 
@@ -1756,8 +1838,15 @@
     <span class="doccomment">/// The next [`PingUploadTask`](enum.PingUploadTask.html).</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_upload_task</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">log_ping</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PingUploadTask</span> {
         <span class="kw">let</span> <span class="ident">task</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_upload_task_internal</span>(<span class="ident">glean</span>, <span class="ident">log_ping</span>);
-        <span class="kw">if</span> <span class="ident">task</span> <span class="op">=</span><span class="op">=</span> <span class="ident">PingUploadTask</span>::<span class="ident">Done</span> <span class="op">|</span><span class="op">|</span> <span class="ident">task</span> <span class="op">=</span><span class="op">=</span> <span class="ident">PingUploadTask</span>::<span class="ident">Wait</span> {
-            <span class="self">self</span>.<span class="ident">reset_recoverable_failure_count</span>()
+
+        <span class="kw">if</span> <span class="ident">task</span> <span class="op">!</span><span class="op">=</span> <span class="ident">PingUploadTask</span>::<span class="ident">Wait</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="self">self</span>.<span class="ident">wait_attempt_count</span>() <span class="op">&gt;</span> <span class="number">0</span> {
+            <span class="self">self</span>.<span class="ident">wait_attempt_count</span>.<span class="ident">store</span>(<span class="number">0</span>, <span class="ident">Ordering</span>::<span class="ident">SeqCst</span>);
+        }
+
+        <span class="kw">if</span> (<span class="ident">task</span> <span class="op">=</span><span class="op">=</span> <span class="ident">PingUploadTask</span>::<span class="ident">Wait</span> <span class="op">|</span><span class="op">|</span> <span class="ident">task</span> <span class="op">=</span><span class="op">=</span> <span class="ident">PingUploadTask</span>::<span class="ident">Done</span>)
+            <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="self">self</span>.<span class="ident">recoverable_failure_count</span>() <span class="op">&gt;</span> <span class="number">0</span>
+        {
+            <span class="self">self</span>.<span class="ident">recoverable_failure_count</span>.<span class="ident">store</span>(<span class="number">0</span>, <span class="ident">Ordering</span>::<span class="ident">SeqCst</span>);
         }
 
         <span class="ident">task</span>
@@ -1927,35 +2016,22 @@
     <span class="kw">fn</span> <span class="ident">doesnt_error_when_there_are_no_pending_pings</span>() {
         <span class="kw">let</span> (<span class="ident">glean</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">new_glean</span>(<span class="prelude-val">None</span>);
 
-        <span class="comment">// Create a new upload_manager</span>
-        <span class="kw">let</span> <span class="ident">dir</span> <span class="op">=</span> <span class="ident">tempfile</span>::<span class="ident">tempdir</span>().<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">upload_manager</span> <span class="op">=</span> <span class="ident">PingUploadManager</span>::<span class="ident">new</span>(<span class="ident">dir</span>.<span class="ident">path</span>(), <span class="string">&quot;Testing&quot;</span>, <span class="bool-val">false</span>);
-
-        <span class="comment">// Wait for processing of pending pings directory to finish.</span>
-        <span class="kw">while</span> <span class="ident">upload_manager</span>.<span class="ident">get_upload_task</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="bool-val">false</span>) <span class="op">=</span><span class="op">=</span> <span class="ident">PingUploadTask</span>::<span class="ident">Wait</span> {
+        <span class="kw">while</span> <span class="ident">glean</span>.<span class="ident">get_upload_task</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">PingUploadTask</span>::<span class="ident">Wait</span> {
             <span class="ident">thread</span>::<span class="ident">sleep</span>(<span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">10</span>));
         }
 
         <span class="comment">// Try and get the next request.</span>
         <span class="comment">// Verify request was not returned</span>
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
-            <span class="ident">upload_manager</span>.<span class="ident">get_upload_task</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="bool-val">false</span>),
-            <span class="ident">PingUploadTask</span>::<span class="ident">Done</span>
-        );
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">glean</span>.<span class="ident">get_upload_task</span>(), <span class="ident">PingUploadTask</span>::<span class="ident">Done</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">returns_ping_request_when_there_is_one</span>() {
-        <span class="kw">let</span> (<span class="ident">glean</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">new_glean</span>(<span class="prelude-val">None</span>);
+        <span class="kw">let</span> (<span class="ident">glean</span>, <span class="ident">dir</span>) <span class="op">=</span> <span class="ident">new_glean</span>(<span class="prelude-val">None</span>);
 
-        <span class="comment">// Create a new upload_manager</span>
-        <span class="kw">let</span> <span class="ident">dir</span> <span class="op">=</span> <span class="ident">tempfile</span>::<span class="ident">tempdir</span>().<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">upload_manager</span> <span class="op">=</span> <span class="ident">PingUploadManager</span>::<span class="ident">new</span>(<span class="ident">dir</span>.<span class="ident">path</span>(), <span class="string">&quot;Testing&quot;</span>, <span class="bool-val">false</span>);
-
-        <span class="comment">// Wait for processing of pending pings directory to finish.</span>
-        <span class="kw">while</span> <span class="ident">upload_manager</span>.<span class="ident">get_upload_task</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="bool-val">false</span>) <span class="op">=</span><span class="op">=</span> <span class="ident">PingUploadTask</span>::<span class="ident">Wait</span> {
-            <span class="ident">thread</span>::<span class="ident">sleep</span>(<span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">10</span>));
-        }
+        <span class="comment">// Create a new upload manager so that we have access to its functions directly,</span>
+        <span class="comment">// make it synchronous so we don&#39;t have to manually wait for the scanning to finish.</span>
+        <span class="kw">let</span> <span class="ident">upload_manager</span> <span class="op">=</span> <span class="ident">PingUploadManager</span>::<span class="ident">new</span>(<span class="ident">dir</span>.<span class="ident">path</span>(), <span class="string">&quot;Testing&quot;</span>, <span class="comment">/* sync */</span> <span class="bool-val">true</span>);
 
         <span class="comment">// Enqueue a ping</span>
         <span class="ident">upload_manager</span>.<span class="ident">enqueue_ping</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="ident">Uuid</span>::<span class="ident">new_v4</span>().<span class="ident">to_string</span>(), <span class="ident">PATH</span>, <span class="string">&quot;&quot;</span>, <span class="prelude-val">None</span>);
@@ -1970,16 +2046,11 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">returns_as_many_ping_requests_as_there_are</span>() {
-        <span class="kw">let</span> (<span class="ident">glean</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">new_glean</span>(<span class="prelude-val">None</span>);
+        <span class="kw">let</span> (<span class="ident">glean</span>, <span class="ident">dir</span>) <span class="op">=</span> <span class="ident">new_glean</span>(<span class="prelude-val">None</span>);
 
-        <span class="comment">// Create a new upload_manager</span>
-        <span class="kw">let</span> <span class="ident">dir</span> <span class="op">=</span> <span class="ident">tempfile</span>::<span class="ident">tempdir</span>().<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">upload_manager</span> <span class="op">=</span> <span class="ident">PingUploadManager</span>::<span class="ident">new</span>(<span class="ident">dir</span>.<span class="ident">path</span>(), <span class="string">&quot;Testing&quot;</span>, <span class="bool-val">false</span>);
-
-        <span class="comment">// Wait for processing of pending pings directory to finish.</span>
-        <span class="kw">while</span> <span class="ident">upload_manager</span>.<span class="ident">get_upload_task</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="bool-val">false</span>) <span class="op">=</span><span class="op">=</span> <span class="ident">PingUploadTask</span>::<span class="ident">Wait</span> {
-            <span class="ident">thread</span>::<span class="ident">sleep</span>(<span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">10</span>));
-        }
+        <span class="comment">// Create a new upload manager so that we have access to its functions directly,</span>
+        <span class="comment">// make it synchronous so we don&#39;t have to manually wait for the scanning to finish.</span>
+        <span class="kw">let</span> <span class="ident">upload_manager</span> <span class="op">=</span> <span class="ident">PingUploadManager</span>::<span class="ident">new</span>(<span class="ident">dir</span>.<span class="ident">path</span>(), <span class="string">&quot;Testing&quot;</span>, <span class="comment">/* sync */</span> <span class="bool-val">true</span>);
 
         <span class="comment">// Enqueue a ping multiple times</span>
         <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="number">10</span>;
@@ -2004,23 +2075,19 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">limits_the_number_of_pings_when_there_is_rate_limiting</span>() {
-        <span class="kw">let</span> (<span class="ident">glean</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">new_glean</span>(<span class="prelude-val">None</span>);
+        <span class="kw">let</span> (<span class="ident">glean</span>, <span class="ident">dir</span>) <span class="op">=</span> <span class="ident">new_glean</span>(<span class="prelude-val">None</span>);
 
-        <span class="comment">// Create a new upload_manager</span>
-        <span class="kw">let</span> <span class="ident">dir</span> <span class="op">=</span> <span class="ident">tempfile</span>::<span class="ident">tempdir</span>().<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">upload_manager</span> <span class="op">=</span> <span class="ident">PingUploadManager</span>::<span class="ident">new</span>(<span class="ident">dir</span>.<span class="ident">path</span>(), <span class="string">&quot;Testing&quot;</span>, <span class="bool-val">false</span>);
+        <span class="comment">// Create a new upload manager so that we have access to its functions directly,</span>
+        <span class="comment">// make it synchronous so we don&#39;t have to manually wait for the scanning to finish.</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">upload_manager</span> <span class="op">=</span>
+            <span class="ident">PingUploadManager</span>::<span class="ident">new</span>(<span class="ident">dir</span>.<span class="ident">path</span>(), <span class="string">&quot;Testing&quot;</span>, <span class="comment">/* sync */</span> <span class="bool-val">true</span>);
 
         <span class="comment">// Add a rate limiter to the upload mangager with max of 10 pings every 3 seconds.</span>
         <span class="kw">let</span> <span class="ident">secs_per_interval</span> <span class="op">=</span> <span class="number">3</span>;
         <span class="kw">let</span> <span class="ident">max_pings_per_interval</span> <span class="op">=</span> <span class="number">10</span>;
         <span class="ident">upload_manager</span>.<span class="ident">set_rate_limiter</span>(<span class="ident">secs_per_interval</span>, <span class="number">10</span>);
 
-        <span class="comment">// Wait for processing of pending pings directory to finish.</span>
-        <span class="kw">while</span> <span class="ident">upload_manager</span>.<span class="ident">get_upload_task</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="bool-val">false</span>) <span class="op">=</span><span class="op">=</span> <span class="ident">PingUploadTask</span>::<span class="ident">Wait</span> {
-            <span class="ident">thread</span>::<span class="ident">sleep</span>(<span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">10</span>));
-        }
-
-        <span class="comment">// Enqueue a ping multiple times</span>
+        <span class="comment">// Enqueue the max number of pings allowed per uploading window</span>
         <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">max_pings_per_interval</span> {
             <span class="ident">upload_manager</span>.<span class="ident">enqueue_ping</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="ident">Uuid</span>::<span class="ident">new_v4</span>().<span class="ident">to_string</span>(), <span class="ident">PATH</span>, <span class="string">&quot;&quot;</span>, <span class="prelude-val">None</span>);
         }
@@ -2033,8 +2100,7 @@
             }
         }
 
-        <span class="comment">// Enqueue just one more ping.</span>
-        <span class="comment">// We should still be within the default rate limit time.</span>
+        <span class="comment">// Enqueue just one more ping</span>
         <span class="ident">upload_manager</span>.<span class="ident">enqueue_ping</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="ident">Uuid</span>::<span class="ident">new_v4</span>().<span class="ident">to_string</span>(), <span class="ident">PATH</span>, <span class="string">&quot;&quot;</span>, <span class="prelude-val">None</span>);
 
         <span class="comment">// Verify that we are indeed told to wait because we are at capacity</span>
@@ -2043,6 +2109,7 @@
             <span class="ident">upload_manager</span>.<span class="ident">get_upload_task</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="bool-val">false</span>)
         );
 
+        <span class="comment">// Wait for the uploading window to reset</span>
         <span class="ident">thread</span>::<span class="ident">sleep</span>(<span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="ident">secs_per_interval</span>));
 
         <span class="kw">match</span> <span class="ident">upload_manager</span>.<span class="ident">get_upload_task</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="bool-val">false</span>) {
@@ -2053,16 +2120,11 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">clearing_the_queue_works_correctly</span>() {
-        <span class="kw">let</span> (<span class="ident">glean</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">new_glean</span>(<span class="prelude-val">None</span>);
+        <span class="kw">let</span> (<span class="ident">glean</span>, <span class="ident">dir</span>) <span class="op">=</span> <span class="ident">new_glean</span>(<span class="prelude-val">None</span>);
 
-        <span class="comment">// Create a new upload_manager</span>
-        <span class="kw">let</span> <span class="ident">dir</span> <span class="op">=</span> <span class="ident">tempfile</span>::<span class="ident">tempdir</span>().<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">upload_manager</span> <span class="op">=</span> <span class="ident">PingUploadManager</span>::<span class="ident">new</span>(<span class="ident">dir</span>.<span class="ident">path</span>(), <span class="string">&quot;Testing&quot;</span>, <span class="bool-val">false</span>);
-
-        <span class="comment">// Wait for processing of pending pings directory to finish.</span>
-        <span class="kw">while</span> <span class="ident">upload_manager</span>.<span class="ident">get_upload_task</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="bool-val">false</span>) <span class="op">=</span><span class="op">=</span> <span class="ident">PingUploadTask</span>::<span class="ident">Wait</span> {
-            <span class="ident">thread</span>::<span class="ident">sleep</span>(<span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">10</span>));
-        }
+        <span class="comment">// Create a new upload manager so that we have access to its functions directly,</span>
+        <span class="comment">// make it synchronous so we don&#39;t have to manually wait for the scanning to finish.</span>
+        <span class="kw">let</span> <span class="ident">upload_manager</span> <span class="op">=</span> <span class="ident">PingUploadManager</span>::<span class="ident">new</span>(<span class="ident">dir</span>.<span class="ident">path</span>(), <span class="string">&quot;Testing&quot;</span>, <span class="comment">/* sync */</span> <span class="bool-val">true</span>);
 
         <span class="comment">// Enqueue a ping multiple times</span>
         <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="number">10</span> {
@@ -2119,7 +2181,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">fills_up_queue_successfully_from_disk</span>() {
-        <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">glean</span>, <span class="ident">tmpdir</span>) <span class="op">=</span> <span class="ident">new_glean</span>(<span class="prelude-val">None</span>);
+        <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">glean</span>, <span class="ident">dir</span>) <span class="op">=</span> <span class="ident">new_glean</span>(<span class="prelude-val">None</span>);
 
         <span class="comment">// Register a ping for testing</span>
         <span class="kw">let</span> <span class="ident">ping_type</span> <span class="op">=</span> <span class="ident">PingType</span>::<span class="ident">new</span>(<span class="string">&quot;test&quot;</span>, <span class="bool-val">true</span>, <span class="comment">/* send_if_empty */</span> <span class="bool-val">true</span>, <span class="macro">vec</span><span class="macro">!</span>[]);
@@ -2132,7 +2194,7 @@
         }
 
         <span class="comment">// Create a new upload manager pointing to the same data_path as the glean instance.</span>
-        <span class="kw">let</span> <span class="ident">upload_manager</span> <span class="op">=</span> <span class="ident">PingUploadManager</span>::<span class="ident">new</span>(<span class="ident">tmpdir</span>.<span class="ident">path</span>(), <span class="string">&quot;Rust&quot;</span>, <span class="bool-val">true</span>);
+        <span class="kw">let</span> <span class="ident">upload_manager</span> <span class="op">=</span> <span class="ident">PingUploadManager</span>::<span class="ident">new</span>(<span class="ident">dir</span>.<span class="ident">path</span>(), <span class="string">&quot;Rust&quot;</span>, <span class="bool-val">true</span>);
 
         <span class="comment">// Verify the requests were properly enqueued</span>
         <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">n</span> {
@@ -2293,11 +2355,11 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">new_pings_are_added_while_upload_in_progress</span>() {
-        <span class="kw">let</span> (<span class="ident">glean</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">new_glean</span>(<span class="prelude-val">None</span>);
+        <span class="kw">let</span> (<span class="ident">glean</span>, <span class="ident">dir</span>) <span class="op">=</span> <span class="ident">new_glean</span>(<span class="prelude-val">None</span>);
 
-        <span class="comment">// Create a new upload_manager</span>
-        <span class="kw">let</span> <span class="ident">dir</span> <span class="op">=</span> <span class="ident">tempfile</span>::<span class="ident">tempdir</span>().<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">upload_manager</span> <span class="op">=</span> <span class="ident">PingUploadManager</span>::<span class="ident">new</span>(<span class="ident">dir</span>.<span class="ident">path</span>(), <span class="string">&quot;Testing&quot;</span>, <span class="bool-val">false</span>);
+        <span class="comment">// Create a new upload manager so that we have access to its functions directly,</span>
+        <span class="comment">// make it synchronous so we don&#39;t have to manually wait for the scanning to finish.</span>
+        <span class="kw">let</span> <span class="ident">upload_manager</span> <span class="op">=</span> <span class="ident">PingUploadManager</span>::<span class="ident">new</span>(<span class="ident">dir</span>.<span class="ident">path</span>(), <span class="string">&quot;Testing&quot;</span>, <span class="comment">/* sync */</span> <span class="bool-val">true</span>);
 
         <span class="comment">// Wait for processing of pending pings directory to finish.</span>
         <span class="kw">while</span> <span class="ident">upload_manager</span>.<span class="ident">get_upload_task</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="bool-val">false</span>) <span class="op">=</span><span class="op">=</span> <span class="ident">PingUploadTask</span>::<span class="ident">Wait</span> {
@@ -2388,16 +2450,11 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">duplicates_are_not_enqueued</span>() {
-        <span class="kw">let</span> (<span class="ident">glean</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">new_glean</span>(<span class="prelude-val">None</span>);
+        <span class="kw">let</span> (<span class="ident">glean</span>, <span class="ident">dir</span>) <span class="op">=</span> <span class="ident">new_glean</span>(<span class="prelude-val">None</span>);
 
-        <span class="comment">// Create a new upload_manager</span>
-        <span class="kw">let</span> <span class="ident">dir</span> <span class="op">=</span> <span class="ident">tempfile</span>::<span class="ident">tempdir</span>().<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">upload_manager</span> <span class="op">=</span> <span class="ident">PingUploadManager</span>::<span class="ident">new</span>(<span class="ident">dir</span>.<span class="ident">path</span>(), <span class="string">&quot;Testing&quot;</span>, <span class="bool-val">false</span>);
-
-        <span class="comment">// Wait for processing of pending pings directory to finish.</span>
-        <span class="kw">while</span> <span class="ident">upload_manager</span>.<span class="ident">get_upload_task</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="bool-val">false</span>) <span class="op">=</span><span class="op">=</span> <span class="ident">PingUploadTask</span>::<span class="ident">Wait</span> {
-            <span class="ident">thread</span>::<span class="ident">sleep</span>(<span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">10</span>));
-        }
+        <span class="comment">// Create a new upload manager so that we have access to its functions directly,</span>
+        <span class="comment">// make it synchronous so we don&#39;t have to manually wait for the scanning to finish.</span>
+        <span class="kw">let</span> <span class="ident">upload_manager</span> <span class="op">=</span> <span class="ident">PingUploadManager</span>::<span class="ident">new</span>(<span class="ident">dir</span>.<span class="ident">path</span>(), <span class="string">&quot;Testing&quot;</span>, <span class="comment">/* sync */</span> <span class="bool-val">true</span>);
 
         <span class="kw">let</span> <span class="ident">doc_id</span> <span class="op">=</span> <span class="ident">Uuid</span>::<span class="ident">new_v4</span>().<span class="ident">to_string</span>();
         <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;/submit/app_id/test-ping/1/{}&quot;</span>, <span class="ident">doc_id</span>);
@@ -2463,7 +2520,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">quota_is_enforced_when_enqueueing_cached_pings</span>() {
-        <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">glean</span>, <span class="ident">tmpdir</span>) <span class="op">=</span> <span class="ident">new_glean</span>(<span class="prelude-val">None</span>);
+        <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">glean</span>, <span class="ident">dir</span>) <span class="op">=</span> <span class="ident">new_glean</span>(<span class="prelude-val">None</span>);
 
         <span class="comment">// Register a ping for testing</span>
         <span class="kw">let</span> <span class="ident">ping_type</span> <span class="op">=</span> <span class="ident">PingType</span>::<span class="ident">new</span>(<span class="string">&quot;test&quot;</span>, <span class="bool-val">true</span>, <span class="comment">/* send_if_empty */</span> <span class="bool-val">true</span>, <span class="macro">vec</span><span class="macro">!</span>[]);
@@ -2475,7 +2532,7 @@
             <span class="ident">glean</span>.<span class="ident">submit_ping</span>(<span class="kw-2">&amp;</span><span class="ident">ping_type</span>, <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
         }
 
-        <span class="kw">let</span> <span class="ident">directory_manager</span> <span class="op">=</span> <span class="ident">PingDirectoryManager</span>::<span class="ident">new</span>(<span class="ident">tmpdir</span>.<span class="ident">path</span>());
+        <span class="kw">let</span> <span class="ident">directory_manager</span> <span class="op">=</span> <span class="ident">PingDirectoryManager</span>::<span class="ident">new</span>(<span class="ident">dir</span>.<span class="ident">path</span>());
         <span class="kw">let</span> <span class="ident">pending_pings</span> <span class="op">=</span> <span class="ident">directory_manager</span>.<span class="ident">process_dirs</span>().<span class="ident">pending_pings</span>;
         <span class="comment">// The pending pings array is sorted by date in ascending order,</span>
         <span class="comment">// the newest element is the last one.</span>
@@ -2483,7 +2540,7 @@
         <span class="kw">let</span> (<span class="ident">newest_ping_id</span>, <span class="kw">_</span>, <span class="kw">_</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">newest_ping</span>;
 
         <span class="comment">// Create a new upload manager pointing to the same data_path as the glean instance.</span>
-        <span class="kw">let</span> <span class="ident">upload_manager</span> <span class="op">=</span> <span class="ident">PingUploadManager</span>::<span class="ident">new</span>(<span class="ident">tmpdir</span>.<span class="ident">path</span>(), <span class="string">&quot;Rust&quot;</span>, <span class="bool-val">true</span>);
+        <span class="kw">let</span> <span class="ident">upload_manager</span> <span class="op">=</span> <span class="ident">PingUploadManager</span>::<span class="ident">new</span>(<span class="ident">dir</span>.<span class="ident">path</span>(), <span class="string">&quot;Rust&quot;</span>, <span class="bool-val">true</span>);
 
         <span class="comment">// Enqueue cached pings and set the quota to just a little over the size on an empty ping file.</span>
         <span class="comment">// This way we can check that one ping is kept and all others are deleted.</span>
@@ -2517,6 +2574,67 @@
                 .<span class="ident">test_get_value</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="string">&quot;metrics&quot;</span>)
                 .<span class="ident">unwrap</span>()
         )
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">maximum_wait_attemps_is_enforced</span>() {
+        <span class="kw">let</span> (<span class="ident">glean</span>, <span class="ident">dir</span>) <span class="op">=</span> <span class="ident">new_glean</span>(<span class="prelude-val">None</span>);
+
+        <span class="comment">// Create a new upload manager so that we have access to its functions directly,</span>
+        <span class="comment">// make it synchronous so we don&#39;t have to manually wait for the scanning to finish.</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">upload_manager</span> <span class="op">=</span>
+            <span class="ident">PingUploadManager</span>::<span class="ident">new</span>(<span class="ident">dir</span>.<span class="ident">path</span>(), <span class="string">&quot;Testing&quot;</span>, <span class="comment">/* sync */</span> <span class="bool-val">true</span>);
+
+        <span class="comment">// Add a rate limiter to the upload mangager with max of 1 ping 5secs.</span>
+        <span class="comment">//</span>
+        <span class="comment">// We arbitrarily set the maximum pings per interval to a very low number,</span>
+        <span class="comment">// when the rate limiter reaches it&#39;s limit get_upload_task returns a PingUploadTask::Wait,</span>
+        <span class="comment">// which will allow us to test the limitations around returning too many of those in a row.</span>
+        <span class="kw">let</span> <span class="ident">secs_per_interval</span> <span class="op">=</span> <span class="number">5</span>;
+        <span class="kw">let</span> <span class="ident">max_pings_per_interval</span> <span class="op">=</span> <span class="number">1</span>;
+        <span class="ident">upload_manager</span>.<span class="ident">set_rate_limiter</span>(<span class="ident">secs_per_interval</span>, <span class="ident">max_pings_per_interval</span>);
+
+        <span class="comment">// Enqueue two pings</span>
+        <span class="ident">upload_manager</span>.<span class="ident">enqueue_ping</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="ident">Uuid</span>::<span class="ident">new_v4</span>().<span class="ident">to_string</span>(), <span class="ident">PATH</span>, <span class="string">&quot;&quot;</span>, <span class="prelude-val">None</span>);
+        <span class="ident">upload_manager</span>.<span class="ident">enqueue_ping</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="ident">Uuid</span>::<span class="ident">new_v4</span>().<span class="ident">to_string</span>(), <span class="ident">PATH</span>, <span class="string">&quot;&quot;</span>, <span class="prelude-val">None</span>);
+
+        <span class="comment">// Get the first ping, it should be returned normally.</span>
+        <span class="kw">match</span> <span class="ident">upload_manager</span>.<span class="ident">get_upload_task</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="bool-val">false</span>) {
+            <span class="ident">PingUploadTask</span>::<span class="ident">Upload</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {}
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Expected upload manager to return the next request!&quot;</span>),
+        }
+
+        <span class="comment">// Try to get the next ping,</span>
+        <span class="comment">// we should be throttled and thus get a PingUploadTask::Wait.</span>
+        <span class="comment">// Check that we are indeed allowed to get this response as many times as expected.</span>
+        <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">MAX_WAIT_ATTEMPTS</span> {
+            <span class="macro">assert_eq</span><span class="macro">!</span>(
+                <span class="ident">upload_manager</span>.<span class="ident">get_upload_task</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="bool-val">false</span>),
+                <span class="ident">PingUploadTask</span>::<span class="ident">Wait</span>
+            );
+        }
+
+        <span class="comment">// Check that after we get PingUploadTask::Wait the allowed number of times,</span>
+        <span class="comment">// we then get PingUploadTask::Done.</span>
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            <span class="ident">upload_manager</span>.<span class="ident">get_upload_task</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="bool-val">false</span>),
+            <span class="ident">PingUploadTask</span>::<span class="ident">Done</span>
+        );
+
+        <span class="comment">// Wait for the rate limiter to allow upload tasks again.</span>
+        <span class="ident">thread</span>::<span class="ident">sleep</span>(<span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="ident">secs_per_interval</span>));
+
+        <span class="comment">// Check that we are allowed again to get pings.</span>
+        <span class="kw">match</span> <span class="ident">upload_manager</span>.<span class="ident">get_upload_task</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="bool-val">false</span>) {
+            <span class="ident">PingUploadTask</span>::<span class="ident">Upload</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {}
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Expected upload manager to return the next request!&quot;</span>),
+        }
+
+        <span class="comment">// And once we are done we don&#39;t need to wait anymore.</span>
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            <span class="ident">upload_manager</span>.<span class="ident">get_upload_task</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="bool-val">false</span>),
+            <span class="ident">PingUploadTask</span>::<span class="ident">Done</span>
+        );
     }
 }
 </pre></div>
