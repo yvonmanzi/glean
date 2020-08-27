@@ -117,7 +117,7 @@ __pdoc__ = {&#34;libglean_ffi&#34;: False}</code></pre>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="glean.load_metrics"><code class="name flex">
-<span>def <span class="ident">load_metrics</span></span>(<span>filepath: Union[str, pathlib.Path, List[Union[str, pathlib.Path]]], config: dict = {}) ‑> Any</span>
+<span>def <span class="ident">load_metrics</span></span>(<span>filepath: Union[str, pathlib.Path, List[Union[str, pathlib.Path]]], config: Union[dict, NoneType] = None) ‑> Any</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Load metrics from a <code>metrics.yaml</code> file.</p>
@@ -142,7 +142,8 @@ the <code>metrics.yaml</code> file.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def load_metrics(
-    filepath: Union[Union[str, Path], List[Union[str, Path]]], config: dict = {}
+    filepath: Union[Union[str, Path], List[Union[str, Path]]],
+    config: Optional[dict] = None,
 ) -&gt; Any:
     &#34;&#34;&#34;
     Load metrics from a `metrics.yaml` file.
@@ -159,6 +160,9 @@ the <code>metrics.yaml</code> file.</p>
         &gt;&gt;&gt; metrics = load_metrics(&#34;metrics.yaml&#34;)
         &gt;&gt;&gt; metrics.category.name.set(&#34;value&#34;)
     &#34;&#34;&#34;
+    if config is None:
+        config = {}
+
     if not isinstance(filepath, list):
         filepath = [filepath]
 
@@ -190,7 +194,7 @@ the <code>metrics.yaml</code> file.</p>
 </details>
 </dd>
 <dt id="glean.load_pings"><code class="name flex">
-<span>def <span class="ident">load_pings</span></span>(<span>filepath: Union[str, pathlib.Path, List[Union[str, pathlib.Path]]], config: dict = {}) ‑> Any</span>
+<span>def <span class="ident">load_pings</span></span>(<span>filepath: Union[str, pathlib.Path, List[Union[str, pathlib.Path]]], config: Union[dict, NoneType] = None) ‑> Any</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Load pings from a <code>pings.yaml</code> file.</p>
@@ -215,7 +219,8 @@ the <code>pings.yaml</code> file.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def load_pings(
-    filepath: Union[Union[str, Path], List[Union[str, Path]]], config: dict = {}
+    filepath: Union[Union[str, Path], List[Union[str, Path]]],
+    config: Optional[dict] = None,
 ) -&gt; Any:
     &#34;&#34;&#34;
     Load pings from a `pings.yaml` file.
