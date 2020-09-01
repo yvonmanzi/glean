@@ -6813,6 +6813,27 @@ but should still be given some thought.
 </ul>
 <p>Updating to new versions of existing dependencies is a normal part of software development
 and is not accompanied by any particular ceremony.</p>
+<h3><a class="header" href="#dependency-updates" id="dependency-updates">Dependency updates</a></h3>
+<p>We use <a href="https://dependabot.com/">Dependabot</a> to automatically open pull requests when dependencies release a new version.
+All CI tasks run on those pull requests to ensure updates don't break anything.</p>
+<p>As <code>glean-core</code> is now also vendored into mozilla-central, including all of its Rust dependencies, we need to be a bit careful about these updates.
+Landing upgrades of the Glean SDK itself in mozilla-central is a separate process.
+See <a href="https://firefox-source-docs.mozilla.org/toolkit/components/glean/updating_sdk.html">Updating the Glean SDK</a> in the Firefox Source Docs.
+Following are some guidelines to ensure compatibility with mozilla-central:</p>
+<ul>
+<li>Patch releases of dependencies should be fine in most cases.</li>
+<li>Minor releases should be compatible. Best to check the changelog of the updated dependency to make sure. These updates should only land in <code>Cargo.lock</code>. No updates in <code>Cargo.toml</code> are necessary</li>
+<li>Major releases will always need a check against mozilla-central. See <a href="https://firefox-source-docs.mozilla.org/toolkit/components/glean/updating_sdk.html">Updating the Glean SDK</a>.</li>
+</ul>
+<p>In case of uncertainty defer a decision to :janerik or :chutten.</p>
+<h4><a class="header" href="#manual-dependency-updates" id="manual-dependency-updates">Manual dependency updates</a></h4>
+<p>You can manually check for outdated dependencies using <a href="https://crates.io/crates/cargo-outdated">cargo-outdated</a>.
+Individual crate updates for version compatible with the requirement in <code>Cargo.toml</code> can be done using:</p>
+<pre><code>cargo update -p $cratename
+</code></pre>
+<p>To update all transitive dependencies to the latest semver-compatible version use:</p>
+<pre><code>cargo update
+</code></pre>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/dev/core/dependency-management.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#adding-a-new-metric-type" id="adding-a-new-metric-type">Adding a new metric type</a></h1>
 <p>Data in the Glean SDK is stored in so-called metrics.
 You can find the full list of implemented metric types <a href="dev/core/../../user/metrics/index.html">in the user overview</a>.</p>
@@ -7786,6 +7807,11 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 <li>Track the size of the database file at startup (<a href="https://github.com/mozilla/glean/pull/1141">#1141</a>).</li>
 </ul>
 </li>
+<li>iOS
+<ul>
+<li>Disabled code coverage in release builds (<a href="https://github.com/mozilla/glean/issues/1195">#1195</a>).</li>
+</ul>
+</li>
 </ul>
 <h1><a class="header" href="#v3230-2020-08-27" id="v3230-2020-08-27">v32.3.0 (2020-08-27)</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v32.2.0...v32.3.0">Full changelog</a></p>
@@ -8736,6 +8762,8 @@ They could be release notes, documentation, hopes, dreams, or whatever: so long 
 <li>2020-06-12: <a href="https://blog.mozilla.org/data/2020/06/12/this-week-in-glean-project-fog-update-end-of-h12020/">Project FOG Update, end of H12020</a></li>
 <li>2020-07-16: <a href="https://blog.mozilla.org/data/2020/07/16/mozilla-telemetry-in-2020-from-just-firefox-to-a-galaxy-of-data/">Mozilla Telemetry in 2020: From “Just Firefox” to a “Galaxy of Data”</a></li>
 <li>2020-07-24: <a href="https://blog.mozilla.org/data/2020/07/24/this-week-in-glean-automated-end-to-end-tests-for-glean/">Automated end-to-end tests for Glean</a></li>
+<li>2020-08-06: <a href="https://blog.mozilla.org/data/2020/08/06/experimental-integration-glean-with-unity-applications/">Experimental integration Glean with Unity applications</a></li>
+<li>2020-09-01: <a href="https://blog.mozilla.org/data/2020/09/01/twig-leveraging-rust/">Leveraging Rust to build cross-platform mobile libraries</a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/appendix/twig.md">Edit this file on GitHub.</a></footer>
                     </main>

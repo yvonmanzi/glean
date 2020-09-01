@@ -216,6 +216,27 @@ but should still be given some thought.
 </ul>
 <p>Updating to new versions of existing dependencies is a normal part of software development
 and is not accompanied by any particular ceremony.</p>
+<h3><a class="header" href="#dependency-updates" id="dependency-updates">Dependency updates</a></h3>
+<p>We use <a href="https://dependabot.com/">Dependabot</a> to automatically open pull requests when dependencies release a new version.
+All CI tasks run on those pull requests to ensure updates don't break anything.</p>
+<p>As <code>glean-core</code> is now also vendored into mozilla-central, including all of its Rust dependencies, we need to be a bit careful about these updates.
+Landing upgrades of the Glean SDK itself in mozilla-central is a separate process.
+See <a href="https://firefox-source-docs.mozilla.org/toolkit/components/glean/updating_sdk.html">Updating the Glean SDK</a> in the Firefox Source Docs.
+Following are some guidelines to ensure compatibility with mozilla-central:</p>
+<ul>
+<li>Patch releases of dependencies should be fine in most cases.</li>
+<li>Minor releases should be compatible. Best to check the changelog of the updated dependency to make sure. These updates should only land in <code>Cargo.lock</code>. No updates in <code>Cargo.toml</code> are necessary</li>
+<li>Major releases will always need a check against mozilla-central. See <a href="https://firefox-source-docs.mozilla.org/toolkit/components/glean/updating_sdk.html">Updating the Glean SDK</a>.</li>
+</ul>
+<p>In case of uncertainty defer a decision to :janerik or :chutten.</p>
+<h4><a class="header" href="#manual-dependency-updates" id="manual-dependency-updates">Manual dependency updates</a></h4>
+<p>You can manually check for outdated dependencies using <a href="https://crates.io/crates/cargo-outdated">cargo-outdated</a>.
+Individual crate updates for version compatible with the requirement in <code>Cargo.toml</code> can be done using:</p>
+<pre><code>cargo update -p $cratename
+</code></pre>
+<p>To update all transitive dependencies to the latest semver-compatible version use:</p>
+<pre><code>cargo update
+</code></pre>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/dev/core/dependency-management.md">Edit this file on GitHub.</a></footer>
                     </main>
 
