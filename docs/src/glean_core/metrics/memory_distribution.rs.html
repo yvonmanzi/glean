@@ -202,6 +202,10 @@
 <span id="202">202</span>
 <span id="203">203</span>
 <span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -325,6 +329,10 @@
     <span class="doccomment">/// Values bigger than 1 Terabyte (2&lt;sup&gt;40&lt;/sup&gt; bytes) are truncated</span>
     <span class="doccomment">/// and an `ErrorType::InvalidValue` error is recorded.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accumulate_samples_signed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glean</span>: <span class="kw-2">&amp;</span><span class="ident">Glean</span>, <span class="ident">samples</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>) {
+        <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">should_record</span>(<span class="ident">glean</span>) {
+            <span class="kw">return</span>;
+        }
+
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">num_negative_samples</span> <span class="op">=</span> <span class="number">0</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">num_too_log_samples</span> <span class="op">=</span> <span class="number">0</span>;
 
