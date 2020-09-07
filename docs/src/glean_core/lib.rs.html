@@ -902,6 +902,12 @@
 <span id="902">902</span>
 <span id="903">903</span>
 <span id="904">904</span>
+<span id="905">905</span>
+<span id="906">906</span>
+<span id="907">907</span>
+<span id="908">908</span>
+<span id="909">909</span>
+<span id="910">910</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -1177,7 +1183,7 @@
         <span class="ident">data_path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">application_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">upload_enabled</span>: <span class="ident">bool</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">cfg</span> <span class="op">=</span> <span class="ident">Configuration</span> {
             <span class="ident">data_path</span>: <span class="ident">data_path</span>.<span class="ident">into</span>(),
             <span class="ident">application_id</span>: <span class="ident">application_id</span>.<span class="ident">into</span>(),
@@ -1187,7 +1193,13 @@
             <span class="ident">delay_ping_lifetime_io</span>: <span class="bool-val">false</span>,
         };
 
-        <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">cfg</span>)
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">glean</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">cfg</span>).<span class="ident">unwrap</span>();
+
+        <span class="comment">// Disable all upload manager policies for testing</span>
+        <span class="comment">// and make the upload manager scan the pings directories synchronously.</span>
+        <span class="ident">glean</span>.<span class="ident">upload_manager</span> <span class="op">=</span> <span class="ident">PingUploadManager</span>::<span class="ident">no_policy</span>(<span class="ident">data_path</span>, <span class="bool-val">true</span>);
+
+        <span class="ident">glean</span>
     }
 
     <span class="doccomment">/// Destroys the database.</span>

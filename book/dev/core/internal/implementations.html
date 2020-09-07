@@ -168,6 +168,18 @@
 <tr><td>Glean.py</td><td>Python</td><td>Windows/Mac/Linux</td><td>all</td><td>Autodetected at runtime</td></tr>
 <tr><td>FOG<sup class="footnote-reference"><a href="#2">2</a></sup></td><td>Rust/C++/JavaScript</td><td>as Firefox supports</td><td>Desktop application</td><td>OS info build-time autodetected, app info passed in</td></tr>
 </tbody></table>
+<h2><a class="header" href="#features-matrix" id="features-matrix">Features matrix</a></h2>
+<table><thead><tr><th>Feature/Bindings</th><th>Kotlin</th><th>Swift</th><th>Python</th><th>C#</th><th>Rust</th></tr></thead><tbody>
+<tr><td>Core metric types</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>X</td></tr>
+<tr><td>Metrics Testing API</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>X</td></tr>
+<tr><td><code>baseline</code> ping</td><td>✓</td><td>✓</td><td>X</td><td>X</td><td>X</td></tr>
+<tr><td><code>metrics</code></td><td>✓</td><td>✓</td><td>X</td><td>X</td><td>X</td></tr>
+<tr><td><code>events</code></td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>X</td></tr>
+<tr><td><code>deletion-request</code> ping</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+<tr><td>Custom pings</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>X</td></tr>
+<tr><td>Custom pings testing API</td><td>✓</td><td>✓</td><td>✓</td><td>X</td><td>X</td></tr>
+<tr><td>Debug Ping View support</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+</tbody></table>
 <hr />
 <div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
 <p><a href="https://crates.io/crates/glean-preview">glean-preview</a> is an experimental crate for prototyping integration into Firefox. It it not recommended for general use. See Project FOG.</p>
