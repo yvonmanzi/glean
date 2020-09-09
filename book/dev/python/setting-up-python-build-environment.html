@@ -207,10 +207,9 @@ pip install -r requirements_dev.txt
 <p>By default, the <code>Makefile</code> installs the latest version available of each of Glean's dependencies.  If you wish to install the minimum required versions instead, (useful primarily to ensure that Glean doesn't unintentionally use newer APIs in its dependencies) pass the <code>GLEAN_PYDEPS=min</code> environment variable: <code>make python-setup GLEAN_PYDEPS=min</code>.</p>
 <h2><a class="header" href="#build-the-python-bindings" id="build-the-python-bindings">Build the Python bindings</a></h2>
 <h3><a class="header" href="#manual-method-1" id="manual-method-1">Manual method</a></h3>
-<p>First, rebuild the Rust core if any Rust changes were made:</p>
-<pre><code class="language-bash">  $ cargo build  # If there were Rust changes
-  $ cd glean-core/python
-  $ python setup.py install
+<p>Building the Python bindings also builds the Rust shared object for the Glean SDK core.</p>
+<pre><code class="language-bash">  $ cd glean-core/python
+  $ python setup.py build install
 </code></pre>
 <h3><a class="header" href="#makefile-method-1" id="makefile-method-1">Makefile method</a></h3>
 <p>This will implicitly setup the Python environment, rebuild the Rust core and then build the Python bindings.</p>

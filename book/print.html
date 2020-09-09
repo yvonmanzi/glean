@@ -297,11 +297,13 @@ Create a Run Script in which you specify your shell (ex: <code>/bin/sh</code>), 
 </div>
 <div data-lang="Python" class="tab">
 <p>We recommend using a virtual environment for your work to isolate the dependencies for your project. There are many popular abstractions on top of virtual environments in the Python ecosystem which can help manage your project dependencies.</p>
-<p>The Glean SDK Python bindings currently have <a href="https://pypi.org/project/glean-sdk/#files">prebuilt wheels on PyPI for Windows (i686 and x86_64), Linux (x86_64) and macOS (x86_64)</a>.</p>
-<p>If you're running one of those platforms and have your virtual environment set up and activated, you can install the Glean SDK into it using:</p>
+<p>The Glean SDK Python bindings currently have <a href="https://pypi.org/project/glean-sdk/#files">prebuilt wheels on PyPI for Windows (i686 and x86_64), Linux (x86_64) and macOS (x86_64)</a>.
+For other platforms, the <code>glean_sdk</code> package will be built from source on your machine. 
+This requires that Cargo and Rust are already installed. 
+The easiest way to do this is through <a href="https://rustup.rs/">rustup</a>.</p>
+<p>Once you have your virtual environment set up and activated, you can install the Glean SDK into it using:</p>
 <pre><code class="language-bash">$ python -m pip install glean_sdk
 </code></pre>
-<p>If you are not on one of these platforms, you will need to build the Glean SDK Python bindings from source using <a href="user/../dev/python/setting-up-python-build-environment.html">these instructions</a>.</p>
 <p>The Glean SDK Python bindings make extensive use of type annotations to catch type related errors at build time. We highly recommend adding <a href="https://mypy-lang.org">mypy</a> to your continuous integration workflow to catch errors related to type mismatches early.</p>
 </div>
 <div data-lang="C#" class="tab">
@@ -6579,10 +6581,9 @@ pip install -r requirements_dev.txt
 <p>By default, the <code>Makefile</code> installs the latest version available of each of Glean's dependencies.  If you wish to install the minimum required versions instead, (useful primarily to ensure that Glean doesn't unintentionally use newer APIs in its dependencies) pass the <code>GLEAN_PYDEPS=min</code> environment variable: <code>make python-setup GLEAN_PYDEPS=min</code>.</p>
 <h2><a class="header" href="#build-the-python-bindings" id="build-the-python-bindings">Build the Python bindings</a></h2>
 <h3><a class="header" href="#manual-method-1" id="manual-method-1">Manual method</a></h3>
-<p>First, rebuild the Rust core if any Rust changes were made:</p>
-<pre><code class="language-bash">  $ cargo build  # If there were Rust changes
-  $ cd glean-core/python
-  $ python setup.py install
+<p>Building the Python bindings also builds the Rust shared object for the Glean SDK core.</p>
+<pre><code class="language-bash">  $ cd glean-core/python
+  $ python setup.py build install
 </code></pre>
 <h3><a class="header" href="#makefile-method-1" id="makefile-method-1">Makefile method</a></h3>
 <p>This will implicitly setup the Python environment, rebuild the Rust core and then build the Python bindings.</p>
@@ -7827,6 +7828,11 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 <li>iOS
 <ul>
 <li>Disabled code coverage in release builds (<a href="https://github.com/mozilla/glean/issues/1195">#1195</a>).</li>
+</ul>
+</li>
+<li>Python
+<ul>
+<li>Glean now ships a source package to pip install on platforms where wheels aren't provided.</li>
 </ul>
 </li>
 </ul>
