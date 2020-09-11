@@ -7823,6 +7823,7 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 <li>General
 <ul>
 <li>Track the size of the database file at startup (<a href="https://github.com/mozilla/glean/pull/1141">#1141</a>).</li>
+<li>BUGFIX: scan the pending pings directories <strong>after</strong> dealing with upload status on initialization. This is important, because in case upload is disabled we delete any outstanding non-deletion ping file, and if we scan the pending pings folder before doing that we may end up sending pings that should have been discarded. (<a href="https://github.com/mozilla/glean/pull/1205">#1205</a>)</li>
 </ul>
 </li>
 <li>iOS

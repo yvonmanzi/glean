@@ -952,7 +952,7 @@
         <span class="comment">// 2. We&#39;re not holding on to it beyond this function</span>
         <span class="comment">//    and we copy out all data when needed.</span>
         <span class="kw">let</span> <span class="ident">glean_cfg</span> <span class="op">=</span> <span class="ident">glean_core</span>::<span class="ident">Configuration</span>::<span class="ident">try_from</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">cfg</span>)<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">glean</span> <span class="op">=</span> <span class="ident">Glean</span>::<span class="ident">new_for_subprocess</span>(<span class="kw-2">&amp;</span><span class="ident">glean_cfg</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">glean</span> <span class="op">=</span> <span class="ident">Glean</span>::<span class="ident">new_for_subprocess</span>(<span class="kw-2">&amp;</span><span class="ident">glean_cfg</span>, <span class="bool-val">true</span>)<span class="question-mark">?</span>;
         <span class="ident">glean_core</span>::<span class="ident">setup_glean</span>(<span class="ident">glean</span>)<span class="question-mark">?</span>;
         <span class="ident">log</span>::<span class="macro">info</span><span class="macro">!</span>(<span class="string">&quot;Glean initialized for subprocess&quot;</span>);
         <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>)
