@@ -159,46 +159,114 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#quantity" id="quantity">Quantity</a></h1>
-<p>Used to record a single non-negative integer value.
+<p>Used to record a single non-negative integer value or 0.
 For example, the width of the display in pixels.</p>
 <blockquote>
-<p><strong>Note</strong>: Quantities are currently only allowed for GeckoView metrics (the <code>gecko_datapoint</code> parameter is present) and thus have only a Kotlin API.</p>
+<p><strong>IMPORTANT</strong> If you need to <em>count</em> something (e.g. number of tabs open or number of times a button is pressed) prefer using the <a href="./counter.html">Counter</a> metric type, which has a specific API for counting things and also takes care of resetting the count at the correct time.</p>
 </blockquote>
 <h2><a class="header" href="#configuration" id="configuration">Configuration</a></h2>
 <p>Say you're adding a new quantity for the width of the display in pixels. First you need to add an entry for the quantity to the <code>metrics.yaml</code> file:</p>
-<pre><code class="language-YAML">gfx:
-  display_width:
+<pre><code class="language-YAML">display:
+  width:
     type: quantity
     description: &gt;
       The width of the display, in pixels.
     unit: pixels
-    gecko_datapoint: DISPLAY_W_PIXELS
     ...
 </code></pre>
 <p>Note that quantities have a required <code>unit</code> parameter, which is a free-form string for documentation purposes.</p>
 <h2><a class="header" href="#api" id="api">API</a></h2>
-<pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Gfx
+<div class="tabs">
+<div class="tabbar"></div>
+<div class="tabcontents">
+<div data-lang="Kotlin" class="tab">
+<pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Display
 
-Gfx.displayWidth.set(width)
+Display.width.set(width)
 </code></pre>
 <p>There are test APIs available too:</p>
-<pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Gfx
+<pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Display
 
 // Was anything recorded?
-assertTrue(Gfx.displayWidth.testHasValue())
+assertTrue(Display.width.testHasValue())
 // Does the quantity have the expected value?
-assertEquals(6, Gfx.displayWidth.testGetValue())
+assertEquals(6, Display.width.testGetValue())
 // Did it record an error due to a negative value?
-assertEquals(1, Gfx.displayWidth.testGetNumRecordedErrors(ErrorType.InvalidValue))
+assertEquals(1, Display.width.testGetNumRecordedErrors(ErrorType.InvalidValue))
 </code></pre>
+</div>
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Display;
+
+Display.INSTANCE.width.set(width);
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Display;
+
+// Was anything recorded?
+assertTrue(Display.INSTANCE.width.testHasValue());
+// Does the quantity have the expected value?
+assertEquals(6, Display.INSTANCE.width.testGetValue());
+// Did the quantity record a negative value?
+assertEquals(
+    1, Display.INSTANCE.width.testGetNumRecordedErrors(ErrorType.InvalidValue)
+);
+</code></pre>
+</div>
+<div data-lang="Swift" class="tab">
+<pre><code class="language-Swift">Display.width.set(width)
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-Swift">@testable import Glean
+
+// Was anything recorded?
+XCTAssert(Display.width.testHasValue())
+// Does the quantity have the expected value?
+XCTAssertEqual(6, try Display.width.testGetValue())
+// Did the quantity record a negative value?
+XCTAssertEqual(1, Display.width.testGetNumRecordedErrors(.invalidValue))
+</code></pre>
+</div>
+<div data-lang="Python" class="tab">
+<pre><code class="language-Python">from glean import load_metrics
+metrics = load_metrics(&quot;metrics.yaml&quot;)
+
+metrics.display.width.set(width)
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-Python"># Was anything recorded?
+assert metrics.display.width.test_has_value()
+# Does the quantity have the expected value?
+assert 6 == metrics.display.width.test_get_value()
+# Did the quantity record an negative value?
+from glean.testing import ErrorType
+assert 1 == metrics.display.width.test_get_num_recorded_errors(
+    ErrorType.INVALID_VALUE
+)
+</code></pre>
+</div>
+<div data-lang="C#" class="tab">
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.Display;
+
+Display.width.Set(width);
+</code></pre>
+<p>There are test APIs available too:</p>
+<pre><code class="language-C#">using static Mozilla.YourApplication.GleanMetrics.Display;
+
+// Was anything recorded?
+Assert.True(Display.width.TestHasValue());
+// Does the counter have the expected value?
+Assert.Equal(6, Display.width.TestGetValue());
+// Did the counter record an negative value?
+Assert.Equal(
+    1, Display.width.TestGetNumRecordedErrors(ErrorType.InvalidValue)
+);
+</code></pre>
+</div>
+</div>
+</div>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
 <ul>
-<li>
-<p>Quantities must be non-negative integers.</p>
-</li>
-<li>
-<p>Quantities are only available for metrics that come from Gecko.</p>
-</li>
+<li>Quantities must be non-negative integers or 0.</li>
 </ul>
 <h2><a class="header" href="#examples" id="examples">Examples</a></h2>
 <ul>
