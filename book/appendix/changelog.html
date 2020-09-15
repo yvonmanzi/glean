@@ -164,6 +164,15 @@
 <li>General
 <ul>
 <li>Allow using quantity metric type outside of Gecko (<a href="https://github.com/mozilla/glean/pull/1198">#1198</a>)</li>
+<li>Update <code>glean_parser</code> to 1.28.5
+<ul>
+<li>The <code>SUPERFLUOUS_NO_LINT</code> warning has been removed from the glinter. It likely did more harm than good, and makes it hard to make metrics.yaml files that pass across different versions of <code>glean_parser</code>.</li>
+<li>Expired metrics will now produce a linter warning, <code>EXPIRED_METRIC</code>.</li>
+<li>Expiry dates that are more than 730 days (~2 years) in the future will produce a linter warning, <code>EXPIRATION_DATE_TOO_FAR</code>.</li>
+<li>Allow using the Quantity metric type outside of Gecko.</li>
+<li>New parser configs <code>custom_is_expired</code> and <code>custom_validate_expires</code> added. These are both functions that take the expires value of the metric and return a bool. (See <code>Metric.is_expired</code> and <code>Metric.validate_expires</code>). These will allow FOG to provide custom validation for its version-based <code>expires</code> values.</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
