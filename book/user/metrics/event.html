@@ -159,7 +159,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#events" id="events">Events</a></h1>
-<p>Events allow recording of e.g. individual occurrences of user actions, say every time a view was open and from where. </p>
+<p>Events allow recording of e.g. individual occurrences of user actions, say every time a view was open and from where.</p>
 <p>Each event contains the following data:</p>
 <ul>
 <li>A timestamp, in milliseconds. The first event in any ping always has a value of <code>0</code>, and subsequent event timestamps are relative to it.</li>
@@ -294,7 +294,7 @@ Assert.Equal(0, Views.loginOpened.TestGetNumRecordedErrors(ErrorType.InvalidValu
 </ul>
 <h2><a class="header" href="#recorded-errors" id="recorded-errors">Recorded errors</a></h2>
 <ul>
-<li><code>invalid_overflow</code>: if any of the values in the <code>extras</code> object are greater than 50 bytes in length.  (Prior to Glean TODO, this recorded an <code>invalid_value</code>).</li>
+<li><code>invalid_overflow</code>: if any of the values in the <code>extras</code> object are greater than 50 bytes in length.  (Prior to Glean 31.5.0, this recorded an <code>invalid_value</code>).</li>
 </ul>
 <h2><a class="header" href="#reference" id="reference">Reference</a></h2>
 <ul>

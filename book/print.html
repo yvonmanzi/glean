@@ -1397,9 +1397,9 @@ logging.getLogger(&quot;glean&quot;).setLevel(logging.DEBUG)
 </code></pre>
 <p>See the <a href="https://docs.python.org/3.8/library/logging.html">Python logging documentation</a> for more information.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/debugging/python.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#error-reporting" id="error-reporting">Error reporting</a></h1>
-<p>The Glean SDK records the number of errors that occur when metrics are passed invalid data or are otherwise used incorrectly. 
-This information is reported back in special labeled counter metrics in the <code>glean.error</code> category. 
-Error metrics are included in the same pings as the metric that caused the error. 
+<p>The Glean SDK records the number of errors that occur when metrics are passed invalid data or are otherwise used incorrectly.
+This information is reported back in special labeled counter metrics in the <code>glean.error</code> category.
+Error metrics are included in the same pings as the metric that caused the error.
 Additionally, error metrics are always sent in the <a href="user/pings/metrics.html"><code>metrics</code> ping</a> ping.</p>
 <p>The following categories of errors are recorded:</p>
 <ul>
@@ -1412,13 +1412,13 @@ Additionally, error metrics are always sent in the <a href="user/pings/metrics.h
 <pre><code class="language-Kotlin">MyMetrics.stringMetric.set(&quot;this_string_is_longer_than_the_limit_for_string_metrics&quot;)
 </code></pre>
 <p>The following error metric counter would be incremented:</p>
-<pre><code class="language-Kotlin">Glean.error.invalidValue[&quot;my_metrics.string_metric&quot;].add(1)
+<pre><code class="language-Kotlin">Glean.error.invalidOverflow[&quot;my_metrics.string_metric&quot;].add(1)
 </code></pre>
 <p>Resulting in the following keys in the ping:</p>
 <pre><code class="language-json">{
   &quot;metrics&quot;: {
     &quot;labeled_counter&quot;: {
-      &quot;glean.error.invalid_value&quot;: {
+      &quot;glean.error.invalid_overflow&quot;: {
         &quot;my_metrics.string_metric&quot;: 1
       }
     }
@@ -2528,7 +2528,7 @@ Assert.Equal(
 </ul>
 <h2><a class="header" href="#recorded-errors-5" id="recorded-errors-5">Recorded errors</a></h2>
 <ul>
-<li><code>invalid_overflow</code>: if the string is too long. (Prior to Glean TODO, this recorded an <code>invalid_value</code>).</li>
+<li><code>invalid_overflow</code>: if the string is too long. (Prior to Glean 31.5.0, this recorded an <code>invalid_value</code>).</li>
 </ul>
 <h2><a class="header" href="#reference-6" id="reference-6">Reference</a></h2>
 <ul>
@@ -2783,7 +2783,7 @@ Assert.Equal(
 <h2><a class="header" href="#recorded-errors-7" id="recorded-errors-7">Recorded errors</a></h2>
 <ul>
 <li>
-<p><code>invalid_overflow</code>: if the string is too long. (Prior to Glean TODO, this recorded an <code>invalid_value</code>).</p>
+<p><code>invalid_overflow</code>: if the string is too long. (Prior to Glean 31.5.0, this recorded an <code>invalid_value</code>).</p>
 </li>
 <li>
 <p><code>invalid_value</code>: if the list is too long</p>
@@ -3882,7 +3882,7 @@ Assert.Equal(1, Install.firstRun.TestGetNumRecordedErrors(ErrorType.InvalidValue
 <li><a href="user/metrics/../../../python/glean/metrics/datetime.html">Python API docs</a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/metrics/datetime.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#events" id="events">Events</a></h1>
-<p>Events allow recording of e.g. individual occurrences of user actions, say every time a view was open and from where. </p>
+<p>Events allow recording of e.g. individual occurrences of user actions, say every time a view was open and from where.</p>
 <p>Each event contains the following data:</p>
 <ul>
 <li>A timestamp, in milliseconds. The first event in any ping always has a value of <code>0</code>, and subsequent event timestamps are relative to it.</li>
@@ -4017,7 +4017,7 @@ Assert.Equal(0, Views.loginOpened.TestGetNumRecordedErrors(ErrorType.InvalidValu
 </ul>
 <h2><a class="header" href="#recorded-errors-13" id="recorded-errors-13">Recorded errors</a></h2>
 <ul>
-<li><code>invalid_overflow</code>: if any of the values in the <code>extras</code> object are greater than 50 bytes in length.  (Prior to Glean TODO, this recorded an <code>invalid_value</code>).</li>
+<li><code>invalid_overflow</code>: if any of the values in the <code>extras</code> object are greater than 50 bytes in length.  (Prior to Glean 31.5.0, this recorded an <code>invalid_value</code>).</li>
 </ul>
 <h2><a class="header" href="#reference-14" id="reference-14">Reference</a></h2>
 <ul>

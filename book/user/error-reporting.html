@@ -159,9 +159,9 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#error-reporting" id="error-reporting">Error reporting</a></h1>
-<p>The Glean SDK records the number of errors that occur when metrics are passed invalid data or are otherwise used incorrectly. 
-This information is reported back in special labeled counter metrics in the <code>glean.error</code> category. 
-Error metrics are included in the same pings as the metric that caused the error. 
+<p>The Glean SDK records the number of errors that occur when metrics are passed invalid data or are otherwise used incorrectly.
+This information is reported back in special labeled counter metrics in the <code>glean.error</code> category.
+Error metrics are included in the same pings as the metric that caused the error.
 Additionally, error metrics are always sent in the <a href="pings/metrics.html"><code>metrics</code> ping</a> ping.</p>
 <p>The following categories of errors are recorded:</p>
 <ul>
@@ -174,13 +174,13 @@ Additionally, error metrics are always sent in the <a href="pings/metrics.html">
 <pre><code class="language-Kotlin">MyMetrics.stringMetric.set(&quot;this_string_is_longer_than_the_limit_for_string_metrics&quot;)
 </code></pre>
 <p>The following error metric counter would be incremented:</p>
-<pre><code class="language-Kotlin">Glean.error.invalidValue[&quot;my_metrics.string_metric&quot;].add(1)
+<pre><code class="language-Kotlin">Glean.error.invalidOverflow[&quot;my_metrics.string_metric&quot;].add(1)
 </code></pre>
 <p>Resulting in the following keys in the ping:</p>
 <pre><code class="language-json">{
   &quot;metrics&quot;: {
     &quot;labeled_counter&quot;: {
-      &quot;glean.error.invalid_value&quot;: {
+      &quot;glean.error.invalid_overflow&quot;: {
         &quot;my_metrics.string_metric&quot;: 1
       }
     }
