@@ -166,6 +166,13 @@
 <li>publish library snapshot to the local Maven repository</li>
 <li>consume library snapshot in application</li>
 </ol>
+<blockquote>
+<p><strong>Note</strong>: this substitution-based approach will not work for testing updates to the Glean Gradle Plugin.
+For that to work, the library and the plugin need to be published to a local maven and manually imported
+in the consuming projects.
+Please refer to <a href="./locally-published-components-in-fenix.html">Using locally-published Glean in Fenix</a> for
+how to do that.</p>
+</blockquote>
 <h2><a class="header" href="#preparation" id="preparation">Preparation</a></h2>
 <p>Clone the Glean SDK and android-components repositories:</p>
 <pre><code class="language-sh">git clone https://github.com/mozilla/glean

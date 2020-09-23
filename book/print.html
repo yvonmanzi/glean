@@ -6365,6 +6365,13 @@ All locations need to be updated on upgrades:</p>
 <li>publish library snapshot to the local Maven repository</li>
 <li>consume library snapshot in application</li>
 </ol>
+<blockquote>
+<p><strong>Note</strong>: this substitution-based approach will not work for testing updates to the Glean Gradle Plugin.
+For that to work, the library and the plugin need to be published to a local maven and manually imported
+in the consuming projects.
+Please refer to <a href="dev/android/./locally-published-components-in-fenix.html">Using locally-published Glean in Fenix</a> for
+how to do that.</p>
+</blockquote>
 <h2><a class="header" href="#preparation" id="preparation">Preparation</a></h2>
 <p>Clone the Glean SDK and android-components repositories:</p>
 <pre><code class="language-sh">git clone https://github.com/mozilla/glean
@@ -6418,7 +6425,7 @@ Other tests like <code>:service-glean:testDebugUnitTest</code> or <code>:support
 </ol>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/dev/android/development-with-android-components.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#using-locally-published-glean-in-fenix" id="using-locally-published-glean-in-fenix">Using locally-published Glean in Fenix</a></h1>
 <blockquote>
-<p>Note: This is a bit tedious, and you might like to try the substitution-based &gt; approach documented in
+<p>Note: This is a bit tedious, and you might like to try the substitution-based approach documented in
 <a href="dev/android/./development-with-android-components.html">Working on unreleased Glean code in android-components</a>.
 That approach is still fairly new, and the local-publishing approach in this document is necessary if it fails.</p>
 </blockquote>
