@@ -159,7 +159,28 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
-<p><a href="https://github.com/mozilla/glean/compare/v33.0.3...main">Full changelog</a></p>
+<p><a href="https://github.com/mozilla/glean/compare/v33.0.4...main">Full changelog</a></p>
+<h1><a class="header" href="#v3304-2020-09-28" id="v3304-2020-09-28">v33.0.4 (2020-09-28)</a></h1>
+<p><a href="https://github.com/mozilla/glean/compare/v33.0.3...v33.0.4">Full changelog</a></p>
+<p>Note: Previous 33.0.z releases were broken. This release now includes all changes from 33.0.0 to 33.0.3.</p>
+<ul>
+<li>General
+<ul>
+<li>Update <code>glean_parser</code> to 1.28.6
+<ul>
+<li>BUGFIX: Ensure Kotlin arguments are deterministically ordered</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Android
+<ul>
+<li><strong>Breaking change:</strong> Updated to the Android Gradle Plugin v4.0.1 and Gradle 6.5.1. Projects using older versions of these components will need to update in order to use newer versions of the Glean SDK.</li>
+<li>Update the Kotlin Gradle Plugin to version 1.4.10.</li>
+<li>Fixed the building of <code>.aar</code> releases on Android so they include the Rust shared objects.</li>
+</ul>
+</li>
+</ul>
 <h1><a class="header" href="#v3303-2020-09-25" id="v3303-2020-09-25">v33.0.3 (2020-09-25)</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v33.0.2...v33.0.3">Full changelog</a></p>
 <ul>
