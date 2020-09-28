@@ -5718,7 +5718,7 @@ We don't run the full test suite again.</p>
 <li>Find the &quot;Decision task&quot; and click &quot;Details&quot;</li>
 <li>From the list of tasks pick the one you want to look at and follow the &quot;View task in Taskcluster&quot; link.</li>
 </ol>
-<h2><a class="header" href="#special-keywords" id="special-keywords">Special keywords</a></h2>
+<h2><a class="header" href="#special-behavior" id="special-behavior">Special behavior</a></h2>
 <h3><a class="header" href="#documentation-only-changes" id="documentation-only-changes">Documentation-only changes</a></h3>
 <p>Documentation is deployed from CI, we therefore need it to run on documentation changes.
 However, some of the long-running code tests can be skipped.
@@ -5732,6 +5732,16 @@ To skip tasks on TaskCluster add the following to the title of your pull request
 <pre><code>[ci skip]
 </code></pre>
 <p>This should only be used for metadata files, such as those in <code>.github</code>, <code>LICENSE</code> or <code>CODE_OF_CONDUCT.md</code>.</p>
+<h3><a class="header" href="#release-like-android-builds" id="release-like-android-builds">Release-like Android builds</a></h3>
+<p>Release builds are done on <a href="https://taskcluster.net/">TaskCluster</a>.
+As it builds for multiple platforms this task is quite long and does not run on pull requests by default.</p>
+<p>It is possible trigger the task on pull requests.
+Add the following literal string to the pull request <strong>title</strong>:</p>
+<pre><code>[ci full]
+</code></pre>
+<p>If added after initially opening the pull request, you need to close, then re-open the pull request to trigger a new build.</p>
+<p>The <code>Decision Task</code> will spawn <code>module-build-glean</code> and <code>module-build-glean-gradle-plugin</code> tasks.
+When they finish you will find the generated files under <code>Artifacts</code> on TaskCluster.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/dev/ci.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#glean-release-process" id="glean-release-process">Glean release process</a></h1>
 <p>The Glean SDK consists of multiple libraries for different platforms and targets.
 The main supported libraries are released as one.
@@ -7899,7 +7909,16 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 <h2><a class="header" href="#this-week-in-glean-twig" id="this-week-in-glean-twig">This Week in Glean (TWiG)</a></h2>
 <p><a href="appendix/twig.html">This Week in Glean</a> is a series of blog posts that the Glean Team at Mozilla is using to try to communicate better about our work.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/appendix/glossary.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
-<p><a href="https://github.com/mozilla/glean/compare/v33.0.2...main">Full changelog</a></p>
+<p><a href="https://github.com/mozilla/glean/compare/v33.0.3...main">Full changelog</a></p>
+<h1><a class="header" href="#v3303-2020-09-25" id="v3303-2020-09-25">v33.0.3 (2020-09-25)</a></h1>
+<p><a href="https://github.com/mozilla/glean/compare/v33.0.2...v33.0.3">Full changelog</a></p>
+<ul>
+<li>General
+<ul>
+<li>v33.0.2 was tagged incorrectly. This release is just to correct that mistake.</li>
+</ul>
+</li>
+</ul>
 <h1><a class="header" href="#v3302-2020-09-25" id="v3302-2020-09-25">v33.0.2 (2020-09-25)</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v33.0.1...v33.0.2">Full changelog</a></p>
 <ul>
