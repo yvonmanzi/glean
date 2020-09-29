@@ -7910,6 +7910,13 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 <p><a href="appendix/twig.html">This Week in Glean</a> is a series of blog posts that the Glean Team at Mozilla is using to try to communicate better about our work.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/appendix/glossary.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#unreleased-changes" id="unreleased-changes">Unreleased changes</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v33.0.4...main">Full changelog</a></p>
+<ul>
+<li>General
+<ul>
+<li>BUGFIX: Transform ping directory size from bytes to kilobytes before accumulating to <code>glean.upload.pending_pings_directory_size</code> (<a href="https://github.com/mozilla/glean/pull/1236">#1236</a>).</li>
+</ul>
+</li>
+</ul>
 <h1><a class="header" href="#v3304-2020-09-28" id="v3304-2020-09-28">v33.0.4 (2020-09-28)</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v33.0.3...v33.0.4">Full changelog</a></p>
 <p>Note: Previous 33.0.z releases were broken. This release now includes all changes from 33.0.0 to 33.0.3.</p>
