@@ -134,7 +134,7 @@ These are documented in glean_parser:
 <p>metrics (object): An object containing a tree of metrics, as defined in
 the <code>metrics.yaml</code> file.</p>
 <h2 id="example">Example</h2>
-<pre><code class="python-repl">&gt;&gt;&gt; metrics = load_metrics(&quot;metrics.yaml&quot;)
+<pre><code class="language-python-repl">&gt;&gt;&gt; metrics = load_metrics(&quot;metrics.yaml&quot;)
 &gt;&gt;&gt; metrics.category.name.set(&quot;value&quot;)
 </code></pre></div>
 <details class="source">
@@ -211,7 +211,7 @@ These are documented in glean_parser:
 <p>pings (object): An object where the attributes are pings, as defined in
 the <code>pings.yaml</code> file.</p>
 <h2 id="example">Example</h2>
-<pre><code class="python-repl">&gt;&gt;&gt; pings = load_pings(&quot;pings.yaml&quot;)
+<pre><code class="language-python-repl">&gt;&gt;&gt; pings = load_pings(&quot;pings.yaml&quot;)
 &gt;&gt;&gt; pings.baseline.submit()
 </code></pre></div>
 <details class="source">
@@ -412,7 +412,7 @@ def server_endpoint(self) -&gt; str:
 <div class="desc"><p>The main Glean API.</p>
 <p>Before any data collection can take place, the Glean SDK <strong>must</strong> be
 initialized from the application.</p>
-<pre><code class="python-repl">&gt;&gt;&gt; Glean.initialize(
+<pre><code class="language-python-repl">&gt;&gt;&gt; Glean.initialize(
 ...     application_id=&quot;my-app&quot;,
 ...     application_version=&quot;0.0.0&quot;,
 ...     upload_enabled=True,
