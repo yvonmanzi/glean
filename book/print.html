@@ -3131,19 +3131,16 @@ fun onPageLoaded(e: Event) {
 <pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Pages
 
 // Was anything recorded?
-assertTrue(pages.pageLoad.testHasValue())
+assertTrue(Pages.pageLoad.testHasValue())
 
 // Get snapshot.
-val snapshot = pages.pageLoad.testGetValue()
-
-// Does the sum have the expected value?
-assertEquals(11, snapshot.sum)
+val snapshot = Pages.pageLoad.testGetValue()
 
 // Usually you don't know the exact timing values, but how many should have been recorded.
-assertEquals(2L, snapshot.count)
+assertEquals(1L, snapshot.count)
 
-// Was an error recorded?
-assertEquals(1, pages.pageLoad.testGetNumRecordedErrors(ErrorType.InvalidValue))
+// Assert that no errors were recorded.
+assertEquals(0, Pages.pageLoad.testGetNumRecordedErrors(ErrorType.InvalidValue))
 </code></pre>
 </div>
 <div data-lang="Java" class="tab">
@@ -3170,15 +3167,12 @@ assertTrue(pages.INSTANCE.pageLoad.testHasValue());
 // Get snapshot.
 DistributionData snapshot = pages.INSTANCE.pageLoad.testGetValue();
 
-// Does the sum have the expected value?
-assertEquals(11, snapshot.getSum);
-
 // Usually you don't know the exact timing values, but how many should have been recorded.
-assertEquals(2L, snapshot.getCount);
+assertEquals(1L, snapshot.getCount);
 
-// Was an error recorded?
+// Assert that no errors were recorded.
 assertEquals(
-    1,
+    0,
     pages.INSTANCE.pageLoad.testGetNumRecordedErrors(
         ErrorType.InvalidValue
     )
@@ -3208,14 +3202,11 @@ XCTAssert(pages.pageLoad.testHasValue())
 // Get snapshot.
 let snapshot = try! pages.pageLoad.testGetValue()
 
-// Does the sum have the expected value?
-XCTAssertEqual(11, snapshot.sum)
-
 // Usually you don't know the exact timing values, but how many should have been recorded.
-XCTAssertEqual(2, snapshot.count)
+XCTAssertEqual(1, snapshot.count)
 
-// Was an error recorded?
-XCTAssertEqual(1, pages.pageLoad.testGetNumRecordedErrors(.invalidValue))
+// Assert that no errors were recorded.
+XCTAssertEqual(0, pages.pageLoad.testGetNumRecordedErrors(.invalidValue))
 </code></pre>
 </div>
 <div data-lang="Python" class="tab">
@@ -3246,14 +3237,11 @@ assert metrics.pages.page_load.test_has_value()
 # Get snapshot.
 snapshot = metrics.pages.page_load.test_get_value()
 
-# Does the sum have the expected value?
-assert 11 == snapshot.sum
-
 # Usually you don't know the exact timing values, but how many should have been recorded.
-assert 2 == snapshot.count
+assert 1 == snapshot.count
 
-# Was an error recorded?
-assert 1 == metrics.pages.page_load.test_get_num_recorded_errors(
+# Assert that no errors were recorded.
+assert 0 == metrics.pages.page_load.test_get_num_recorded_errors(
     ErrorType.INVALID_VALUE
 )
 </code></pre>
@@ -3281,14 +3269,11 @@ Assert.True(Pages.pageLoad.TestHasValue());
 // Get snapshot.
 var snapshot = Pages.pageLoad.TestGetValue();
 
-// Does the sum have the expected value?
-Assert.Equal(11, snapshot.Sum);
-
 // Usually you don't know the exact timing values, but how many should have been recorded.
-Assert.Equal(2L, snapshot.Values.Count);
+Assert.Equal(1, snapshot.Values.Count);
 
-// Was an error recorded?
-Assert.Equal(1, Pages.pageLoad.TestGetNumRecordedErrors(ErrorType.InvalidValue));
+// Assert that no errors were recorded. 
+Assert.Equal(0, Pages.pageLoad.TestGetNumRecordedErrors(ErrorType.InvalidValue));
 </code></pre>
 </div>
 </div>
@@ -3423,6 +3408,9 @@ That is, the function from a value \( x \) to a bucket index is:</p>
 </code></pre>
 <h2><a class="header" href="#api-11" id="api-11">API</a></h2>
 <p>Now you can use the memory distribution from the application's code.</p>
+<blockquote>
+<p><strong>Note</strong> The data <em>provided</em> to the <code>accumulate</code> method is in the configured memory unit specified in the <code>metrics.yaml</code> file. The data <em>recorded</em>, on the other hand, is always in <strong>bytes</strong>.</p>
+</blockquote>
 <p>For example, to measure the distribution of heap allocations:</p>
 <div class="tabs">
 <div class="tabbar"></div>
@@ -4308,7 +4296,7 @@ Assert.Equal(
 <p>Applications can also define and send their own <a href="user/pings/custom.html">custom pings</a> when the schedules of these pings is not suitable.</p>
 <p>There is also a <a href="user/pings/ping-schedules-and-timings.html">high-level overview</a> of how the <code>metrics</code> and <code>baseline</code> pings relate and the timings they record.</p>
 <h2><a class="header" href="#ping-sections" id="ping-sections">Ping sections</a></h2>
-<p>There are two standard metadata sections that are added to most pings, in addition to their core metrics and events content (which are described in <a href="user/pings/../adding-new-metrics.html">Adding new metrics</a>).</p>
+<p>Every ping has the following keys at the top-level:</p>
 <ul>
 <li>
 <p>The <a href="user/pings/index.html#the-ping_info-section"><code>ping_info</code> section</a> contains core metadata that is included in <strong>every</strong> ping.</p>
@@ -4317,7 +4305,15 @@ Assert.Equal(
 <p>The <a href="user/pings/index.html#the-client_info-section"><code>client_info</code> section</a> contains information that identifies the client.
 It is included in most pings (including all built-in pings), but may be excluded from pings where we don't want to connect client information with the other metrics in the ping.</p>
 </li>
+<li>
+<p>The <code>metrics</code> section contains the submitted values for all metric types except for <a href="user/pings/../metrics/event.html">events</a>.
+It has keys for each of the metric types, under which is data for each metric.</p>
+</li>
+<li>
+<p>The <code>events</code> section contains the events recorded in the ping.</p>
+</li>
 </ul>
+<p>See the <a href="user/pings/../../dev/core/internal/payload.html">payload documentation</a> documentation for more details for each metric type in the <code>metrics</code> and <code>events</code> section.</p>
 <h3><a class="header" href="#the-ping_info-section" id="the-ping_info-section">The <code>ping_info</code> section</a></h3>
 <p>The following fields are included in the <code>ping_info</code> section, for every ping.
 Optional fields are marked accordingly.</p>
@@ -4329,6 +4325,18 @@ Optional fields are marked accordingly.</p>
 <tr><td><code>reason</code></td><td>String</td><td><em>Optional</em>. The reason the ping was submitted. The specific set of values and their meanings are defined for each metric type in the <code>reasons</code> field in the <code>pings.yaml</code> file.</td></tr>
 </tbody></table>
 <p>All the metrics surviving application restarts (e.g. <code>seq</code>, ...) are removed once the application using the Glean SDK is uninstalled.</p>
+<h4><a class="header" href="#the-experiments-object" id="the-experiments-object">The <code>experiments</code> object</a></h4>
+<p>This object (included in the <a href="user/pings/index.html#the-ping_info-section"><code>ping_info</code> section</a>) contains experiment annotations keyed by the experiment <code>id</code>. Each annotation contains the experiment <code>branch</code> the client is enrolled in and may contain a string to string map with additional data in the <code>extra</code> key. Both the <code>id</code> and <code>branch</code> are truncated to 30 characters.
+See <a href="user/pings/../experiments-api.html">Using the Experiments API</a> on how to record experiments data.</p>
+<pre><code class="language-json">{
+  &quot;&lt;id&gt;&quot;: {
+    &quot;branch&quot;: &quot;branch-id&quot;,
+    &quot;extra&quot;: {
+      &quot;some-key&quot;: &quot;a-value&quot;
+    }
+  }
+}
+</code></pre>
 <h3><a class="header" href="#the-client_info-section" id="the-client_info-section">The <code>client_info</code> section</a></h3>
 <p>The following fields are included in the <code>client_info</code> section.
 Optional fields are marked accordingly.</p>
@@ -4348,18 +4356,6 @@ Optional fields are marked accordingly.</p>
 <tr><td><code>locale</code></td><td>String</td><td><em>Optional</em>. The locale of the application during initialization (e.g. &quot;es-ES&quot;). If the locale can't be determined on the system, the value is &quot;und&quot;, to indicate &quot;undetermined&quot;.</td></tr>
 </tbody></table>
 <p>All the metrics surviving application restarts (e.g. <code>client_id</code>, ...) are removed once the application using the Glean SDK is uninstalled.</p>
-<h3><a class="header" href="#the-experiments-object" id="the-experiments-object">The <code>experiments</code> object</a></h3>
-<p>This object (included in the <a href="user/pings/index.html#the-ping_info-section"><code>ping_info</code> section</a>) contains experiments keyed by the experiment <code>id</code>. Each listed experiment contains the <code>branch</code> the client is enrolled in and may contain a string to string map with additional data in the <code>extra</code> key. Both the <code>id</code> and <code>branch</code> are truncated to 30 characters.
-See <a href="user/pings/../experiments-api.html">Using the Experiments API</a> on how to record experiments data.</p>
-<pre><code class="language-json">{
-  &quot;&lt;id&gt;&quot;: {
-    &quot;branch&quot;: &quot;branch-id&quot;,
-    &quot;extra&quot;: {
-      &quot;some-key&quot;: &quot;a-value&quot;
-    }
-  }
-}
-</code></pre>
 <h2><a class="header" href="#ping-submission" id="ping-submission">Ping submission</a></h2>
 <p>The pings that the Glean SDK generates are submitted to the Mozilla servers at specific paths, in order to provide additional metadata without the need to unpack the ping payload.</p>
 <p>A typical submission URL looks like</p>

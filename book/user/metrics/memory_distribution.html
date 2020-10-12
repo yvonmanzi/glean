@@ -191,6 +191,9 @@ That is, the function from a value \( x \) to a bucket index is:</p>
 </code></pre>
 <h2><a class="header" href="#api" id="api">API</a></h2>
 <p>Now you can use the memory distribution from the application's code.</p>
+<blockquote>
+<p><strong>Note</strong> The data <em>provided</em> to the <code>accumulate</code> method is in the configured memory unit specified in the <code>metrics.yaml</code> file. The data <em>recorded</em>, on the other hand, is always in <strong>bytes</strong>.</p>
+</blockquote>
 <p>For example, to measure the distribution of heap allocations:</p>
 <div class="tabs">
 <div class="tabbar"></div>
