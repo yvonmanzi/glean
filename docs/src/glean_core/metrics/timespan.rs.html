@@ -173,6 +173,10 @@
 <span id="172">172</span>
 <span id="173">173</span>
 <span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -208,6 +212,10 @@
     }
 }
 
+<span class="comment">// IMPORTANT:</span>
+<span class="comment">//</span>
+<span class="comment">// When changing this implementation, make sure all the operations are</span>
+<span class="comment">// also declared in the related trait in `../traits/`.</span>
 <span class="kw">impl</span> <span class="ident">TimespanMetric</span> {
     <span class="doccomment">/// Creates a new timespan metric.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">meta</span>: <span class="ident">CommonMetricData</span>, <span class="ident">time_unit</span>: <span class="ident">TimeUnit</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {

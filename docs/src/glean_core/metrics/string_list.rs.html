@@ -153,6 +153,10 @@
 <span id="152">152</span>
 <span id="153">153</span>
 <span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -189,6 +193,10 @@
     }
 }
 
+<span class="comment">// IMPORTANT:</span>
+<span class="comment">//</span>
+<span class="comment">// When changing this implementation, make sure all the operations are</span>
+<span class="comment">// also declared in the related trait in `../traits/`.</span>
 <span class="kw">impl</span> <span class="ident">StringListMetric</span> {
     <span class="doccomment">/// Creates a new string list metric.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">meta</span>: <span class="ident">CommonMetricData</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {

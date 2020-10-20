@@ -73,6 +73,10 @@
 <span id="72">72</span>
 <span id="73">73</span>
 <span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -97,6 +101,10 @@
     <span class="kw">pub</span> <span class="ident">reason_codes</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
 }
 
+<span class="comment">// IMPORTANT:</span>
+<span class="comment">//</span>
+<span class="comment">// When changing this implementation, make sure all the operations are</span>
+<span class="comment">// also declared in the related trait in `../traits/`.</span>
 <span class="kw">impl</span> <span class="ident">PingType</span> {
     <span class="doccomment">/// Creates a new ping type for the given name, whether to include the client ID and whether to</span>
     <span class="doccomment">/// send this ping empty.</span>

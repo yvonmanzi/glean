@@ -134,6 +134,10 @@
 <span id="133">133</span>
 <span id="134">134</span>
 <span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -173,6 +177,10 @@
     }
 }
 
+<span class="comment">// IMPORTANT:</span>
+<span class="comment">//</span>
+<span class="comment">// When changing this implementation, make sure all the operations are</span>
+<span class="comment">// also declared in the related trait in `../traits/`.</span>
 <span class="kw">impl</span> <span class="ident">EventMetric</span> {
     <span class="doccomment">/// Creates a new event metric.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">meta</span>: <span class="ident">CommonMetricData</span>, <span class="ident">allowed_extra_keys</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {

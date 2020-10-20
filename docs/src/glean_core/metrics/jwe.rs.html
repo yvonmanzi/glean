@@ -467,6 +467,10 @@
 <span id="466">466</span>
 <span id="467">467</span>
 <span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -531,6 +535,10 @@
     <span class="ident">auth_tag</span>: <span class="ident">String</span>,
 }
 
+<span class="comment">// IMPORTANT:</span>
+<span class="comment">//</span>
+<span class="comment">// When changing this implementation, make sure all the operations are</span>
+<span class="comment">// also declared in the related trait in `../traits/`.</span>
 <span class="kw">impl</span> <span class="ident">Jwe</span> {
     <span class="doccomment">/// Create a new JWE struct.</span>
     <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>(
