@@ -253,6 +253,28 @@ Assert.True(Flags.a11yEnabled.TestHasValue());
 Assert.True(Flags.a11yEnabled.TestGetValue());
 </code></pre>
 </div>
+<div data-lang="Rust" class="tab">
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use glean_metrics;
+
+flags::a11y_enabled.set(system.is_accessibility_enabled());
+<span class="boring">}
+</span></code></pre></pre>
+<p>There are test APIs available too:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use glean_metrics;
+
+// Was anything recorded?
+assert!(flags::a11y_enabled.test_get_value().is_some());
+// Does it have the expected value?
+assert!(flags::a11y_enabled.test_get_value().unwrap());
+<span class="boring">}
+</span></code></pre></pre>
+</div>
 </div>
 </div>
 <h2><a class="header" href="#limits" id="limits">Limits</a></h2>
