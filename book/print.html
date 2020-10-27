@@ -7480,8 +7480,8 @@ Copy out the data and convert into language-appropriate types (e.g. convert <cod
 <p>The Glean SDK reserves all ping names in <code>send_in_pings</code> starting with <code>glean_</code>.</p>
 <p>This currently includes, but is not limited to:</p>
 <ul>
-<li><code>glean_client_info</code></li>
-<li><code>glean_internal_info</code></li>
+<li><code>glean_client_info</code>: metrics sent with this ping are added to every ping in its <code>client_info</code> section;</li>
+<li><code>glean_internal_info</code>: metrics sent with this ping are added to every ping in its <code>ping_info</code> section.</li>
 </ul>
 <p>Additionally, only Glean may specify <code>all-pings</code>.  This special value has no effect in the client, but indicates to the backend infrastructure that a metric may appear in any ping.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/dev/core/internal/reserved-ping-names.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#clearing-metrics-when-disablingenabling-glean" id="clearing-metrics-when-disablingenabling-glean">Clearing metrics when disabling/enabling Glean</a></h1>
