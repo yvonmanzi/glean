@@ -214,6 +214,128 @@
 <span id="213">213</span>
 <span id="214">214</span>
 <span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -235,7 +357,6 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
 <span class="doccomment">//! # use glean::{Configuration, ClientInfoMetrics, Error, private::*};</span>
-<span class="doccomment">//! # fn main() -&gt; Result&lt;(), Error&gt; {</span>
 <span class="doccomment">//! let cfg = Configuration {</span>
 <span class="doccomment">//!     data_path: &quot;/tmp/data&quot;.into(),</span>
 <span class="doccomment">//!     application_id: &quot;org.mozilla.glean_core.example&quot;.into(),</span>
@@ -244,18 +365,17 @@
 <span class="doccomment">//!     delay_ping_lifetime_io: false,</span>
 <span class="doccomment">//!     channel: None,</span>
 <span class="doccomment">//! };</span>
-<span class="doccomment">//! glean::initialize(cfg, ClientInfoMetrics::unknown())?;</span>
+<span class="doccomment">//! glean::initialize(cfg, ClientInfoMetrics::unknown());</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! let prototype_ping = PingType::new(&quot;prototype&quot;, true, true, vec!());</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! glean::register_ping_type(&amp;prototype_ping);</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! prototype_ping.submit(None);</span>
-<span class="doccomment">//! # Ok(())</span>
-<span class="doccomment">//! # }</span>
 <span class="doccomment">//! ```</span>
 
 <span class="kw">use</span> <span class="ident">once_cell</span>::<span class="ident">sync</span>::<span class="ident">OnceCell</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">atomic</span>::{<span class="ident">AtomicBool</span>, <span class="ident">Ordering</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">Mutex</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">configuration</span>::<span class="ident">Configuration</span>;
@@ -264,15 +384,19 @@
 
 <span class="kw">mod</span> <span class="ident">configuration</span>;
 <span class="kw">mod</span> <span class="ident">core_metrics</span>;
-<span class="kw">mod</span> <span class="ident">dispatcher</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">dispatcher</span>;
+<span class="kw">mod</span> <span class="ident">glean_metrics</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">private</span>;
 <span class="kw">mod</span> <span class="ident">system</span>;
 
 <span class="kw">const</span> <span class="ident">LANGUAGE_BINDING_NAME</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;Rust&quot;</span>;
 
-<span class="doccomment">/// Application state to keep track of.</span>
+<span class="doccomment">/// State to keep track for the Rust Language bindings.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This is useful for setting Glean SDK-owned metrics when</span>
+<span class="doccomment">/// the state of the upload is toggled.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">struct</span> <span class="ident">AppState</span> {
+<span class="kw">struct</span> <span class="ident">RustBindingsState</span> {
     <span class="doccomment">/// The channel the application is being distributed on.</span>
     <span class="ident">channel</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
 
@@ -280,20 +404,25 @@
     <span class="ident">client_info</span>: <span class="ident">ClientInfoMetrics</span>,
 }
 
+<span class="doccomment">/// Set when `glean::initialize()` returns.</span>
+<span class="doccomment">/// This allows to detect calls that happen before `glean::initialize()` was called.</span>
+<span class="doccomment">/// Note: The initialization might still be in progress, as it runs in a separate thread.</span>
+<span class="kw">static</span> <span class="ident">INITIALIZE_CALLED</span>: <span class="ident">AtomicBool</span> <span class="op">=</span> <span class="ident">AtomicBool</span>::<span class="ident">new</span>(<span class="bool-val">false</span>);
+
 <span class="doccomment">/// A global singleton storing additional state for Glean.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Requires a Mutex, because in tests we can actual reset this.</span>
-<span class="kw">static</span> <span class="ident">STATE</span>: <span class="ident">OnceCell</span><span class="op">&lt;</span><span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">AppState</span><span class="op">&gt;&gt;</span> <span class="op">=</span> <span class="ident">OnceCell</span>::<span class="ident">new</span>();
+<span class="kw">static</span> <span class="ident">STATE</span>: <span class="ident">OnceCell</span><span class="op">&lt;</span><span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">RustBindingsState</span><span class="op">&gt;&gt;</span> <span class="op">=</span> <span class="ident">OnceCell</span>::<span class="ident">new</span>();
 
 <span class="doccomment">/// Get a reference to the global state object.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Panics if no global state object was set.</span>
-<span class="kw">fn</span> <span class="ident">global_state</span>() <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">AppState</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">global_state</span>() <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">RustBindingsState</span><span class="op">&gt;</span> {
     <span class="ident">STATE</span>.<span class="ident">get</span>().<span class="ident">unwrap</span>()
 }
 
 <span class="doccomment">/// Set or replace the global Glean object.</span>
-<span class="kw">fn</span> <span class="ident">setup_state</span>(<span class="ident">state</span>: <span class="ident">AppState</span>) {
+<span class="kw">fn</span> <span class="ident">setup_state</span>(<span class="ident">state</span>: <span class="ident">RustBindingsState</span>) {
     <span class="kw">if</span> <span class="ident">STATE</span>.<span class="ident">get</span>().<span class="ident">is_none</span>() {
         <span class="ident">STATE</span>.<span class="ident">set</span>(<span class="ident">Mutex</span>::<span class="ident">new</span>(<span class="ident">state</span>)).<span class="ident">unwrap</span>();
     } <span class="kw">else</span> {
@@ -322,29 +451,132 @@
 
 <span class="doccomment">/// Creates and initializes a new Glean object.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// See `glean_core::Glean::new`.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">initialize</span>(<span class="ident">cfg</span>: <span class="ident">Configuration</span>, <span class="ident">client_info</span>: <span class="ident">ClientInfoMetrics</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">core_cfg</span> <span class="op">=</span> <span class="ident">glean_core</span>::<span class="ident">Configuration</span> {
-        <span class="ident">upload_enabled</span>: <span class="ident">cfg</span>.<span class="ident">upload_enabled</span>,
-        <span class="ident">data_path</span>: <span class="ident">cfg</span>.<span class="ident">data_path</span>.<span class="ident">clone</span>(),
-        <span class="ident">application_id</span>: <span class="ident">cfg</span>.<span class="ident">application_id</span>.<span class="ident">clone</span>(),
-        <span class="ident">language_binding_name</span>: <span class="ident">LANGUAGE_BINDING_NAME</span>.<span class="ident">into</span>(),
-        <span class="ident">max_events</span>: <span class="ident">cfg</span>.<span class="ident">max_events</span>,
-        <span class="ident">delay_ping_lifetime_io</span>: <span class="ident">cfg</span>.<span class="ident">delay_ping_lifetime_io</span>,
-    };
-    <span class="kw">let</span> <span class="ident">glean</span> <span class="op">=</span> <span class="ident">Glean</span>::<span class="ident">new</span>(<span class="ident">core_cfg</span>)<span class="question-mark">?</span>;
+<span class="doccomment">/// See `glean_core::Glean::new` for more information.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Arguments</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// * `cfg` - the `Configuration` options to initialize with.</span>
+<span class="doccomment">/// * `client_info` - the `ClientInfoMetrics` values used to set Glean</span>
+<span class="doccomment">///   core metrics.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">initialize</span>(<span class="ident">cfg</span>: <span class="ident">Configuration</span>, <span class="ident">client_info</span>: <span class="ident">ClientInfoMetrics</span>) {
+    <span class="kw">if</span> <span class="ident">was_initialize_called</span>() {
+        <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;Glean should not be initialized multiple times&quot;</span>);
+        <span class="kw">return</span>;
+    }
 
-    <span class="comment">// First initialize core metrics</span>
-    <span class="ident">initialize_core_metrics</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="ident">client_info</span>, <span class="ident">cfg</span>.<span class="ident">channel</span>.<span class="ident">clone</span>());
+    <span class="ident">std</span>::<span class="ident">thread</span>::<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">||</span> {
+        <span class="kw">let</span> <span class="ident">core_cfg</span> <span class="op">=</span> <span class="ident">glean_core</span>::<span class="ident">Configuration</span> {
+            <span class="ident">upload_enabled</span>: <span class="ident">cfg</span>.<span class="ident">upload_enabled</span>,
+            <span class="ident">data_path</span>: <span class="ident">cfg</span>.<span class="ident">data_path</span>.<span class="ident">clone</span>(),
+            <span class="ident">application_id</span>: <span class="ident">cfg</span>.<span class="ident">application_id</span>.<span class="ident">clone</span>(),
+            <span class="ident">language_binding_name</span>: <span class="ident">LANGUAGE_BINDING_NAME</span>.<span class="ident">into</span>(),
+            <span class="ident">max_events</span>: <span class="ident">cfg</span>.<span class="ident">max_events</span>,
+            <span class="ident">delay_ping_lifetime_io</span>: <span class="ident">cfg</span>.<span class="ident">delay_ping_lifetime_io</span>,
+        };
 
-    <span class="comment">// Now make this the global object available to others.</span>
-    <span class="ident">setup_state</span>(<span class="ident">AppState</span> {
-        <span class="ident">channel</span>: <span class="ident">cfg</span>.<span class="ident">channel</span>,
-        <span class="ident">client_info</span>,
+        <span class="kw">let</span> <span class="ident">glean</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">Glean</span>::<span class="ident">new</span>(<span class="ident">core_cfg</span>) {
+            <span class="prelude-val">Ok</span>(<span class="ident">glean</span>) <span class="op">=&gt;</span> <span class="ident">glean</span>,
+            <span class="comment">// glean-core already takes care of logging errors: other bindings</span>
+            <span class="comment">// simply do early returns, as we&#39;re doing.</span>
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="kw">return</span>,
+        };
+
+        <span class="comment">// glean-core already takes care of logging errors: other bindings</span>
+        <span class="comment">// simply do early returns, as we&#39;re doing.</span>
+        <span class="kw">if</span> <span class="ident">glean_core</span>::<span class="ident">setup_glean</span>(<span class="ident">glean</span>).<span class="ident">is_err</span>() {
+            <span class="kw">return</span>;
+        }
+
+        <span class="ident">log</span>::<span class="macro">info</span><span class="macro">!</span>(<span class="string">&quot;Glean initialized&quot;</span>);
+
+        <span class="comment">// Now make this the global object available to others.</span>
+        <span class="ident">setup_state</span>(<span class="ident">RustBindingsState</span> {
+            <span class="ident">channel</span>: <span class="ident">cfg</span>.<span class="ident">channel</span>,
+            <span class="ident">client_info</span>,
+        });
+
+        <span class="kw">let</span> <span class="ident">upload_enabled</span> <span class="op">=</span> <span class="ident">cfg</span>.<span class="ident">upload_enabled</span>;
+
+        <span class="ident">with_glean_mut</span>(<span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
+            <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">global_state</span>().<span class="ident">lock</span>().<span class="ident">unwrap</span>();
+
+            <span class="comment">// Get the current value of the dirty flag so we know whether to</span>
+            <span class="comment">// send a dirty startup baseline ping below.  Immediately set it to</span>
+            <span class="comment">// `false` so that dirty startup pings won&#39;t be sent if Glean</span>
+            <span class="comment">// initialization does not complete successfully.</span>
+            <span class="comment">// TODO Bug 1672956 will decide where to set this flag again.</span>
+            <span class="kw">let</span> <span class="ident">dirty_flag</span> <span class="op">=</span> <span class="ident">glean</span>.<span class="ident">is_dirty_flag_set</span>();
+            <span class="ident">glean</span>.<span class="ident">set_dirty_flag</span>(<span class="bool-val">false</span>);
+
+            <span class="comment">// Register builtin pings.</span>
+            <span class="comment">// Unfortunately we need to manually list them here to guarantee</span>
+            <span class="comment">// they are registered synchronously before we need them.</span>
+            <span class="comment">// We don&#39;t need to handle the deletion-request ping. It&#39;s never touched</span>
+            <span class="comment">// from the language implementation.</span>
+            <span class="ident">glean</span>.<span class="ident">register_ping_type</span>(<span class="kw-2">&amp;</span><span class="ident">glean_metrics</span>::<span class="ident">pings</span>::<span class="ident">baseline</span>.<span class="ident">ping_type</span>);
+            <span class="ident">glean</span>.<span class="ident">register_ping_type</span>(<span class="kw-2">&amp;</span><span class="ident">glean_metrics</span>::<span class="ident">pings</span>::<span class="ident">metrics</span>.<span class="ident">ping_type</span>);
+            <span class="ident">glean</span>.<span class="ident">register_ping_type</span>(<span class="kw-2">&amp;</span><span class="ident">glean_metrics</span>::<span class="ident">pings</span>::<span class="ident">events</span>.<span class="ident">ping_type</span>);
+
+            <span class="comment">// TODO: perform registration of pings that were attempted to be</span>
+            <span class="comment">// registered before init. See bug 1673850.</span>
+
+            <span class="comment">// If this is the first time ever the Glean SDK runs, make sure to set</span>
+            <span class="comment">// some initial core metrics in case we need to generate early pings.</span>
+            <span class="comment">// The next times we start, we would have them around already.</span>
+            <span class="kw">let</span> <span class="ident">is_first_run</span> <span class="op">=</span> <span class="ident">glean</span>.<span class="ident">is_first_run</span>();
+            <span class="kw">if</span> <span class="ident">is_first_run</span> {
+                <span class="ident">initialize_core_metrics</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="ident">state</span>.<span class="ident">client_info</span>, <span class="ident">state</span>.<span class="ident">channel</span>.<span class="ident">clone</span>());
+            }
+
+            <span class="comment">// Deal with any pending events so we can start recording new ones</span>
+            <span class="kw">let</span> <span class="ident">pings_submitted</span> <span class="op">=</span> <span class="ident">glean</span>.<span class="ident">on_ready_to_submit_pings</span>();
+
+            <span class="comment">// We need to kick off upload in these cases:</span>
+            <span class="comment">// 1. Pings were submitted through Glean and it is ready to upload those pings;</span>
+            <span class="comment">// 2. Upload is disabled, to upload a possible deletion-request ping.</span>
+            <span class="kw">if</span> <span class="ident">pings_submitted</span> <span class="op">||</span> <span class="op">!</span><span class="ident">upload_enabled</span> {
+                <span class="comment">// TODO: bug 1672958.</span>
+            }
+
+            <span class="comment">// Set up information and scheduling for Glean owned pings. Ideally, the &quot;metrics&quot;</span>
+            <span class="comment">// ping startup check should be performed before any other ping, since it relies</span>
+            <span class="comment">// on being dispatched to the API context before any other metric.</span>
+            <span class="comment">// TODO: start the metrics ping scheduler, will happen in bug 1672951.</span>
+
+            <span class="comment">// Check if the &quot;dirty flag&quot; is set. That means the product was probably</span>
+            <span class="comment">// force-closed. If that&#39;s the case, submit a &#39;baseline&#39; ping with the</span>
+            <span class="comment">// reason &quot;dirty_startup&quot;. We only do that from the second run.</span>
+            <span class="kw">if</span> <span class="op">!</span><span class="ident">is_first_run</span> <span class="op">&amp;&amp;</span> <span class="ident">dirty_flag</span> {
+                <span class="comment">// TODO: bug 1672958 - submit_ping_by_name_sync(&quot;baseline&quot;, &quot;dirty_startup&quot;);</span>
+            }
+
+            <span class="comment">// From the second time we run, after all startup pings are generated,</span>
+            <span class="comment">// make sure to clear `lifetime: application` metrics and set them again.</span>
+            <span class="comment">// Any new value will be sent in newly generated pings after startup.</span>
+            <span class="kw">if</span> <span class="op">!</span><span class="ident">is_first_run</span> {
+                <span class="ident">glean</span>.<span class="ident">clear_application_lifetime_metrics</span>();
+                <span class="ident">initialize_core_metrics</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="ident">state</span>.<span class="ident">client_info</span>, <span class="ident">state</span>.<span class="ident">channel</span>.<span class="ident">clone</span>());
+            }
+        });
+
+        <span class="comment">// Signal Dispatcher that init is complete</span>
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span> <span class="ident">dispatcher</span>::<span class="ident">flush_init</span>() {
+            <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;Unable to flush the preinit queue: {}&quot;</span>, <span class="ident">err</span>);
+        }
     });
-    <span class="ident">glean_core</span>::<span class="ident">setup_glean</span>(<span class="ident">glean</span>)<span class="question-mark">?</span>;
 
-    <span class="prelude-val">Ok</span>(())
+    <span class="comment">// Mark the initialization as called: this needs to happen outside of the</span>
+    <span class="comment">// dispatched block!</span>
+    <span class="ident">INITIALIZE_CALLED</span>.<span class="ident">store</span>(<span class="bool-val">true</span>, <span class="ident">Ordering</span>::<span class="ident">SeqCst</span>);
+}
+
+<span class="doccomment">/// Checks if `glean::initialize` was ever called.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Returns</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// `true` if it was, `false` otherwise.</span>
+<span class="kw">fn</span> <span class="ident">was_initialize_called</span>() <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="ident">INITIALIZE_CALLED</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">SeqCst</span>)
 }
 
 <span class="kw">fn</span> <span class="ident">initialize_core_metrics</span>(
@@ -376,56 +608,68 @@
 <span class="doccomment">/// Sets whether upload is enabled or not.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// See `glean_core::Glean.set_upload_enabled`.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_upload_enabled</span>(<span class="ident">enabled</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-    <span class="ident">with_glean_mut</span>(<span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
-        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">global_state</span>().<span class="ident">lock</span>().<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">old_enabled</span> <span class="op">=</span> <span class="ident">glean</span>.<span class="ident">is_upload_enabled</span>();
-        <span class="ident">glean</span>.<span class="ident">set_upload_enabled</span>(<span class="ident">enabled</span>);
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_upload_enabled</span>(<span class="ident">enabled</span>: <span class="ident">bool</span>) {
+    <span class="kw">if</span> <span class="op">!</span><span class="ident">was_initialize_called</span>() {
+        <span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span>
+            <span class="string">&quot;Changing upload enabled before Glean is initialized is not supported.\n \
+            Pass the correct state into `Glean.initialize()`.\n \
+            See documentation at https://mozilla.github.io/glean/book/user/general-api.html#initializing-the-glean-sdk&quot;</span>;
+        <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">msg</span>);
+        <span class="kw">return</span>;
+    }
 
-        <span class="kw">if</span> <span class="op">!</span><span class="ident">old_enabled</span> <span class="op">&amp;&amp;</span> <span class="ident">enabled</span> {
-            <span class="comment">// If uploading is being re-enabled, we have to restore the</span>
-            <span class="comment">// application-lifetime metrics.</span>
-            <span class="ident">initialize_core_metrics</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="ident">state</span>.<span class="ident">client_info</span>, <span class="ident">state</span>.<span class="ident">channel</span>.<span class="ident">clone</span>());
-        }
+    <span class="comment">// Changing upload enabled always happens asynchronous.</span>
+    <span class="comment">// That way it follows what a user expect when calling it inbetween other calls:</span>
+    <span class="comment">// it executes in the right order.</span>
+    <span class="comment">//</span>
+    <span class="comment">// Because the dispatch queue is halted until Glean is fully initialized</span>
+    <span class="comment">// we can safely enqueue here and it will execute after initialization.</span>
+    <span class="ident">dispatcher</span>::<span class="ident">launch</span>(<span class="kw">move</span> <span class="op">||</span> {
+        <span class="ident">with_glean_mut</span>(<span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
+            <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">global_state</span>().<span class="ident">lock</span>().<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">old_enabled</span> <span class="op">=</span> <span class="ident">glean</span>.<span class="ident">is_upload_enabled</span>();
+            <span class="ident">glean</span>.<span class="ident">set_upload_enabled</span>(<span class="ident">enabled</span>);
 
-        <span class="ident">enabled</span>
-    })
-}
+            <span class="comment">// TODO: Cancel upload and any outstanding metrics ping scheduler</span>
+            <span class="comment">// task. Will happen on bug 1672951.</span>
 
-<span class="doccomment">/// Determines whether upload is enabled.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// See `glean_core::Glean.is_upload_enabled`.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_upload_enabled</span>() <span class="op">-&gt;</span> <span class="ident">bool</span> {
-    <span class="ident">with_glean</span>(<span class="op">|</span><span class="ident">glean</span><span class="op">|</span> <span class="ident">glean</span>.<span class="ident">is_upload_enabled</span>())
+            <span class="kw">if</span> <span class="op">!</span><span class="ident">old_enabled</span> <span class="op">&amp;&amp;</span> <span class="ident">enabled</span> {
+                <span class="comment">// If uploading is being re-enabled, we have to restore the</span>
+                <span class="comment">// application-lifetime metrics.</span>
+                <span class="ident">initialize_core_metrics</span>(<span class="kw-2">&amp;</span><span class="ident">glean</span>, <span class="kw-2">&amp;</span><span class="ident">state</span>.<span class="ident">client_info</span>, <span class="ident">state</span>.<span class="ident">channel</span>.<span class="ident">clone</span>());
+            }
+
+            <span class="comment">// TODO: trigger upload for the deletion-ping. Will happen in bug 1672952.</span>
+        });
+    });
 }
 
 <span class="doccomment">/// Register a new [`PingType`](metrics/struct.PingType.html).</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register_ping_type</span>(<span class="ident">ping</span>: <span class="kw-2">&amp;</span><span class="ident">private</span>::<span class="ident">PingType</span>) {
-    <span class="ident">with_glean_mut</span>(<span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
-        <span class="ident">glean</span>.<span class="ident">register_ping_type</span>(<span class="kw-2">&amp;</span><span class="ident">ping</span>.<span class="ident">ping_type</span>);
+    <span class="kw">let</span> <span class="ident">ping</span> <span class="op">=</span> <span class="ident">ping</span>.<span class="ident">clone</span>();
+    <span class="ident">dispatcher</span>::<span class="ident">launch</span>(<span class="kw">move</span> <span class="op">||</span> {
+        <span class="ident">with_glean_mut</span>(<span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
+            <span class="ident">glean</span>.<span class="ident">register_ping_type</span>(<span class="kw-2">&amp;</span><span class="ident">ping</span>.<span class="ident">ping_type</span>);
+        })
     })
 }
 
 <span class="doccomment">/// Collects and submits a ping for eventual uploading.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// See `glean_core::Glean.submit_ping`.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Returns</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Whether the ping was successfully assembled and queued.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">submit_ping</span>(<span class="ident">ping</span>: <span class="kw-2">&amp;</span><span class="ident">private</span>::<span class="ident">PingType</span>, <span class="ident">reason</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">submit_ping</span>(<span class="ident">ping</span>: <span class="kw-2">&amp;</span><span class="ident">private</span>::<span class="ident">PingType</span>, <span class="ident">reason</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>) {
     <span class="ident">submit_ping_by_name</span>(<span class="kw-2">&amp;</span><span class="ident">ping</span>.<span class="ident">name</span>, <span class="ident">reason</span>)
 }
 
 <span class="doccomment">/// Collects and submits a ping for eventual uploading by name.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// See `glean_core::Glean.submit_ping_by_name`.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Returns</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Whether the ping was succesfully assembled and queued.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">submit_ping_by_name</span>(<span class="ident">ping</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">reason</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-    <span class="ident">with_glean</span>(<span class="op">|</span><span class="ident">glean</span><span class="op">|</span> <span class="ident">glean</span>.<span class="ident">submit_ping_by_name</span>(<span class="ident">ping</span>, <span class="ident">reason</span>).<span class="ident">unwrap_or</span>(<span class="bool-val">false</span>))
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">submit_ping_by_name</span>(<span class="ident">ping</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">reason</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>) {
+    <span class="kw">let</span> <span class="ident">ping</span> <span class="op">=</span> <span class="ident">ping</span>.<span class="ident">to_string</span>();
+    <span class="kw">let</span> <span class="ident">reason</span> <span class="op">=</span> <span class="ident">reason</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">to_string</span>());
+    <span class="ident">dispatcher</span>::<span class="ident">launch</span>(<span class="kw">move</span> <span class="op">||</span> {
+        <span class="ident">with_glean</span>(<span class="op">|</span><span class="ident">glean</span><span class="op">|</span> <span class="ident">glean</span>.<span class="ident">submit_ping_by_name</span>(<span class="kw-2">&amp;</span><span class="ident">ping</span>, <span class="ident">reason</span>.<span class="ident">as_deref</span>()).<span class="ident">ok</span>());
+    })
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>

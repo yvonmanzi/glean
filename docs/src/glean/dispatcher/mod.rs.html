@@ -505,6 +505,17 @@
 <span id="504">504</span>
 <span id="505">505</span>
 <span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -565,18 +576,23 @@
 <span class="doccomment">/// The error returned from operations on the dispatcher</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Error</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">DispatchError</span> {
+    <span class="doccomment">/// The worker panicked while running a task</span>
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;The worker panicked while running a task&quot;</span>)]</span>
     <span class="ident">WorkerPanic</span>,
 
+    <span class="doccomment">/// Maximum queue size reached</span>
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Maximum queue size reached&quot;</span>)]</span>
     <span class="ident">QueueFull</span>,
 
+    <span class="doccomment">/// Pre-init buffer was already flushed</span>
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Pre-init buffer was already flushed&quot;</span>)]</span>
     <span class="ident">AlreadyFlushed</span>,
 
+    <span class="doccomment">/// Failed to send command to worker thread</span>
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Failed to send command to worker thread&quot;</span>)]</span>
     <span class="ident">SendError</span>,
 
+    <span class="doccomment">/// Failed to receive from channel</span>
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Failed to receive from channel&quot;</span>)]</span>
     <span class="ident">RecvError</span>(<span class="attribute">#[<span class="ident">from</span>]</span> <span class="ident">crossbeam_channel</span>::<span class="ident">RecvError</span>),
 }
@@ -599,9 +615,17 @@
 <span class="doccomment">/// A clonable guard for a dispatch queue.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
 <span class="kw">struct</span> <span class="ident">DispatchGuard</span> {
+    <span class="doccomment">/// Whether to queue on the preinit buffer or on the unbounded queue</span>
     <span class="ident">queue_preinit</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">AtomicBool</span><span class="op">&gt;</span>,
-    <span class="ident">preinit</span>: <span class="ident">Sender</span><span class="op">&lt;</span><span class="ident">Command</span><span class="op">&gt;</span>,
-    <span class="ident">queue</span>: <span class="ident">Sender</span><span class="op">&lt;</span><span class="ident">Command</span><span class="op">&gt;</span>,
+
+    <span class="doccomment">/// Used to unblock the worker thread initially.</span>
+    <span class="ident">block_sender</span>: <span class="ident">Sender</span><span class="op">&lt;</span>()<span class="op">&gt;</span>,
+
+    <span class="doccomment">/// Sender for the preinit queue.</span>
+    <span class="ident">preinit_sender</span>: <span class="ident">Sender</span><span class="op">&lt;</span><span class="ident">Command</span><span class="op">&gt;</span>,
+
+    <span class="doccomment">/// Sender for the unbounded queue.</span>
+    <span class="ident">sender</span>: <span class="ident">Sender</span><span class="op">&lt;</span><span class="ident">Command</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">DispatchGuard</span> {
@@ -616,15 +640,50 @@
 
     <span class="kw">fn</span> <span class="ident">send</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">task</span>: <span class="ident">Command</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">DispatchError</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">queue_preinit</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">SeqCst</span>) {
-            <span class="kw">match</span> <span class="self">self</span>.<span class="ident">preinit</span>.<span class="ident">try_send</span>(<span class="ident">task</span>) {
+            <span class="kw">match</span> <span class="self">self</span>.<span class="ident">preinit_sender</span>.<span class="ident">try_send</span>(<span class="ident">task</span>) {
                 <span class="prelude-val">Ok</span>(()) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(()),
                 <span class="prelude-val">Err</span>(<span class="ident">TrySendError</span>::<span class="ident">Full</span>(<span class="kw">_</span>)) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">DispatchError</span>::<span class="ident">QueueFull</span>),
                 <span class="prelude-val">Err</span>(<span class="ident">TrySendError</span>::<span class="ident">Disconnected</span>(<span class="kw">_</span>)) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">DispatchError</span>::<span class="ident">SendError</span>),
             }
         } <span class="kw">else</span> {
-            <span class="self">self</span>.<span class="ident">queue</span>.<span class="ident">send</span>(<span class="ident">task</span>)<span class="question-mark">?</span>;
+            <span class="self">self</span>.<span class="ident">sender</span>.<span class="ident">send</span>(<span class="ident">task</span>)<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>(())
         }
+    }
+
+    <span class="kw">fn</span> <span class="ident">block_on_queue</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">let</span> (<span class="ident">tx</span>, <span class="ident">rx</span>) <span class="op">=</span> <span class="ident">crossbeam_channel</span>::<span class="ident">bounded</span>(<span class="number">0</span>);
+        <span class="self">self</span>.<span class="ident">launch</span>(<span class="kw">move</span> <span class="op">||</span> {
+            <span class="ident">tx</span>.<span class="ident">send</span>(())
+                .<span class="ident">expect</span>(<span class="string">&quot;(worker) Can&#39;t send message on single-use channel&quot;</span>)
+        })
+        .<span class="ident">expect</span>(<span class="string">&quot;Failed to launch the blocking task&quot;</span>);
+        <span class="ident">rx</span>.<span class="ident">recv</span>()
+            .<span class="ident">expect</span>(<span class="string">&quot;Failed to receive message on single-use channel&quot;</span>);
+    }
+
+    <span class="kw">fn</span> <span class="ident">flush_init</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">DispatchError</span><span class="op">&gt;</span> {
+        <span class="comment">// We immediately stop queueing in the pre-init buffer.</span>
+        <span class="kw">let</span> <span class="ident">old_val</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">queue_preinit</span>.<span class="ident">swap</span>(<span class="bool-val">false</span>, <span class="ident">Ordering</span>::<span class="ident">SeqCst</span>);
+        <span class="kw">if</span> <span class="op">!</span><span class="ident">old_val</span> {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">DispatchError</span>::<span class="ident">AlreadyFlushed</span>);
+        }
+
+        <span class="comment">// Unblock the worker thread exactly once.</span>
+        <span class="self">self</span>.<span class="ident">block_sender</span>.<span class="ident">send</span>(())<span class="question-mark">?</span>;
+
+        <span class="comment">// Single-use channel to communicate with the worker thread.</span>
+        <span class="kw">let</span> (<span class="ident">swap_sender</span>, <span class="ident">swap_receiver</span>) <span class="op">=</span> <span class="ident">bounded</span>(<span class="number">0</span>);
+
+        <span class="comment">// Send final command and block until it is sent.</span>
+        <span class="self">self</span>.<span class="ident">preinit_sender</span>
+            .<span class="ident">send</span>(<span class="ident">Command</span>::<span class="ident">Swap</span>(<span class="ident">swap_sender</span>))
+            .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">DispatchError</span>::<span class="ident">SendError</span>)<span class="question-mark">?</span>;
+
+        <span class="comment">// Now wait for the worker thread to do the swap and inform us.</span>
+        <span class="comment">// This blocks until all tasks in the preinit buffer have been processed.</span>
+        <span class="ident">swap_receiver</span>.<span class="ident">recv</span>()<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(())
     }
 }
 
@@ -636,17 +695,8 @@
 <span class="doccomment">/// Processing will start after flushing once, processing already enqueued tasks first, then</span>
 <span class="doccomment">/// waiting for further tasks to be enqueued.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Dispatcher</span> {
-    <span class="doccomment">/// Whether to queue on the preinit buffer or on the unbounded queue</span>
-    <span class="ident">queue_preinit</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">AtomicBool</span><span class="op">&gt;</span>,
-
-    <span class="doccomment">/// Used to unblock the worker thread initially.</span>
-    <span class="ident">block_sender</span>: <span class="ident">Sender</span><span class="op">&lt;</span>()<span class="op">&gt;</span>,
-
-    <span class="doccomment">/// Sender for the preinit queue.</span>
-    <span class="ident">preinit_sender</span>: <span class="ident">Sender</span><span class="op">&lt;</span><span class="ident">Command</span><span class="op">&gt;</span>,
-
-    <span class="doccomment">/// Sender for the unbounded queue.</span>
-    <span class="ident">sender</span>: <span class="ident">Sender</span><span class="op">&lt;</span><span class="ident">Command</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Guard used for communication with the worker thread.</span>
+    <span class="ident">guard</span>: <span class="ident">DispatchGuard</span>,
 
     <span class="doccomment">/// Handle to the worker thread, allows to wait for it to finish.</span>
     <span class="ident">worker</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">JoinHandle</span><span class="op">&lt;</span>()<span class="op">&gt;&gt;</span>,
@@ -712,33 +762,25 @@
             }
         });
 
-        <span class="ident">Dispatcher</span> {
+        <span class="kw">let</span> <span class="ident">guard</span> <span class="op">=</span> <span class="ident">DispatchGuard</span> {
             <span class="ident">queue_preinit</span>,
             <span class="ident">block_sender</span>,
             <span class="ident">preinit_sender</span>,
             <span class="ident">sender</span>,
+        };
+
+        <span class="ident">Dispatcher</span> {
+            <span class="ident">guard</span>,
             <span class="ident">worker</span>: <span class="prelude-val">Some</span>(<span class="ident">worker</span>),
         }
     }
 
     <span class="kw">fn</span> <span class="ident">guard</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">DispatchGuard</span> {
-        <span class="ident">DispatchGuard</span> {
-            <span class="ident">queue_preinit</span>: <span class="ident">Arc</span>::<span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">queue_preinit</span>),
-            <span class="ident">preinit</span>: <span class="self">self</span>.<span class="ident">preinit_sender</span>.<span class="ident">clone</span>(),
-            <span class="ident">queue</span>: <span class="self">self</span>.<span class="ident">sender</span>.<span class="ident">clone</span>(),
-        }
+        <span class="self">self</span>.<span class="ident">guard</span>.<span class="ident">clone</span>()
     }
 
     <span class="kw">fn</span> <span class="ident">block_on_queue</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="kw">let</span> (<span class="ident">tx</span>, <span class="ident">rx</span>) <span class="op">=</span> <span class="ident">crossbeam_channel</span>::<span class="ident">bounded</span>(<span class="number">0</span>);
-        <span class="self">self</span>.<span class="ident">guard</span>()
-            .<span class="ident">launch</span>(<span class="kw">move</span> <span class="op">||</span> {
-                <span class="ident">tx</span>.<span class="ident">send</span>(())
-                    .<span class="ident">expect</span>(<span class="string">&quot;(worker) Can&#39;t send message on single-use channel&quot;</span>)
-            })
-            .<span class="ident">expect</span>(<span class="string">&quot;Failed to launch the blocking task&quot;</span>);
-        <span class="ident">rx</span>.<span class="ident">recv</span>()
-            .<span class="ident">expect</span>(<span class="string">&quot;Failed to receive message on single-use channel&quot;</span>);
+        <span class="self">self</span>.<span class="ident">guard</span>().<span class="ident">block_on_queue</span>()
     }
 
     <span class="doccomment">/// Waits for the worker thread to finish and finishes the dispatch queue.</span>
@@ -758,27 +800,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns an error if called multiple times.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">flush_init</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">DispatchError</span><span class="op">&gt;</span> {
-        <span class="comment">// We immediately stop queueing in the pre-init buffer.</span>
-        <span class="kw">let</span> <span class="ident">old_val</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">queue_preinit</span>.<span class="ident">swap</span>(<span class="bool-val">false</span>, <span class="ident">Ordering</span>::<span class="ident">SeqCst</span>);
-        <span class="kw">if</span> <span class="op">!</span><span class="ident">old_val</span> {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">DispatchError</span>::<span class="ident">AlreadyFlushed</span>);
-        }
-
-        <span class="comment">// Unblock the worker thread exactly once.</span>
-        <span class="self">self</span>.<span class="ident">block_sender</span>.<span class="ident">send</span>(())<span class="question-mark">?</span>;
-
-        <span class="comment">// Single-use channel to communicate with the worker thread.</span>
-        <span class="kw">let</span> (<span class="ident">swap_sender</span>, <span class="ident">swap_receiver</span>) <span class="op">=</span> <span class="ident">bounded</span>(<span class="number">0</span>);
-
-        <span class="comment">// Send final command and block until it is sent.</span>
-        <span class="self">self</span>.<span class="ident">preinit_sender</span>
-            .<span class="ident">send</span>(<span class="ident">Command</span>::<span class="ident">Swap</span>(<span class="ident">swap_sender</span>))
-            .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">DispatchError</span>::<span class="ident">SendError</span>)<span class="question-mark">?</span>;
-
-        <span class="comment">// Now wait for the worker thread to do the swap and inform us.</span>
-        <span class="comment">// This blocks until all tasks in the preinit buffer have been processed.</span>
-        <span class="ident">swap_receiver</span>.<span class="ident">recv</span>()<span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(())
+        <span class="self">self</span>.<span class="ident">guard</span>().<span class="ident">flush_init</span>()
     }
 }
 
