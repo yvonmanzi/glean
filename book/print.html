@@ -306,12 +306,25 @@ Create a Run Script in which you specify your shell (ex: <code>/bin/sh</code>), 
 </code></pre>
 </li>
 </ol>
+<h4><a class="header" href="#combined-usage-with-application-services" id="combined-usage-with-application-services">Combined usage with application-services</a></h4>
+<p>If your application uses both the Glean SDK and <a href="https://github.com/mozilla/application-services">application-services</a>
+you can use a combined release to reduce the memory usage and startup time impact.</p>
+<p>In your <code>Cartfile</code> require only <code>application-services</code>, e.g.:</p>
+<pre><code>github &quot;mozilla/application-services&quot; ~&gt; &quot;{latest-version}&quot;
+</code></pre>
+<blockquote>
+<p><strong>Important:</strong> the <code>{latest-version}</code> placeholder should be replaced with the version number of the latest application-services release.
+You can find the version number on the <a href="https://github.com/mozilla/application-services/releases/latest">release page</a>.</p>
+</blockquote>
+<p>Then check out and build the new dependency:</p>
+<pre><code>carthage update --platform iOS
+</code></pre>
 </div>
 <div data-lang="Python" class="tab">
 <p>We recommend using a virtual environment for your work to isolate the dependencies for your project. There are many popular abstractions on top of virtual environments in the Python ecosystem which can help manage your project dependencies.</p>
 <p>The Glean SDK Python bindings currently have <a href="https://pypi.org/project/glean-sdk/#files">prebuilt wheels on PyPI for Windows (i686 and x86_64), Linux (x86_64) and macOS (x86_64)</a>.
-For other platforms, the <code>glean_sdk</code> package will be built from source on your machine. 
-This requires that Cargo and Rust are already installed. 
+For other platforms, the <code>glean_sdk</code> package will be built from source on your machine.
+This requires that Cargo and Rust are already installed.
 The easiest way to do this is through <a href="https://rustup.rs/">rustup</a>.</p>
 <p>Once you have your virtual environment set up and activated, you can install the Glean SDK into it using:</p>
 <pre><code class="language-bash">$ python -m pip install glean_sdk
@@ -399,6 +412,11 @@ Add a new <code>metrics.yaml</code> file to your Xcode project.</p>
 Create a Run Script in which you specify your shell (ex: <code>/bin/sh</code>), add the following contents to the script area below the shell:</p>
 <pre><code>bash $PWD/sdk_generator.sh
 </code></pre>
+<blockquote>
+<p><strong>Note:</strong> If you are using the combined release of application-services and the Glean SDK you need to set the namespace to <code>MozillaAppServices</code>, e.g.:</p>
+<pre><code>bash $PWD/sdk_generator.sh --glean-namespace MozillaAppServices
+</code></pre>
+</blockquote>
 </li>
 <li>
 <p>Add the path to your <code>metrics.yaml</code> and (optionally) <code>pings.yaml</code> under &quot;Input files&quot;:</p>
@@ -5890,6 +5908,7 @@ cargo publish --verbose
 </ul>
 </li>
 <li>Once the above pull request lands, delete the specific release branch.</li>
+<li>Update <code>glean-ffi</code> in the iOS megazord. See the <a href="https://github.com/mozilla/application-services/blob/main/megazords/ios/README.md#glean-component">application-services documentation for that</a>.</li>
 </ol>
 <h2><a class="header" href="#hotfix-release-for-latest-version" id="hotfix-release-for-latest-version">Hotfix release for latest version</a></h2>
 <p>If the latest released version requires a bug fix, a hotfix branch is used.</p>
@@ -5965,6 +5984,7 @@ cargo publish --verbose
 </ul>
 </li>
 <li>Once the above pull request lands, delete the hotfix branch.</li>
+<li>Update <code>glean-ffi</code> in the iOS megazord. See the <a href="https://github.com/mozilla/application-services/blob/main/megazords/ios/README.md#glean-component">application-services documentation for that</a>.</li>
 </ol>
 <h2><a class="header" href="#hotfix-release-for-previous-version" id="hotfix-release-for-previous-version">Hotfix release for previous version</a></h2>
 <p>If you need to release a hotfix for a previously released version (that is: not the latest released version), you need a support branch.</p>
